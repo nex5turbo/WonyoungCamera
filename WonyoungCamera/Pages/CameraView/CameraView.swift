@@ -92,7 +92,7 @@ struct CameraView: View {
             }
             .onChange(of: colorBackground?.0) { newValue in
                 guard let color = colorBackground else {
-                    self.buttonColor = .white
+                    self.buttonColor = .gray
                     return
                 }
                 self.buttonColor = Color(red: Double(255 - color.0) / 255,
