@@ -42,6 +42,8 @@ struct CameraView: View {
         contrast += Float(calculatedBrightness)
         if contrast <= 0.5 {
             contrast = 0.5
+        } else if contrast >= 2.0 {
+            contrast = 2.0
         }
     }
     func setSaturation(dy: CGFloat) {
