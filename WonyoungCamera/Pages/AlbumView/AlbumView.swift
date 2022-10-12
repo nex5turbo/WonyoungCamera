@@ -12,6 +12,7 @@ import LinkPresentation
 struct AlbumView: View {
     @State var albumImagePaths: [String] = []
     @State var selectedPath: String?
+    @State var selectedImage: Image?
     @State var albumItems: [AlbumItem] = []
     @State var fullscreenPresent = false
     @Environment(\.dismiss) private var dismiss
@@ -38,6 +39,8 @@ struct AlbumView: View {
                                 .frame(width: imageSize, height: imageSize)
                                 .onTapGesture {
                                     self.selectedPath = item.path
+                                    guard let image = UIImage(contentsOfFile: item.path) else { return }
+                                    self.selectedImage = Image(uiImage: image)
                                     self.fullscreenPresent.toggle()
                                 }
                                 .contextMenu {
@@ -58,11 +61,12 @@ struct AlbumView: View {
                         }
                     }
                 }
+                .padding()
             }
         }
-        .fullScreenCover(isPresented: $fullscreenPresent, content: {
-            FullScreenImageView(paths: $albumImagePaths ,path: $selectedPath)
-        })
+        .overlay(
+            ImageViewer(image: $selectedImage, viewerShown: $fullscreenPresent)
+        )
         .onAppear {
             DispatchQueue.global().async {
                 if albumImagePaths.isEmpty {
