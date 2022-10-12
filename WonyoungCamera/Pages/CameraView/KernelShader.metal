@@ -133,8 +133,10 @@ half4 applyContrast(half4 inputColor, half contrast) {
 }
 
 half4 applySaturation(half4 inputColor, half saturation) {
-    half4 outputColor;
-    outputColor.rgb = dot(inputColor.rgb, half3(0.2126, 0.7152, 0.0722)) + (inputColor.rgb - dot(inputColor.rgb, half3(0.2126, 0.7152, 0.0722))) * saturation;
-    outputColor.a = inputColor.a;
+    half3 hsv = rgb2hsv(inputColor.rgb);
+    hsv.y = hsv.y * saturation;
+    half3 rgb = hsv2rgb(hsv);
+    half4 outputColor = half4(rgb, 1);
     return outputColor;
+    
 }

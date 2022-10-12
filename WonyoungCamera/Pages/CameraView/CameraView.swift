@@ -49,6 +49,8 @@ struct CameraView: View {
         saturation += Float(calculatedBrightness)
         if saturation <= 0.5 {
             saturation = 0.5
+        } else if saturation >= 2.0 {
+            saturation = 2.0
         }
     }
     func getAdjustIconName() -> String {
