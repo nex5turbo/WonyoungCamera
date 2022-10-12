@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Photos
+import LinkPresentation
 
 struct AlbumView: View {
     @State var albumImagePaths: [String] = []
@@ -48,6 +49,11 @@ struct AlbumView: View {
                                     } label: {
                                         Text("Delete")
                                     }
+                                    Button {
+                                        share(item: image, path: item.path)
+                                    } label: {
+                                        Text("Share")
+                                    }
                                 }
                         }
                     }
@@ -75,6 +81,18 @@ struct AlbumView: View {
             }
         }
     }
+    func share(item: UIImage, path: String) {
+        guard let image = UIImage(contentsOfFile: path) else { return }
+        let shareImage = ShareImage(placeholderItem: image)
+        let activityVC = UIActivityViewController(activityItems: [shareImage], applicationActivities: nil)
+        activityVC.isModalInPresentation = true
+
+        print(UIApplication.shared.connectedScenes)
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        window?.rootViewController?.present(activityVC, animated: true,completion: nil)
+    }
 }
 
 struct AlbumView_Previews: PreviewProvider {
@@ -83,3 +101,38 @@ struct AlbumView_Previews: PreviewProvider {
     }
 }
 
+class ShareImage: UIActivityItemProvider {
+    var image: UIImage
+
+    override var item: Any {
+        get {
+          return self.image
+        }
+    }
+
+override init(placeholderItem: Any) {
+    guard let image = placeholderItem as? UIImage else {
+        fatalError("Couldn't create image from provided item")
+    }
+
+    self.image = image
+    super.init(placeholderItem: placeholderItem)
+}
+
+    @available(iOS 13.0, *)
+    override func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+
+        let metadata = LPLinkMetadata()
+        metadata.title = "Share this circle!"
+
+        var thumbnail: NSSecureCoding = NSNull()
+        if let imageData = self.image.pngData() {
+            thumbnail = NSData(data: imageData)
+        }
+
+        metadata.imageProvider = NSItemProvider(item: thumbnail, typeIdentifier: "public.png")
+
+        return metadata
+    }
+
+}
