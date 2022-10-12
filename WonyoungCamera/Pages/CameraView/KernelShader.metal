@@ -32,7 +32,7 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
         return;
     }
     if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (120 * (textureWidth / 2160))) {
-        writeTexture.write(half4(0.5, 0.5, 0.5, 1), gid);
+        writeTexture.write(half4(0, 0, 0, 1), gid);
         return;
     }
     constexpr sampler colorSampler;

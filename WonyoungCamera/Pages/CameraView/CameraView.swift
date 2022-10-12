@@ -25,7 +25,7 @@ struct CameraView: View {
     @State var colorBackgroundEnabled = false
     @State var settingPresent = false
     @State var colorBackground: (Int, Int, Int)? = nil
-    @State var buttonColor: Color = .gray
+    @State var buttonColor: Color = .black
     @State var selectedAdjustType: AdjustType = .brightness
 
     func setBrightness(dy: CGFloat) {
@@ -92,7 +92,7 @@ struct CameraView: View {
             }
             .onChange(of: colorBackground?.0) { newValue in
                 guard let color = colorBackground else {
-                    self.buttonColor = .gray
+                    self.buttonColor = .black
                     return
                 }
                 self.buttonColor = Color(red: Double(255 - color.0) / 255,
