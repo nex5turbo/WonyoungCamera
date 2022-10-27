@@ -81,7 +81,7 @@ class MetalView: UIView {
     init(_ parent: MetalCameraView, device: MTLDevice) {
         self.parent = parent
         self.device = device
-        self.renderer = Renderer(device: device)
+        self.renderer = Renderer()
         super.init(frame: .zero)
 //        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.drag))
 //        self.addGestureRecognizer(panGesture)
@@ -225,7 +225,7 @@ extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 func convertToCGImage(texture: MTLTexture) -> CGImage? {
     let options: [CIImageOption: Any] = [
-        .colorSpace: CGColorSpaceCreateDeviceRGB()
+        .colorSpace: CGColorSpaceCreateDeviceRGB(),
     ]
     guard let ciImage = CIImage(mtlTexture: texture, options: options) else {
         fatalError("No ciImage")

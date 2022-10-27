@@ -8,30 +8,42 @@
 import SwiftUI
 
 struct FilterScrollView: View {
+    @State var selectedLut: Lut? = nil
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
+            HStack(spacing: 5) {
                 ZStack {
                     Color.gray
                     Text("default")
                         .font(.system(size: 8))
                         .foregroundColor(.white)
                 }
-                .frame(width: 70, height: 70)
-                .cornerRadius(5)
+                .clipShape(Circle())
+                .frame(width: 50, height: 50)
+                .overlay(
+                    Circle().stroke(self.selectedLut == nil ? .red : .clear, lineWidth: 3)
+                )
+                .padding(2)
                 .onTapGesture {
                     LutStorage.instance.selectedLut = nil
+                    self.selectedLut = nil
                 }
                 ForEach(Lut.allCases, id: \.self) { lut in
-                    Button {
-                        LutStorage.instance.selectedLut = lut
-                    } label: {
-                        Image(uiImage: UIImage(named: lut.rawValue)!)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 70, height: 70)
-                            .clipped()
-                            .cornerRadius(5)
+                    if let image = LutStorage.instance.sampleImages[lut] {
+                        Button {
+                            LutStorage.instance.selectedLut = lut
+                            self.selectedLut = lut
+                        } label: {
+                            Image(uiImage: image!)
+                                .resizable()
+                                .scaledToFill()
+                                .clipShape(Circle())
+                                .frame(width: 50, height: 50)
+                                .overlay(
+                                    Circle().stroke(self.selectedLut == lut ? .red : .clear, lineWidth: 3)
+                                )
+                                .padding(2)
+                        }
                     }
                 }
             }

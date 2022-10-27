@@ -19,7 +19,7 @@ class Renderer {
     var defaultRenderPipelineState: MTLRenderPipelineState!
     var defaultLibrary: MTLLibrary
     var commandQueue: MTLCommandQueue
-    init(device: MTLDevice) {
+    init(compute: String = "roundingImage") {
         self.device = SharedMetalDevice.instance.device
         guard let commandQueue = device.makeCommandQueue() else {
             fatalError("[Error] No command queue for device: \(device)")
@@ -28,7 +28,7 @@ class Renderer {
         guard let defaultLibrary = device.makeDefaultLibrary() else {
             fatalError("[Error] No command queue for device: \(device)")
         }
-        guard let computePipelineState = device.loadComputePipelineState() else {
+        guard let computePipelineState = device.loadComputePipelineState(compute) else {
             fatalError()
         }
         self.computePipelineState = computePipelineState
@@ -73,6 +73,42 @@ class Renderer {
         }
         renderPassDescriptor.colorAttachments[0].texture = texture
         return renderPassDescriptor
+    }
+    func applyLutToSampleImage(_ sampleImageTexture: MTLTexture, lutTexture: MTLTexture) -> UIImage? {
+        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+            print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
+            return nil
+        }
+        let texture = sampleImageTexture
+        guard let returnTexture = createTexture(width: texture.width, height: texture.height) else {
+            return nil
+        }
+
+        var textureWidth = Float(texture.width)
+        var textureHeight = Float(texture.height)
+
+        // compute
+        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
+        computeEncoder?.setComputePipelineState(self.computePipelineState)
+        computeEncoder?.setTexture(returnTexture, index: 0)
+        computeEncoder?.setTexture(texture, index: 1)
+        computeEncoder?.setTexture(lutTexture, index: 2)
+        
+        computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 1)
+        computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 2)
+        let w = computePipelineState.threadExecutionWidth
+        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
+        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
+
+        let threadgroupsPerGrid = MTLSizeMake((returnTexture.width + w - 1) / w,
+                                         (returnTexture.height + h - 1) / h,
+                                         1)
+        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
+
+        computeEncoder?.endEncoding()
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        return textureToUIImage(texture: returnTexture)
     }
     func render(
         to drawable: CAMetalDrawable,
@@ -195,6 +231,33 @@ class Renderer {
        
        return texture
      }
+    private func createTexture(width: Int, height: Int) -> MTLTexture? {
+       let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+         pixelFormat: MTLPixelFormat.rgba8Unorm,
+         width: width,
+         height: height,
+         mipmapped: false)
+       
+       textureDescriptor.usage = [.shaderWrite, .shaderRead]
+       
+       guard let texture: MTLTexture = device.makeTexture(descriptor: textureDescriptor) else {
+         return nil
+       }
+       
+       let region = MTLRegion.init(origin: MTLOrigin.init(x: 0, y: 0, z: 0), size: MTLSize.init(width: texture.width, height: texture.height, depth: 1));
+       
+       let count = width * height * 4
+       let stride = MemoryLayout<CChar>.stride
+       let alignment = MemoryLayout<CChar>.alignment
+       let byteCount = stride * count
+       
+       let p = UnsafeMutableRawPointer.allocate(byteCount: byteCount, alignment: alignment)
+       let data = p.initializeMemory(as: CChar.self, repeating: 0, count: count)
+         
+       texture.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: width * 4)
+       
+       return texture
+     }
     func getVertices(frameOffset: Float) -> [Vertex] {
         let ratio: Float = Float(UIScreen.main.bounds.width / UIScreen.main.bounds.height)
         let returnValue = [
@@ -208,6 +271,13 @@ class Renderer {
         ]
         return returnValue
     }
+    func textureToUIImage(texture: MTLTexture) -> UIImage? {
+        guard let cgImage = convertToCGImage(texture: texture) else {
+            return nil
+        }
+        let uiImage = UIImage(cgImage: cgImage)
+        return uiImage
+    }
 }
 
 struct Vertex {
@@ -217,15 +287,15 @@ struct Vertex {
 
 import MetalKit
 extension MTLDevice {
-    func loadFilter(filterName: String) -> MTLTexture? {
+    func loadFilter(filterName: String, ext: String = "png") -> MTLTexture? {
         let textureLoader = MTKTextureLoader(device: self)
-        if let url = Bundle.main.url(forResource: filterName, withExtension: "png") {
-            let returnTexture = try? textureLoader.newTexture(URL: url, options: nil)
+        if let url = Bundle.main.url(forResource: filterName, withExtension: ext) {
+            let returnTexture = try? textureLoader.newTexture(URL: url, options: [.SRGB: false])
             return returnTexture
         }
         return nil
     }
-    func loadComputePipelineState(functionName: String = "roundingImage") -> MTLComputePipelineState? {
+    func loadComputePipelineState(_ functionName: String = "roundingImage") -> MTLComputePipelineState? {
         let bundle = Bundle.main
         guard let url = bundle.url(forResource: "default", withExtension: "metallib") else { return nil }
         guard let library = try? self.makeLibrary(URL: url) else {

@@ -23,21 +23,40 @@ enum Lut: String, CaseIterable {
 
 class LutStorage {
     static var instance = LutStorage()
-    var luts: [Lut: MTLTexture]
+    var luts: [Lut: MTLTexture] = [:]
+    var sampleImages: [Lut: UIImage?] = [:]
     var selectedLut: Lut? = nil
+    var sampleImageTexture: MTLTexture
+    var sampleImage: UIImage
+    let renderer: Renderer
     init() {
         let device = SharedMetalDevice.instance.device
-        self.luts = [:]
+        guard let sampleImageTexture = device.loadFilter(filterName: "sample") else {
+            abort()
+        }
+        self.sampleImageTexture = sampleImageTexture
+        self.renderer = Renderer(compute: "sampleImage")
+        guard let sampleImage = UIImage(named: "sample") else {
+            abort()
+        }
+        self.sampleImage = sampleImage
         for lut in Lut.allCases {
             guard let texture = device.loadFilter(filterName: lut.rawValue) else {
                 continue
             }
             self.luts[lut] = texture
+            guard let image = getSampleImage(lut: texture) else {
+                continue
+            }
+            self.sampleImages[lut] = image
         }
     }
     func applyRandomLut() {
         let lutKeys = Array(luts.keys)
         let randomIndex = Int.random(in: 0 ..< luts.count)
         self.selectedLut = lutKeys[randomIndex]
+    }
+    func getSampleImage(lut: MTLTexture) -> UIImage? {
+        return renderer.applyLutToSampleImage(sampleImageTexture, lutTexture: lut)
     }
 }

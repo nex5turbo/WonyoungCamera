@@ -92,7 +92,7 @@ half4 applyFilter(half4 textureColor, texture2d<half> filterTexture) {
     half4 newColor2 = filterTexture.sample(quadSampler4, texPos2);
 
     half4 newColor = mix(newColor1, newColor2, fract(blueColor));
-    return half4(mix(base, half4(newColor.rgb, base.w), half(0.5)));
+    return half4(mix(base, half4(newColor.rgb, base.w), half(1)));
 }
 
 //half4 applyBrightness(half4 color, float brightness) {
@@ -139,4 +139,13 @@ half4 applySaturation(half4 inputColor, half saturation) {
     half4 outputColor = half4(rgb, 1);
     return outputColor;
     
+}
+
+kernel void sampleImage(texture2d<half, access::write> writeTexture [[ texture(0) ]],
+                        texture2d<half> readTexture [[ texture(1) ]],
+                        texture2d<half> lutTexture [[ texture(2) ]],
+                        uint2 gid [[ thread_position_in_grid ]]) {
+    half4 color = readTexture.read(gid);
+    half4 filteredColor = applyFilter(color, lutTexture);
+    writeTexture.write(filteredColor, gid);
 }
