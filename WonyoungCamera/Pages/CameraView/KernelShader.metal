@@ -26,15 +26,7 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
                           uint2 gid [[ thread_position_in_grid ]]) {
     float halfWidth = textureWidth / 2;
     float halfHeight = textureHeight / 2;
-    half clearColor = 255.0 / 255.0;
-    if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (100 * (textureWidth / 2160))) {
-        writeTexture.write(half4(clearColor, clearColor, clearColor, 0), gid);
-        return;
-    }
-    if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (120 * (textureWidth / 2160))) {
-        writeTexture.write(half4(0, 0, 0, 1), gid);
-        return;
-    }
+
     constexpr sampler colorSampler;
     float2 coord = float2(gid);
     // 절반 사이즈를 빼서 scale 적용한 다음 다시 절반 사이즈 더해주면 된다.
@@ -50,6 +42,15 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
         coord.x = 1 - coord.x;
     }
     half4 color = readTexture.sample(colorSampler, coord);
+    if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (100 * (textureWidth / 2160))) {
+        writeTexture.write(half4(0), gid);
+        return;
+    }
+    if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (120 * (textureWidth / 2160))) {
+        writeTexture.write(half4(0, 0, 0, 1), gid);
+        return;
+    }
+
     if (shouldFilter) {
         half4 filteredColor = applyFilter(color, lutTexture);
         filteredColor = applyBrightness(filteredColor, brightness);

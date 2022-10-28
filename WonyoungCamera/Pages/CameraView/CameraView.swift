@@ -138,7 +138,7 @@ struct CameraView: View {
                 VStack {
                     Color.clear.frame(height: 10)
                     if filterPresent {
-                        FilterScrollView()
+                        FilterScrollView(color: $buttonColor)
                     }
                     HStack {
                         Button {

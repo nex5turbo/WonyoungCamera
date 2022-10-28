@@ -193,7 +193,7 @@ class Renderer {
         renderCommandEncoder.setRenderPipelineState(self.defaultRenderPipelineState)
         renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
         renderCommandEncoder.setFragmentTexture(emptyTexture, index: 0)
-        renderCommandEncoder.setFragmentTexture(lutTexture, index: 1)
+        renderCommandEncoder.setFragmentTexture(texture, index: 1)
         renderCommandEncoder.setFragmentBytes(&shouldFlip, length: MemoryLayout<Bool>.stride, index: 0)
         renderCommandEncoder.setFragmentBytes(&deviceWidth, length: MemoryLayout<Float>.stride, index: 1)
         renderCommandEncoder.setFragmentBytes(&deviceHeight, length: MemoryLayout<Float>.stride, index: 2)
@@ -210,6 +210,7 @@ class Renderer {
          width: size,
          height: size,
          mipmapped: false)
+        textureDescriptor.textureType = .type2DMultisample
        
        textureDescriptor.usage = [.shaderWrite, .shaderRead]
        
@@ -261,13 +262,13 @@ class Renderer {
     func getVertices(frameOffset: Float) -> [Vertex] {
         let ratio: Float = Float(UIScreen.main.bounds.width / UIScreen.main.bounds.height)
         let returnValue = [
-            Vertex(position: SIMD2<Float>(1, frameOffset - ratio), textureCoordinate: SIMD2<Float>(1,1)),
-            Vertex(position: SIMD2<Float>(-1, frameOffset - ratio), textureCoordinate: SIMD2<Float>(0,1)),
-            Vertex(position: SIMD2<Float>(-1, frameOffset + ratio), textureCoordinate: SIMD2<Float>(0,0)),
+            Vertex(position: SIMD2<Float>(1, -1), textureCoordinate: SIMD2<Float>(1,1)),
+            Vertex(position: SIMD2<Float>(-1, -1), textureCoordinate: SIMD2<Float>(0,1)),
+            Vertex(position: SIMD2<Float>(-1, 1), textureCoordinate: SIMD2<Float>(0,0)),
 
-            Vertex(position: SIMD2<Float>(1, frameOffset - ratio), textureCoordinate: SIMD2<Float>(1,1)),
-            Vertex(position: SIMD2<Float>(-1, frameOffset + ratio), textureCoordinate: SIMD2<Float>(0,0)),
-            Vertex(position: SIMD2<Float>(1, frameOffset + ratio), textureCoordinate: SIMD2<Float>(1,0))
+            Vertex(position: SIMD2<Float>(1, -1), textureCoordinate: SIMD2<Float>(1,1)),
+            Vertex(position: SIMD2<Float>(-1, 1), textureCoordinate: SIMD2<Float>(0,0)),
+            Vertex(position: SIMD2<Float>(1, 1), textureCoordinate: SIMD2<Float>(1,0))
         ]
         return returnValue
     }
