@@ -67,13 +67,17 @@ fragment half4 default_fragment(RasterizerData in [[ stage_in ]],
                                 constant float &deviceScale [[ buffer(3) ]],
                                 constant bool &shouldFilter [[ buffer(4) ]]) {
     constexpr sampler colorSampler(coord::normalized, filter::linear);
+    float frameRatio = float(cameraTexture.get_height()) / float(cameraTexture.get_width());
     float2 size = float2(deviceWidth * deviceScale, deviceHeight * deviceScale);
+    float2 frameSize = float2(deviceWidth * deviceScale, deviceWidth * frameRatio * deviceScale);
     float2 center = float2(size.x / 2, (size.y / 2) - 200);
     float2 circleCoord = float2(in.position.x / size.x, (in.position.y - center.y + (size.x / 2)) / size.x);
+    float2 frameCoord = float2(in.position.x / frameSize.x, (in.position.y - center.y + (frameSize.y / 2)) / frameSize.y);
     half4 circleColor = inputTexture.sample(colorSampler, circleCoord);
     if (circleColor.a == 0) {
-        half4 testColor = gaussianBlur(in.textureCoordinate, cameraTexture);
-        return mix(testColor, half4(0, 0, 0, 1), 0.5);
+//        half4 testColor = gaussianBlur(in.textureCoordinate, cameraTexture);
+//        return mix(testColor, half4(0, 0, 0, 1), 0.5);
+        return cameraTexture.sample(colorSampler, frameCoord);
     } else {
         return circleColor;
     }

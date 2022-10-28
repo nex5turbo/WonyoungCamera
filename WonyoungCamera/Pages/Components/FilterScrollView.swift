@@ -20,7 +20,11 @@ struct FilterScrollView: View {
                     .clipShape(Circle())
                     .frame(width: 40, height: 40)
                     .overlay(
-                        Circle().stroke(self.selectedLut == nil ? .red : .clear, lineWidth: 3)
+                        Image(systemName: "checkmark.circle")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .opacity(self.selectedLut == nil ? 1 : 0)
+                            .foregroundColor(.white)
                     )
                     .padding(2)
 
@@ -33,12 +37,12 @@ struct FilterScrollView: View {
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
                             .foregroundColor(color)
-                        Spacer()
                     }
                     .frame(height: 20)
                 }
                 .padding(2)
                 .onTapGesture {
+                    HapticManager.instance.impact(style: .soft)
                     LutStorage.instance.selectedLut = nil
                     self.selectedLut = nil
                 }
@@ -46,6 +50,7 @@ struct FilterScrollView: View {
                     if let image = LutStorage.instance.sampleImages[lut] {
                         VStack {
                             Button {
+                                HapticManager.instance.impact(style: .soft)
                                 LutStorage.instance.selectedLut = lut
                                 self.selectedLut = lut
                             } label: {
@@ -55,7 +60,11 @@ struct FilterScrollView: View {
                                     .clipShape(Circle())
                                     .frame(width: 40, height: 40)
                                     .overlay(
-                                        Circle().stroke(self.selectedLut == lut ? .red : .clear, lineWidth: 3)
+                                        Image(systemName: "checkmark.circle")
+                                            .resizable()
+                                            .frame(width: 40, height: 40)
+                                            .opacity(self.selectedLut == lut ? 1 : 0)
+                                            .foregroundColor(.white)
                                     )
                                     .padding(2)
                             }

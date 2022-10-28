@@ -15,6 +15,7 @@ class Renderer {
     private var deviceSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     private var deviceScale = UIScreen.main.scale
     var emptyTexture: MTLTexture?
+    var frameTexture: MTLTexture?
     var computePipelineState: MTLComputePipelineState
     var defaultRenderPipelineState: MTLRenderPipelineState!
     var defaultLibrary: MTLLibrary
@@ -52,6 +53,9 @@ class Renderer {
             defaultRenderPipelineState = try device.makeRenderPipelineState(descriptor: defaultRenderPipelineDesc)
         } catch {
             fatalError("Engine Error: Cannot create defaultRenderPipelineState!")
+        }
+        if compute == "roundingImage" {
+            self.frameTexture = device.loadFilter(filterName: "cameraFrame")
         }
     }
     public func makeTexture(descriptor: MTLTextureDescriptor) -> MTLTexture? {
@@ -193,7 +197,7 @@ class Renderer {
         renderCommandEncoder.setRenderPipelineState(self.defaultRenderPipelineState)
         renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
         renderCommandEncoder.setFragmentTexture(emptyTexture, index: 0)
-        renderCommandEncoder.setFragmentTexture(texture, index: 1)
+        renderCommandEncoder.setFragmentTexture(frameTexture, index: 1)
         renderCommandEncoder.setFragmentBytes(&shouldFlip, length: MemoryLayout<Bool>.stride, index: 0)
         renderCommandEncoder.setFragmentBytes(&deviceWidth, length: MemoryLayout<Float>.stride, index: 1)
         renderCommandEncoder.setFragmentBytes(&deviceHeight, length: MemoryLayout<Float>.stride, index: 2)
@@ -210,7 +214,6 @@ class Renderer {
          width: size,
          height: size,
          mipmapped: false)
-        textureDescriptor.textureType = .type2DMultisample
        
        textureDescriptor.usage = [.shaderWrite, .shaderRead]
        
@@ -260,7 +263,6 @@ class Renderer {
        return texture
      }
     func getVertices(frameOffset: Float) -> [Vertex] {
-        let ratio: Float = Float(UIScreen.main.bounds.width / UIScreen.main.bounds.height)
         let returnValue = [
             Vertex(position: SIMD2<Float>(1, -1), textureCoordinate: SIMD2<Float>(1,1)),
             Vertex(position: SIMD2<Float>(-1, -1), textureCoordinate: SIMD2<Float>(0,1)),
