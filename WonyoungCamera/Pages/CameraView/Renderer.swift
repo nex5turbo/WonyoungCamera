@@ -144,19 +144,13 @@ class Renderer {
             return
         }
 
-        var lutTexture: MTLTexture? = nil
-        if LutStorage.instance.selectedLut != nil {
-            lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut!]
-        }
+        let lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut]
         var shouldFilter = lutTexture != nil
         let quadVertices = getVertices(frameOffset: frameOffset)
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
         
         var shouldFlip = shouldFlip
-        var deviceWidth = Float(deviceSize.width)
-        var deviceHeight = Float(deviceSize.height)
-        var deviceScale = Float(deviceScale)
         var textureWidth = Float(texture.width)
         var textureHeight = Float(texture.height)
         var brightness = brightness
@@ -198,8 +192,11 @@ class Renderer {
         renderCommandEncoder.setFragmentTexture(emptyTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(frameTexture, index: 1)
         renderCommandEncoder.setFragmentBytes(&shouldFlip, length: MemoryLayout<Bool>.stride, index: 0)
-        renderCommandEncoder.setFragmentBytes(&deviceWidth, length: MemoryLayout<Float>.stride, index: 1)
-        renderCommandEncoder.setFragmentBytes(&deviceHeight, length: MemoryLayout<Float>.stride, index: 2)
+        var drawableWidth: Float = Float(drawable.texture.width)
+        renderCommandEncoder.setFragmentBytes(&drawableWidth, length: MemoryLayout<Float>.stride, index: 1)
+        var drawableHeight: Float = Float(drawable.texture.height)
+        renderCommandEncoder.setFragmentBytes(&drawableHeight, length: MemoryLayout<Float>.stride, index: 2)
+        var deviceScale = UIScreen.main.scale
         renderCommandEncoder.setFragmentBytes(&deviceScale, length: MemoryLayout<Float>.stride, index: 3)
         renderCommandEncoder.setFragmentBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 4)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)

@@ -29,6 +29,7 @@ struct CameraView: View {
     @State var selectedAdjustType: AdjustType = .brightness
     @State var sliderValue: Float = 0
     @State var isSliderEditing = false
+    @State var selectedLut: Lut = .natural
 
     func getAdjustIconName() -> String {
         switch selectedAdjustType {
@@ -42,29 +43,6 @@ struct CameraView: View {
     }
     var body: some View {
         ZStack {
-            VStack {
-                MetalCameraView(
-                    metalCamera: metalCamera,
-                    shouldTakePicture: $shouldTakePicture,
-                    takenPicture: $takenImage,
-                    brightness: $brightness,
-                    contrast: $contrast,
-                    saturation: $saturation,
-                    colorBackgroundEnabled: $colorBackgroundEnabled,
-                    colorBackgounrd: $colorBackground
-                )
-                .ignoresSafeArea()
-            }
-            .onChange(of: colorBackground?.0) { newValue in
-                guard let color = colorBackground else {
-                    self.buttonColor = .white
-                    return
-                }
-                self.buttonColor = Color(red: Double(255 - color.0) / 255,
-                                        green: Double(255 - color.1) / 255,
-                                        blue: Double(255 - color.2) / 255)
-            }
-
             VStack(spacing: 0) {
                 HStack {
                     NavigationLink(destination: AlbumView().navigationTitle("").navigationBarHidden(true), isActive: $settingPresent) {
@@ -94,7 +72,6 @@ struct CameraView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
                 .background(.black)
-                Spacer()
                 GeometryReader { proxy in
                     ZStack {
                         Color.clear
@@ -107,6 +84,27 @@ struct CameraView: View {
                                 print(proxy.size.height)
                             }
                         // metal view가 들어갈 자리
+                        VStack {
+                            MetalCameraView(
+                                metalCamera: metalCamera,
+                                shouldTakePicture: $shouldTakePicture,
+                                takenPicture: $takenImage,
+                                brightness: $brightness,
+                                contrast: $contrast,
+                                saturation: $saturation,
+                                colorBackgroundEnabled: $colorBackgroundEnabled,
+                                colorBackgounrd: $colorBackground
+                            )
+                        }
+                        .onChange(of: colorBackground?.0) { newValue in
+                            guard let color = colorBackground else {
+                                self.buttonColor = .white
+                                return
+                            }
+                            self.buttonColor = Color(red: Double(255 - color.0) / 255,
+                                                    green: Double(255 - color.1) / 255,
+                                                    blue: Double(255 - color.2) / 255)
+                        }
                         if isSliderEditing {
                             ZStack {
                                 VStack {
@@ -125,7 +123,6 @@ struct CameraView: View {
                     }
                     
                 }
-                Spacer()
                 VStack {
                     Color.clear.frame(height: 10)
                     Slider(value: $sliderValue, in: 0...100, step: 1) { editing in
@@ -158,7 +155,7 @@ struct CameraView: View {
                         .padding(.horizontal)
                     Color.clear.frame(height: 10)
                     if filterPresent {
-                        FilterScrollView(color: $buttonColor)
+                        FilterScrollView(selectedLut: $selectedLut, color: $buttonColor)
                     }
                     HStack {
                         Button {
@@ -174,7 +171,8 @@ struct CameraView: View {
 
                         Button {
                             HapticManager.instance.impact(style: .soft)
-                            LutStorage.instance.applyRandomLut()
+                            let selectedLut = LutStorage.instance.applyRandomLut()
+                            self.selectedLut = selectedLut
                         } label: {
                             Image(systemName: "shuffle.circle")
                                 .font(.system(size: bottomIconSize))
