@@ -8,52 +8,67 @@
 import SwiftUI
 
 struct FilterScrollView: View {
-    @State var selectedLut: Lut? = nil
+    @Binding var selectedLut: Lut
+    @Binding var color: Color
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 5) {
-                ZStack {
-                    Color.gray
-                    Text("default")
-                        .font(.system(size: 8))
-                        .foregroundColor(.white)
-                }
-                .clipShape(Circle())
-                .frame(width: 50, height: 50)
-                .overlay(
-                    Circle().stroke(self.selectedLut == nil ? .red : .clear, lineWidth: 3)
-                )
-                .padding(2)
-                .onTapGesture {
-                    LutStorage.instance.selectedLut = nil
-                    self.selectedLut = nil
-                }
-                ForEach(Lut.allCases, id: \.self) { lut in
-                    if let image = LutStorage.instance.sampleImages[lut] {
-                        Button {
-                            LutStorage.instance.selectedLut = lut
-                            self.selectedLut = lut
-                        } label: {
-                            Image(uiImage: image!)
-                                .resizable()
-                                .scaledToFill()
-                                .clipShape(Circle())
-                                .frame(width: 50, height: 50)
-                                .overlay(
-                                    Circle().stroke(self.selectedLut == lut ? .red : .clear, lineWidth: 3)
-                                )
-                                .padding(2)
+            ScrollViewReader { value in
+                HStack(spacing: 10) {
+                    HStack {
+                        ForEach(Array(Lut.allCases).indices, id: \.self) { index in
+                            let lut = Array(Lut.allCases)[index]
+                            if let image = LutStorage.instance.sampleImages[lut] {
+                                VStack {
+                                    Button {
+                                        HapticManager.instance.impact(style: .soft)
+                                        LutStorage.instance.selectedLut = lut
+                                        self.selectedLut = lut
+                                    } label: {
+                                        Image(uiImage: image!)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .clipShape(Circle())
+                                            .frame(width: 40, height: 40)
+                                            .overlay(
+                                                Image(systemName: "checkmark.circle")
+                                                    .resizable()
+                                                    .frame(width: 40, height: 40)
+                                                    .opacity(self.selectedLut == lut ? 1 : 0)
+                                                    .foregroundColor(.white)
+                                            )
+                                    }
+                                    VStack {
+                                        Spacer()
+                                        Text(lut.rawValue)
+                                            .frame(width: 30)
+                                            .font(.system(size: 10))
+                                            .scaledToFill()
+                                            .minimumScaleFactor(0.5)
+                                            .lineLimit(1)
+                                            .foregroundColor(color)
+                                    }
+                                    .frame(height: 15)
+                                }
+                            }
+                        }
+                    }
+                    .onChange(of: selectedLut) { newValue in
+                        let scrollArray = Array(Lut.allCases)
+                        guard let index = scrollArray.firstIndex(of: newValue) else {
+                            return
+                        }
+                        withAnimation {
+                            value.scrollTo(Int(index), anchor: .center)
                         }
                     }
                 }
             }
         }
-        .padding(.horizontal)
     }
 }
 
 struct FilterScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterScrollView()
+        FilterScrollView(selectedLut: .constant(Lut.natural), color: .constant(.black))
     }
 }

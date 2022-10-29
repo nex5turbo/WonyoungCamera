@@ -61,14 +61,11 @@ class MetalCamera: ObservableObject {
         }
         var resolution: AVCaptureSession.Preset {
             if videoSession.canSetSessionPreset(.hd4K3840x2160) {
-                print("DEBUG4 can session preset 2160")
                 return .hd4K3840x2160
             }
             if videoSession.canSetSessionPreset(.hd1920x1080) {
-                print("DEBUG4 can session preset 1080")
                 return .hd1920x1080
             }
-            print("DEBUG4 can session preset 720")
             return .hd1280x720
         }
         if resolution == .hd4K3840x2160 {

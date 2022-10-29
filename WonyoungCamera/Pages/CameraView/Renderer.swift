@@ -15,6 +15,7 @@ class Renderer {
     private var deviceSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     private var deviceScale = UIScreen.main.scale
     var emptyTexture: MTLTexture?
+    var frameTexture: MTLTexture?
     var computePipelineState: MTLComputePipelineState
     var defaultRenderPipelineState: MTLRenderPipelineState!
     var defaultLibrary: MTLLibrary
@@ -52,6 +53,9 @@ class Renderer {
             defaultRenderPipelineState = try device.makeRenderPipelineState(descriptor: defaultRenderPipelineDesc)
         } catch {
             fatalError("Engine Error: Cannot create defaultRenderPipelineState!")
+        }
+        if compute == "roundingImage" {
+            self.frameTexture = device.loadFilter(filterName: "cameraFrame")
         }
     }
     public func makeTexture(descriptor: MTLTextureDescriptor) -> MTLTexture? {
@@ -131,7 +135,6 @@ class Renderer {
             return
         }
         if emptyTexture == nil || min(texture.height, texture.width) != size {
-            print("DEBUG4 switch \(emptyTexture == nil) \(min(texture.height, texture.width)) \(size)")
             guard let newTexture = createTexture(size: size) else {
                 fatalError()
             }
@@ -141,19 +144,13 @@ class Renderer {
             return
         }
 
-        var lutTexture: MTLTexture? = nil
-        if LutStorage.instance.selectedLut != nil {
-            lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut!]
-        }
+        let lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut]
         var shouldFilter = lutTexture != nil
         let quadVertices = getVertices(frameOffset: frameOffset)
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
         
         var shouldFlip = shouldFlip
-        var deviceWidth = Float(deviceSize.width)
-        var deviceHeight = Float(deviceSize.height)
-        var deviceScale = Float(deviceScale)
         var textureWidth = Float(texture.width)
         var textureHeight = Float(texture.height)
         var brightness = brightness
@@ -193,10 +190,13 @@ class Renderer {
         renderCommandEncoder.setRenderPipelineState(self.defaultRenderPipelineState)
         renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
         renderCommandEncoder.setFragmentTexture(emptyTexture, index: 0)
-        renderCommandEncoder.setFragmentTexture(lutTexture, index: 1)
+        renderCommandEncoder.setFragmentTexture(frameTexture, index: 1)
         renderCommandEncoder.setFragmentBytes(&shouldFlip, length: MemoryLayout<Bool>.stride, index: 0)
-        renderCommandEncoder.setFragmentBytes(&deviceWidth, length: MemoryLayout<Float>.stride, index: 1)
-        renderCommandEncoder.setFragmentBytes(&deviceHeight, length: MemoryLayout<Float>.stride, index: 2)
+        var drawableWidth: Float = Float(drawable.texture.width)
+        renderCommandEncoder.setFragmentBytes(&drawableWidth, length: MemoryLayout<Float>.stride, index: 1)
+        var drawableHeight: Float = Float(drawable.texture.height)
+        renderCommandEncoder.setFragmentBytes(&drawableHeight, length: MemoryLayout<Float>.stride, index: 2)
+        var deviceScale = UIScreen.main.scale
         renderCommandEncoder.setFragmentBytes(&deviceScale, length: MemoryLayout<Float>.stride, index: 3)
         renderCommandEncoder.setFragmentBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 4)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
@@ -259,15 +259,14 @@ class Renderer {
        return texture
      }
     func getVertices(frameOffset: Float) -> [Vertex] {
-        let ratio: Float = Float(UIScreen.main.bounds.width / UIScreen.main.bounds.height)
         let returnValue = [
-            Vertex(position: SIMD2<Float>(1, frameOffset - ratio), textureCoordinate: SIMD2<Float>(1,1)),
-            Vertex(position: SIMD2<Float>(-1, frameOffset - ratio), textureCoordinate: SIMD2<Float>(0,1)),
-            Vertex(position: SIMD2<Float>(-1, frameOffset + ratio), textureCoordinate: SIMD2<Float>(0,0)),
+            Vertex(position: SIMD2<Float>(1, -1), textureCoordinate: SIMD2<Float>(1,1)),
+            Vertex(position: SIMD2<Float>(-1, -1), textureCoordinate: SIMD2<Float>(0,1)),
+            Vertex(position: SIMD2<Float>(-1, 1), textureCoordinate: SIMD2<Float>(0,0)),
 
-            Vertex(position: SIMD2<Float>(1, frameOffset - ratio), textureCoordinate: SIMD2<Float>(1,1)),
-            Vertex(position: SIMD2<Float>(-1, frameOffset + ratio), textureCoordinate: SIMD2<Float>(0,0)),
-            Vertex(position: SIMD2<Float>(1, frameOffset + ratio), textureCoordinate: SIMD2<Float>(1,0))
+            Vertex(position: SIMD2<Float>(1, -1), textureCoordinate: SIMD2<Float>(1,1)),
+            Vertex(position: SIMD2<Float>(-1, 1), textureCoordinate: SIMD2<Float>(0,0)),
+            Vertex(position: SIMD2<Float>(1, 1), textureCoordinate: SIMD2<Float>(1,0))
         ]
         return returnValue
     }

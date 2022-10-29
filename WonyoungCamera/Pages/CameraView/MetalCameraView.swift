@@ -83,8 +83,10 @@ class MetalView: UIView {
         self.device = device
         self.renderer = Renderer()
         super.init(frame: .zero)
-//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.drag))
-//        self.addGestureRecognizer(panGesture)
+
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.drag))
+        self.addGestureRecognizer(panGesture)
+
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.pinch))
         self.addGestureRecognizer(pinchGesture)
         self.isUserInteractionEnabled = true
