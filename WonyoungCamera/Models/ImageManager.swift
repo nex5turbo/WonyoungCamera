@@ -50,11 +50,9 @@ class ImageManager {
             let myCollageDirPath = documentDir.appendingPathComponent(APP_FOLDER_NAME)
             createMyCollageDir(myCollageDirPath: myCollageDirPath)
             guard let data = image.pngData() else {
-                print("DEBUG4 no data")
                 return
             }
             guard let targetImage = UIImage(data: data) else {
-                print("DEBUG4 no image")
                 return
             }
 
@@ -64,7 +62,6 @@ class ImageManager {
             UIImageWriteToSavedPhotosAlbum(targetImage, nil, nil, nil)
         } catch {
             #if DEBUG
-            print("DEBUG4")
             print(error.localizedDescription)
             #endif
         }

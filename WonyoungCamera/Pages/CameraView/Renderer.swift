@@ -135,7 +135,6 @@ class Renderer {
             return
         }
         if emptyTexture == nil || min(texture.height, texture.width) != size {
-            print("DEBUG4 switch \(emptyTexture == nil) \(min(texture.height, texture.width)) \(size)")
             guard let newTexture = createTexture(size: size) else {
                 fatalError()
             }

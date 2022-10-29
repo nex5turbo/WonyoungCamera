@@ -25,36 +25,11 @@ struct CameraView: View {
     @State var colorBackgroundEnabled = false
     @State var settingPresent = false
     @State var colorBackground: (Int, Int, Int)? = nil
-    @State var buttonColor: Color = .black
+    @State var buttonColor: Color = .white
     @State var selectedAdjustType: AdjustType = .brightness
+    @State var sliderValue: Float = 0
+    @State var isSliderEditing = false
 
-    func setBrightness(dy: CGFloat) {
-        let calculatedBrightness = dy / 10000
-        brightness += Float(calculatedBrightness)
-        if brightness <= 0.5 {
-            brightness = 0.5
-        } else if brightness >= 2.0 {
-            brightness = 2.0
-        }
-    }
-    func setContrast(dy: CGFloat) {
-        let calculatedBrightness = dy / 10000
-        contrast += Float(calculatedBrightness)
-        if contrast <= 0.5 {
-            contrast = 0.5
-        } else if contrast >= 2.0 {
-            contrast = 2.0
-        }
-    }
-    func setSaturation(dy: CGFloat) {
-        let calculatedBrightness = dy / 10000
-        saturation += Float(calculatedBrightness)
-        if saturation <= 0.5 {
-            saturation = 0.5
-        } else if saturation >= 2.0 {
-            saturation = 2.0
-        }
-    }
     func getAdjustIconName() -> String {
         switch selectedAdjustType {
         case .brightness:
@@ -66,20 +41,6 @@ struct CameraView: View {
         }
     }
     var body: some View {
-        let drag = DragGesture()
-            .onChanged {
-                let startLocation = $0.startLocation.y
-                let dy = startLocation - $0.location.y
-                switch selectedAdjustType {
-                case .brightness:
-                    setBrightness(dy: dy)
-                case .contrast:
-                    setContrast(dy: dy)
-                case .saturation:
-                    setSaturation(dy: dy)
-                }
-            }
-        // 근데 이걸 어떻게 자연스럽게 알릴 수 있으려나?
         ZStack {
             VStack {
                 MetalCameraView(
@@ -96,7 +57,7 @@ struct CameraView: View {
             }
             .onChange(of: colorBackground?.0) { newValue in
                 guard let color = colorBackground else {
-                    self.buttonColor = .black
+                    self.buttonColor = .white
                     return
                 }
                 self.buttonColor = Color(red: Double(255 - color.0) / 255,
@@ -110,7 +71,6 @@ struct CameraView: View {
                         Image(systemName: "photo.circle")
                             .foregroundColor(self.buttonColor)
                             .font(.system(size: 20))
-                            .padding(10)
                     }
                     Spacer()
                     Button {
@@ -120,7 +80,6 @@ struct CameraView: View {
                         Image(systemName: colorBackgroundEnabled ? "circle.fill" : "circle.hexagongrid.circle")
                             .foregroundColor(self.buttonColor)
                             .font(.system(size:20))
-                            .padding(10)
                     }
                     Spacer()
                     Button {
@@ -130,12 +89,73 @@ struct CameraView: View {
                         Image(systemName: isMute ? "speaker.slash.circle.fill" : "speaker.wave.2.circle.fill")
                             .foregroundColor(self.buttonColor)
                             .font(.system(size:20))
-                            .padding(10)
                     }
                 }
-                .padding()
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+                .background(.black)
+                Spacer()
+                GeometryReader { proxy in
+                    ZStack {
+                        Color.clear
+                            .onAppear {
+                                print(proxy.size.width)
+                                print(proxy.size.height)
+                            }
+                            .onChange(of: proxy.size) { _ in
+                                print(proxy.size.width)
+                                print(proxy.size.height)
+                            }
+                        // metal view가 들어갈 자리
+                        if isSliderEditing {
+                            ZStack {
+                                VStack {
+                                    Image(systemName: getAdjustIconName())
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 40))
+                                    Text("\(Int(sliderValue))%")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 30))
+                                }
+                            }
+                            .frame(width: 120, height: 120)
+                            .background(.black.opacity(0.5))
+                            .cornerRadius(10)
+                        }
+                    }
+                    
+                }
                 Spacer()
                 VStack {
+                    Color.clear.frame(height: 10)
+                    Slider(value: $sliderValue, in: 0...100, step: 1) { editing in
+                        self.isSliderEditing = editing
+                    }
+                        .accentColor(.white)
+                        .onAppear {
+                            self.sliderValue = 50
+                        }
+                        .onChange(of: sliderValue) { newValue in
+                            switch selectedAdjustType {
+                            case .brightness:
+                                brightness = 0.5 + (sliderValue / 100)
+                            case .contrast:
+                                contrast = 0.5 + (sliderValue / 100)
+                            case .saturation:
+                                saturation = 0.5 + (sliderValue / 100)
+                            }
+                        }
+                        .onChange(of: selectedAdjustType) { newValue in
+                            switch selectedAdjustType {
+                            case .brightness:
+                                sliderValue = (brightness - 0.5) * 100
+                            case .contrast:
+                                sliderValue = (contrast - 0.5) * 100
+                            case .saturation:
+                                sliderValue = (saturation - 0.5) * 100
+                            }
+                        }
+                        .padding(.horizontal)
                     Color.clear.frame(height: 10)
                     if filterPresent {
                         FilterScrollView(color: $buttonColor)
@@ -204,27 +224,10 @@ struct CameraView: View {
                                 .padding(10)
                         }
                     }
-                    Color.clear.frame(height: 10)
+                    .padding(.horizontal)
                 }
-                .padding()
                 .cornerRadius(30, corners: [.topLeft, .topRight])
-            }
-            HStack {
-                Spacer()
-                Color(UIColor(red: 0, green: 0, blue: 0, alpha: 0.01))
-                    .contentShape(Rectangle())
-                    .frame(width: UIScreen.main.bounds.width, height: 300)
-                    .gesture(drag)
-                    .onTapGesture {
-                        switch selectedAdjustType {
-                        case .brightness:
-                            brightness = 1
-                        case .contrast:
-                            contrast = 1
-                        case .saturation:
-                            saturation = 1
-                        }
-                    }
+                .background(.black)
             }
         }
         .onChange(of: takenImage, perform: { newValue in

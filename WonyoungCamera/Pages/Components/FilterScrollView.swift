@@ -26,7 +26,6 @@ struct FilterScrollView: View {
                             .opacity(self.selectedLut == nil ? 1 : 0)
                             .foregroundColor(.white)
                     )
-                    .padding(2)
 
                     VStack {
                         Spacer()
@@ -38,7 +37,7 @@ struct FilterScrollView: View {
                             .lineLimit(1)
                             .foregroundColor(color)
                     }
-                    .frame(height: 20)
+                    .frame(height: 15)
                 }
                 .padding(2)
                 .onTapGesture {
@@ -66,7 +65,6 @@ struct FilterScrollView: View {
                                             .opacity(self.selectedLut == lut ? 1 : 0)
                                             .foregroundColor(.white)
                                     )
-                                    .padding(2)
                             }
                             VStack {
                                 Spacer()
@@ -78,7 +76,7 @@ struct FilterScrollView: View {
                                     .lineLimit(1)
                                     .foregroundColor(color)
                             }
-                            .frame(height: 20)
+                            .frame(height: 15)
                         }
                     }
                 }
