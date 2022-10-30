@@ -47,7 +47,7 @@ struct FilterScrollView: View {
                                             .lineLimit(1)
                                             .foregroundColor(color)
                                     }
-                                    .frame(height: 15)
+                                    .frame(height: 20)
                                 }
                             }
                         }

@@ -133,6 +133,9 @@ struct CameraView: View {
                             self.sliderValue = 50
                         }
                         .onChange(of: sliderValue) { newValue in
+                            if newValue == 50 {
+                                HapticManager.instance.impact(style: .soft)
+                            }
                             switch selectedAdjustType {
                             case .brightness:
                                 brightness = 0.5 + (sliderValue / 100)

@@ -135,7 +135,7 @@ class MetalView: UIView {
             brightness: parent.brightness,
             contrast: parent.contrast,
             saturation: parent.saturation,
-            clearColor: parent.colorBackgounrd == nil ? (220, 220, 220) : parent.colorBackgounrd!
+            clearColor: parent.colorBackgounrd == nil ? (255, 255, 255) : parent.colorBackgounrd!
         )
         
         DispatchQueue.main.async {
