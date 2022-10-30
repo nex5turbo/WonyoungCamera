@@ -39,9 +39,11 @@ struct AlbumView: View {
                                 .frame(width: imageSize, height: imageSize)
                                 .onTapGesture {
                                     self.selectedPath = item.path
-                                    guard let image = UIImage(contentsOfFile: item.path) else { return }
-                                    self.selectedImage = Image(uiImage: image)
-                                    self.fullscreenPresent.toggle()
+//                                    guard let originalImage = UIImage(contentsOfFile: item.path) else { return }
+//                                    self.selectedImage = Image(uiImage: originalImage)
+                                    let exporter = Exporter()
+                                    exporter.export(paths: [item.path], as: .png, count: 12)
+//                                    self.fullscreenPresent.toggle()
                                 }
                                 .contextMenu {
                                     Button(role: .destructive) {

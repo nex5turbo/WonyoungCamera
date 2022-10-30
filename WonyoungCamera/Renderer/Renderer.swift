@@ -84,7 +84,13 @@ class Renderer {
             return nil
         }
         let texture = sampleImageTexture
-        guard let returnTexture = createTexture(width: texture.width, height: texture.height) else {
+        let textureDescriptor = MTLTextureDescriptor()
+        textureDescriptor.textureType = .type2D
+        textureDescriptor.pixelFormat = .bgra8Unorm
+        textureDescriptor.width = texture.width
+        textureDescriptor.height = texture.height
+        textureDescriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        guard let returnTexture = self.makeTexture(descriptor: textureDescriptor) else {
             return nil
         }
 
@@ -135,7 +141,13 @@ class Renderer {
             return
         }
         if emptyTexture == nil || min(texture.height, texture.width) != size {
-            guard let newTexture = createTexture(size: size) else {
+            let textureDescriptor = MTLTextureDescriptor()
+            textureDescriptor.textureType = .type2D
+            textureDescriptor.pixelFormat = .bgra8Unorm
+            textureDescriptor.width = size
+            textureDescriptor.height = size
+            textureDescriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+            guard let newTexture = self.makeTexture(descriptor: textureDescriptor) else {
                 fatalError()
             }
             self.emptyTexture = newTexture
@@ -204,60 +216,7 @@ class Renderer {
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
-    private func createTexture(size: Int) -> MTLTexture? {
-       let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
-         pixelFormat: MTLPixelFormat.rgba8Unorm,
-         width: size,
-         height: size,
-         mipmapped: false)
-       
-       textureDescriptor.usage = [.shaderWrite, .shaderRead]
-       
-       guard let texture: MTLTexture = device.makeTexture(descriptor: textureDescriptor) else {
-         return nil
-       }
-       
-       let region = MTLRegion.init(origin: MTLOrigin.init(x: 0, y: 0, z: 0), size: MTLSize.init(width: texture.width, height: texture.height, depth: 1));
-       
-       let count = size * size * 4
-       let stride = MemoryLayout<CChar>.stride
-       let alignment = MemoryLayout<CChar>.alignment
-       let byteCount = stride * count
-       
-       let p = UnsafeMutableRawPointer.allocate(byteCount: byteCount, alignment: alignment)
-       let data = p.initializeMemory(as: CChar.self, repeating: 0, count: count)
-         
-       texture.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: size * 4)
-       
-       return texture
-     }
-    private func createTexture(width: Int, height: Int) -> MTLTexture? {
-       let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
-         pixelFormat: MTLPixelFormat.rgba8Unorm,
-         width: width,
-         height: height,
-         mipmapped: false)
-       
-       textureDescriptor.usage = [.shaderWrite, .shaderRead]
-       
-       guard let texture: MTLTexture = device.makeTexture(descriptor: textureDescriptor) else {
-         return nil
-       }
-       
-       let region = MTLRegion.init(origin: MTLOrigin.init(x: 0, y: 0, z: 0), size: MTLSize.init(width: texture.width, height: texture.height, depth: 1));
-       
-       let count = width * height * 4
-       let stride = MemoryLayout<CChar>.stride
-       let alignment = MemoryLayout<CChar>.alignment
-       let byteCount = stride * count
-       
-       let p = UnsafeMutableRawPointer.allocate(byteCount: byteCount, alignment: alignment)
-       let data = p.initializeMemory(as: CChar.self, repeating: 0, count: count)
-         
-       texture.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: width * 4)
-       
-       return texture
-     }
+
     func getVertices(frameOffset: Float) -> [Vertex] {
         let returnValue = [
             Vertex(position: SIMD2<Float>(1, -1), textureCoordinate: SIMD2<Float>(1,1)),
@@ -269,13 +228,6 @@ class Renderer {
             Vertex(position: SIMD2<Float>(1, 1), textureCoordinate: SIMD2<Float>(1,0))
         ]
         return returnValue
-    }
-    func textureToUIImage(texture: MTLTexture) -> UIImage? {
-        guard let cgImage = convertToCGImage(texture: texture) else {
-            return nil
-        }
-        let uiImage = UIImage(cgImage: cgImage)
-        return uiImage
     }
 }
 
@@ -307,5 +259,15 @@ extension MTLDevice {
         }
         
         return returnValue
+    }
+    func makeTexture(image: UIImage?) -> MTLTexture? {
+        guard let image = image else {
+            print("RSRenderer makeTexture(_) Error: The image is nil!")
+            return nil
+        }
+
+        let textureLoader = MTKTextureLoader(device: self)
+        let texture = try! textureLoader.newTexture(cgImage: image.cgImage!)
+        return texture
     }
 }

@@ -225,9 +225,16 @@ extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
 }
+func textureToUIImage(texture: MTLTexture) -> UIImage? {
+    guard let cgImage = convertToCGImage(texture: texture) else {
+        return nil
+    }
+    let uiImage = UIImage(cgImage: cgImage)
+    return uiImage
+}
 func convertToCGImage(texture: MTLTexture) -> CGImage? {
     let options: [CIImageOption: Any] = [
-        .colorSpace: CGColorSpaceCreateDeviceRGB(),
+        .colorSpace: CGColorSpaceCreateDeviceRGB()
     ]
     guard let ciImage = CIImage(mtlTexture: texture, options: options) else {
         fatalError("No ciImage")

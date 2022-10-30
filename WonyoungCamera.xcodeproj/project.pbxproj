@@ -10,6 +10,9 @@
 		54168B2D28E275030000DF7F /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B2C28E275030000DF7F /* AlbumView.swift */; };
 		54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B2E28E278E50000DF7F /* ImageManager.swift */; };
 		54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B3228E33E2E0000DF7F /* Hidden.swift */; };
+		5435E650290EF72600F8A331 /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435E64F290EF72600F8A331 /* Exporter.swift */; };
+		5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435E651290EFAE600F8A331 /* ExportRenderer.swift */; };
+		5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5435E655290EFD9C00F8A331 /* ExportShader.metal */; };
 		545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D578328DDFB2100A874DB /* SharedMetalDevice.swift */; };
 		545D583328DEACC200A874DB /* Brightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D583228DEACC200A874DB /* Brightness.swift */; };
 		545D583728DEB0FB00A874DB /* Brightness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 545D583628DEB0FB00A874DB /* Brightness.metal */; };
@@ -129,6 +132,9 @@
 		54168B2C28E275030000DF7F /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		54168B2E28E278E50000DF7F /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		54168B3228E33E2E0000DF7F /* Hidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hidden.swift; sourceTree = "<group>"; };
+		5435E64F290EF72600F8A331 /* Exporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exporter.swift; sourceTree = "<group>"; };
+		5435E651290EFAE600F8A331 /* ExportRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportRenderer.swift; sourceTree = "<group>"; };
+		5435E655290EFD9C00F8A331 /* ExportShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ExportShader.metal; sourceTree = "<group>"; };
 		545D578328DDFB2100A874DB /* SharedMetalDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMetalDevice.swift; sourceTree = "<group>"; };
 		545D583228DEACC200A874DB /* Brightness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brightness.swift; sourceTree = "<group>"; };
 		545D583628DEB0FB00A874DB /* Brightness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Brightness.metal; sourceTree = "<group>"; };
@@ -282,6 +288,34 @@
 			path = AlbumView;
 			sourceTree = "<group>";
 		};
+		5435E64E290EF70D00F8A331 /* Exporter */ = {
+			isa = PBXGroup;
+			children = (
+				5435E64F290EF72600F8A331 /* Exporter.swift */,
+			);
+			path = Exporter;
+			sourceTree = "<group>";
+		};
+		5435E653290EFD7C00F8A331 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				5435E654290EFD8900F8A331 /* Shader */,
+				5435E651290EFAE600F8A331 /* ExportRenderer.swift */,
+				54D358CD28DC7BD900A3AB4D /* Renderer.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		5435E654290EFD8900F8A331 /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				54D358CA28DC7BD900A3AB4D /* Shader.metal */,
+				54D358CB28DC7BD900A3AB4D /* KernelShader.metal */,
+				5435E655290EFD9C00F8A331 /* ExportShader.metal */,
+			);
+			path = Shader;
+			sourceTree = "<group>";
+		};
 		545D583128DEACB600A874DB /* Adjustment */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +461,8 @@
 		54D3589528DC7B6900A3AB4D /* WonyoungCamera */ = {
 			isa = PBXGroup;
 			children = (
+				5435E653290EFD7C00F8A331 /* Renderer */,
+				5435E64E290EF70D00F8A331 /* Exporter */,
 				54168B2928E273F00000DF7F /* Pages */,
 				54D358C628DC7BD900A3AB4D /* Extensions */,
 				54D358CE28DC7BD900A3AB4D /* LUTs */,
@@ -487,10 +523,7 @@
 			children = (
 				545D583128DEACB600A874DB /* Adjustment */,
 				54D358C928DC7BD900A3AB4D /* MetalCamera.swift */,
-				54D358CA28DC7BD900A3AB4D /* Shader.metal */,
-				54D358CB28DC7BD900A3AB4D /* KernelShader.metal */,
 				54D358CC28DC7BD900A3AB4D /* MetalCameraView.swift */,
-				54D358CD28DC7BD900A3AB4D /* Renderer.swift */,
 				546ED8C528F03C3700C62AE5 /* CameraView.swift */,
 			);
 			path = CameraView;
@@ -745,9 +778,12 @@
 				54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */,
 				54D358E028DC7BD900A3AB4D /* KernelShader.metal in Sources */,
 				54168B2D28E275030000DF7F /* AlbumView.swift in Sources */,
+				5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */,
 				54D358E728DC7BD900A3AB4D /* SoundManager.swift in Sources */,
 				54D358E228DC7BD900A3AB4D /* Renderer.swift in Sources */,
 				54D358E928DC7BD900A3AB4D /* Lut.swift in Sources */,
+				5435E650290EF72600F8A331 /* Exporter.swift in Sources */,
+				5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */,
 				54D358DD28DC7BD900A3AB4D /* CornerRadius+Extensions.swift in Sources */,
 				54D358E128DC7BD900A3AB4D /* MetalCameraView.swift in Sources */,
 				54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */,

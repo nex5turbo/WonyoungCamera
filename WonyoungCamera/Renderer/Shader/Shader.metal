@@ -67,7 +67,6 @@ fragment half4 default_fragment(RasterizerData in [[ stage_in ]],
                                 constant float &deviceScale [[ buffer(3) ]],
                                 constant bool &shouldFilter [[ buffer(4) ]]) {
     constexpr sampler colorSampler(coord::normalized, filter::linear);
-    float frameRatio = float(cameraTexture.get_height()) / float(cameraTexture.get_width());
     
     float2 size = float2(deviceWidth, deviceHeight);
     
