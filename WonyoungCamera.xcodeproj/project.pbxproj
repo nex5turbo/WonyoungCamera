@@ -548,6 +548,7 @@
 		54D358D328DC7BD900A3AB4D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				54168B2E28E278E50000DF7F /* ImageManager.swift */,
 				54D358D428DC7BD900A3AB4D /* SoundManager.swift */,
 				54D358D528DC7BD900A3AB4D /* HapticManager.swift */,
 			);
@@ -559,7 +560,6 @@
 			children = (
 				54D358D728DC7BD900A3AB4D /* Lut.swift */,
 				545D578328DDFB2100A874DB /* SharedMetalDevice.swift */,
-				54168B2E28E278E50000DF7F /* ImageManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
