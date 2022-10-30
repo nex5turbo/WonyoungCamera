@@ -45,7 +45,7 @@ class ExportRenderer {
             40: computePipelineState40
         ]
     }
-    func render(images: [UIImage], imageCount: Int) -> MTLTexture? {
+    func render(paths: [String], imageCount: Int) -> MTLTexture? {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
             return nil
@@ -55,10 +55,7 @@ class ExportRenderer {
         }
         let textureWidth = 2100
         let textureHeight = 2970
-//        guard let baseTexture = device.createTexture(width: textureWidth, height: textureHeight) else {
-//            return nil
-//        }
-        //
+
         let textureDescriptor = MTLTextureDescriptor()
         textureDescriptor.textureType = .type2D
         textureDescriptor.pixelFormat = .bgra8Unorm
@@ -68,10 +65,10 @@ class ExportRenderer {
         guard let baseTexture = self.device.makeTexture(descriptor: textureDescriptor) else {
             return nil
         }
-        //
+
         var textures: [MTLTexture] = []
-        for image in images {
-            guard let texture = device.makeTexture(image: image) else {
+        for path in paths {
+            guard let texture = device.loadImage(path: path) else {
                 return nil
             }
             textures.append(texture)
@@ -86,9 +83,6 @@ class ExportRenderer {
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(computePipelineState)
         computeEncoder?.setTexture(baseTexture, index: 0)
-//        for (index, texture) in textures.enumerated() {
-//            computeEncoder?.setTexture(texture, index: index + 1)
-//        }
         computeEncoder?.setTextures(textures, range: 1..<textures.count + 1)
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w

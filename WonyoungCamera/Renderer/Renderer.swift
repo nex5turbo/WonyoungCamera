@@ -238,6 +238,14 @@ struct Vertex {
 
 import MetalKit
 extension MTLDevice {
+    func loadImage(path: String) -> MTLTexture? {
+        let textureLoader = MTKTextureLoader(device: self)
+        if let url = URL(string: "file://\(path)") {
+            let returnTexture = try? textureLoader.newTexture(URL: url, options: [.SRGB: false])
+            return returnTexture
+        }
+        return nil
+    }
     func loadFilter(filterName: String, ext: String = "png") -> MTLTexture? {
         let textureLoader = MTKTextureLoader(device: self)
         if let url = Bundle.main.url(forResource: filterName, withExtension: ext) {

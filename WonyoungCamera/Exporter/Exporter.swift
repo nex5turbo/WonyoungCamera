@@ -22,27 +22,12 @@ class Exporter {
     }
 
     func export(paths: [String], as type: ExportType, count: Int) {
-        var images: [UIImage] = []
-        for path in paths {
-            guard let url = URL(string: "file://\(path)") else {
-                return
-            }
-            guard let data = try? Data(contentsOf: url) else {
-                return
-            }
-            guard let image = UIImage(data: data) else {
-                return
-            }
-            images.append(image)
-        }
-        export(images: images, as: type, count: count)
-    }
-    func export(images: [UIImage], as type: ExportType, count: Int) {
         // render image from renderer
         guard count == 12 || count == 24 || count == 40 else {
             return
         }
-        guard let texture = renderer.render(images: images, imageCount: count) else {
+
+        guard let texture = renderer.render(paths: paths, imageCount: count) else {
             abort()
         }
         guard let image = textureToUIImage(texture: texture) else {
