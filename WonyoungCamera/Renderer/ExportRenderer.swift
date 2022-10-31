@@ -13,8 +13,8 @@ class ExportRenderer {
     private var deviceSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     private var deviceScale = UIScreen.main.scale
     var computePipelineState12: MTLComputePipelineState
-    var computePipelineState24: MTLComputePipelineState
-    var computePipelineState40: MTLComputePipelineState
+    var computePipelineState20: MTLComputePipelineState
+    var computePipelineState30: MTLComputePipelineState
     var commandQueue: MTLCommandQueue
     var computeWith: [Int: MTLComputePipelineState]
     deinit {
@@ -31,18 +31,18 @@ class ExportRenderer {
             fatalError()
         }
         self.computePipelineState12 = computePipelineState12
-        guard let computePipelineState24 = device.loadComputePipelineState("export24") else {
+        guard let computePipelineState20 = device.loadComputePipelineState("export20") else {
             fatalError()
         }
-        self.computePipelineState24 = computePipelineState24
-        guard let computePipelineState40 = device.loadComputePipelineState("export40") else {
+        self.computePipelineState20 = computePipelineState20
+        guard let computePipelineState30 = device.loadComputePipelineState("export30") else {
             fatalError()
         }
-        self.computePipelineState40 = computePipelineState40
+        self.computePipelineState30 = computePipelineState30
         self.computeWith = [
             12: computePipelineState12,
-            24: computePipelineState24,
-            40: computePipelineState40
+            20: computePipelineState20,
+            30: computePipelineState30
         ]
     }
     func render(paths: [String], imageCount: Int) -> MTLTexture? {

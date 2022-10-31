@@ -21,17 +21,17 @@ class Exporter {
         renderer = ExportRenderer()
     }
 
-    func export(paths: [String], as type: ExportType, count: Int) {
+    func exportAndGetResult(paths: [String], as type: ExportType, count: Int) -> UIImage? {
         // render image from renderer
-        guard count == 12 || count == 24 || count == 40 else {
-            return
+        guard count == 12 || count == 20 || count == 30 else {
+            return nil
         }
 
         guard let texture = renderer.render(paths: paths, imageCount: count) else {
-            abort()
+            return nil
         }
         guard let image = textureToUIImage(texture: texture) else {
-            abort()
+            return nil
         }
         switch type {
         case .pdf:
@@ -41,6 +41,7 @@ class Exporter {
         case .jpg:
             asJpg(image: image)
         }
+        return image
     }
 
     func asPdf(image: UIImage) {
