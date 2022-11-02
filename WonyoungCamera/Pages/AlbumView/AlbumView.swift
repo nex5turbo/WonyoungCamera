@@ -25,12 +25,17 @@ struct AlbumView: View {
     @State var selectedImages: [AlbumItem] = []
     @State var selectedExportCount: ExportCount = ._3x4
     @State var resultImage: UIImage = UIImage()
+    @State var resultNSData: NSData? = nil
+    @State var resultData: Data? = nil
     @State var resultPresent = false
     @Environment(\.dismiss) private var dismiss
     let deviceWidth = UIScreen.main.bounds.width
     let imageSize = UIScreen.main.bounds.width / 3.5
     var body: some View {
         ZStack {
+            NavigationLink(destination: ExportResultView(resultImage: $resultImage, resultNSData: $resultNSData, resultData: $resultData), isActive: $resultPresent) {
+                EmptyView()
+            }
             VStack {
                 HStack {
                     Image(systemName: "xmark")
@@ -58,6 +63,7 @@ struct AlbumView: View {
                     .cornerRadius(15)
                     .padding()
                 }
+                .padding(.horizontal, 3)
                 .onChange(of: isSelectMode) { newValue in
                     if !newValue {
                         selectedImages.removeAll()
@@ -84,7 +90,7 @@ struct AlbumView: View {
                                                     Text("Delete")
                                                 }
                                                 Button {
-                                                    share(item: image, path: item.path)
+                                                    share(path: item.path)
                                                 } label: {
                                                     Text("Share")
                                                 }
@@ -161,15 +167,17 @@ struct AlbumView: View {
                     .background(.white)
                     Color.white.frame(height: 5)
                     HStack {
-                        Button {
-                            let exporter = Exporter()
-                            let paths = selectedImages.map { $0.path }
-                            guard let resultImage = exporter.exportAndGetResult(paths: paths, as: .png, count: selectedExportCount.rawValue) else {
-                                return
+                        Menu {
+                            Button {
+                                export(as: .pdf)
+                            } label: {
+                                Text("pdf")
                             }
-                            self.resultImage = resultImage
-                            self.resultPresent = true
-                            self.isSelectMode = false
+                            Button {
+                                export(as: .png)
+                            } label: {
+                                Text("png")
+                            }
                         } label: {
                             Image(systemName: "printer.fill")
                                 .font(.system(size: 18))
@@ -197,13 +205,6 @@ struct AlbumView: View {
                 
             }
         }
-        .sheet(isPresented: $resultPresent, content: {
-            Image(uiImage: resultImage)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 400)
-                .border(.black, width: 1)
-        })
         .overlay(
             ImageViewer(image: $selectedImage, viewerShown: $fullscreenPresent)
         )
@@ -225,17 +226,17 @@ struct AlbumView: View {
             }
         }
     }
-    func share(item: UIImage, path: String) {
-        guard let image = UIImage(contentsOfFile: path) else { return }
-        let shareImage = ShareImage(placeholderItem: image)
-        let activityVC = UIActivityViewController(activityItems: [shareImage], applicationActivities: nil)
-        activityVC.isModalInPresentation = true
-
-        print(UIApplication.shared.connectedScenes)
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        window?.rootViewController?.present(activityVC, animated: true,completion: nil)
+    func export(as ext: ExportType) {
+        let exporter = Exporter()
+        let paths = selectedImages.map { $0.path }
+        guard let result = exporter.exportAndGetResult(paths: paths, as: ext, count: selectedExportCount.rawValue) else {
+            return
+        }
+        self.resultImage = result.0
+        self.resultNSData = result.1
+        self.resultData = result.2
+        self.resultPresent = true
+        self.isSelectMode = false
     }
 }
 
@@ -245,38 +246,36 @@ struct AlbumView_Previews: PreviewProvider {
     }
 }
 
-class ShareImage: UIActivityItemProvider {
-    var image: UIImage
+func share(path: String) {
+    guard let image = UIImage(contentsOfFile: path) else { return }
+    let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+    activityVC.isModalInPresentation = true
 
-    override var item: Any {
-        get {
-          return self.image
-        }
-    }
-
-override init(placeholderItem: Any) {
-    guard let image = placeholderItem as? UIImage else {
-        fatalError("Couldn't create image from provided item")
-    }
-
-    self.image = image
-    super.init(placeholderItem: placeholderItem)
+    print(UIApplication.shared.connectedScenes)
+    let scenes = UIApplication.shared.connectedScenes
+    let windowScene = scenes.first as? UIWindowScene
+    let window = windowScene?.windows.first
+    window?.rootViewController?.present(activityVC, animated: true,completion: nil)
 }
 
-    @available(iOS 13.0, *)
-    override func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+func share(data: Data) {
+    let activityVC = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+    activityVC.isModalInPresentation = true
 
-        let metadata = LPLinkMetadata()
-        metadata.title = "Share this circle!"
+    print(UIApplication.shared.connectedScenes)
+    let scenes = UIApplication.shared.connectedScenes
+    let windowScene = scenes.first as? UIWindowScene
+    let window = windowScene?.windows.first
+    window?.rootViewController?.present(activityVC, animated: true,completion: nil)
+}
 
-        var thumbnail: NSSecureCoding = NSNull()
-        if let imageData = self.image.pngData() {
-            thumbnail = NSData(data: imageData)
-        }
+func share(data: NSData) {
+    let activityVC = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+    activityVC.isModalInPresentation = true
 
-        metadata.imageProvider = NSItemProvider(item: thumbnail, typeIdentifier: "public.png")
-
-        return metadata
-    }
-
+    print(UIApplication.shared.connectedScenes)
+    let scenes = UIApplication.shared.connectedScenes
+    let windowScene = scenes.first as? UIWindowScene
+    let window = windowScene?.windows.first
+    window?.rootViewController?.present(activityVC, animated: true,completion: nil)
 }
