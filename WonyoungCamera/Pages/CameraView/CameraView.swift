@@ -29,7 +29,7 @@ struct CameraView: View {
     @State var selectedAdjustType: AdjustType = .brightness
     @State var sliderValue: Float = 0
     @State var isSliderEditing = false
-    @State var selectedLut: Lut = .natural
+    @State var selectedLut: Lut = .Natural
 
     func getAdjustIconName() -> String {
         switch selectedAdjustType {
@@ -45,12 +45,6 @@ struct CameraView: View {
         ZStack {
             VStack(spacing: 0) {
                 HStack {
-                    NavigationLink(destination: AlbumView().navigationTitle("").navigationBarHidden(true), isActive: $settingPresent) {
-                        Image(systemName: "photo.circle")
-                            .foregroundColor(self.buttonColor)
-                            .font(.system(size: 20))
-                    }
-                    Spacer()
                     Button {
                         HapticManager.instance.impact(style: .soft)
                         self.colorBackgroundEnabled.toggle()
@@ -59,6 +53,10 @@ struct CameraView: View {
                             .foregroundColor(self.buttonColor)
                             .font(.system(size:20))
                     }
+                    Spacer()
+                    Text(selectedLut.rawValue)
+                        .foregroundColor(.gray)
+                        .font(.system(size:15))
                     Spacer()
                     Button {
                         HapticManager.instance.impact(style: .soft)
@@ -213,15 +211,10 @@ struct CameraView: View {
                                 .padding(10)
                         }
                         Spacer()
-                        Button {
-                            HapticManager.instance.impact(style: .soft)
-                            withAnimation {
-                                filterPresent.toggle()
-                            }
-                        } label: {
-                            Image(systemName: "camera.filters")
-                                .font(.system(size: bottomIconSize))
+                        NavigationLink(destination: AlbumView().navigationTitle("").navigationBarHidden(true), isActive: $settingPresent) {
+                            Image(systemName: "photo.circle")
                                 .foregroundColor(self.buttonColor)
+                                .font(.system(size: bottomIconSize))
                                 .padding(10)
                         }
                     }

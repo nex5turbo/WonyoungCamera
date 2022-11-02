@@ -69,6 +69,6 @@ struct FilterScrollView: View {
 
 struct FilterScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterScrollView(selectedLut: .constant(Lut.natural), color: .constant(.black))
+        FilterScrollView(selectedLut: .constant(Lut.Natural), color: .constant(.black))
     }
 }

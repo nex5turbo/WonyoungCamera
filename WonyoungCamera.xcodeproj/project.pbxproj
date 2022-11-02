@@ -90,7 +90,7 @@
 		545D58EE28E08A7400A874DB /* lut16.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58BB28E08A7400A874DB /* lut16.png */; };
 		54608CD4290AB87A00614B80 /* sample.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD3290AB87A00614B80 /* sample.png */; };
 		54608CD6290C01DB00614B80 /* cameraFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD5290C01DB00614B80 /* cameraFrame.png */; };
-		54608CDA290D9BC300614B80 /* natural.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD9290D9BC300614B80 /* natural.png */; };
+		54608CDA290D9BC300614B80 /* Natural.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD9290D9BC300614B80 /* Natural.png */; };
 		546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED8C528F03C3700C62AE5 /* CameraView.swift */; };
 		546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */; };
 		54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3589628DC7B6900A3AB4D /* WonyoungCameraApp.swift */; };
@@ -213,7 +213,7 @@
 		545D58BB28E08A7400A874DB /* lut16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut16.png; sourceTree = "<group>"; };
 		54608CD3290AB87A00614B80 /* sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sample.png; sourceTree = "<group>"; };
 		54608CD5290C01DB00614B80 /* cameraFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraFrame.png; sourceTree = "<group>"; };
-		54608CD9290D9BC300614B80 /* natural.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = natural.png; sourceTree = "<group>"; };
+		54608CD9290D9BC300614B80 /* Natural.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Natural.png; sourceTree = "<group>"; };
 		546ED8C528F03C3700C62AE5 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WonyoungCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -535,7 +535,7 @@
 		54D358CE28DC7BD900A3AB4D /* LUTs */ = {
 			isa = PBXGroup;
 			children = (
-				54608CD9290D9BC300614B80 /* natural.png */,
+				54608CD9290D9BC300614B80 /* Natural.png */,
 				54608CD5290C01DB00614B80 /* cameraFrame.png */,
 				54608CD3290AB87A00614B80 /* sample.png */,
 				545D58B028E08A7400A874DB /* Colors */,
@@ -704,7 +704,7 @@
 				545D587E28E07BA000A874DB /* Alex.png in Resources */,
 				545D58DF28E08A7400A874DB /* Sampi.png in Resources */,
 				545D58DC28E08A7400A874DB /* Gordon.png in Resources */,
-				54608CDA290D9BC300614B80 /* natural.png in Resources */,
+				54608CDA290D9BC300614B80 /* Natural.png in Resources */,
 				545D58C328E08A7400A874DB /* VIB.png in Resources */,
 				545D587228E07BA000A874DB /* Peter.png in Resources */,
 				545D58C628E08A7400A874DB /* Doris.png in Resources */,

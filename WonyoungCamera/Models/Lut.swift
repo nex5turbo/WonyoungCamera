@@ -8,7 +8,7 @@
 import Foundation
 import MetalKit
 enum Lut: String, CaseIterable {
-    case natural
+    case Natural
     case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
 
     case lut9, lut13, lut14, lut15, lut16, lut17, lut18, lut19, lut20, lut21, lut22
@@ -26,7 +26,7 @@ class LutStorage {
     static var instance = LutStorage()
     var luts: [Lut: MTLTexture] = [:]
     var sampleImages: [Lut: UIImage?] = [:]
-    var selectedLut: Lut = .natural
+    var selectedLut: Lut = .Natural
     var sampleImageTexture: MTLTexture
     var sampleImage: UIImage
     let renderer: Renderer
