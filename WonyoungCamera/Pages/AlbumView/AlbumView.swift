@@ -48,7 +48,7 @@ struct AlbumView: View {
                     Button {
                         isSelectMode.toggle()
                     } label: {
-                        Text("\(isSelectMode ? "취소" : "선택")")
+                        Text("\(isSelectMode ? "취소" : "스티커")")
                             .font(.system(size: 12))
                             .foregroundColor(.white)
                             .padding(.vertical, 5)
@@ -111,7 +111,7 @@ struct AlbumView: View {
                                             }
                                             selectedImages.remove(at: removeItemIndex)
                                         } else {
-                                            guard selectedImages.count <= selectedExportCount.rawValue else {
+                                            guard selectedImages.count < selectedExportCount.rawValue else {
                                                 return
                                             }
                                             selectedImages.append(item)
@@ -177,7 +177,7 @@ struct AlbumView: View {
                         .padding()
                         .disabled(selectedImages.isEmpty)
                         Spacer()
-                        Text(selectedImages.isEmpty ? "항목 선택" : "\(selectedImages.count)장의 사진이 선택됨")
+                        Text(selectedImages.isEmpty ? "항목 선택" : "\(selectedImages.count) / \(selectedExportCount.rawValue)장의 사진이 선택됨")
                             .font(.system(size: 18))
                             .bold()
                         Spacer()
