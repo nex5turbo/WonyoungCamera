@@ -14,6 +14,9 @@ struct CameraView: View {
     }
     let bottomIconSize: CGFloat = 25
     @ObservedObject var metalCamera = MetalCamera()
+    @State var albumItems: [AlbumItem] = []
+    @State var albumImagePaths: [String] = []
+
     @State var shouldTakePicture = false
     @State var takenImage: UIImage? = nil
     @State var filterPresent = true
@@ -211,7 +214,7 @@ struct CameraView: View {
                                 .padding(10)
                         }
                         Spacer()
-                        NavigationLink(destination: AlbumView().navigationTitle("").navigationBarHidden(true), isActive: $settingPresent) {
+                        NavigationLink(destination: AlbumView(albumItems: $albumItems, albumImagePaths: $albumImagePaths).navigationTitle("").navigationBarHidden(true), isActive: $settingPresent) {
                             Image(systemName: "photo.circle")
                                 .foregroundColor(self.buttonColor)
                                 .font(.system(size: bottomIconSize))

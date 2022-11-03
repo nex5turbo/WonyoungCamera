@@ -16,10 +16,11 @@ enum ExportCount: Int, CaseIterable {
 }
 
 struct AlbumView: View {
-    @State var albumImagePaths: [String] = []
+    @Binding var albumItems: [AlbumItem]
+    @Binding var albumImagePaths: [String]
+
     @State var selectedPath: String?
     @State var selectedImage: Image?
-    @State var albumItems: [AlbumItem] = []
     @State var fullscreenPresent = false
     @State var isSelectMode = false
     @State var selectedImages: [AlbumItem] = []
@@ -31,6 +32,7 @@ struct AlbumView: View {
     @State var topBarHeight: CGFloat = 0
     @State var deleteConfirmPresent = false
     @State var selectedIndex = 0
+    @State var isLoading = false
     @Environment(\.dismiss) private var dismiss
     let deviceWidth = UIScreen.main.bounds.width
     let imageSize = UIScreen.main.bounds.width / 3.5
@@ -39,73 +41,88 @@ struct AlbumView: View {
             NavigationLink(destination: ExportResultView(resultImage: $resultImage, resultNSData: $resultNSData, resultData: $resultData), isActive: $resultPresent) {
                 EmptyView()
             }
-            ScrollView {
-                Color.clear.frame(height: topBarHeight)
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize)),
-                                    GridItem(.adaptive(minimum: imageSize)),
-                                    GridItem(.adaptive(minimum: imageSize))]) {
-                    ForEach(Array(zip(albumItems.indices, albumItems)), id: \.0) { (index, item) in
-                        if let image = item.image {
-                            ZStack {
-                                Image(uiImage: image)
-                                    .resizable()
+            if !isLoading {
+                ScrollView {
+                    Color.clear.frame(height: topBarHeight)
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize)),
+                                        GridItem(.adaptive(minimum: imageSize)),
+                                        GridItem(.adaptive(minimum: imageSize))]) {
+                        ForEach(Array(zip(albumItems.indices, albumItems)), id: \.0) { (index, item) in
+                            if let image = item.image {
+                                ZStack {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .frame(width: imageSize, height: imageSize)
+                                        .contextMenu {
+                                            if !isSelectMode {
+                                                Button(role: .destructive) {
+                                                    self.selectedIndex = index
+                                                    self.deleteConfirmPresent = true
+                                                } label: {
+                                                    Text("Delete")
+                                                    Image(systemName: "trash.circle")
+                                                }
+                                                Button {
+                                                    share(path: item.path)
+                                                } label: {
+                                                    Text("Share")
+                                                    Image(systemName: "square.and.arrow.up.circle")
+                                                }
+                                            }
+                                        }
+                                    // 체크버튼
+                                    VStack {
+                                        if isSelectMode && selectedImages.contains(item) {
+                                            Image(systemName: "checkmark.circle")
+                                                .font(.system(size: 40))
+                                                .foregroundColor(.white)
+                                        }
+                                    }
                                     .frame(width: imageSize, height: imageSize)
-                                    .contextMenu {
-                                        if !isSelectMode {
-                                            Button(role: .destructive) {
-                                                self.selectedIndex = index
-                                                self.deleteConfirmPresent = true
-                                            } label: {
-                                                Text("Delete")
-                                                Image(systemName: "trash.circle")
-                                            }
-                                            Button {
-                                                share(path: item.path)
-                                            } label: {
-                                                Text("Share")
-                                                Image(systemName: "square.and.arrow.up.circle")
-                                            }
-                                        }
-                                    }
-                                // 체크버튼
-                                VStack {
-                                    if isSelectMode && selectedImages.contains(item) {
-                                        Image(systemName: "checkmark.circle")
-                                            .font(.system(size: 40))
-                                            .foregroundColor(.white)
-                                    }
+                                    .background(.black.opacity(isSelectMode && selectedImages.contains(item) ? 0.5 : 0))
+                                    .clipShape(Circle())
+                                    .clipped()
                                 }
-                                .frame(width: imageSize, height: imageSize)
-                                .background(.black.opacity(isSelectMode && selectedImages.contains(item) ? 0.5 : 0))
-                                .clipShape(Circle())
-                                .clipped()
-                            }
-                            .onTapGesture {
-                                if isSelectMode {
-                                    if selectedImages.contains(item) {
-                                        guard let removeItemIndex = selectedImages.firstIndex(of: item) else {
-                                            return
+                                .onTapGesture {
+                                    if isSelectMode {
+                                        if selectedImages.contains(item) {
+                                            guard let removeItemIndex = selectedImages.firstIndex(of: item) else {
+                                                return
+                                            }
+                                            selectedImages.remove(at: removeItemIndex)
+                                        } else {
+                                            guard selectedImages.count < selectedExportCount.rawValue else {
+                                                return
+                                            }
+                                            selectedImages.append(item)
                                         }
-                                        selectedImages.remove(at: removeItemIndex)
                                     } else {
-                                        guard selectedImages.count < selectedExportCount.rawValue else {
-                                            return
-                                        }
-                                        selectedImages.append(item)
+                                        self.selectedPath = item.path
+                                        guard let originalImage = UIImage(contentsOfFile: item.path) else { return }
+                                        self.selectedImage = Image(uiImage: originalImage)
+                                        self.fullscreenPresent.toggle()
                                     }
-                                } else {
-                                    self.selectedPath = item.path
-                                    guard let originalImage = UIImage(contentsOfFile: item.path) else { return }
-                                    self.selectedImage = Image(uiImage: originalImage)
-                                    self.fullscreenPresent.toggle()
                                 }
                             }
                         }
                     }
+                    .padding()
+                    .padding(.bottom, 200)
                 }
-                .padding()
-                .padding(.bottom, 200)
+            } else {
+                Color.gray
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    Spacer()
+                }
+                .background(.ultraThinMaterial)
             }
+            
             VStack(spacing: 0) {
                 HStack {
                     Image(systemName: "xmark.circle")
@@ -243,6 +260,7 @@ struct AlbumView: View {
         )
         .onAppear {
             DispatchQueue.global().async {
+                isLoading = true
                 if albumImagePaths.isEmpty {
                     self.albumImagePaths = ImageManager.instance.loadImageUrls()
                     self.albumImagePaths.forEach { path in
@@ -250,11 +268,16 @@ struct AlbumView: View {
                             return
                         }
                         DispatchQueue.main.async {
-                            withAnimation {
-                                self.albumItems.append(AlbumItem(image: image, path: path))
-                            }
+                            self.albumItems.append(AlbumItem(image: image, path: path))
                         }
                     }
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            self.isLoading = false
+                        }
+                    }
+                } else {
+                    isLoading = false
                 }
             }
         }
@@ -272,12 +295,12 @@ struct AlbumView: View {
         self.isSelectMode = false
     }
 }
-
-struct AlbumView_Previews: PreviewProvider {
-    static var previews: some View {
-        AlbumView()
-    }
-}
+//
+//struct AlbumView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AlbumView()
+//    }
+//}
 
 func share(path: String) {
     let url = NSURL(fileURLWithPath: path)
