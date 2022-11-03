@@ -36,7 +36,7 @@ struct CameraView: View {
     func getAdjustIconName() -> String {
         switch selectedAdjustType {
         case .brightness:
-            return "microbe.circle"
+            return "sun.max.circle"
         case .contrast:
             return "circle.righthalf.filled"
         case .saturation:
