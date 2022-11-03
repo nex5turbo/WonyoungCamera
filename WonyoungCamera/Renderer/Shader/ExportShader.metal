@@ -23,7 +23,7 @@ kernel void export12(texture2d<half, access::write> baseTexture [[ texture(0) ]]
         for (int i = 0; i < 3; i++) {
             if (gid.x >= circleSize * i + padding_h && gid.x <= circleSize * (i + 1) + padding_h &&
                 gid.y >= circleSize * j + padding_v && gid.y <= circleSize * (j + 1) + padding_v) {
-                int index = i * 4 + j;
+                int index = i + j * 3;
                 float x = (gid.x - padding_h - circleSize * i) / circleSize;
                 float y = (gid.y - padding_v - circleSize * j) / circleSize;
                 float2 coord = float2(x, y);
@@ -55,7 +55,7 @@ kernel void export20(texture2d<half, access::write> baseTexture [[ texture(0) ]]
         for (int i = 0; i < 4; i++) {
             if (gid.x >= circleSize * i + padding_h && gid.x <= circleSize * (i + 1) + padding_h &&
                 gid.y >= circleSize * j + padding_v && gid.y <= circleSize * (j + 1) + padding_v) {
-                int index = i * 5 + j;
+                int index = i + j * 4;
                 float x = (gid.x - padding_h - circleSize * i) / circleSize;
                 float y = (gid.y - padding_v - circleSize * j) / circleSize;
                 float2 coord = float2(x, y);
@@ -87,7 +87,7 @@ kernel void export30(texture2d<half, access::write> baseTexture [[ texture(0) ]]
         for (int i = 0; i < 5; i++) {
             if (gid.x >= circleSize * i + padding_h && gid.x <= circleSize * (i + 1) + padding_h &&
                 gid.y >= circleSize * j + padding_v && gid.y <= circleSize * (j + 1) + padding_v) {
-                int index = i * 6 + j;
+                int index = i + j * 5;
                 float x = (gid.x - padding_h - circleSize * i) / circleSize;
                 float y = (gid.y - padding_v - circleSize * j) / circleSize;
                 float2 coord = float2(x, y);
