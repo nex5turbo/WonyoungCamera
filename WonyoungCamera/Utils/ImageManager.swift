@@ -93,7 +93,7 @@ class ImageManager {
             })
         guard let sortedUrls = sortedUrls else { return [] }
         return sortedUrls.map {
-            return $0.path
+            return $0.absoluteString
         }
     }
     func loadImages() -> [AlbumItem] {

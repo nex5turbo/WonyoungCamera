@@ -8,6 +8,7 @@
 import SwiftUI
 import Photos
 import LinkPresentation
+import Kingfisher
 
 enum ExportCount: Int, CaseIterable {
     case _3x4 = 12
@@ -16,14 +17,13 @@ enum ExportCount: Int, CaseIterable {
 }
 
 struct AlbumView: View {
-    @Binding var albumItems: [AlbumItem]
-    @Binding var albumImagePaths: [String]
+    @State var albumImagePaths: [String] = []
 
     @State var selectedPath: String?
     @State var selectedImage: Image?
     @State var fullscreenPresent = false
     @State var isSelectMode = false
-    @State var selectedImages: [AlbumItem] = []
+    @State var selectedImagePaths: [String] = []
     @State var selectedExportCount: ExportCount = ._3x4
     @State var resultImage: UIImage = UIImage()
     @State var resultNSData: NSData? = nil
@@ -47,11 +47,14 @@ struct AlbumView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize)),
                                         GridItem(.adaptive(minimum: imageSize)),
                                         GridItem(.adaptive(minimum: imageSize))]) {
-                        ForEach(Array(zip(albumItems.indices, albumItems)), id: \.0) { (index, item) in
-                            if let image = item.image {
+
+                        ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
+                            if true {
                                 ZStack {
-                                    Image(uiImage: image)
+                                    let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+                                    KFImage(URL(string: item))
                                         .resizable()
+                                        .setProcessor(resizingProcessor)
                                         .frame(width: imageSize, height: imageSize)
                                         .contextMenu {
                                             if !isSelectMode {
@@ -63,7 +66,7 @@ struct AlbumView: View {
                                                     Image(systemName: "trash.circle")
                                                 }
                                                 Button {
-                                                    share(path: item.path)
+                                                    share(path: item)
                                                 } label: {
                                                     Text("Share")
                                                     Image(systemName: "square.and.arrow.up.circle")
@@ -71,34 +74,41 @@ struct AlbumView: View {
                                             }
                                         }
                                     // 체크버튼
-                                    VStack {
-                                        if isSelectMode && selectedImages.contains(item) {
+                                    if isSelectMode && selectedImagePaths.contains(item) {
+                                        VStack {
                                             Image(systemName: "checkmark.circle")
                                                 .font(.system(size: 40))
                                                 .foregroundColor(.white)
                                         }
+                                        .frame(width: imageSize, height: imageSize)
+                                        .background(.black.opacity(isSelectMode && selectedImagePaths.contains(item) ? 0.5 : 0))
+                                        .clipShape(Circle())
+                                        .clipped()
                                     }
-                                    .frame(width: imageSize, height: imageSize)
-                                    .background(.black.opacity(isSelectMode && selectedImages.contains(item) ? 0.5 : 0))
-                                    .clipShape(Circle())
-                                    .clipped()
                                 }
                                 .onTapGesture {
                                     if isSelectMode {
-                                        if selectedImages.contains(item) {
-                                            guard let removeItemIndex = selectedImages.firstIndex(of: item) else {
+                                        if selectedImagePaths.contains(item) {
+                                            guard let removeItemIndex = selectedImagePaths.firstIndex(of: item) else {
                                                 return
                                             }
-                                            selectedImages.remove(at: removeItemIndex)
+                                            selectedImagePaths.remove(at: removeItemIndex)
                                         } else {
-                                            guard selectedImages.count < selectedExportCount.rawValue else {
+                                            guard selectedImagePaths.count < selectedExportCount.rawValue else {
                                                 return
                                             }
-                                            selectedImages.append(item)
+                                            selectedImagePaths.append(item)
                                         }
                                     } else {
-                                        self.selectedPath = item.path
-                                        guard let originalImage = UIImage(contentsOfFile: item.path) else { return }
+                                        self.selectedPath = item
+                                        var path = item
+                                        if item.contains("file://") {
+                                            path = item.replacingOccurrences(of: "file://", with: "")
+                                        }
+                                        guard let originalImage = UIImage(contentsOfFile: path) else {
+                                            print(item)
+                                            return
+                                        }
                                         self.selectedImage = Image(uiImage: originalImage)
                                         self.fullscreenPresent.toggle()
                                     }
@@ -164,7 +174,7 @@ struct AlbumView: View {
                 .background(.ultraThinMaterial)
                 .onChange(of: isSelectMode) { newValue in
                     if !newValue {
-                        selectedImages.removeAll()
+                        selectedImagePaths.removeAll()
                     }
                 }
                 Divider()
@@ -219,9 +229,9 @@ struct AlbumView: View {
                                     .font(.system(size: 18))
                             }
                             .padding()
-                            .disabled(selectedImages.isEmpty)
+                            .disabled(selectedImagePaths.isEmpty)
                             Spacer()
-                            Text(selectedImages.isEmpty ? "항목 선택" : "\(selectedImages.count) / \(selectedExportCount.rawValue)장의 사진이 선택됨")
+                            Text(selectedImagePaths.isEmpty ? "항목 선택" : "\(selectedImagePaths.count) / \(selectedExportCount.rawValue)장의 사진이 선택됨")
                                 .font(.system(size: 18))
                                 .bold()
                             Spacer()
@@ -243,9 +253,9 @@ struct AlbumView: View {
         }
         .alert("삭제하시겠습니까?", isPresented: $deleteConfirmPresent, actions: {
             Button(role: .destructive) {
-                ImageManager.instance.delete(at: albumItems[selectedIndex].path)
+                ImageManager.instance.delete(at: albumImagePaths[selectedIndex])
                 withAnimation {
-                    albumItems.remove(at: self.selectedIndex)
+                    albumImagePaths.remove(at: self.selectedIndex)
                 }
             } label: {
                 Text("삭제")
@@ -259,18 +269,10 @@ struct AlbumView: View {
             ImageViewer(image: $selectedImage, viewerShown: $fullscreenPresent)
         )
         .onAppear {
+            isLoading = true
             DispatchQueue.global().async {
-                isLoading = true
                 if albumImagePaths.isEmpty {
                     self.albumImagePaths = ImageManager.instance.loadImageUrls()
-                    self.albumImagePaths.forEach { path in
-                        guard let image = UIImage(contentsOfFile: path)?.preparingThumbnail(of: CGSize(width: 300, height: 300)) else {
-                            return
-                        }
-                        DispatchQueue.main.async {
-                            self.albumItems.append(AlbumItem(image: image, path: path))
-                        }
-                    }
                     DispatchQueue.main.async {
                         withAnimation {
                             self.isLoading = false
@@ -284,7 +286,7 @@ struct AlbumView: View {
     }
     func export(as ext: ExportType) {
         let exporter = Exporter()
-        let paths = selectedImages.map { $0.path }
+        let paths = selectedImagePaths
         guard let result = exporter.exportAndGetResult(paths: paths, as: ext, count: selectedExportCount.rawValue) else {
             return
         }

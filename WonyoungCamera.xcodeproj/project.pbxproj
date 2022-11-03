@@ -14,6 +14,7 @@
 		5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435E651290EFAE600F8A331 /* ExportRenderer.swift */; };
 		5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5435E655290EFD9C00F8A331 /* ExportShader.metal */; };
 		545908A3291299E600B3A658 /* ExportResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A2291299E600B3A658 /* ExportResultView.swift */; };
+		545908A62913F87E00B3A658 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 545908A52913F87E00B3A658 /* Kingfisher */; };
 		545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D578328DDFB2100A874DB /* SharedMetalDevice.swift */; };
 		545D583328DEACC200A874DB /* Brightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D583228DEACC200A874DB /* Brightness.swift */; };
 		545D583728DEB0FB00A874DB /* Brightness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 545D583628DEB0FB00A874DB /* Brightness.metal */; };
@@ -243,6 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				545908A62913F87E00B3A658 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +585,9 @@
 			dependencies = (
 			);
 			name = WonyoungCamera;
+			packageProductDependencies = (
+				545908A52913F87E00B3A658 /* Kingfisher */,
+			);
 			productName = WonyoungCamera;
 			productReference = 54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */;
 			productType = "com.apple.product-type.application";
@@ -655,6 +660,9 @@
 				Base,
 			);
 			mainGroup = 54D3588A28DC7B6900A3AB4D;
+			packageReferences = (
+				545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 54D3589428DC7B6900A3AB4D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1133,6 +1141,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		545908A52913F87E00B3A658 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 54D3588B28DC7B6900A3AB4D /* Project object */;
 }
