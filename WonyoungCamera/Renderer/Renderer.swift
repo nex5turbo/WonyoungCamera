@@ -156,7 +156,10 @@ class Renderer {
             return
         }
 
-        let lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut]
+        var lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut]
+        if LutStorage.instance.selectedLut == .Natural {
+            lutTexture = nil
+        }
         var shouldFilter = lutTexture != nil
         let quadVertices = getVertices(frameOffset: frameOffset)
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
