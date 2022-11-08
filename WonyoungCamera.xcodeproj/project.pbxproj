@@ -112,6 +112,8 @@
 		54D358E728DC7BD900A3AB4D /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D428DC7BD900A3AB4D /* SoundManager.swift */; };
 		54D358E828DC7BD900A3AB4D /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D528DC7BD900A3AB4D /* HapticManager.swift */; };
 		54D358E928DC7BD900A3AB4D /* Lut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D728DC7BD900A3AB4D /* Lut.swift */; };
+		560C70FC2919E6EE00F679A3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 560C70FE2919E6EE00F679A3 /* Localizable.strings */; };
+		560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C71002919E71000F679A3 /* LocalizeFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -239,6 +241,9 @@
 		54D358D428DC7BD900A3AB4D /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		54D358D528DC7BD900A3AB4D /* HapticManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		54D358D728DC7BD900A3AB4D /* Lut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lut.swift; sourceTree = "<group>"; };
+		560C70FD2919E6EE00F679A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		560C70FF2919E6F100F679A3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		560C71002919E71000F679A3 /* LocalizeFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizeFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +332,8 @@
 			isa = PBXGroup;
 			children = (
 				545908A829140C5500B3A658 /* Colors.swift */,
+				560C70FE2919E6EE00F679A3 /* Localizable.strings */,
+				560C71002919E71000F679A3 /* LocalizeFile.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -669,6 +676,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 54D3588A28DC7B6900A3AB4D;
 			packageReferences = (
@@ -714,6 +722,7 @@
 				545D58EA28E08A7400A874DB /* lut13.png in Resources */,
 				545D58BD28E08A7400A874DB /* Ranguit.png in Resources */,
 				545D587128E07BA000A874DB /* Hagrid.png in Resources */,
+				560C70FC2919E6EE00F679A3 /* Localizable.strings in Resources */,
 				545D58E928E08A7400A874DB /* lut9.png in Resources */,
 				545D58D628E08A7400A874DB /* Apple.png in Resources */,
 				545D58CC28E08A7400A874DB /* Earl.png in Resources */,
@@ -794,6 +803,7 @@
 				54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */,
 				54D358E828DC7BD900A3AB4D /* HapticManager.swift in Sources */,
 				546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */,
+				560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */,
 				545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */,
 				545908A3291299E600B3A658 /* ExportResultView.swift in Sources */,
 				545908A929140C5500B3A658 /* Colors.swift in Sources */,
@@ -849,6 +859,18 @@
 			targetProxy = 54D358AE28DC7B6A00A3AB4D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		560C70FE2919E6EE00F679A3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				560C70FD2919E6EE00F679A3 /* en */,
+				560C70FF2919E6F100F679A3 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		54D358B528DC7B6A00A3AB4D /* Debug */ = {
@@ -973,7 +995,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
-				DEVELOPMENT_TEAM = 352B2432VD;
+				DEVELOPMENT_TEAM = 7W542TN97Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
@@ -990,7 +1012,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.9;
-				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1009,7 +1031,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
-				DEVELOPMENT_TEAM = 352B2432VD;
+				DEVELOPMENT_TEAM = 7W542TN97Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
@@ -1026,7 +1048,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.9;
-				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

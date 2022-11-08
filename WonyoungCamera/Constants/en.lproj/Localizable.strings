@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  WonyoungCamera
+
+  Created by 장진영 on 2022/11/08.
+  
+*/
+
+"Cancel" = "Cancel";
+"delete?" = "Delete this pic?";
+"delete" = "Delete";
+"%d / %d selected" = "%d / %d Selected";
+"share" = "Share";
+"Sticker" = "Sticker";
+"Select" = "Select";
