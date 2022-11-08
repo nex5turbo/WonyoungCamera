@@ -62,13 +62,13 @@ struct AlbumView: View {
                                                     self.selectedIndex = index
                                                     self.deleteConfirmPresent = true
                                                 } label: {
-                                                    Text("Delete")
+                                                    Text(deleteLabel)
                                                     Image(systemName: "trash.circle")
                                                 }
                                                 Button {
                                                     share(path: item)
                                                 } label: {
-                                                    Text("Share")
+                                                    Text(shareLabel)
                                                     Image(systemName: "square.and.arrow.up.circle")
                                                 }
                                             }
@@ -150,7 +150,7 @@ struct AlbumView: View {
                     Button {
                         isSelectMode.toggle()
                     } label: {
-                        Text("\(isSelectMode ? "취소" : "스티커")")
+                        Text("\(isSelectMode ? cancelLabel : stickerLabel)")
                             .font(.system(size: 12))
                             .foregroundColor(.white)
                             .padding(.vertical, 5)
@@ -231,7 +231,7 @@ struct AlbumView: View {
                             .padding()
                             .disabled(selectedImagePaths.isEmpty)
                             Spacer()
-                            Text(selectedImagePaths.isEmpty ? "항목 선택" : "\(selectedImagePaths.count) / \(selectedExportCount.rawValue)장의 사진이 선택됨")
+                            Text(selectedImagePaths.isEmpty ? selectLabel : selectedCountText(c1: selectedImagePaths.count, c2: selectedExportCount.rawValue))
                                 .font(.system(size: 18))
                                 .bold()
                             Spacer()
@@ -251,18 +251,18 @@ struct AlbumView: View {
                 }
             }
         }
-        .alert("삭제하시겠습니까?", isPresented: $deleteConfirmPresent, actions: {
+        .alert(askDeleteLabel, isPresented: $deleteConfirmPresent, actions: {
             Button(role: .destructive) {
                 ImageManager.instance.delete(at: albumImagePaths[selectedIndex])
                 withAnimation {
                     albumImagePaths.remove(at: self.selectedIndex)
                 }
             } label: {
-                Text("삭제")
+                Text(deleteLabel)
             }
             Button(role: .cancel) {
             } label: {
-                Text("취소")
+                Text(cancelLabel)
             }
         })
         .overlay(
