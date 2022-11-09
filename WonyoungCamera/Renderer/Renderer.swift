@@ -16,6 +16,7 @@ class Renderer {
     private var deviceScale = UIScreen.main.scale
     var emptyTexture: MTLTexture?
     var frameTexture: MTLTexture?
+    var circleTexture: MTLTexture
     var computePipelineState: MTLComputePipelineState
     var defaultRenderPipelineState: MTLRenderPipelineState!
     var defaultLibrary: MTLLibrary
@@ -32,6 +33,10 @@ class Renderer {
         guard let computePipelineState = device.loadComputePipelineState(compute) else {
             fatalError()
         }
+        guard let circleTexture = device.loadFilter(filterName: "circle") else {
+            fatalError()
+        }
+        self.circleTexture = circleTexture
         self.computePipelineState = computePipelineState
         self.defaultLibrary = defaultLibrary
         let defaultVertexProgram = defaultLibrary.makeFunction(name: "default_vertex")
@@ -179,6 +184,7 @@ class Renderer {
         computeEncoder?.setTexture(emptyTexture, index: 0)
         computeEncoder?.setTexture(texture, index: 1)
         computeEncoder?.setTexture(lutTexture, index: 2)
+        computeEncoder?.setTexture(circleTexture, index: 3)
         
         computeEncoder?.setBytes(&shouldFlip, length: MemoryLayout<Bool>.stride, index: 0)
         computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 1)

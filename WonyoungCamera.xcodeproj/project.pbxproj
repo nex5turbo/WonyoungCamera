@@ -16,6 +16,7 @@
 		545908A3291299E600B3A658 /* ExportResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A2291299E600B3A658 /* ExportResultView.swift */; };
 		545908A62913F87E00B3A658 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 545908A52913F87E00B3A658 /* Kingfisher */; };
 		545908A929140C5500B3A658 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A829140C5500B3A658 /* Colors.swift */; };
+		545908AB291C010100B3A658 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 545908AA291C010100B3A658 /* circle.png */; };
 		545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D578328DDFB2100A874DB /* SharedMetalDevice.swift */; };
 		545D583328DEACC200A874DB /* Brightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D583228DEACC200A874DB /* Brightness.swift */; };
 		545D583728DEB0FB00A874DB /* Brightness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 545D583628DEB0FB00A874DB /* Brightness.metal */; };
@@ -142,6 +143,7 @@
 		5435E655290EFD9C00F8A331 /* ExportShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ExportShader.metal; sourceTree = "<group>"; };
 		545908A2291299E600B3A658 /* ExportResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportResultView.swift; sourceTree = "<group>"; };
 		545908A829140C5500B3A658 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		545908AA291C010100B3A658 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		545D578328DDFB2100A874DB /* SharedMetalDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMetalDevice.swift; sourceTree = "<group>"; };
 		545D583228DEACC200A874DB /* Brightness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brightness.swift; sourceTree = "<group>"; };
 		545D583628DEB0FB00A874DB /* Brightness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Brightness.metal; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 		54D358CE28DC7BD900A3AB4D /* LUTs */ = {
 			isa = PBXGroup;
 			children = (
+				545908AA291C010100B3A658 /* circle.png */,
 				54608CD9290D9BC300614B80 /* Natural.png */,
 				54608CD5290C01DB00614B80 /* cameraFrame.png */,
 				54608CD3290AB87A00614B80 /* sample.png */,
@@ -773,6 +776,7 @@
 				54608CD4290AB87A00614B80 /* sample.png in Resources */,
 				545D58D428E08A7400A874DB /* Dragon.png in Resources */,
 				545D58D528E08A7400A874DB /* Grapes.png in Resources */,
+				545908AB291C010100B3A658 /* circle.png in Resources */,
 				545D58EC28E08A7400A874DB /* lut15.png in Resources */,
 				545D58DA28E08A7400A874DB /* Vinny.png in Resources */,
 			);

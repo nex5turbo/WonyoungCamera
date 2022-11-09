@@ -26,6 +26,8 @@ struct ExportResultView: View {
             }
             .padding()
             Spacer()
+            Text("이미지 생성이 완료되었습니다!")
+            Text("프린터로 출력할 수 있습니다!")
             Image(uiImage: resultImage)
                 .resizable()
                 .scaledToFit()
