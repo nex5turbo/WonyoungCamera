@@ -256,6 +256,19 @@ struct AlbumView: View {
                         }
                         Color.clear.frame(height: 5)
                         HStack {
+                            Button {
+                            } label: {
+                                Image(systemName: "questionmark.circle")
+                                    .font(.system(size: 18))
+                            }
+                            .padding()
+
+                            Spacer()
+                            Text(selectedImagePaths.isEmpty ? selectLabel : selectedCountText(c1: selectedImagePaths.count, c2: selectedExportCount.rawValue))
+                                .font(.system(size: 18))
+                                .bold()
+                            Spacer()
+
                             Menu {
                                 Button {
                                     export(as: .pdf)
@@ -275,19 +288,6 @@ struct AlbumView: View {
                             }
                             .padding()
                             .disabled(selectedImagePaths.isEmpty)
-                            Spacer()
-                            Text(selectedImagePaths.isEmpty ? selectLabel : selectedCountText(c1: selectedImagePaths.count, c2: selectedExportCount.rawValue))
-                                .font(.system(size: 18))
-                                .bold()
-                            Spacer()
-                            Button {
-                            } label: {
-                                Image(systemName: "printer.fill")
-                                    .font(.system(size: 18))
-                                    .foregroundColor(.clear)
-                            }
-                            .padding()
-                            .disabled(true)
                         }
                         .padding(.bottom, 10)
                         .edgesIgnoringSafeArea(.all)
