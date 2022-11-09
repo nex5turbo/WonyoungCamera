@@ -7,6 +7,12 @@
 
 import Foundation
 import MetalKit
+
+struct LutInfo {
+    var lut: Lut
+    var isFree: Bool
+}
+
 enum Lut: String, CaseIterable {
     case Natural
     case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
@@ -20,6 +26,22 @@ enum Lut: String, CaseIterable {
     case Danligter, Ranguit, Greered, Sven, Rangueen, Ragwarm, VIB, Garage, Yenely
     
     case Doris, Country, Doug, TinyDC, Blues, Borg, Earl, Coco, Minker, Carl, Sun, LemonFell
+
+    static fileprivate let lutInfo: [Lut: LutInfo] = [
+        .Natural: LutInfo(lut: .Natural, isFree: true),
+        .Aladin: LutInfo(lut: .Aladin, isFree: true),
+        .Alex: LutInfo(lut: .Alex, isFree: true),
+        .Amber: LutInfo(lut: .Amber, isFree: true),
+        .Anne: LutInfo(lut: .Anne, isFree: true)
+    ]
+
+    var isFree: Bool {
+        guard let currentLutInfo = Lut.lutInfo[self] else {
+            return false
+        }
+        
+        return currentLutInfo.isFree
+    }
 }
 
 class LutStorage {
@@ -52,12 +74,14 @@ class LutStorage {
             self.sampleImages[lut] = image
         }
     }
+
     func applyRandomLut() -> Lut {
         let lutKeys = Array(luts.keys)
         let randomIndex = Int.random(in: 0 ..< luts.count)
         self.selectedLut = lutKeys[randomIndex]
         return self.selectedLut
     }
+
     func getSampleImage(lut: MTLTexture) -> UIImage? {
         return renderer.applyLutToSampleImage(sampleImageTexture, lutTexture: lut)
     }
