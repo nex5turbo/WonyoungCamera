@@ -133,19 +133,22 @@ struct AlbumView: View {
                                             }
                                         }
                                     }
+                                    .padding(3)
                                 }
                             }
 
                             Color.clear.frame(height: 200)
                         }
                         .frame(width: 100)
-                        .background(.gray)
+                        .background(.ultraThinMaterial)
                         .onDrop(of: [.item], delegate: DragDelegate(
                             items: $selectedImagePaths,
                             draggingItem: $draggingItem,
                             isDragging: $isDragging,
                             callback: { dropItem in
-                                selectedImagePaths.append(dropItem)
+                                if selectedImagePaths.count < selectedExportCount.rawValue {
+                                    selectedImagePaths.append(dropItem)
+                                }
                             }))
                     }
                 }
