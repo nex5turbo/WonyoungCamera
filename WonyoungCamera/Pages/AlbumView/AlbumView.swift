@@ -35,89 +35,119 @@ struct AlbumView: View {
     @State var isLoading = false
     @Environment(\.dismiss) private var dismiss
     let deviceWidth = UIScreen.main.bounds.width
-    let imageSize = UIScreen.main.bounds.width / 3.5
+    @State var imageSize = UIScreen.main.bounds.width / 3.5
+    @State var draggingItem: String?
+    @State var isDragging = false
     var body: some View {
         ZStack {
             NavigationLink(destination: ExportResultView(resultImage: $resultImage, resultNSData: $resultNSData, resultData: $resultData), isActive: $resultPresent) {
                 EmptyView()
             }
             if !isLoading {
-                ScrollView {
-                    Color.clear.frame(height: topBarHeight)
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize)),
-                                        GridItem(.adaptive(minimum: imageSize)),
-                                        GridItem(.adaptive(minimum: imageSize))]) {
+                HStack(spacing: 0) {
+                    ScrollView {
+                        Color.clear.frame(height: topBarHeight)
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize)),
+                                            GridItem(.adaptive(minimum: imageSize)),
+                                            GridItem(.adaptive(minimum: imageSize))]) {
 
-                        ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
-                            if true {
-                                ZStack {
-                                    let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
-                                    KFImage(URL(string: item))
-                                        .resizable()
-                                        .setProcessor(resizingProcessor)
-                                        .frame(width: imageSize, height: imageSize)
-                                        .contextMenu {
-                                            if !isSelectMode {
-                                                Button(role: .destructive) {
-                                                    self.selectedIndex = index
-                                                    self.deleteConfirmPresent = true
-                                                } label: {
-                                                    Text(deleteLabel)
-                                                    Image(systemName: "trash.circle")
-                                                }
-                                                Button {
-                                                    share(path: item)
-                                                } label: {
-                                                    Text(shareLabel)
-                                                    Image(systemName: "square.and.arrow.up.circle")
+                            ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
+                                if true {
+                                    ZStack {
+                                        let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+                                        KFImage(URL(string: item))
+                                            .resizable()
+                                            .setProcessor(resizingProcessor)
+                                            .frame(width: imageSize, height: imageSize)
+                                            .contextMenu {
+                                                if !isSelectMode {
+                                                    Button(role: .destructive) {
+                                                        self.selectedIndex = index
+                                                        self.deleteConfirmPresent = true
+                                                    } label: {
+                                                        Text(deleteLabel)
+                                                        Image(systemName: "trash.circle")
+                                                    }
+                                                    Button {
+                                                        share(path: item)
+                                                    } label: {
+                                                        Text(shareLabel)
+                                                        Image(systemName: "square.and.arrow.up.circle")
+                                                    }
                                                 }
                                             }
-                                        }
-                                    // 체크버튼
-                                    if isSelectMode && selectedImagePaths.contains(item) {
-                                        VStack {
-                                            Image(systemName: "checkmark.circle")
-                                                .font(.system(size: 40))
-                                                .foregroundColor(.white)
-                                        }
-                                        .frame(width: imageSize, height: imageSize)
-                                        .background(.black.opacity(isSelectMode && selectedImagePaths.contains(item) ? 0.5 : 0))
-                                        .clipShape(Circle())
-                                        .clipped()
                                     }
-                                }
-                                .onTapGesture {
-                                    if isSelectMode {
-                                        if selectedImagePaths.contains(item) {
-                                            guard let removeItemIndex = selectedImagePaths.firstIndex(of: item) else {
-                                                return
-                                            }
-                                            selectedImagePaths.remove(at: removeItemIndex)
-                                        } else {
+                                    .onDrag {
+                                        draggingItem = item
+                                        isDragging = true
+                                        return NSItemProvider()
+                                    }
+                                    .onTapGesture {
+                                        if isSelectMode {
                                             guard selectedImagePaths.count < selectedExportCount.rawValue else {
                                                 return
                                             }
                                             selectedImagePaths.append(item)
+                                        } else {
+                                            self.selectedPath = item
+                                            var path = item
+                                            if item.contains("file://") {
+                                                path = item.replacingOccurrences(of: "file://", with: "")
+                                            }
+                                            guard let originalImage = UIImage(contentsOfFile: path) else {
+                                                print(item)
+                                                return
+                                            }
+                                            self.selectedImage = Image(uiImage: originalImage)
+                                            self.fullscreenPresent.toggle()
                                         }
-                                    } else {
-                                        self.selectedPath = item
-                                        var path = item
-                                        if item.contains("file://") {
-                                            path = item.replacingOccurrences(of: "file://", with: "")
-                                        }
-                                        guard let originalImage = UIImage(contentsOfFile: path) else {
-                                            print(item)
-                                            return
-                                        }
-                                        self.selectedImage = Image(uiImage: originalImage)
-                                        self.fullscreenPresent.toggle()
                                     }
                                 }
                             }
                         }
+                        .padding()
+                        .padding(.bottom, 200)
                     }
-                    .padding()
-                    .padding(.bottom, 200)
+                    if isSelectMode {
+                        ScrollView {
+                            Color.clear.frame(height: topBarHeight)
+
+                            VStack {
+                                ForEach(selectedImagePaths.indices, id: \.self) { index in
+                                    let item = selectedImagePaths[index]
+                                    let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+                                    ZStack {
+                                        KFImage(URL(string: item))
+                                            .resizable()
+                                            .setProcessor(resizingProcessor)
+                                            .frame(width: 90, height: 90)
+                                        HStack {
+                                            Spacer()
+                                            VStack {
+                                                Image(systemName: "xmark.circle")
+                                                    .font(.system(size: 14))
+                                                    .onTapGesture {
+                                                        selectedImagePaths.remove(at: index)
+                                                    }
+                                                Spacer()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            Color.clear.frame(height: 200)
+                        }
+                        .frame(width: 100)
+                        .background(.gray)
+                        .onDrop(of: [.item], delegate: DragDelegate(
+                            items: $selectedImagePaths,
+                            draggingItem: $draggingItem,
+                            isDragging: $isDragging,
+                            callback: { dropItem in
+                                selectedImagePaths.append(dropItem)
+                            }))
+                    }
                 }
             } else {
                 Color.gray
@@ -148,7 +178,10 @@ struct AlbumView: View {
                         .padding()
                     Spacer()
                     Button {
-                        isSelectMode.toggle()
+                        withAnimation {
+                            isSelectMode.toggle()
+                        }
+                        
                     } label: {
                         Text("\(isSelectMode ? cancelLabel : stickerLabel)")
                             .font(.system(size: 12))
@@ -156,6 +189,8 @@ struct AlbumView: View {
                             .padding(.vertical, 5)
                             .padding(.horizontal, 10)
                     }
+                    .onChange(of: isSelectMode, perform: { newValue in
+                    })
                     .background(Color.gray)
                     .cornerRadius(15)
                     .padding()
@@ -175,6 +210,13 @@ struct AlbumView: View {
                 .onChange(of: isSelectMode) { newValue in
                     if !newValue {
                         selectedImagePaths.removeAll()
+                        withAnimation {
+                            imageSize = UIScreen.main.bounds.width / 3.5
+                        }
+                    } else {
+                        withAnimation {
+                            imageSize = (UIScreen.main.bounds.width - 100) / 3.5
+                        }
                     }
                 }
                 Divider()
@@ -295,6 +337,28 @@ struct AlbumView: View {
         self.resultData = result.2
         self.resultPresent = true
         self.isSelectMode = false
+    }
+
+    private struct DragDelegate: DropDelegate {
+        var items: Binding<[String]>
+        var draggingItem: Binding<String?>
+        var isDragging: Binding<Bool>
+        var callback: (String) -> Void
+
+        func performDrop(info: DropInfo) -> Bool {
+            isDragging.wrappedValue = false
+            guard let item = draggingItem.wrappedValue else {
+                draggingItem.wrappedValue = nil // <- HERE
+                return true
+            }
+            draggingItem.wrappedValue = nil // <- HERE
+            callback(item)
+            return true
+        }
+
+        func dropUpdated(info: DropInfo) -> DropProposal? {
+           return DropProposal(operation: .move)
+        }
     }
 }
 //
