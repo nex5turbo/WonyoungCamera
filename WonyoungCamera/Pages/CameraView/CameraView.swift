@@ -190,10 +190,20 @@ struct CameraView: View {
                             }
                             shouldTakePicture.toggle()
                         } label: {
-                            Image(systemName: "circle.fill")
-                                .font(.system(size: 50))
-                                .foregroundColor(self.buttonColor)
-                                .padding(10)
+                            ZStack {
+                                Image(systemName: "circle.fill")
+                                    .font(.system(size: 50))
+                                    .foregroundColor(.highlightColor)
+                                    .padding(10)
+                                Image(systemName: "circle.fill")
+                                    .font(.system(size: 40))
+                                    .foregroundColor(.black)
+                                    .padding(10)
+                                Image(systemName: "circle.fill")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(self.buttonColor)
+                                    .padding(10)
+                            }
                         }
                         Spacer()
                         Button {
