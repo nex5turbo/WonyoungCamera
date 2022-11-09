@@ -47,18 +47,18 @@ struct AlbumView: View {
                 HStack(spacing: 0) {
                     ScrollView {
                         Color.clear.frame(height: topBarHeight)
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize)),
-                                            GridItem(.adaptive(minimum: imageSize)),
-                                            GridItem(.adaptive(minimum: imageSize))]) {
+                        LazyVGrid(columns: [GridItem(.flexible()),
+                                            GridItem(.flexible()),
+                                            GridItem(.flexible())]) {
 
                             ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
                                 if true {
                                     ZStack {
-                                        let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+                                        let resizingProcessor = DownsamplingImageProcessor(size: CGSize(width: 300, height: 300))
                                         KFImage(URL(string: item))
                                             .resizable()
                                             .setProcessor(resizingProcessor)
-                                            .frame(width: imageSize, height: imageSize)
+                                            .scaledToFill()
                                             .contextMenu {
                                                 if !isSelectMode {
                                                     Button(role: .destructive) {
@@ -106,7 +106,7 @@ struct AlbumView: View {
                             }
                         }
                         .padding()
-                        .padding(.bottom, 200)
+                        Color.clear.frame(height: 200)
                     }
                     if isSelectMode {
                         ScrollView {
