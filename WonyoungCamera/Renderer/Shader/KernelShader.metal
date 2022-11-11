@@ -15,6 +15,8 @@ half4 applySaturation( half4 inputColor, half saturation);
 kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture(0) ]],
                           texture2d<half> readTexture [[ texture(1) ]],
                           texture2d<half> lutTexture [[ texture(2) ]],
+                          texture2d<half> circleTexture [[ texture(3) ]],
+
                           constant bool &shouldFlip [[ buffer(0) ]],
                           constant float &textureWidth [[ buffer(1) ]],
                           constant float &textureHeight [[ buffer(2) ]],
