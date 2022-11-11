@@ -38,6 +38,28 @@ struct AlbumView: View {
     @State var imageSize = UIScreen.main.bounds.width / 3.5
     @State var draggingItem: String?
     @State var isDragging = false
+    
+    init() {
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(.highlightColor)
+        UISegmentedControl
+            .appearance()
+            .setTitleTextAttributes(
+                [
+                    .font: UIFont.systemFont(ofSize: 14, weight: .semibold),
+                    .foregroundColor: UIColor.white
+                ],
+                for: .selected
+            )
+        UISegmentedControl
+            .appearance()
+            .setTitleTextAttributes(
+                [
+                    .font: UIFont.systemFont(ofSize: 14, weight: .semibold),
+                    .foregroundColor: UIColor.black
+                ],
+                for: .normal
+            )
+    }
     var body: some View {
         ZStack {
             NavigationLink(destination: ExportResultView(resultImage: $resultImage, resultNSData: $resultNSData, resultData: $resultData), isActive: $resultPresent) {
@@ -191,17 +213,19 @@ struct AlbumView: View {
                         }
                         
                     } label: {
-                        Text("\(isSelectMode ? cancelLabel : stickerLabel)")
-                            .font(.system(size: 12))
-                            .foregroundColor(.white)
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, 10)
+                        if !isSelectMode {
+                            LottieThumbnailView(lottieName: .exportImage)
+                                .frame(width: 44, height: 44)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 10)
+                        } else {
+                            LottieThumbnailView(lottieName: .photo)
+                                .frame(width: 44, height: 44)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 10)
+                                
+                        }
                     }
-                    .onChange(of: isSelectMode, perform: { newValue in
-                    })
-                    .background(Color.gray)
-                    .cornerRadius(15)
-                    .padding()
                 }
                 .overlay(
                     GeometryReader { proxy in
@@ -214,7 +238,7 @@ struct AlbumView: View {
                             }
                     }
                 )
-                .background(.ultraThinMaterial)
+                .background(.white)
                 .onChange(of: isSelectMode) { newValue in
                     if !newValue {
                         selectedImagePaths.removeAll()
@@ -236,8 +260,7 @@ struct AlbumView: View {
                     Divider()
                     VStack(spacing: 0) {
                         Color.clear.frame(height: 10)
-                        HStack {
-                            Spacer()
+                        Picker(selection: $selectedExportCount, label: Text("")) {
                             ForEach(Array(ExportCount.allCases), id: \.self) { item in
                                 switch item {
                                 case ._3x4:
@@ -256,14 +279,16 @@ struct AlbumView: View {
                                             self.selectedExportCount = ._5x6
                                         }
                                 }
-                                Spacer()
                             }
                         }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.horizontal)
                         Color.clear.frame(height: 5)
                         HStack {
                             Button {
                             } label: {
                                 Image(systemName: "questionmark.circle")
+                                    .accentColor(Color.highlightColor)
                                     .font(.system(size: 18))
                             }
                             .padding()
@@ -292,6 +317,7 @@ struct AlbumView: View {
                                     .font(.system(size: 18))
                             }
                             .padding()
+                            .accentColor(Color.highlightColor)
                             .disabled(selectedImagePaths.isEmpty)
                         }
                         .padding(.bottom, 10)
@@ -369,12 +395,12 @@ struct AlbumView: View {
         }
     }
 }
-//
-//struct AlbumView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AlbumView()
-//    }
-//}
+
+struct AlbumView_Previews: PreviewProvider {
+    static var previews: some View {
+        AlbumView()
+    }
+}
 
 func share(path: String) {
     let url = NSURL(fileURLWithPath: path)

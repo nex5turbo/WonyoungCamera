@@ -10,6 +10,8 @@ import Lottie
 
 enum Lottie: String {
     case exportImage
+    case cancel
+    case photo
 }
 
 struct LottieThumbnailView: UIViewRepresentable {
