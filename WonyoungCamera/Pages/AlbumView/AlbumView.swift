@@ -109,47 +109,52 @@ struct AlbumView: View {
                         Color.clear.frame(height: 200)
                     }
                     if isSelectMode {
-                        ScrollView {
-                            Color.clear.frame(height: topBarHeight)
+                        ScrollViewReader { scroll in
+                            ScrollView {
+                                Color.clear.frame(height: topBarHeight)
 
-                            VStack {
-                                ForEach(selectedImagePaths.indices, id: \.self) { index in
-                                    let item = selectedImagePaths[index]
-                                    let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
-                                    ZStack {
-                                        KFImage(URL(string: item))
-                                            .resizable()
-                                            .setProcessor(resizingProcessor)
-                                            .frame(width: 90, height: 90)
-                                        HStack {
-                                            Spacer()
-                                            VStack {
-                                                Image(systemName: "xmark.circle")
-                                                    .font(.system(size: 14))
-                                                    .onTapGesture {
-                                                        selectedImagePaths.remove(at: index)
-                                                    }
+                                VStack {
+                                    ForEach(selectedImagePaths.indices, id: \.self) { index in
+                                        let item = selectedImagePaths[index]
+                                        let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+                                        ZStack {
+                                            KFImage(URL(string: item))
+                                                .resizable()
+                                                .setProcessor(resizingProcessor)
+                                                .frame(width: 90, height: 90)
+                                            HStack {
                                                 Spacer()
+                                                VStack {
+                                                    Image(systemName: "xmark.circle")
+                                                        .font(.system(size: 14))
+                                                        .onTapGesture {
+                                                            selectedImagePaths.remove(at: index)
+                                                        }
+                                                    Spacer()
+                                                }
                                             }
                                         }
+                                        .padding(3)
                                     }
-                                    .padding(3)
                                 }
-                            }
+                                .onChange(of: selectedImagePaths) { _ in
+                                    HapticManager.instance.impact(style: .soft)
+                                }
 
-                            Color.clear.frame(height: 200)
+                                Color.clear.frame(height: 200)
+                            }
+                            .frame(width: 100)
+                            .background(.ultraThinMaterial)
+                            .onDrop(of: [.item], delegate: DragDelegate(
+                                items: $selectedImagePaths,
+                                draggingItem: $draggingItem,
+                                isDragging: $isDragging,
+                                callback: { dropItem in
+                                    if selectedImagePaths.count < selectedExportCount.rawValue {
+                                        selectedImagePaths.append(dropItem)
+                                    }
+                                }))
                         }
-                        .frame(width: 100)
-                        .background(.ultraThinMaterial)
-                        .onDrop(of: [.item], delegate: DragDelegate(
-                            items: $selectedImagePaths,
-                            draggingItem: $draggingItem,
-                            isDragging: $isDragging,
-                            callback: { dropItem in
-                                if selectedImagePaths.count < selectedExportCount.rawValue {
-                                    selectedImagePaths.append(dropItem)
-                                }
-                            }))
                     }
                 }
             } else {
