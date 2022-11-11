@@ -223,7 +223,7 @@ struct CameraView: View {
                                 .padding(10)
                         }
                         Spacer()
-                        NavigationLink(destination: AlbumView().navigationTitle("").navigationBarHidden(true), isActive: $settingPresent) {
+                        NavigationLink(destination: AlbumView(), isActive: $settingPresent) {
                             Image(systemName: "photo.circle")
                                 .foregroundColor(self.buttonColor)
                                 .font(.system(size: bottomIconSize))

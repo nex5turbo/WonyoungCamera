@@ -13,61 +13,65 @@ struct ExportResultView: View {
     @Binding var resultNSData: NSData?
     @Binding var resultData: Data?
     var body: some View {
-        VStack {
+        ZStack {
             ZStack {
+                Image(uiImage: resultImage)
+                    .resizable()
+                    .scaledToFill()
+                    .cornerRadius(15)
+                    .frame(width: 300, height: 420)
+                    .shadow(color: .gray, radius: 10, x: 5, y: 5)
                 VStack {
+                    LottiView(lottieName: .finish, loop: .playOnce)
+                    Color.clear.frame(height: 120)
+                }
+            }
+            VStack {
+                Spacer()
+                HStack {
+                    Button {
+                        if let data = resultData {
+                            share(data: data)
+                        } else if let nsdata = resultNSData {
+                            share(data: nsdata)
+                        }
+                    } label: {
+                        Image(systemName: "square.and.arrow.up.circle")
+                            .font(.system(size: 28))
+                            .foregroundColor(.white)
+                    }
+                    .frame(width: 44, height: 44)
+                    .background(Color.highlightColor)
+                    .clipShape(Circle())
+                }
+            }
+            VStack(spacing: 0) {
+                ZStack {
+                    HStack {
+                        Text("Great!")
+                            .bold()
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                    }
                     HStack {
                         Button {
-                            resultImage = UIImage()
-                            resultNSData = nil
-                            resultData = nil
                             dismiss()
                         } label: {
-                            Image(systemName: "chevron.left")
+                            Image(systemName: "xmark.circle")
                                 .font(.system(size: 20))
-                                .foregroundColor(.highlightColor)
+                                .foregroundColor(.black)
+                                .padding()
                         }
                         Spacer()
                     }
-                    .padding()
-                    Spacer()
                 }
-
-                HStack {
-                    Spacer()
-                    VStack {
-                        LottieThumbnailView(lottieName: .exportImage)
-                            .frame(width: 100, height: 100)
-                    }
-                    Spacer()
-                }
-            }
-
-            Spacer()
-            Image(uiImage: resultImage)
-                .resizable()
-                .scaledToFill()
-                .cornerRadius(15)
-                .frame(width: 300, height: 420)
-                .shadow(color: .gray, radius: 10, x: 5, y: 5)
-            Spacer()
-            HStack {
-                Button {
-                    if let data = resultData {
-                        share(data: data)
-                    } else if let nsdata = resultNSData {
-                        share(data: nsdata)
-                    }
-                } label: {
-                    Image(systemName: "square.and.arrow.up.circle")
-                        .font(.system(size: 28))
-                        .foregroundColor(.white)
-                }
-                .frame(width: 44, height: 44)
-                .background(Color.highlightColor)
-                .clipShape(Circle())
+                .background(.white)
+                Divider()
+                Spacer()
             }
         }
+        
+        .background(.white)
         .navigationTitle("")
         .navigationBarHidden(true)
     }

@@ -11,8 +11,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             CameraView()
-                .navigationTitle("")
-                .navigationBarHidden(true)
         }
         .navigationViewStyle(.stack)
     }

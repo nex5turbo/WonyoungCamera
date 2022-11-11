@@ -29,13 +29,11 @@ struct AlbumView: View {
     @State var resultNSData: NSData? = nil
     @State var resultData: Data? = nil
     @State var resultPresent = false
-    @State var topBarHeight: CGFloat = 0
     @State var deleteConfirmPresent = false
     @State var selectedIndex = 0
     @State var isLoading = false
     @Environment(\.dismiss) private var dismiss
     let deviceWidth = UIScreen.main.bounds.width
-    @State var imageSize = UIScreen.main.bounds.width / 3.5
     @State var draggingItem: String?
     @State var isDragging = false
     
@@ -65,194 +63,181 @@ struct AlbumView: View {
             NavigationLink(destination: ExportResultView(resultImage: $resultImage, resultNSData: $resultNSData, resultData: $resultData), isActive: $resultPresent) {
                 EmptyView()
             }
-            if !isLoading {
-                HStack(spacing: 0) {
-                    ScrollView {
-                        Color.clear.frame(height: topBarHeight)
-                        LazyVGrid(columns: [GridItem(.flexible()),
-                                            GridItem(.flexible()),
-                                            GridItem(.flexible())]) {
-
-                            ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
-                                if true {
-                                    ZStack {
-                                        let resizingProcessor = DownsamplingImageProcessor(size: CGSize(width: 300, height: 300))
-                                        KFImage(URL(string: item))
-                                            .resizable()
-                                            .setProcessor(resizingProcessor)
-                                            .scaledToFill()
-                                            .contextMenu {
-                                                if !isSelectMode {
-                                                    Button(role: .destructive) {
-                                                        self.selectedIndex = index
-                                                        self.deleteConfirmPresent = true
-                                                    } label: {
-                                                        Text(deleteLabel)
-                                                        Image(systemName: "trash.circle")
-                                                    }
-                                                    Button {
-                                                        share(path: item)
-                                                    } label: {
-                                                        Text(shareLabel)
-                                                        Image(systemName: "square.and.arrow.up.circle")
-                                                    }
-                                                }
-                                            }
-                                    }
-                                    .onDrag {
-                                        draggingItem = item
-                                        isDragging = true
-                                        return NSItemProvider()
-                                    }
-                                    .onTapGesture {
-                                        if isSelectMode {
-                                            guard selectedImagePaths.count < selectedExportCount.rawValue else {
-                                                return
-                                            }
-                                            selectedImagePaths.append(item)
-                                        } else {
-                                            self.selectedPath = item
-                                            var path = item
-                                            if item.contains("file://") {
-                                                path = item.replacingOccurrences(of: "file://", with: "")
-                                            }
-                                            guard let originalImage = UIImage(contentsOfFile: path) else {
-                                                print(item)
-                                                return
-                                            }
-                                            self.selectedImage = Image(uiImage: originalImage)
-                                            self.fullscreenPresent.toggle()
-                                        }
-                                    }
-                                }
+            VStack(spacing: 0) {
+                ZStack {
+                    HStack {
+                        Image(systemName: "xmark.circle")
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                            .onTapGesture {
+                                dismiss()
+                            }
+                            .padding()
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                isSelectMode.toggle()
+                            }
+                            
+                        } label: {
+                            if !isSelectMode {
+                                LottiView(lottieName: .exportImage)
+                                    .frame(width: 44, height: 44)
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal, 10)
+                            } else {
+                                LottiView(lottieName: .photo)
+                                    .frame(width: 44, height: 44)
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal, 10)
+                                    
                             }
                         }
-                        .padding()
-                        Color.clear.frame(height: 200)
+                        .onChange(of: isSelectMode) { newValue in
+                            if !newValue {
+                                selectedImagePaths.removeAll()
+                            }
+                        }
                     }
-                    if isSelectMode {
-                        ScrollViewReader { scroll in
-                            ScrollView {
-                                Color.clear.frame(height: topBarHeight)
+                    HStack {
+                        Text("Sticka")
+                            .bold()
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                    }
+                }
+                .background(.white)
+                Divider()
 
-                                VStack {
-                                    ForEach(selectedImagePaths.indices, id: \.self) { index in
-                                        let item = selectedImagePaths[index]
-                                        let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+                if !isLoading {
+                    HStack(spacing: 0) {
+                        ScrollView {
+                            LazyVGrid(columns: [GridItem(.flexible()),
+                                                GridItem(.flexible()),
+                                                GridItem(.flexible())]) {
+
+                                ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
+                                    if true {
                                         ZStack {
+                                            let resizingProcessor = DownsamplingImageProcessor(size: CGSize(width: 300, height: 300))
                                             KFImage(URL(string: item))
                                                 .resizable()
                                                 .setProcessor(resizingProcessor)
-                                                .frame(width: 90, height: 90)
-                                            HStack {
-                                                Spacer()
-                                                VStack {
-                                                    Image(systemName: "xmark.circle")
-                                                        .font(.system(size: 14))
-                                                        .onTapGesture {
-                                                            selectedImagePaths.remove(at: index)
+                                                .scaledToFill()
+                                                .contextMenu {
+                                                    if !isSelectMode {
+                                                        Button(role: .destructive) {
+                                                            self.selectedIndex = index
+                                                            self.deleteConfirmPresent = true
+                                                        } label: {
+                                                            Text(deleteLabel)
+                                                            Image(systemName: "trash.circle")
                                                         }
-                                                    Spacer()
+                                                        Button {
+                                                            share(path: item)
+                                                        } label: {
+                                                            Text(shareLabel)
+                                                            Image(systemName: "square.and.arrow.up.circle")
+                                                        }
+                                                    }
                                                 }
+                                        }
+                                        .onDrag {
+                                            draggingItem = item
+                                            isDragging = true
+                                            return NSItemProvider()
+                                        }
+                                        .onTapGesture {
+                                            if isSelectMode {
+                                                guard selectedImagePaths.count < selectedExportCount.rawValue else {
+                                                    return
+                                                }
+                                                selectedImagePaths.append(item)
+                                            } else {
+                                                self.selectedPath = item
+                                                var path = item
+                                                if item.contains("file://") {
+                                                    path = item.replacingOccurrences(of: "file://", with: "")
+                                                }
+                                                guard let originalImage = UIImage(contentsOfFile: path) else {
+                                                    print(item)
+                                                    return
+                                                }
+                                                self.selectedImage = Image(uiImage: originalImage)
+                                                self.fullscreenPresent.toggle()
                                             }
                                         }
-                                        .padding(3)
                                     }
                                 }
-                                .onChange(of: selectedImagePaths) { _ in
-                                    HapticManager.instance.impact(style: .soft)
-                                }
+                            }
+                            .padding()
+                            Color.clear.frame(height: 200)
+                        }
+                        if isSelectMode {
+                            ScrollViewReader { scroll in
+                                ScrollView {
 
-                                Color.clear.frame(height: 200)
-                            }
-                            .frame(width: 100)
-                            .background(.ultraThinMaterial)
-                            .onDrop(of: [.item], delegate: DragDelegate(
-                                items: $selectedImagePaths,
-                                draggingItem: $draggingItem,
-                                isDragging: $isDragging,
-                                callback: { dropItem in
-                                    if selectedImagePaths.count < selectedExportCount.rawValue {
-                                        selectedImagePaths.append(dropItem)
+                                    VStack {
+                                        ForEach(selectedImagePaths.indices, id: \.self) { index in
+                                            let item = selectedImagePaths[index]
+                                            let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
+                                            ZStack {
+                                                KFImage(URL(string: item))
+                                                    .resizable()
+                                                    .setProcessor(resizingProcessor)
+                                                    .frame(width: 90, height: 90)
+                                                HStack {
+                                                    Spacer()
+                                                    VStack {
+                                                        Image(systemName: "xmark.circle")
+                                                            .foregroundColor(.black)
+                                                            .font(.system(size: 14))
+                                                            .onTapGesture {
+                                                                selectedImagePaths.remove(at: index)
+                                                            }
+                                                        Spacer()
+                                                    }
+                                                }
+                                            }
+                                            .padding(3)
+                                        }
                                     }
-                                }))
-                        }
-                    }
-                }
-            } else {
-                Color.gray
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
-                    Spacer()
-                }
-                .background(.ultraThinMaterial)
-            }
-            
-            VStack(spacing: 0) {
-                HStack {
-                    Image(systemName: "xmark.circle")
-                        .font(.system(size: 20))
-                        .onTapGesture {
-                            dismiss()
-                        }
-                        .padding()
-                    Spacer()
-                    Text("Sticka")
-                        .bold()
-                        .font(.system(size: 20))
-                    Spacer()
-                    Button {
-                        withAnimation {
-                            isSelectMode.toggle()
-                        }
-                        
-                    } label: {
-                        if !isSelectMode {
-                            LottieThumbnailView(lottieName: .exportImage)
-                                .frame(width: 44, height: 44)
-                                .padding(.vertical, 5)
-                                .padding(.horizontal, 10)
-                        } else {
-                            LottieThumbnailView(lottieName: .photo)
-                                .frame(width: 44, height: 44)
-                                .padding(.vertical, 5)
-                                .padding(.horizontal, 10)
-                                
-                        }
-                    }
-                }
-                .overlay(
-                    GeometryReader { proxy in
-                        Color.clear
-                            .onAppear {
-                                self.topBarHeight = proxy.size.height
+                                    .onChange(of: selectedImagePaths) { _ in
+                                        HapticManager.instance.impact(style: .soft)
+                                    }
+
+                                    Color.clear.frame(height: 200)
+                                }
+                                .frame(width: 100)
+                                .background(.ultraThinMaterial)
+                                .onDrop(of: [.item], delegate: DragDelegate(
+                                    items: $selectedImagePaths,
+                                    draggingItem: $draggingItem,
+                                    isDragging: $isDragging,
+                                    callback: { dropItem in
+                                        if selectedImagePaths.count < selectedExportCount.rawValue {
+                                            selectedImagePaths.append(dropItem)
+                                        }
+                                    }))
                             }
-                            .onChange(of: proxy.size) { size in
-                                self.topBarHeight = size.height
-                            }
-                    }
-                )
-                .background(.white)
-                .onChange(of: isSelectMode) { newValue in
-                    if !newValue {
-                        selectedImagePaths.removeAll()
-                        withAnimation {
-                            imageSize = UIScreen.main.bounds.width / 3.5
-                        }
-                    } else {
-                        withAnimation {
-                            imageSize = (UIScreen.main.bounds.width - 100) / 3.5
                         }
                     }
+                    .background(Color.white)
+                } else {
+                    Color.gray
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                    .background(.ultraThinMaterial)
                 }
-                Divider()
-                Spacer()
             }
+
             if isSelectMode {
                 VStack(spacing: 0) {
                     Spacer()
@@ -295,6 +280,7 @@ struct AlbumView: View {
                             Spacer()
                             Text(selectedImagePaths.isEmpty ? selectLabel : selectedCountText(c1: selectedImagePaths.count, c2: selectedExportCount.rawValue))
                                 .font(.system(size: 18))
+                                .foregroundColor(.black)
                                 .bold()
                             Spacer()
 
@@ -322,10 +308,11 @@ struct AlbumView: View {
                         .padding(.bottom, 10)
                         .edgesIgnoringSafeArea(.all)
                     }
-                    .background(.thickMaterial)
+                    .background(.white)
                 }
             }
         }
+        .navigationBarHidden(true)
         .alert(askDeleteLabel, isPresented: $deleteConfirmPresent, actions: {
             Button(role: .destructive) {
                 ImageManager.instance.delete(at: albumImagePaths[selectedIndex])
