@@ -175,8 +175,8 @@ struct AlbumView: View {
                         }
                         if isSelectMode {
                             ScrollViewReader { scroll in
-                                ScrollView {
-
+                                ScrollView(showsIndicators: false) {
+                                    
                                     VStack {
                                         ForEach(selectedImagePaths.indices, id: \.self) { index in
                                             let item = selectedImagePaths[index]
@@ -205,11 +205,11 @@ struct AlbumView: View {
                                     .onChange(of: selectedImagePaths) { _ in
                                         HapticManager.instance.impact(style: .soft)
                                     }
-
+                                    
                                     Color.clear.frame(height: 200)
                                 }
                                 .frame(width: 100)
-                                .background(.ultraThinMaterial)
+                                .background(.thinMaterial)
                                 .onDrop(of: [.item], delegate: DragDelegate(
                                     items: $selectedImagePaths,
                                     draggingItem: $draggingItem,
@@ -241,6 +241,15 @@ struct AlbumView: View {
             if isSelectMode {
                 VStack(spacing: 0) {
                     Spacer()
+                    if selectedImagePaths.isEmpty {
+                        HStack(spacing: 0) {
+                            Spacer()
+                            LottiView(lottieName: .arrowRight)
+                                .frame(width: 100, height: 100)
+                            Color.clear.frame(width: 50)
+                        }
+                        Spacer()
+                    }
                     Divider()
                     VStack(spacing: 0) {
                         Color.clear.frame(height: 10)
