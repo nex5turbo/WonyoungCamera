@@ -14,20 +14,34 @@ struct ExportResultView: View {
     @Binding var resultData: Data?
     var body: some View {
         VStack {
-            HStack {
-                Button {
-                    resultImage = UIImage()
-                    resultNSData = nil
-                    resultData = nil
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 20))
-                        .foregroundColor(.highlightColor)
+            ZStack {
+                VStack {
+                    HStack {
+                        Button {
+                            resultImage = UIImage()
+                            resultNSData = nil
+                            resultData = nil
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 20))
+                                .foregroundColor(.highlightColor)
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    Spacer()
                 }
-                Spacer()
+
+                HStack {
+                    Spacer()
+                    VStack {
+                        LottieThumbnailView(lottieName: .exportImage)
+                            .frame(width: 100, height: 100)
+                    }
+                    Spacer()
+                }
             }
-            .padding()
 
             Spacer()
             Image(uiImage: resultImage)

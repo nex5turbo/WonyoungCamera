@@ -116,6 +116,8 @@
 		560C70FC2919E6EE00F679A3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 560C70FE2919E6EE00F679A3 /* Localizable.strings */; };
 		560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C71002919E71000F679A3 /* LocalizeFile.swift */; };
 		6A8FFC30291E082900000C1B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6A8FFC2F291E082900000C1B /* Lottie */; };
+		6A8FFC35291E097100000C1B /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8FFC34291E097100000C1B /* LottieView.swift */; };
+		6A8FFC37291E101300000C1B /* exportImage.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A8FFC36291E101200000C1B /* exportImage.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +249,8 @@
 		560C70FD2919E6EE00F679A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		560C70FF2919E6F100F679A3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		560C71002919E71000F679A3 /* LocalizeFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizeFile.swift; sourceTree = "<group>"; };
+		6A8FFC34291E097100000C1B /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		6A8FFC36291E101200000C1B /* exportImage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = exportImage.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -487,6 +491,7 @@
 		54D3589528DC7B6900A3AB4D /* WonyoungCamera */ = {
 			isa = PBXGroup;
 			children = (
+				6A8FFC31291E085500000C1B /* Lottie */,
 				545908A729140C4C00B3A658 /* Constants */,
 				5435E653290EFD7C00F8A331 /* Renderer */,
 				5435E64E290EF70D00F8A331 /* Exporter */,
@@ -532,6 +537,7 @@
 			isa = PBXGroup;
 			children = (
 				54D358C228DC7BD900A3AB4D /* FilterScrollView.swift */,
+				6A8FFC34291E097100000C1B /* LottieView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -590,6 +596,14 @@
 				545D578328DDFB2100A874DB /* SharedMetalDevice.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6A8FFC31291E085500000C1B /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				6A8FFC36291E101200000C1B /* exportImage.json */,
+			);
+			path = Lottie;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -755,6 +769,7 @@
 				545D587328E07BA000A874DB /* Harry.png in Resources */,
 				545D58E428E08A7400A874DB /* lut18.png in Resources */,
 				545D58C528E08A7400A874DB /* Yenely.png in Resources */,
+				6A8FFC37291E101300000C1B /* exportImage.json in Resources */,
 				545D587A28E07BA000A874DB /* Bob.png in Resources */,
 				545D58C828E08A7400A874DB /* Doug.png in Resources */,
 				545D58BF28E08A7400A874DB /* Creamlow.png in Resources */,
@@ -809,6 +824,7 @@
 			files = (
 				54D358DE28DC7BD900A3AB4D /* MetalCamera.swift in Sources */,
 				54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */,
+				6A8FFC35291E097100000C1B /* LottieView.swift in Sources */,
 				54D358E828DC7BD900A3AB4D /* HapticManager.swift in Sources */,
 				546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */,
 				560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */,
