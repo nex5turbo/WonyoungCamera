@@ -115,6 +115,7 @@
 		54D358E928DC7BD900A3AB4D /* Lut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D728DC7BD900A3AB4D /* Lut.swift */; };
 		560C70FC2919E6EE00F679A3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 560C70FE2919E6EE00F679A3 /* Localizable.strings */; };
 		560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C71002919E71000F679A3 /* LocalizeFile.swift */; };
+		6A8FFC30291E082900000C1B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6A8FFC2F291E082900000C1B /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -254,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				545908A62913F87E00B3A658 /* Kingfisher in Frameworks */,
+				6A8FFC30291E082900000C1B /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,6 +610,7 @@
 			name = WonyoungCamera;
 			packageProductDependencies = (
 				545908A52913F87E00B3A658 /* Kingfisher */,
+				6A8FFC2F291E082900000C1B /* Lottie */,
 			);
 			productName = WonyoungCamera;
 			productReference = 54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */;
@@ -684,6 +687,7 @@
 			mainGroup = 54D3588A28DC7B6900A3AB4D;
 			packageReferences = (
 				545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 54D3589428DC7B6900A3AB4D /* Products */;
 			projectDirPath = "";
@@ -1189,6 +1193,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1196,6 +1208,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		6A8FFC2F291E082900000C1B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
