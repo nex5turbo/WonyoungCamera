@@ -15,44 +15,55 @@ struct ExportResultView: View {
     var body: some View {
         VStack {
             HStack {
-                Image(systemName: "xmark")
-                    .onTapGesture {
-                        resultImage = UIImage()
-                        resultNSData = nil
-                        resultData = nil
-                        dismiss()
-                    }
+                Button {
+                    resultImage = UIImage()
+                    resultNSData = nil
+                    resultData = nil
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 20))
+                        .foregroundColor(.highlightColor)
+                }
                 Spacer()
             }
             .padding()
+
             Spacer()
-            Text("이미지 생성이 완료되었습니다!")
-            Text("프린터로 출력할 수 있습니다!")
             Image(uiImage: resultImage)
                 .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 400)
-                .border(.black, width: 1)
+                .scaledToFill()
+                .cornerRadius(15)
+                .frame(width: 300, height: 420)
+                .shadow(color: .gray, radius: 10, x: 5, y: 5)
             Spacer()
             HStack {
-                Image(systemName: "square.and.arrow.up")
-                    .onTapGesture {
-                        if let data = resultData {
-                            share(data: data)
-                        } else if let nsdata = resultNSData {
-                            share(data: nsdata)
-                        }
+                Button {
+                    if let data = resultData {
+                        share(data: data)
+                    } else if let nsdata = resultNSData {
+                        share(data: nsdata)
                     }
+                } label: {
+                    Image(systemName: "square.and.arrow.up.circle")
+                        .font(.system(size: 28))
+                        .foregroundColor(.white)
+                }
+                .frame(width: 44, height: 44)
+                .background(Color.highlightColor)
+                .clipShape(Circle())
             }
-            .padding()
         }
         .navigationTitle("")
         .navigationBarHidden(true)
     }
 }
 
-//struct ExportResultView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ExportResultView()
-//    }
-//}
+struct ExportResultView_Previews: PreviewProvider {
+    static var previews: some View {
+        ExportResultView(
+            resultImage: .constant(UIImage()),
+            resultNSData: .constant(nil),
+            resultData: .constant(nil))
+    }
+}
