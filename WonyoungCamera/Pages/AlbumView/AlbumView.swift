@@ -202,10 +202,9 @@ struct AlbumView: View {
                         }
                         .padding()
                     Spacer()
-                    Image(systemName: "printer.fill")
+                    Text("Sticka")
+                        .bold()
                         .font(.system(size: 20))
-                        .foregroundColor(.clear)
-                        .padding()
                     Spacer()
                     Button {
                         withAnimation {
@@ -264,17 +263,17 @@ struct AlbumView: View {
                             ForEach(Array(ExportCount.allCases), id: \.self) { item in
                                 switch item {
                                 case ._3x4:
-                                    Text("12")
+                                    Text("3x4")
                                         .onTapGesture {
                                             self.selectedExportCount = ._3x4
                                         }
                                 case ._4x5:
-                                    Text("20")
+                                    Text("4x5")
                                         .onTapGesture {
                                             self.selectedExportCount = ._4x5
                                         }
                                 case ._5x6:
-                                    Text("30")
+                                    Text("5x6")
                                         .onTapGesture {
                                             self.selectedExportCount = ._5x6
                                         }
@@ -323,7 +322,7 @@ struct AlbumView: View {
                         .padding(.bottom, 10)
                         .edgesIgnoringSafeArea(.all)
                     }
-                    .background(.ultraThinMaterial)
+                    .background(.thickMaterial)
                 }
             }
         }
