@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import GoogleMobileAds
 
 @main
 struct WonyoungCameraApp: App {
@@ -17,7 +18,6 @@ struct WonyoungCameraApp: App {
         }
     }
 }
-
 
 class AppDelegate: NSObject, UIApplicationDelegate {
         
@@ -33,6 +33,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             } else {
 
             }
+        }
+        GADMobileAds.sharedInstance().start { _ in
+            var ad = OpenAd()
+            ad.tryToPresentAd()
         }
         return true
     }
