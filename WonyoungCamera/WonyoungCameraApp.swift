@@ -35,8 +35,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             }
         }
         GADMobileAds.sharedInstance().start { _ in
-            var ad = OpenAd()
-            ad.tryToPresentAd()
         }
         return true
     }

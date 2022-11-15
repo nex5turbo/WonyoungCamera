@@ -12,26 +12,29 @@ final class OpenAd: NSObject, GADFullScreenContentDelegate {
    var appOpenAd: GADAppOpenAd?
    var loadTime = Date()
    
-   func requestAppOpenAd() {
+    override init() {
+        super.init()
+        loadAppOpenAd()
+    }
+   func loadAppOpenAd() {
        let request = GADRequest()
-       GADAppOpenAd.load(withAdUnitID: "ca-app-pub-3940256099942544/5662855259",
+       GADAppOpenAd.load(
+//                         withAdUnitID: "ca-app-pub-6235545617614297/1415165279", // product Id
+                         withAdUnitID: "ca-app-pub-3940256099942544/5662855259", // test Id
                          request: request,
                          orientation: UIInterfaceOrientation.portrait,
                          completionHandler: { (appOpenAdIn, _) in
                            self.appOpenAd = appOpenAdIn
                            self.appOpenAd?.fullScreenContentDelegate = self
                            self.loadTime = Date()
-                            self.tryToPresentAd()
                          })
    }
    
    func tryToPresentAd() {
        if let gOpenAd = self.appOpenAd {
-           print("open ad good")
            gOpenAd.present(fromRootViewController: (UIApplication.shared.windows.first?.rootViewController)!)
        } else {
-           print("open ad bad")
-           self.requestAppOpenAd()
+           self.loadAppOpenAd()
        }
    }
    
@@ -40,16 +43,16 @@ final class OpenAd: NSObject, GADFullScreenContentDelegate {
        let timeIntervalBetweenNowAndLoadTime = now.timeIntervalSince(self.loadTime)
        let secondsPerHour = 3600.0
        let intervalInHours = timeIntervalBetweenNowAndLoadTime / secondsPerHour
-       return false
+       return intervalInHours < Double(thresholdN)
    }
    
    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
        print("[OPEN AD] Failed: \(error)")
-       requestAppOpenAd()
+       loadAppOpenAd()
    }
    
    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-       requestAppOpenAd()
+       loadAppOpenAd()
        print("[OPEN AD] Ad dismissed")
    }
 }
