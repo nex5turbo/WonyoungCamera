@@ -14,7 +14,7 @@ struct CameraView: View {
     }
     let bottomIconSize: CGFloat = 25
     @ObservedObject var metalCamera = MetalCamera()
-//    @State var albumImagePaths: [String] = []
+    @ObservedObject var purchaseManager = PurchaseManager.shared
 
     @State var shouldTakePicture = false
     @State var takenImage: UIImage? = nil
@@ -184,6 +184,10 @@ struct CameraView: View {
                         }
                         Spacer()
                         Button {
+                            if !purchaseManager.isPremiumUser {
+                                purchaseManager.subscriptionViewPresent.toggle()
+                                return
+                            }
                             HapticManager.instance.impact(style: .soft)
                             if !isMute {
                                 shutterSound()

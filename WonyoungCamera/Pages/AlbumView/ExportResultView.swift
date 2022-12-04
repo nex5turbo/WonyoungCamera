@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExportResultView: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject var purchaseManager = PurchaseManager.shared
     @Binding var resultImage: UIImage
     @Binding var resultNSData: NSData?
     @Binding var resultData: Data?
@@ -30,10 +31,14 @@ struct ExportResultView: View {
                 Spacer()
                 HStack {
                     Button {
-                        if let data = resultData {
-                            share(data: data)
-                        } else if let nsdata = resultNSData {
-                            share(data: nsdata)
+                        if purchaseManager.isPremiumUser {
+                            if let data = resultData {
+                                share(data: data)
+                            } else if let nsdata = resultNSData {
+                                share(data: nsdata)
+                            }
+                        } else {
+                            purchaseManager.subscriptionViewPresent.toggle()
                         }
                     } label: {
                         Image(systemName: "square.and.arrow.up.circle")

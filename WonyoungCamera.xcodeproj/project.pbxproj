@@ -120,6 +120,9 @@
 		54D358E928DC7BD900A3AB4D /* Lut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D728DC7BD900A3AB4D /* Lut.swift */; };
 		54EA8349291EE612007D6A4A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 54EA8348291EE612007D6A4A /* GoogleMobileAds */; };
 		54EA834F291EE753007D6A4A /* OpenAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EA834E291EE753007D6A4A /* OpenAd.swift */; };
+		54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 54ED1063293CCCBE00926E36 /* SwiftyStoreKit */; };
+		54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54ED1065293CCD1C00926E36 /* Purchase.plist */; };
+		54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED1067293CCE3700926E36 /* SubscriptionView.swift */; };
 		560C70FC2919E6EE00F679A3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 560C70FE2919E6EE00F679A3 /* Localizable.strings */; };
 		560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C71002919E71000F679A3 /* LocalizeFile.swift */; };
 		6A8FFC30291E082900000C1B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6A8FFC2F291E082900000C1B /* Lottie */; };
@@ -261,6 +264,8 @@
 		54D358D728DC7BD900A3AB4D /* Lut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lut.swift; sourceTree = "<group>"; };
 		54EA834C291EE6CE007D6A4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		54EA834E291EE753007D6A4A /* OpenAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAd.swift; sourceTree = "<group>"; };
+		54ED1065293CCD1C00926E36 /* Purchase.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Purchase.plist; sourceTree = "<group>"; };
+		54ED1067293CCE3700926E36 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		560C70FD2919E6EE00F679A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		560C70FF2919E6F100F679A3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		560C71002919E71000F679A3 /* LocalizeFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizeFile.swift; sourceTree = "<group>"; };
@@ -275,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54EA8349291EE612007D6A4A /* GoogleMobileAds in Frameworks */,
+				54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */,
 				545908A62913F87E00B3A658 /* Kingfisher in Frameworks */,
 				6A8FFC30291E082900000C1B /* Lottie in Frameworks */,
 			);
@@ -304,6 +310,7 @@
 				54168B2A28E274020000DF7F /* SettingView */,
 				54D358C828DC7BD900A3AB4D /* CameraView */,
 				54D358C028DC7BD900A3AB4D /* Components */,
+				54ED1067293CCE3700926E36 /* SubscriptionView.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -605,6 +612,7 @@
 				54D358D428DC7BD900A3AB4D /* SoundManager.swift */,
 				54D358D528DC7BD900A3AB4D /* HapticManager.swift */,
 				545908B8291E828400B3A658 /* IAPManager.swift */,
+				54ED1065293CCD1C00926E36 /* Purchase.plist */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -659,6 +667,7 @@
 				545908A52913F87E00B3A658 /* Kingfisher */,
 				6A8FFC2F291E082900000C1B /* Lottie */,
 				54EA8348291EE612007D6A4A /* GoogleMobileAds */,
+				54ED1063293CCCBE00926E36 /* SwiftyStoreKit */,
 			);
 			productName = WonyoungCamera;
 			productReference = 54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */;
@@ -737,6 +746,7 @@
 				545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				54EA8347291EE612007D6A4A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
 			);
 			productRefGroup = 54D3589428DC7B6900A3AB4D /* Products */;
 			projectDirPath = "";
@@ -809,6 +819,7 @@
 				545D58C528E08A7400A874DB /* Yenely.png in Resources */,
 				6A8FFC37291E101300000C1B /* exportImage.json in Resources */,
 				545D587A28E07BA000A874DB /* Bob.png in Resources */,
+				54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */,
 				545D58C828E08A7400A874DB /* Doug.png in Resources */,
 				545D58BF28E08A7400A874DB /* Creamlow.png in Resources */,
 				545D58ED28E08A7400A874DB /* lut17.png in Resources */,
@@ -888,6 +899,7 @@
 				54D358E128DC7BD900A3AB4D /* MetalCameraView.swift in Sources */,
 				54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */,
 				54D358DF28DC7BD900A3AB4D /* Shader.metal in Sources */,
+				54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */,
 				545D583328DEACC200A874DB /* Brightness.swift in Sources */,
 				54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */,
 				545D583728DEB0FB00A874DB /* Brightness.metal in Sources */,
@@ -1059,7 +1071,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1078,7 +1090,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.11;
+				MARKETING_VERSION = 0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1096,7 +1108,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1115,7 +1127,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.11;
+				MARKETING_VERSION = 0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1261,6 +1273,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.3;
+			};
+		};
 		6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -1281,6 +1301,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 54EA8347291EE612007D6A4A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
+		};
+		54ED1063293CCCBE00926E36 /* SwiftyStoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */;
+			productName = SwiftyStoreKit;
 		};
 		6A8FFC2F291E082900000C1B /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

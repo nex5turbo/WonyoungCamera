@@ -8,11 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    @ObservedObject var purchaseManager = PurchaseManager.shared
     var body: some View {
         NavigationView {
             CameraView()
         }
+        .fullScreenCover(isPresented: $purchaseManager.subscriptionViewPresent, content: {
+            SubscriptionView()
+        })
         .navigationViewStyle(.stack)
+        .onChange(of: scenePhase, perform: { newValue in
+            switch newValue {
+            case .active:
+                if purchaseManager.isPremiumUser {
+                    purchaseManager.verifySubscription { _ in }
+                }
+            default:
+                break
+            }
+        })
     }
 }
 

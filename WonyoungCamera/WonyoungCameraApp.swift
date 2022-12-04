@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AVFoundation
-import GoogleMobileAds
+import SwiftyStoreKit
 
 @main
 struct WonyoungCameraApp: App {
@@ -27,14 +27,22 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return AppDelegate.orientationLock
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
-            if response {
-                
-            } else {
-
+        SwiftyStoreKit.completeTransactions(atomically: false) { purchases in
+            for purchase in purchases {
+                switch purchase.transaction.transactionState {
+                case .purchased, .restored:
+                    if purchase.needsFinishTransaction {
+                        // Deliver content from server, then:
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                    // Unlock content
+                    PurchaseManager.shared.setUserPremium(as: true)
+                case .failed, .purchasing, .deferred:
+                    break
+                @unknown default:
+                    break
+                }
             }
-        }
-        GADMobileAds.sharedInstance().start { _ in
         }
         return true
     }
