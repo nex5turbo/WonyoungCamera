@@ -13,7 +13,7 @@ struct CameraView: View {
         case brightness, contrast, saturation
     }
     let bottomIconSize: CGFloat = 25
-    @ObservedObject var metalCamera = MetalCamera()
+    @ObservedObject var metalCamera: MetalCamera
     @ObservedObject var purchaseManager = PurchaseManager.shared
 
     @State var shouldTakePicture = false
@@ -74,7 +74,7 @@ struct CameraView: View {
                 .background(.black)
                 GeometryReader { proxy in
                     ZStack {
-                        Color.clear
+                        Color.black
                             .onAppear {
                                 print(proxy.size.width)
                                 print(proxy.size.height)
@@ -105,6 +105,9 @@ struct CameraView: View {
                                                     green: Double(255 - color.1) / 255,
                                                     blue: Double(255 - color.2) / 255)
                         }
+                        .shadow(color: .gray, radius: 5)
+                        .cornerRadius(30)
+                        
                         if isSliderEditing {
                             ZStack {
                                 VStack {
@@ -163,6 +166,7 @@ struct CameraView: View {
                     HStack {
                         Button {
                             HapticManager.instance.impact(style: .soft)
+                            print("\(self.metalCamera.id)")
                             self.metalCamera.setUpCamera()
                         } label: {
                             Image(systemName: "arrow.triangle.2.circlepath.circle")
@@ -184,7 +188,7 @@ struct CameraView: View {
                         }
                         Spacer()
                         Button {
-                            if !purchaseManager.isPremiumUser {
+                            if !purchaseManager.isPremiumUser, !selectedLut.isFree {
                                 purchaseManager.subscriptionViewPresent.toggle()
                                 return
                             }
@@ -259,11 +263,14 @@ struct CameraView: View {
                 metalCamera.startSession()
             }
         }
+        .onAppear {
+            print("onAppear \(self.metalCamera.id)")
+        }
     }
 }
 
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView()
+        CameraView(metalCamera: MetalCamera())
     }
 }

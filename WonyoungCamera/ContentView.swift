@@ -10,9 +10,10 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var purchaseManager = PurchaseManager.shared
+    @ObservedObject var metalCamera = MetalCamera()
     var body: some View {
         NavigationView {
-            CameraView()
+            CameraView(metalCamera: metalCamera)
         }
         .fullScreenCover(isPresented: $purchaseManager.subscriptionViewPresent, content: {
             SubscriptionView()
