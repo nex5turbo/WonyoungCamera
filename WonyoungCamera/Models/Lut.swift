@@ -8,11 +8,6 @@
 import Foundation
 import MetalKit
 
-struct LutInfo {
-    var lut: Lut
-    var isFree: Bool
-}
-
 enum Lut: String, CaseIterable {
     case Natural
     case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
@@ -27,20 +22,20 @@ enum Lut: String, CaseIterable {
     
     case Doris, Country, Doug, TinyDC, Blues, Borg, Earl, Coco, Minker, Carl, Sun, LemonFell
 
-    static fileprivate let lutInfo: [Lut: LutInfo] = [
-        .Natural: LutInfo(lut: .Natural, isFree: true),
-        .Aladin: LutInfo(lut: .Aladin, isFree: true),
-        .Alex: LutInfo(lut: .Alex, isFree: true),
-        .Amber: LutInfo(lut: .Amber, isFree: true),
-        .Anne: LutInfo(lut: .Anne, isFree: true)
+    static fileprivate let lutInfo: [Lut] = [
+        .Natural,
+        .Aladin,
+        .Alex,
+        .Amber,
+        .Anne
     ]
 
     var isFree: Bool {
-        guard let currentLutInfo = Lut.lutInfo[self] else {
-            return false
+        if Lut.lutInfo.contains(self) {
+            return true
         }
         
-        return currentLutInfo.isFree
+        return false
     }
 }
 
