@@ -166,7 +166,6 @@ struct CameraView: View {
                     HStack {
                         Button {
                             HapticManager.instance.impact(style: .soft)
-                            print("\(self.metalCamera.id)")
                             self.metalCamera.setUpCamera()
                         } label: {
                             Image(systemName: "arrow.triangle.2.circlepath.circle")
@@ -262,9 +261,6 @@ struct CameraView: View {
             } else {
                 metalCamera.startSession()
             }
-        }
-        .onAppear {
-            print("onAppear \(self.metalCamera.id)")
         }
     }
 }
