@@ -100,7 +100,7 @@ struct AlbumView: View {
                         }
                     }
                     HStack {
-                        Text("Sticka")
+                        Text(String.appName)
                             .bold()
                             .font(.system(size: 20))
                             .foregroundColor(.black)
@@ -130,13 +130,13 @@ struct AlbumView: View {
                                                             self.selectedIndex = index
                                                             self.deleteConfirmPresent = true
                                                         } label: {
-                                                            Text(deleteLabel)
+                                                            Text(String.deleteLabel)
                                                             Image(systemName: "trash.circle")
                                                         }
                                                         Button {
                                                             share(path: item)
                                                         } label: {
-                                                            Text(shareLabel)
+                                                            Text(String.shareLabel)
                                                             Image(systemName: "square.and.arrow.up.circle")
                                                         }
                                                     }
@@ -287,7 +287,7 @@ struct AlbumView: View {
                             .padding()
 
                             Spacer()
-                            Text(selectedImagePaths.isEmpty ? selectLabel : selectedCountText(c1: selectedImagePaths.count, c2: selectedExportCount.rawValue))
+                            Text(selectedImagePaths.isEmpty ? String.selectLabel : String.selectedCountText(c1: selectedImagePaths.count, c2: selectedExportCount.rawValue))
                                 .font(.system(size: 18))
                                 .foregroundColor(.black)
                                 .bold()
@@ -322,18 +322,18 @@ struct AlbumView: View {
             }
         }
         .navigationBarHidden(true)
-        .alert(askDeleteLabel, isPresented: $deleteConfirmPresent, actions: {
+        .alert(String.askDeleteLabel, isPresented: $deleteConfirmPresent, actions: {
             Button(role: .destructive) {
                 ImageManager.instance.delete(at: albumImagePaths[selectedIndex])
                 withAnimation {
                     albumImagePaths.remove(at: self.selectedIndex)
                 }
             } label: {
-                Text(deleteLabel)
+                Text(String.deleteLabel)
             }
             Button(role: .cancel) {
             } label: {
-                Text(cancelLabel)
+                Text(String.cancelLabel)
             }
         })
         .overlay(
