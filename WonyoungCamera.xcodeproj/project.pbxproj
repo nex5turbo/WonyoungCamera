@@ -100,7 +100,6 @@
 		54608CDA290D9BC300614B80 /* Natural.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD9290D9BC300614B80 /* Natural.png */; };
 		546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED8C528F03C3700C62AE5 /* CameraView.swift */; };
 		546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */; };
-		54B233CE291FD678009ED190 /* InterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B233CD291FD678009ED190 /* InterstitialAd.swift */; };
 		54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3589628DC7B6900A3AB4D /* WonyoungCameraApp.swift */; };
 		54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3589828DC7B6900A3AB4D /* ContentView.swift */; };
 		54D3589B28DC7B6A00A3AB4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54D3589A28DC7B6A00A3AB4D /* Assets.xcassets */; };
@@ -118,8 +117,6 @@
 		54D358E728DC7BD900A3AB4D /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D428DC7BD900A3AB4D /* SoundManager.swift */; };
 		54D358E828DC7BD900A3AB4D /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D528DC7BD900A3AB4D /* HapticManager.swift */; };
 		54D358E928DC7BD900A3AB4D /* Lut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358D728DC7BD900A3AB4D /* Lut.swift */; };
-		54EA8349291EE612007D6A4A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 54EA8348291EE612007D6A4A /* GoogleMobileAds */; };
-		54EA834F291EE753007D6A4A /* OpenAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EA834E291EE753007D6A4A /* OpenAd.swift */; };
 		54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 54ED1063293CCCBE00926E36 /* SwiftyStoreKit */; };
 		54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54ED1065293CCD1C00926E36 /* Purchase.plist */; };
 		54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED1067293CCE3700926E36 /* SubscriptionView.swift */; };
@@ -241,7 +238,6 @@
 		54608CD9290D9BC300614B80 /* Natural.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Natural.png; sourceTree = "<group>"; };
 		546ED8C528F03C3700C62AE5 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
-		54B233CD291FD678009ED190 /* InterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAd.swift; sourceTree = "<group>"; };
 		54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WonyoungCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D3589628DC7B6900A3AB4D /* WonyoungCameraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonyoungCameraApp.swift; sourceTree = "<group>"; };
 		54D3589828DC7B6900A3AB4D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -263,7 +259,6 @@
 		54D358D528DC7BD900A3AB4D /* HapticManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		54D358D728DC7BD900A3AB4D /* Lut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lut.swift; sourceTree = "<group>"; };
 		54EA834C291EE6CE007D6A4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		54EA834E291EE753007D6A4A /* OpenAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAd.swift; sourceTree = "<group>"; };
 		54ED1065293CCD1C00926E36 /* Purchase.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Purchase.plist; sourceTree = "<group>"; };
 		54ED1067293CCE3700926E36 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		560C70FD2919E6EE00F679A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -279,7 +274,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54EA8349291EE612007D6A4A /* GoogleMobileAds in Frameworks */,
 				54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */,
 				545908A62913F87E00B3A658 /* Kingfisher in Frameworks */,
 				6A8FFC30291E082900000C1B /* Lottie in Frameworks */,
@@ -515,7 +509,6 @@
 		54D3589528DC7B6900A3AB4D /* WonyoungCamera */ = {
 			isa = PBXGroup;
 			children = (
-				54EA834D291EE745007D6A4A /* AdMob */,
 				54EA834C291EE6CE007D6A4A /* Info.plist */,
 				6A8FFC31291E085500000C1B /* Lottie */,
 				545908A729140C4C00B3A658 /* Constants */,
@@ -626,15 +619,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		54EA834D291EE745007D6A4A /* AdMob */ = {
-			isa = PBXGroup;
-			children = (
-				54EA834E291EE753007D6A4A /* OpenAd.swift */,
-				54B233CD291FD678009ED190 /* InterstitialAd.swift */,
-			);
-			path = AdMob;
-			sourceTree = "<group>";
-		};
 		6A8FFC31291E085500000C1B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,7 +650,6 @@
 			packageProductDependencies = (
 				545908A52913F87E00B3A658 /* Kingfisher */,
 				6A8FFC2F291E082900000C1B /* Lottie */,
-				54EA8348291EE612007D6A4A /* GoogleMobileAds */,
 				54ED1063293CCCBE00926E36 /* SwiftyStoreKit */,
 			);
 			productName = WonyoungCamera;
@@ -745,7 +728,6 @@
 			packageReferences = (
 				545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				54EA8347291EE612007D6A4A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
 			);
 			productRefGroup = 54D3589428DC7B6900A3AB4D /* Products */;
@@ -894,8 +876,6 @@
 				5435E650290EF72600F8A331 /* Exporter.swift in Sources */,
 				5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */,
 				54D358DD28DC7BD900A3AB4D /* CornerRadius+Extensions.swift in Sources */,
-				54B233CE291FD678009ED190 /* InterstitialAd.swift in Sources */,
-				54EA834F291EE753007D6A4A /* OpenAd.swift in Sources */,
 				54D358E128DC7BD900A3AB4D /* MetalCameraView.swift in Sources */,
 				54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */,
 				54D358DF28DC7BD900A3AB4D /* Shader.metal in Sources */,
@@ -1265,14 +1245,6 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		54EA8347291EE612007D6A4A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
 		54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit.git";
@@ -1296,11 +1268,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		54EA8348291EE612007D6A4A /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 54EA8347291EE612007D6A4A /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
 		};
 		54ED1063293CCCBE00926E36 /* SwiftyStoreKit */ = {
 			isa = XCSwiftPackageProductDependency;
