@@ -105,9 +105,21 @@ struct CameraView: View {
                                                     green: Double(255 - color.1) / 255,
                                                     blue: Double(255 - color.2) / 255)
                         }
-                        .shadow(color: .gray, radius: 5)
                         .cornerRadius(30)
-                        
+                        .padding(.horizontal, 10)
+                        VStack {
+                            Text("Rounder")
+                                .font(.system(size: 25, weight: .bold))
+                            Spacer()
+                            Text("Round Your Mind")
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(3)
+                            Text("By Rounder camera")
+                                .font(.system(size: 10))
+                                .foregroundColor(.gray)
+                        }
+                        .padding()
+
                         if isSliderEditing {
                             ZStack {
                                 VStack {
