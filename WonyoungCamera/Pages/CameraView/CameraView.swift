@@ -108,15 +108,21 @@ struct CameraView: View {
                         .cornerRadius(30)
                         .padding(.horizontal, 10)
                         VStack {
-                            Text("Rounder")
-                                .font(.system(size: 25, weight: .bold))
-                            Spacer()
-                            Text("Round Your Mind")
-                                .font(.system(size: 14, weight: .semibold))
-                                .padding(3)
-                            Text("By Rounder camera")
-                                .font(.system(size: 10))
-                                .foregroundColor(.gray)
+                            if UIScreen.main.bounds.height / UIScreen.main.bounds.width <= 2.0 {
+                                Spacer()
+                                Text("Rounder")
+                                    .font(.system(size: 25, weight: .bold))
+                            } else {
+                                Text("Rounder")
+                                    .font(.system(size: 25, weight: .bold))
+                                Spacer()
+                                Text("Round Your Mind")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .padding(3)
+                                Text("By Rounder camera")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.gray)
+                            }
                         }
                         .padding()
 
@@ -274,6 +280,8 @@ struct CameraView: View {
                 metalCamera.startSession()
             }
         }
+        .navigationTitle("")
+        .navigationBarHidden(true)
     }
 }
 
