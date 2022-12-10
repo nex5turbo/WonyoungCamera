@@ -14,71 +14,63 @@ struct ExportResultView: View {
     @Binding var resultNSData: NSData?
     @Binding var resultData: Data?
     var body: some View {
-        ZStack {
+        VStack(spacing: 0) {
             ZStack {
-                Image(uiImage: resultImage)
-                    .resizable()
-                    .scaledToFill()
-                    .cornerRadius(15)
-                    .frame(width: 300, height: 420)
-                    .shadow(color: .gray, radius: 10, x: 5, y: 5)
-                VStack {
-                    LottiView(lottieName: .finish, loop: .playOnce)
-                    Color.clear.frame(height: 120)
+                HStack {
+                    Text("Great!")
+                        .bold()
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
                 }
-            }
-            VStack {
-                Spacer()
                 HStack {
                     Button {
-                        if purchaseManager.isPremiumUser {
-                            if let data = resultData {
-                                share(data: data)
-                            } else if let nsdata = resultNSData {
-                                share(data: nsdata)
-                            }
-                        } else {
-                            purchaseManager.subscriptionViewPresent.toggle()
-                        }
+                        dismiss()
                     } label: {
-                        GradientImageView {
-                            Image(systemName: "square.and.arrow.up.circle")
-                                .font(.system(size: 28))
-                        }
-                    }
-                    .frame(width: 44, height: 44)
-                    .clipShape(Circle())
-                }
-            }
-            VStack(spacing: 0) {
-                ZStack {
-                    HStack {
-                        Text("Great!")
-                            .bold()
+                        Image(systemName: "chevron.left")
                             .font(.system(size: 20))
                             .foregroundColor(.black)
+                            .padding()
                     }
-                    HStack {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 20))
-                                .foregroundColor(.black)
-                                .padding()
-                        }
-                        Spacer()
-                    }
+                    Spacer()
                 }
-                .background(.white)
-                Divider()
-                Text("Share or Print!")
-                    .font(.system(size: 20))
-                    .foregroundColor(.black)
-                Spacer()
+            }
+            .background(.white)
+            Divider()
+            Spacer()
+            Image(uiImage: resultImage)
+                .resizable()
+                .scaledToFill()
+                .cornerRadius(15)
+                .frame(width: 300, height: 420)
+                .shadow(color: .gray, radius: 10, x: 5, y: 5)
+            Spacer()
+            Text("Print size 297 x 210")
+                .font(.system(size: 23))
+                .bold()
+                .padding()
+            Text("Share this to your friends, or print with your home printer. This image designed to fit in A4 printing paper.")
+                .foregroundColor(.gray)
+                .font(.system(size: 15))
+                .padding()
+            Spacer()
+            Button {
+                if purchaseManager.isPremiumUser {
+                    if let data = resultData {
+                        share(data: data)
+                    } else if let nsdata = resultNSData {
+                        share(data: nsdata)
+                    }
+                } else {
+                    purchaseManager.subscriptionViewPresent.toggle()
+                }
+            } label: {
+                GradientImageView {
+                    Text("Share")
+                        .font(.system(size: 30))
+                }
+                .padding()
             }
         }
-        
         .background(.white)
         .navigationTitle("")
         .navigationBarHidden(true)

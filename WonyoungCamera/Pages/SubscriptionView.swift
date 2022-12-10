@@ -12,6 +12,8 @@ struct SubscriptionView: View {
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @State var isPurchasing = false
     @State var isRotating = false
+    @State var successAlertPresent = false
+    @State var errorAlertPresent = false
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
             .repeatForever(autoreverses: false)
@@ -39,6 +41,7 @@ struct SubscriptionView: View {
                     .onAppear {
                         isRotating = true
                     }
+                Color.clear.frame(height: 8)
                 VStack(spacing: 8) {
                     GradientImageView {
                         Text("Rounder monthly plan")
@@ -56,14 +59,14 @@ struct SubscriptionView: View {
                 Button {
                     isPurchasing = true
                     PurchaseManager.shared.purchaseMonthlyPremium { result in
-                        print(result)
                         switch result {
                         case .success:
                             purchaseManager.setUserPremium(as: true)
+                            successAlertPresent.toggle()
                         case .deferred:
-                            break
+                            errorAlertPresent.toggle()
                         case .error:
-                            break
+                            errorAlertPresent.toggle()
                         }
                         isPurchasing = false
                     }
@@ -78,6 +81,31 @@ struct SubscriptionView: View {
                 }
                 .padding(.horizontal, 32)
                 .padding(.bottom, 5)
+                .alert(
+                    "Network error",
+                    isPresented: $errorAlertPresent
+                ) {
+                    Button(role: .cancel) {
+                    } label: {
+                        Text("Ok")
+                    }
+
+                } message: {
+                    Text("Please try again.")
+                }
+                .alert(
+                    "Congraturation!",
+                    isPresented: $successAlertPresent
+                ) {
+                    Button(role: .cancel) {
+                        dismiss()
+                    } label: {
+                        Text("Ok")
+                    }
+
+                } message: {
+                    Text("Take your priceless moment!")
+                }
             }
             if isPurchasing {
                 ZStack {
