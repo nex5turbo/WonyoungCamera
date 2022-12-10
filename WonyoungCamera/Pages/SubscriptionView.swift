@@ -11,6 +11,11 @@ struct SubscriptionView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @State var isPurchasing = false
+    @State var isRotating = false
+    var foreverAnimation: Animation {
+        Animation.linear(duration: 5.0)
+            .repeatForever(autoreverses: false)
+    }
     var body: some View {
         ZStack {
             VStack {
@@ -18,12 +23,36 @@ struct SubscriptionView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "xmark.circle")
+                        GradientImageView {
+                            Image(systemName: "xmark.circle")
+                                .font(.system(size:20))
+                        }
                     }
+                    Spacer()
                 }
                 .padding()
+                Image("subIcon")
+                    .resizable()
+                    .frame(width: 200, height: 200)
+                    .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
+                    .animation(foreverAnimation, value: isRotating)
+                    .onAppear {
+                        isRotating = true
+                    }
+                VStack(spacing: 8) {
+                    GradientImageView {
+                        Text("Rounder monthly plan")
+                            .font(.system(size: 17))
+                            .bold()
+                    }
+                    Text("Thanks for using Rounder Camera!")
+                        .font(.system(size: 20))
+                        .bold()
+                }
                 Spacer()
-                Text("Subscription needed")
+                Text("3-day free trial then $1.49/month")
+                    .font(.system(size: 15))
+                    .foregroundColor(.gray)
                 Button {
                     isPurchasing = true
                     PurchaseManager.shared.purchaseMonthlyPremium { result in
@@ -41,14 +70,14 @@ struct SubscriptionView: View {
                 } label: {
                     Text("Subscribe")
                         .frame(maxWidth: .infinity)
+                        .frame(height: 48)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white)
-                        .background(Color.highlightColor)
+                        .background(Color.mainGradientColor)
+                        .cornerRadius(8)
                 }
                 .padding(.horizontal, 32)
                 .padding(.bottom, 5)
-                Spacer()
-                
             }
             if isPurchasing {
                 ZStack {

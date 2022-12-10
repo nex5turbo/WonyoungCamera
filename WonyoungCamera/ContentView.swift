@@ -15,7 +15,7 @@ struct ContentView: View {
         NavigationView {
             CameraView(metalCamera: metalCamera)
         }
-        .fullScreenCover(isPresented: $purchaseManager.subscriptionViewPresent, content: {
+        .sheet(isPresented: $purchaseManager.subscriptionViewPresent, content: {
             SubscriptionView()
         })
         .navigationViewStyle(.stack)

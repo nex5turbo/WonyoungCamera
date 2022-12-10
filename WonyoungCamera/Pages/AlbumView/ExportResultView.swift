@@ -41,12 +41,12 @@ struct ExportResultView: View {
                             purchaseManager.subscriptionViewPresent.toggle()
                         }
                     } label: {
-                        Image(systemName: "square.and.arrow.up.circle")
-                            .font(.system(size: 28))
-                            .foregroundColor(.white)
+                        GradientImageView {
+                            Image(systemName: "square.and.arrow.up.circle")
+                                .font(.system(size: 28))
+                        }
                     }
                     .frame(width: 44, height: 44)
-                    .background(Color.highlightColor)
                     .clipShape(Circle())
                 }
             }
@@ -62,7 +62,7 @@ struct ExportResultView: View {
                         Button {
                             dismiss()
                         } label: {
-                            Image(systemName: "xmark.circle")
+                            Image(systemName: "chevron.left")
                                 .font(.system(size: 20))
                                 .foregroundColor(.black)
                                 .padding()
@@ -72,6 +72,9 @@ struct ExportResultView: View {
                 }
                 .background(.white)
                 Divider()
+                Text("Share or Print!")
+                    .font(.system(size: 20))
+                    .foregroundColor(.black)
                 Spacer()
             }
         }

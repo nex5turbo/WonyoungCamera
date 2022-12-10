@@ -66,7 +66,7 @@ struct AlbumView: View {
             VStack(spacing: 0) {
                 ZStack {
                     HStack {
-                        Image(systemName: "xmark.circle")
+                        Image(systemName: "chevron.left")
                             .font(.system(size: 20))
                             .foregroundColor(.black)
                             .onTapGesture {
