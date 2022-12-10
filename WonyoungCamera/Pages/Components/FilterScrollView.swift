@@ -24,18 +24,25 @@ struct FilterScrollView: View {
                                         LutStorage.instance.selectedLut = lut
                                         self.selectedLut = lut
                                     } label: {
-                                        Image(uiImage: image!)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .clipShape(Circle())
-                                            .frame(width: 40, height: 40)
-                                            .overlay(
-                                                Image(systemName: "checkmark.circle")
-                                                    .resizable()
-                                                    .frame(width: 40, height: 40)
-                                                    .opacity(self.selectedLut == lut ? 1 : 0)
-                                                    .foregroundColor(.white)
-                                            )
+                                        ZStack {
+                                            Image(uiImage: image!)
+                                                .resizable()
+                                                .scaledToFill()
+                                                .clipShape(Circle())
+                                                .frame(width: 40, height: 40)
+                                            if lut.isFree {
+                                                Text("Free")
+                                                    .font(.system(size: 8, weight: .bold))
+                                                    .foregroundColor(.black)
+                                                    .background(.thinMaterial)
+                                                    .cornerRadius(3)
+                                            }
+                                            Image(systemName: "checkmark.circle")
+                                                .resizable()
+                                                .frame(width: 40, height: 40)
+                                                .opacity(self.selectedLut == lut ? 1 : 0)
+                                                .foregroundColor(.white)
+                                        }
                                     }
                                     VStack {
                                         Spacer()
