@@ -12,7 +12,7 @@ enum Lut: String, CaseIterable {
     case Natural
     case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
 
-    case lut9, lut13, lut14, lut15, lut16, lut17, lut18, lut19, lut20, lut21, lut22
+    case Cool, Dust, Neon, Retro, Sunset, Pine, Karma, Greet, Saber, Prim, Dawn
     
     case Harrison, Vinny, Olay, Gordon, Conny, Tom, Sampi, Logan, Henry, Porter, Agnes
     

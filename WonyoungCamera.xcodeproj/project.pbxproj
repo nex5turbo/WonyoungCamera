@@ -84,17 +84,17 @@
 		545D58E128E08A7400A874DB /* Henry.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58AD28E08A7400A874DB /* Henry.png */; };
 		545D58E228E08A7400A874DB /* Porter.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58AE28E08A7400A874DB /* Porter.png */; };
 		545D58E328E08A7400A874DB /* Agnes.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58AF28E08A7400A874DB /* Agnes.png */; };
-		545D58E428E08A7400A874DB /* lut18.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B128E08A7400A874DB /* lut18.png */; };
-		545D58E528E08A7400A874DB /* lut19.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B228E08A7400A874DB /* lut19.png */; };
-		545D58E628E08A7400A874DB /* lut21.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B328E08A7400A874DB /* lut21.png */; };
-		545D58E728E08A7400A874DB /* lut20.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B428E08A7400A874DB /* lut20.png */; };
-		545D58E828E08A7400A874DB /* lut22.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B528E08A7400A874DB /* lut22.png */; };
-		545D58E928E08A7400A874DB /* lut9.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B628E08A7400A874DB /* lut9.png */; };
-		545D58EA28E08A7400A874DB /* lut13.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B728E08A7400A874DB /* lut13.png */; };
-		545D58EB28E08A7400A874DB /* lut14.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B828E08A7400A874DB /* lut14.png */; };
-		545D58EC28E08A7400A874DB /* lut15.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B928E08A7400A874DB /* lut15.png */; };
-		545D58ED28E08A7400A874DB /* lut17.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58BA28E08A7400A874DB /* lut17.png */; };
-		545D58EE28E08A7400A874DB /* lut16.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58BB28E08A7400A874DB /* lut16.png */; };
+		545D58E428E08A7400A874DB /* Karma.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B128E08A7400A874DB /* Karma.png */; };
+		545D58E528E08A7400A874DB /* Greet.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B228E08A7400A874DB /* Greet.png */; };
+		545D58E628E08A7400A874DB /* Prim.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B328E08A7400A874DB /* Prim.png */; };
+		545D58E728E08A7400A874DB /* Saber.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B428E08A7400A874DB /* Saber.png */; };
+		545D58E828E08A7400A874DB /* Dawn.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B528E08A7400A874DB /* Dawn.png */; };
+		545D58E928E08A7400A874DB /* Cool.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B628E08A7400A874DB /* Cool.png */; };
+		545D58EA28E08A7400A874DB /* Dust.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B728E08A7400A874DB /* Dust.png */; };
+		545D58EB28E08A7400A874DB /* Neon.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B828E08A7400A874DB /* Neon.png */; };
+		545D58EC28E08A7400A874DB /* Retro.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58B928E08A7400A874DB /* Retro.png */; };
+		545D58ED28E08A7400A874DB /* Pine.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58BA28E08A7400A874DB /* Pine.png */; };
+		545D58EE28E08A7400A874DB /* Sunset.png in Resources */ = {isa = PBXBuildFile; fileRef = 545D58BB28E08A7400A874DB /* Sunset.png */; };
 		54608CD4290AB87A00614B80 /* sample.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD3290AB87A00614B80 /* sample.png */; };
 		54608CD6290C01DB00614B80 /* cameraFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD5290C01DB00614B80 /* cameraFrame.png */; };
 		54608CDA290D9BC300614B80 /* Natural.png in Resources */ = {isa = PBXBuildFile; fileRef = 54608CD9290D9BC300614B80 /* Natural.png */; };
@@ -223,17 +223,17 @@
 		545D58AD28E08A7400A874DB /* Henry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Henry.png; sourceTree = "<group>"; };
 		545D58AE28E08A7400A874DB /* Porter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Porter.png; sourceTree = "<group>"; };
 		545D58AF28E08A7400A874DB /* Agnes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Agnes.png; sourceTree = "<group>"; };
-		545D58B128E08A7400A874DB /* lut18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut18.png; sourceTree = "<group>"; };
-		545D58B228E08A7400A874DB /* lut19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut19.png; sourceTree = "<group>"; };
-		545D58B328E08A7400A874DB /* lut21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut21.png; sourceTree = "<group>"; };
-		545D58B428E08A7400A874DB /* lut20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut20.png; sourceTree = "<group>"; };
-		545D58B528E08A7400A874DB /* lut22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut22.png; sourceTree = "<group>"; };
-		545D58B628E08A7400A874DB /* lut9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut9.png; sourceTree = "<group>"; };
-		545D58B728E08A7400A874DB /* lut13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut13.png; sourceTree = "<group>"; };
-		545D58B828E08A7400A874DB /* lut14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut14.png; sourceTree = "<group>"; };
-		545D58B928E08A7400A874DB /* lut15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut15.png; sourceTree = "<group>"; };
-		545D58BA28E08A7400A874DB /* lut17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut17.png; sourceTree = "<group>"; };
-		545D58BB28E08A7400A874DB /* lut16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lut16.png; sourceTree = "<group>"; };
+		545D58B128E08A7400A874DB /* Karma.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Karma.png; sourceTree = "<group>"; };
+		545D58B228E08A7400A874DB /* Greet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Greet.png; sourceTree = "<group>"; };
+		545D58B328E08A7400A874DB /* Prim.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Prim.png; sourceTree = "<group>"; };
+		545D58B428E08A7400A874DB /* Saber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Saber.png; sourceTree = "<group>"; };
+		545D58B528E08A7400A874DB /* Dawn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dawn.png; sourceTree = "<group>"; };
+		545D58B628E08A7400A874DB /* Cool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cool.png; sourceTree = "<group>"; };
+		545D58B728E08A7400A874DB /* Dust.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dust.png; sourceTree = "<group>"; };
+		545D58B828E08A7400A874DB /* Neon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Neon.png; sourceTree = "<group>"; };
+		545D58B928E08A7400A874DB /* Retro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Retro.png; sourceTree = "<group>"; };
+		545D58BA28E08A7400A874DB /* Pine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pine.png; sourceTree = "<group>"; };
+		545D58BB28E08A7400A874DB /* Sunset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sunset.png; sourceTree = "<group>"; };
 		54608CD3290AB87A00614B80 /* sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sample.png; sourceTree = "<group>"; };
 		54608CD5290C01DB00614B80 /* cameraFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraFrame.png; sourceTree = "<group>"; };
 		54608CD9290D9BC300614B80 /* Natural.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Natural.png; sourceTree = "<group>"; };
@@ -473,17 +473,17 @@
 		545D58B028E08A7400A874DB /* Colors */ = {
 			isa = PBXGroup;
 			children = (
-				545D58B128E08A7400A874DB /* lut18.png */,
-				545D58B228E08A7400A874DB /* lut19.png */,
-				545D58B328E08A7400A874DB /* lut21.png */,
-				545D58B428E08A7400A874DB /* lut20.png */,
-				545D58B528E08A7400A874DB /* lut22.png */,
-				545D58B628E08A7400A874DB /* lut9.png */,
-				545D58B728E08A7400A874DB /* lut13.png */,
-				545D58B828E08A7400A874DB /* lut14.png */,
-				545D58B928E08A7400A874DB /* lut15.png */,
-				545D58BA28E08A7400A874DB /* lut17.png */,
-				545D58BB28E08A7400A874DB /* lut16.png */,
+				545D58B128E08A7400A874DB /* Karma.png */,
+				545D58B228E08A7400A874DB /* Greet.png */,
+				545D58B328E08A7400A874DB /* Prim.png */,
+				545D58B428E08A7400A874DB /* Saber.png */,
+				545D58B528E08A7400A874DB /* Dawn.png */,
+				545D58B628E08A7400A874DB /* Cool.png */,
+				545D58B728E08A7400A874DB /* Dust.png */,
+				545D58B828E08A7400A874DB /* Neon.png */,
+				545D58B928E08A7400A874DB /* Retro.png */,
+				545D58BA28E08A7400A874DB /* Pine.png */,
+				545D58BB28E08A7400A874DB /* Sunset.png */,
 			);
 			path = Colors;
 			sourceTree = "<group>";
@@ -753,7 +753,7 @@
 				545D58D028E08A7400A874DB /* Sun.png in Resources */,
 				545908BB291E854E00B3A658 /* photo.json in Resources */,
 				54608CD6290C01DB00614B80 /* cameraFrame.png in Resources */,
-				545D58E828E08A7400A874DB /* lut22.png in Resources */,
+				545D58E828E08A7400A874DB /* Dawn.png in Resources */,
 				545D58C028E08A7400A874DB /* Sven.png in Resources */,
 				545D58D128E08A7400A874DB /* LemonFell.png in Resources */,
 				545D588028E07BA000A874DB /* Lucas.png in Resources */,
@@ -765,18 +765,18 @@
 				545D588128E07BA000A874DB /* Aladin.png in Resources */,
 				545D58CD28E08A7400A874DB /* Coco.png in Resources */,
 				545D58E328E08A7400A874DB /* Agnes.png in Resources */,
-				545D58EE28E08A7400A874DB /* lut16.png in Resources */,
-				545D58E628E08A7400A874DB /* lut21.png in Resources */,
+				545D58EE28E08A7400A874DB /* Sunset.png in Resources */,
+				545D58E628E08A7400A874DB /* Prim.png in Resources */,
 				545D587F28E07BA000A874DB /* Josh.png in Resources */,
 				545D58C128E08A7400A874DB /* Rangueen.png in Resources */,
 				545D587C28E07BA000A874DB /* Salomon.png in Resources */,
 				545D58D928E08A7400A874DB /* Harrison.png in Resources */,
-				545D58EA28E08A7400A874DB /* lut13.png in Resources */,
+				545D58EA28E08A7400A874DB /* Dust.png in Resources */,
 				545908B7291E812B00B3A658 /* finish.json in Resources */,
 				545D58BD28E08A7400A874DB /* Ranguit.png in Resources */,
 				545D587128E07BA000A874DB /* Hagrid.png in Resources */,
 				560C70FC2919E6EE00F679A3 /* Localizable.strings in Resources */,
-				545D58E928E08A7400A874DB /* lut9.png in Resources */,
+				545D58E928E08A7400A874DB /* Cool.png in Resources */,
 				545D58D628E08A7400A874DB /* Apple.png in Resources */,
 				545D58CC28E08A7400A874DB /* Earl.png in Resources */,
 				545D58DD28E08A7400A874DB /* Conny.png in Resources */,
@@ -800,19 +800,19 @@
 				545D58D228E08A7400A874DB /* Clementine.png in Resources */,
 				545D58D728E08A7400A874DB /* Pear.png in Resources */,
 				545D587328E07BA000A874DB /* Harry.png in Resources */,
-				545D58E428E08A7400A874DB /* lut18.png in Resources */,
+				545D58E428E08A7400A874DB /* Karma.png in Resources */,
 				545D58C528E08A7400A874DB /* Yenely.png in Resources */,
 				6A8FFC37291E101300000C1B /* exportImage.json in Resources */,
 				545D587A28E07BA000A874DB /* Bob.png in Resources */,
 				54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */,
 				545D58C828E08A7400A874DB /* Doug.png in Resources */,
 				545D58BF28E08A7400A874DB /* Creamlow.png in Resources */,
-				545D58ED28E08A7400A874DB /* lut17.png in Resources */,
+				545D58ED28E08A7400A874DB /* Pine.png in Resources */,
 				545D58CE28E08A7400A874DB /* Minker.png in Resources */,
 				545D58BE28E08A7400A874DB /* Greered.png in Resources */,
 				54D3589B28DC7B6A00A3AB4D /* Assets.xcassets in Resources */,
-				545D58EB28E08A7400A874DB /* lut14.png in Resources */,
-				545D58E728E08A7400A874DB /* lut20.png in Resources */,
+				545D58EB28E08A7400A874DB /* Neon.png in Resources */,
+				545D58E728E08A7400A874DB /* Saber.png in Resources */,
 				545D58C428E08A7400A874DB /* Garage.png in Resources */,
 				545D587828E07BA000A874DB /* Melissa.png in Resources */,
 				545D58BC28E08A7400A874DB /* Danligter.png in Resources */,
@@ -824,14 +824,14 @@
 				545D58CA28E08A7400A874DB /* Blues.png in Resources */,
 				545D587028E07BA000A874DB /* Antonio.png in Resources */,
 				545D587528E07BA000A874DB /* Ivan.png in Resources */,
-				545D58E528E08A7400A874DB /* lut19.png in Resources */,
+				545D58E528E08A7400A874DB /* Greet.png in Resources */,
 				545D58C228E08A7400A874DB /* Ragwarm.png in Resources */,
 				6A8FFC39291E1AA400000C1B /* cancel.json in Resources */,
 				54608CD4290AB87A00614B80 /* sample.png in Resources */,
 				545D58D428E08A7400A874DB /* Dragon.png in Resources */,
 				545D58D528E08A7400A874DB /* Grapes.png in Resources */,
 				545908AB291C010100B3A658 /* circle.png in Resources */,
-				545D58EC28E08A7400A874DB /* lut15.png in Resources */,
+				545D58EC28E08A7400A874DB /* Retro.png in Resources */,
 				545D58DA28E08A7400A874DB /* Vinny.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1055,12 +1055,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WonyoungCamera/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Rounder;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				INFOPLIST_KEY_NSCameraUsageDescription = test;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = test;
@@ -1074,7 +1075,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.13;
+				MARKETING_VERSION = 0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1092,12 +1093,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WonyoungCamera/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Rounder;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				INFOPLIST_KEY_NSCameraUsageDescription = test;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = test;
@@ -1111,7 +1113,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.13;
+				MARKETING_VERSION = 0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

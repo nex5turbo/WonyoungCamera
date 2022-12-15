@@ -276,7 +276,7 @@ struct CameraView: View {
                 }
             }
         })
-        .background(Color.white)
+        .background(Color.black)
         .onChange(of: settingPresent) { newValue in
             if newValue {
                 metalCamera.stopSession()
