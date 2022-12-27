@@ -9,7 +9,7 @@ import Foundation
 import MetalKit
 
 enum Lut: String, CaseIterable {
-    case Natural
+    case Natural, Webtoon
     case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
 
     case Cool, Dust, Neon, Retro, Sunset, Pine, Karma, Greet, Saber, Prim, Dawn
@@ -27,7 +27,8 @@ enum Lut: String, CaseIterable {
         .Aladin,
         .Alex,
         .Amber,
-        .Anne
+        .Anne,
+        .Webtoon
     ]
 
     var isFree: Bool {
