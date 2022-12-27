@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sharedSecret</key>
+	<string>71ede09526bb4a599f1e777e1f25c98e</string>
+	<key>monthlyPremium</key>
+	<string>monthly</string>
+</dict>
+</plist>
