@@ -110,18 +110,17 @@ struct CameraView: View {
                         VStack {
                             if UIScreen.main.bounds.height / UIScreen.main.bounds.width <= 2.0 {
                                 Spacer()
-                                GradientImageView {
-                                    Text("Rounder")
-                                        .font(.system(size: 25, weight: .bold))
-                                }
+                                Text("Rounder")
+                                    .font(.system(size: 25, weight: .bold))
+                                    .foregroundColor(.black)
                             } else {
-                                GradientImageView {
-                                    Text("Rounder")
-                                        .font(.system(size: 25, weight: .bold))
-                                }
+                                Text("Rounder")
+                                    .font(.system(size: 25, weight: .bold))
+                                    .foregroundColor(.black)
                                 Spacer()
                                 Text("Round Your Mind")
                                     .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.black)
                                     .padding(3)
                                 Text("By Rounder camera")
                                     .font(.system(size: 10))

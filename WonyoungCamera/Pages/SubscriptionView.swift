@@ -53,6 +53,10 @@ struct SubscriptionView: View {
                         .bold()
                 }
                 Spacer()
+                Text(String.subscriptionInfoText)
+                    .font(.system(size: 11))
+                    .foregroundColor(.gray)
+                    .padding()
                 Text("3-day free trial then $1.49/month")
                     .font(.system(size: 15))
                     .foregroundColor(.gray)
@@ -106,6 +110,43 @@ struct SubscriptionView: View {
                 } message: {
                     Text("Take your priceless moment!")
                 }
+                HStack {
+                    Button {
+                        
+                    } label: {
+                        Text("Terms of Use")
+                            .font(.system(size: 13))
+                            .foregroundColor(.gray)
+                    }
+                    Text("/")
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray)
+                    Button {
+                        
+                    } label: {
+                        Text("Privacy Policy")
+                            .font(.system(size: 13))
+                            .foregroundColor(.gray)
+                    }
+                    Text("/")
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray)
+                    Button {
+                        isPurchasing = true
+                        purchaseManager.restorePremium { result in
+                            isPurchasing = false
+                            if result {
+                                successAlertPresent = true
+                            } else {
+                                errorAlertPresent = true
+                            }
+                        }
+                    } label: {
+                        Text("Restore")
+                            .font(.system(size: 13))
+                            .foregroundColor(.gray)
+                    }
+                }
             }
             if isPurchasing {
                 ZStack {
@@ -113,8 +154,10 @@ struct SubscriptionView: View {
                     VStack {
                         HStack {
                             Text("Loading....")
+                                .foregroundColor(.black)
                             ProgressView()
                                 .progressViewStyle(.circular)
+                                .foregroundColor(.black)
                         }
                     }
                     .padding(20)

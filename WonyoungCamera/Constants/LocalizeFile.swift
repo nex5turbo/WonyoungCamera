@@ -23,6 +23,7 @@ extension String {
         //let countLabel = NSLocalizedString("%d / %d Selected", comment: "")
         return countedLabel
     }
+    static let subscriptionInfoText = NSLocalizedString("Subscribe information text", comment: "")
 }
 
 
