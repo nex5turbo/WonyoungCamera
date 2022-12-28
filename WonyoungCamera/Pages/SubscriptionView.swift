@@ -112,7 +112,7 @@ struct SubscriptionView: View {
                 }
                 HStack {
                     Button {
-                        
+                        UIApplication.shared.open(URL(string: "https://sites.google.com/view/rounder-terms/")!)
                     } label: {
                         Text("Terms of Use")
                             .font(.system(size: 13))
@@ -122,7 +122,7 @@ struct SubscriptionView: View {
                         .font(.system(size: 13))
                         .foregroundColor(.gray)
                     Button {
-                        
+                        UIApplication.shared.open(URL(string: "https://sites.google.com/view/rounderprivacy/")!)
                     } label: {
                         Text("Privacy Policy")
                             .font(.system(size: 13))
