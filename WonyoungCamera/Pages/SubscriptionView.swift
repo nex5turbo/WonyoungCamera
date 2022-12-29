@@ -186,6 +186,7 @@ struct SubscriptionView: View {
                 .edgesIgnoringSafeArea(.all)
             }
         }
+        .preferredColorScheme(.dark)
     }
 }
 
