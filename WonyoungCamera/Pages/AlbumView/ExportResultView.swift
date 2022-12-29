@@ -44,14 +44,14 @@ struct ExportResultView: View {
                 .frame(width: 300, height: 420)
                 .shadow(color: .gray, radius: 10, x: 5, y: 5)
             Spacer()
-            Text("Print size 297 x 210")
+            Text("297 x 210 (mm)")
                 .font(.system(size: 23))
                 .bold()
                 .padding()
-            Text("Share this to your friends, or print with your home printer. This image designed to fit in A4 printing paper.")
+            Text("Share this to your friends, or print with your home printer. This image designed to fit in A4 printing paper. And be aware, if you print this with home printer, that the color of printed sticker could be different with the original.")
                 .foregroundColor(.gray)
                 .font(.system(size: 15))
-                .padding()
+                .padding(.horizontal, 32)
             Spacer()
             Button {
                 if purchaseManager.isPremiumUser {
@@ -64,12 +64,15 @@ struct ExportResultView: View {
                     purchaseManager.subscriptionViewPresent.toggle()
                 }
             } label: {
-                GradientImageView {
-                    Text("Share")
-                        .font(.system(size: 30))
-                }
-                .padding()
+                Text("Share")
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 48)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.white)
+                    .background(Color.mainGradientColor)
+                    .cornerRadius(8)
             }
+            .padding(.horizontal, 32)
         }
         .background(.white)
         .navigationTitle("")
