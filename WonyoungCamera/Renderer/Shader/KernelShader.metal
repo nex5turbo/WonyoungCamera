@@ -40,7 +40,7 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
     coord.x += halfWidth;
     coord.y += halfHeight;
     coord.x = (coord.x) / textureWidth;
-    coord.y = (coord.y + (200 * scale)) / textureHeight;
+    coord.y = (coord.y) / textureHeight;
     if (shouldFlip) {
         coord.x = 1 - coord.x;
     }
