@@ -16,7 +16,6 @@
 		545908A3291299E600B3A658 /* ExportResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A2291299E600B3A658 /* ExportResultView.swift */; };
 		545908A62913F87E00B3A658 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 545908A52913F87E00B3A658 /* Kingfisher */; };
 		545908A929140C5500B3A658 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A829140C5500B3A658 /* Colors.swift */; };
-		545908AB291C010100B3A658 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 545908AA291C010100B3A658 /* circle.png */; };
 		545908AD291E67EF00B3A658 /* arrowRight.json in Resources */ = {isa = PBXBuildFile; fileRef = 545908AC291E67EF00B3A658 /* arrowRight.json */; };
 		545908B7291E812B00B3A658 /* finish.json in Resources */ = {isa = PBXBuildFile; fileRef = 545908B6291E812B00B3A658 /* finish.json */; };
 		545908B9291E828400B3A658 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908B8291E828400B3A658 /* IAPManager.swift */; };
@@ -102,6 +101,7 @@
 		546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */; };
 		549051C62944B412005D3353 /* GradientImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549051C52944B412005D3353 /* GradientImageView.swift */; };
 		54D1727A295B3CA7006180FA /* Webtoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 54D17279295B3CA7006180FA /* Webtoon.png */; };
+		54D1727C295DBFB3006180FA /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 54D1727B295DBFB3006180FA /* circle.png */; };
 		54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3589628DC7B6900A3AB4D /* WonyoungCameraApp.swift */; };
 		54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3589828DC7B6900A3AB4D /* ContentView.swift */; };
 		54D3589B28DC7B6A00A3AB4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54D3589A28DC7B6A00A3AB4D /* Assets.xcassets */; };
@@ -156,7 +156,6 @@
 		5435E655290EFD9C00F8A331 /* ExportShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ExportShader.metal; sourceTree = "<group>"; };
 		545908A2291299E600B3A658 /* ExportResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportResultView.swift; sourceTree = "<group>"; };
 		545908A829140C5500B3A658 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		545908AA291C010100B3A658 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		545908AC291E67EF00B3A658 /* arrowRight.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrowRight.json; sourceTree = "<group>"; };
 		545908B6291E812B00B3A658 /* finish.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = finish.json; sourceTree = "<group>"; };
 		545908B8291E828400B3A658 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
@@ -242,6 +241,7 @@
 		546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		549051C52944B412005D3353 /* GradientImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientImageView.swift; sourceTree = "<group>"; };
 		54D17279295B3CA7006180FA /* Webtoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Webtoon.png; sourceTree = "<group>"; };
+		54D1727B295DBFB3006180FA /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WonyoungCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D3589628DC7B6900A3AB4D /* WonyoungCameraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonyoungCameraApp.swift; sourceTree = "<group>"; };
 		54D3589828DC7B6900A3AB4D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -589,8 +589,8 @@
 		54D358CE28DC7BD900A3AB4D /* LUTs */ = {
 			isa = PBXGroup;
 			children = (
+				54D1727B295DBFB3006180FA /* circle.png */,
 				54D17279295B3CA7006180FA /* Webtoon.png */,
-				545908AA291C010100B3A658 /* circle.png */,
 				54608CD9290D9BC300614B80 /* Natural.png */,
 				54608CD5290C01DB00614B80 /* cameraFrame.png */,
 				54608CD3290AB87A00614B80 /* sample.png */,
@@ -829,12 +829,12 @@
 				545D587028E07BA000A874DB /* Antonio.png in Resources */,
 				545D587528E07BA000A874DB /* Ivan.png in Resources */,
 				545D58E528E08A7400A874DB /* Greet.png in Resources */,
+				54D1727C295DBFB3006180FA /* circle.png in Resources */,
 				545D58C228E08A7400A874DB /* Ragwarm.png in Resources */,
 				6A8FFC39291E1AA400000C1B /* cancel.json in Resources */,
 				54608CD4290AB87A00614B80 /* sample.png in Resources */,
 				545D58D428E08A7400A874DB /* Dragon.png in Resources */,
 				545D58D528E08A7400A874DB /* Grapes.png in Resources */,
-				545908AB291C010100B3A658 /* circle.png in Resources */,
 				545D58EC28E08A7400A874DB /* Retro.png in Resources */,
 				545D58DA28E08A7400A874DB /* Vinny.png in Resources */,
 			);
