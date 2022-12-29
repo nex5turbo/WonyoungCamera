@@ -135,6 +135,7 @@ class Renderer {
         brightness: Float = 0.0,
         contrast: Float = 0.0,
         saturation: Float = 0.0,
+        shouldStroke: Bool = false,
         clearColor: (Int, Int, Int) = (0, 0, 0)
     ) {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
@@ -177,7 +178,7 @@ class Renderer {
         var contrast = contrast
         var saturation = saturation
         var scale = scale
-
+        var shouldStroke = shouldStroke
         // compute
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
@@ -194,6 +195,7 @@ class Renderer {
         computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 5)
         computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 6)
         computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 7)
+        computeEncoder?.setBytes(&shouldStroke, length: MemoryLayout<Bool>.stride, index: 8)
         
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w

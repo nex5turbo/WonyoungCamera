@@ -17,6 +17,7 @@ struct MetalCameraView: UIViewRepresentable {
     @Binding var contrast: Float
     @Binding var saturation: Float
     @Binding var colorBackgroundEnabled: Bool
+    @Binding var shouldStroke: Bool
     @Binding var colorBackgounrd: (Int, Int, Int)?
     func makeUIView(context: Context) -> MetalView {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -135,6 +136,7 @@ class MetalView: UIView {
             brightness: parent.brightness,
             contrast: parent.contrast,
             saturation: parent.saturation,
+            shouldStroke: parent.shouldStroke,
             clearColor: parent.colorBackgounrd == nil ? (255, 255, 255) : parent.colorBackgounrd!
         )
         

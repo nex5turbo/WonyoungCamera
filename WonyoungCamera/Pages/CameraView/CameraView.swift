@@ -31,6 +31,7 @@ struct CameraView: View {
     @State var selectedAdjustType: AdjustType = .brightness
     @State var sliderValue: Float = 0
     @State var isSliderEditing = false
+    @State var shouldStroke = false
     @State var selectedLut: Lut = .Natural
 
     func getAdjustIconName() -> String {
@@ -93,6 +94,7 @@ struct CameraView: View {
                                 contrast: $contrast,
                                 saturation: $saturation,
                                 colorBackgroundEnabled: $colorBackgroundEnabled,
+                                shouldStroke: $shouldStroke,
                                 colorBackgounrd: $colorBackground
                             )
                         }
@@ -198,10 +200,9 @@ struct CameraView: View {
 
                         Button {
                             HapticManager.instance.impact(style: .soft)
-                            let selectedLut = LutStorage.instance.applyRandomLut()
-                            self.selectedLut = selectedLut
+                            self.shouldStroke.toggle()
                         } label: {
-                            Image(systemName: "shuffle.circle")
+                            Image(systemName: !shouldStroke ? "circle" : "circle.fill")
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)
