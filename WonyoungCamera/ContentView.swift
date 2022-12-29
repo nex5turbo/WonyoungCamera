@@ -11,9 +11,34 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @ObservedObject var metalCamera = MetalCamera()
+    @State var isLoading = true
     var body: some View {
         NavigationView {
-            CameraView(metalCamera: metalCamera)
+            if isLoading {
+                ZStack {
+                    Color.black.edgesIgnoringSafeArea(.all)
+                    VStack {
+                        Image("subIcon")
+                            .resizable()
+                            .frame(width: 200, height: 200)
+                        GradientImageView {
+                            Text("Rounder Camera")
+                                .font(.system(size: 25))
+                                .bold()
+                        }
+                    }
+                }
+                .transition(.opacity)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                        withAnimation {
+                            isLoading = false
+                        }
+                    })
+                }
+            } else {
+                CameraView(metalCamera: metalCamera)
+            }
         }
         .sheet(isPresented: $purchaseManager.subscriptionViewPresent, content: {
             SubscriptionView()
