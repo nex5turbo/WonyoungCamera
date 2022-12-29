@@ -14,140 +14,159 @@ struct SubscriptionView: View {
     @State var isRotating = false
     @State var successAlertPresent = false
     @State var errorAlertPresent = false
+    @State var detailPresent = false
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
             .repeatForever(autoreverses: false)
     }
     var body: some View {
         ZStack {
-            VStack {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        GradientImageView {
-                            Image(systemName: "xmark.circle")
-                                .font(.system(size:20))
+            ScrollView {
+                VStack {
+                    HStack {
+                        Button {
+                            dismiss()
+                        } label: {
+                            GradientImageView {
+                                Image(systemName: "xmark.circle")
+                                    .font(.system(size:20))
+                            }
                         }
+                        Spacer()
                     }
-                    Spacer()
-                }
-                .padding()
-                Image("subIcon")
-                    .resizable()
-                    .frame(width: 200, height: 200)
-                    .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
-                    .animation(foreverAnimation, value: isRotating)
-                    .onAppear {
-                        isRotating = true
-                    }
-                Color.clear.frame(height: 8)
-                VStack(spacing: 8) {
-                    GradientImageView {
-                        Text("Rounder monthly plan")
-                            .font(.system(size: 17))
+                    .padding()
+                    Image("subIcon")
+                        .resizable()
+                        .frame(width: detailPresent ? 200 : 300, height: detailPresent ? 200 : 300)
+                        .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
+                        .animation(foreverAnimation, value: isRotating)
+                        .onAppear {
+                            isRotating = true
+                        }
+                    Color.clear.frame(height: 8)
+                    VStack(spacing: 8) {
+                        GradientImageView {
+                            Text("Rounder monthly plan")
+                                .font(.system(size: 17))
+                                .bold()
+                        }
+                        Text("Thanks for using Rounder Camera!")
+                            .font(.system(size: 20))
                             .bold()
                     }
-                    Text("Thanks for using Rounder Camera!")
-                        .font(.system(size: 20))
-                        .bold()
-                }
-                Spacer()
-                Text(String.subscriptionInfoText)
-                    .font(.system(size: 11))
-                    .foregroundColor(.gray)
-                    .padding()
-                Text("3-day free trial then $1.49/month")
-                    .font(.system(size: 15))
-                    .foregroundColor(.gray)
-                Button {
-                    isPurchasing = true
-                    PurchaseManager.shared.purchaseMonthlyPremium { result in
-                        switch result {
-                        case .success:
-                            purchaseManager.setUserPremium(as: true)
-                            successAlertPresent.toggle()
-                        case .deferred:
-                            errorAlertPresent.toggle()
-                        case .error:
-                            errorAlertPresent.toggle()
-                        }
-                        isPurchasing = false
-                    }
-                } label: {
-                    Text("Subscribe")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 48)
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(.white)
-                        .background(Color.mainGradientColor)
-                        .cornerRadius(8)
-                }
-                .padding(.horizontal, 32)
-                .padding(.bottom, 5)
-                .alert(
-                    "Network error",
-                    isPresented: $errorAlertPresent
-                ) {
-                    Button(role: .cancel) {
-                    } label: {
-                        Text("Ok")
-                    }
-
-                } message: {
-                    Text("Please try again.")
-                }
-                .alert(
-                    "Congraturation!",
-                    isPresented: $successAlertPresent
-                ) {
-                    Button(role: .cancel) {
-                        dismiss()
-                    } label: {
-                        Text("Ok")
-                    }
-
-                } message: {
-                    Text("Take your priceless moment!")
-                }
-                HStack {
-                    Button {
-                        UIApplication.shared.open(URL(string: "https://sites.google.com/view/rounder-terms/")!)
-                    } label: {
-                        Text("Terms of Use")
-                            .font(.system(size: 13))
-                            .foregroundColor(.gray)
-                    }
-                    Text("/")
-                        .font(.system(size: 13))
-                        .foregroundColor(.gray)
-                    Button {
-                        UIApplication.shared.open(URL(string: "https://sites.google.com/view/rounderprivacy/")!)
-                    } label: {
-                        Text("Privacy Policy")
-                            .font(.system(size: 13))
-                            .foregroundColor(.gray)
-                    }
-                    Text("/")
-                        .font(.system(size: 13))
+                    Spacer()
+                    Text("3-day free trial then $1.49/month")
+                        .font(.system(size: 15))
                         .foregroundColor(.gray)
                     Button {
                         isPurchasing = true
-                        purchaseManager.restorePremium { result in
-                            isPurchasing = false
-                            if result {
-                                successAlertPresent = true
-                            } else {
-                                errorAlertPresent = true
+                        PurchaseManager.shared.purchaseMonthlyPremium { result in
+                            switch result {
+                            case .success:
+                                purchaseManager.setUserPremium(as: true)
+                                successAlertPresent.toggle()
+                            case .deferred:
+                                errorAlertPresent.toggle()
+                            case .error:
+                                errorAlertPresent.toggle()
                             }
+                            isPurchasing = false
                         }
                     } label: {
-                        Text("Restore")
+                        Text("Subscribe")
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.white)
+                            .background(Color.mainGradientColor)
+                            .cornerRadius(8)
+                    }
+                    .padding(.horizontal, 32)
+                    .padding(.bottom, 5)
+                    .alert(
+                        "Network error",
+                        isPresented: $errorAlertPresent
+                    ) {
+                        Button(role: .cancel) {
+                        } label: {
+                            Text("Ok")
+                        }
+
+                    } message: {
+                        Text("Please try again.")
+                    }
+                    .alert(
+                        "Congraturation!",
+                        isPresented: $successAlertPresent
+                    ) {
+                        Button(role: .cancel) {
+                            dismiss()
+                        } label: {
+                            Text("Ok")
+                        }
+
+                    } message: {
+                        Text("Take your priceless moment!")
+                    }
+                    HStack {
+                        Button {
+                            UIApplication.shared.open(URL(string: "https://sites.google.com/view/rounder-terms/")!)
+                        } label: {
+                            Text("Terms of Use")
+                                .font(.system(size: 13))
+                                .foregroundColor(.gray)
+                        }
+                        Text("/")
                             .font(.system(size: 13))
                             .foregroundColor(.gray)
+                        Button {
+                            UIApplication.shared.open(URL(string: "https://sites.google.com/view/rounderprivacy/")!)
+                        } label: {
+                            Text("Privacy Policy")
+                                .font(.system(size: 13))
+                                .foregroundColor(.gray)
+                        }
+                        Text("/")
+                            .font(.system(size: 13))
+                            .foregroundColor(.gray)
+                        Button {
+                            isPurchasing = true
+                            purchaseManager.restorePremium { result in
+                                isPurchasing = false
+                                if result {
+                                    successAlertPresent = true
+                                } else {
+                                    errorAlertPresent = true
+                                }
+                            }
+                        } label: {
+                            Text("Restore")
+                                .font(.system(size: 13))
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    Group {
+                        Button {
+                            detailPresent.toggle()
+                        } label: {
+                            GradientImageView {
+                                Image(systemName: detailPresent ? "chevron.compact.up" : "chevron.compact.down")
+                                    .frame(width: 44, height: 44)
+                                    .font(.system(size: 22))
+                            }
+                        }
+                        if detailPresent {
+                            Text(String.subscriptionInfoText)
+                                .font(.system(size: 12))
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 31.5)
+                                .padding(.bottom, 17)
+                        }
                     }
                 }
             }
+            .animation(.easeIn, value: detailPresent)
             if isPurchasing {
                 ZStack {
                     Color.black.opacity(0.4)

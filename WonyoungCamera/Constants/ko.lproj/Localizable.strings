@@ -15,4 +15,4 @@
 "share" = "공유";
 "appName" = "Rounder";
 
-"Subscribe information text" = "구독제는 자동 갱신 구독으로 구독 기간이 종료되기 최소 24시간 전에 구독 취소하지 않으면 구독이 자동으로 갱신됩니다. 구독취소를 원하실 경우 App Store 계정에서 취소할 수 있습니다. 구독이 갱신된 후에는 환불이 불가능합니다.";
+"Subscribe information text" = "The subscription auto-renews at the end of each period term at the same price, unless cancelled 24 hours in advance.\n\nThe subscription fee is charged to your iTunes account at confirmation of purchase.\n\nYou may manage your subscription and turn off auto-renewal by going to your settings.\n\nNo cancellation of the current subscription is allowed during the active period.\n\nBy starting you accept our Terms of Use & Privacy Policy";
