@@ -12,6 +12,12 @@ struct ContentView: View {
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @ObservedObject var metalCamera = MetalCamera()
     @State var isLoading = true
+    @State var isRotating = false
+    var foreverAnimation: Animation {
+        Animation.linear(duration: 5.0)
+            .repeatForever(autoreverses: false)
+    }
+    
     var body: some View {
         NavigationView {
             if isLoading {
@@ -21,6 +27,8 @@ struct ContentView: View {
                         Image("subIcon")
                             .resizable()
                             .frame(width: 200, height: 200)
+                            .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
+                            .animation(foreverAnimation, value: isRotating)
                         GradientImageView {
                             Text("Rounder Camera")
                                 .font(.system(size: 25))
@@ -30,7 +38,9 @@ struct ContentView: View {
                 }
                 .transition(.opacity)
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                    isRotating = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                         withAnimation {
                             isLoading = false
                         }
