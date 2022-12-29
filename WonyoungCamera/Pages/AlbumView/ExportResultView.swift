@@ -24,6 +24,20 @@ struct ExportResultView: View {
                 }
                 HStack {
                     Button {
+                        Task {
+                            let files = FileManager.default.getFilesAtDocument()
+                            files.forEach { path in
+                                guard let url = URL(string: path) else { return }
+                                
+                                do {
+                                    try FileManager.default.removeItem(at: url)
+                                } catch {
+                                    print(error.localizedDescription)
+                                    return
+                                }
+                                print("\(path) success \(FileManager.default.fileExists(atPath: path))")
+                            }
+                        }
                         dismiss()
                     } label: {
                         Image(systemName: "chevron.left")
