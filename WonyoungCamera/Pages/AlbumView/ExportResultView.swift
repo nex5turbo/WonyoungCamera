@@ -12,7 +12,7 @@ struct ExportResultView: View {
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @Binding var resultImage: UIImage
     @Binding var resultNSData: NSData?
-    @Binding var resultData: Data?
+    @Binding var resultURL: String?
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -55,8 +55,8 @@ struct ExportResultView: View {
             Spacer()
             Button {
                 if purchaseManager.isPremiumUser {
-                    if let data = resultData {
-                        share(data: data)
+                    if let resultURL {
+                        share(path: resultURL)
                     } else if let nsdata = resultNSData {
                         share(data: nsdata)
                     }
@@ -85,6 +85,6 @@ struct ExportResultView_Previews: PreviewProvider {
         ExportResultView(
             resultImage: .constant(UIImage()),
             resultNSData: .constant(nil),
-            resultData: .constant(nil))
+            resultURL: .constant(nil))
     }
 }

@@ -21,7 +21,7 @@ class Exporter {
         renderer = ExportRenderer()
     }
 
-    func exportAndGetResult(paths: [String], as type: ExportType, count: Int) -> (UIImage, NSData?, Data?)? {
+    func exportAndGetResult(paths: [String], as type: ExportType, count: Int) -> (UIImage, NSData?, String?)? {
         // render image from renderer
         guard count == 12 || count == 20 || count == 30 else {
             return nil
@@ -34,16 +34,16 @@ class Exporter {
             return nil
         }
         var nsdata: NSData? = nil
-        var data: Data? = nil
+        var url: String? = nil
         switch type {
         case .pdf:
             nsdata = asPdf(image: image)
         case .png:
-            data = asPng(image: image)
+            url = asPng(image: image)
         case .jpg:
-            data = asJpg(image: image)
+            url = asJpg(image: image)
         }
-        return (image, nsdata, data)
+        return (image, nsdata, url)
     }
 
     func asPdf(image: UIImage) -> NSData {
@@ -57,24 +57,25 @@ class Exporter {
         return data
     }
 
-    func asPng(image: UIImage) -> Data {
+    func asPng(image: UIImage) -> String {
         let fileManager = FileManager.default
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDirectory = paths[0]
         let filePath = "\(documentsDirectory)/\(getTimestampAsString()).png"
+        print("debug4 \(filePath)")
         let imageData = image.jpegData(compressionQuality: 1.0)
         fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
-        return imageData!
+        return filePath
     }
 
-    func asJpg(image: UIImage) -> Data {
+    func asJpg(image: UIImage) -> String {
         let fileManager = FileManager.default
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDirectory = paths[0]
         let filePath = "\(documentsDirectory)/\(getTimestampAsString()).jpg"
         let imageData = image.pngData()
         fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
-        return imageData!
+        return filePath
     }
 
     func createPDF(image: UIImage) -> NSData? {

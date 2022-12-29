@@ -27,7 +27,7 @@ struct AlbumView: View {
     @State var selectedExportCount: ExportCount = ._3x4
     @State var resultImage: UIImage = UIImage()
     @State var resultNSData: NSData? = nil
-    @State var resultData: Data? = nil
+    @State var resultURL: String? = nil
     @State var resultPresent = false
     @State var deleteConfirmPresent = false
     @State var selectedIndex = 0
@@ -60,7 +60,7 @@ struct AlbumView: View {
     }
     var body: some View {
         ZStack {
-            NavigationLink(destination: ExportResultView(resultImage: $resultImage, resultNSData: $resultNSData, resultData: $resultData), isActive: $resultPresent) {
+            NavigationLink(destination: ExportResultView(resultImage: $resultImage, resultNSData: $resultNSData, resultURL: $resultURL), isActive: $resultPresent) {
                 EmptyView()
             }
             VStack(spacing: 0) {
@@ -363,7 +363,7 @@ struct AlbumView: View {
         }
         self.resultImage = result.0
         self.resultNSData = result.1
-        self.resultData = result.2
+        self.resultURL = result.2
         self.resultPresent = true
         self.isSelectMode = false
     }
