@@ -67,9 +67,10 @@ class ImageManager {
         }
     }
     func delete(at: String) {
+        guard let url = URL(string: at) else { return }
         let fileManager = FileManager.default
         do {
-            try fileManager.removeItem(atPath: at)
+            try fileManager.removeItem(at: url)
         } catch {
             print("Error: \(error)")
         }
@@ -84,13 +85,13 @@ class ImageManager {
             includingPropertiesForKeys: [.creationDateKey, .contentModificationDateKey],
             options: .skipsHiddenFiles
         )
-            .sorted(by: {
-                if let date1 = try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
-                   let date2 = try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate {
-                    return date1 > date2
-                }
-                return false
-            })
+        .sorted(by: {
+            if let date1 = try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
+               let date2 = try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate {
+                return date1 > date2
+            }
+            return false
+        })
         guard let sortedUrls = sortedUrls else { return [] }
         return sortedUrls.map {
             return $0.absoluteString
