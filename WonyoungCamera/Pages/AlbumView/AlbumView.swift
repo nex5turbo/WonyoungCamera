@@ -111,13 +111,21 @@ struct AlbumView: View {
 
                 if !isLoading {
                     HStack(spacing: 0) {
-                        ScrollView {
-                            LazyVGrid(columns: [GridItem(.flexible()),
-                                                GridItem(.flexible()),
-                                                GridItem(.flexible())]) {
+                        if albumImagePaths.isEmpty {
+                            Spacer()
+                            VStack {
+                                Spacer()
+                                Text("No taken photo.")
+                                Spacer()
+                            }
+                            Spacer()
+                        } else {
+                            ScrollView {
+                                LazyVGrid(columns: [GridItem(.flexible()),
+                                                    GridItem(.flexible()),
+                                                    GridItem(.flexible())]) {
 
-                                ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
-                                    if true {
+                                    ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
                                         ZStack {
                                             let resizingProcessor = DownsamplingImageProcessor(size: CGSize(width: 300, height: 300))
                                             KFImage(URL(string: item))
@@ -169,10 +177,11 @@ struct AlbumView: View {
                                         }
                                     }
                                 }
+                                .padding()
+                                Color.clear.frame(height: 200)
                             }
-                            .padding()
-                            Color.clear.frame(height: 200)
                         }
+                        
                         if isSelectMode {
                             ScrollViewReader { scroll in
                                 ScrollView(showsIndicators: false) {
