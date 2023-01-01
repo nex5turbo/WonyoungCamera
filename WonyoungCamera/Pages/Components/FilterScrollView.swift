@@ -30,13 +30,13 @@ struct FilterScrollView: View {
                                                 .scaledToFill()
                                                 .clipShape(Circle())
                                                 .frame(width: 40, height: 40)
-                                            if lut.isFree {
-                                                Text("Free")
-                                                    .font(.system(size: 8, weight: .bold))
-                                                    .foregroundColor(.black)
-                                                    .background(.thinMaterial)
-                                                    .cornerRadius(3)
-                                            }
+//                                            if lut.isFree {
+//                                                Text("Free")
+//                                                    .font(.system(size: 8, weight: .bold))
+//                                                    .foregroundColor(.black)
+//                                                    .background(.thinMaterial)
+//                                                    .cornerRadius(3)
+//                                            }
                                             Image(systemName: "checkmark.circle")
                                                 .resizable()
                                                 .frame(width: 40, height: 40)

@@ -23,14 +23,15 @@ enum Lut: String, CaseIterable {
 //
 //    case Doris, Country, Doug, TinyDC, Blues, Borg, Earl, Coco, Minker, Carl, Sun, LemonFell
 //
-    static fileprivate let freeLutList: [Lut] = [
-        .Natural,
+//    static fileprivate let freeLutList: [Lut] = [
+//        .Natural,
 //        .Aladin,
 //        .Alex,
 //        .Amber,
 //        .Anne,
-        .Webtoon
-    ]
+//        .Webtoon
+//    ]
+    static fileprivate let freeLutList: [Lut] = Lut.allCases
 
     var isFree: Bool {
         if Lut.freeLutList.contains(self) {
