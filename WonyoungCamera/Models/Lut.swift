@@ -10,24 +10,25 @@ import MetalKit
 
 enum Lut: String, CaseIterable {
     case Natural, Webtoon
-    case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
-
-    case Cool, Dust, Neon, Retro, Sunset, Pine, Karma, Greet, Saber, Prim, Dawn
-    
-    case Harrison, Vinny, Olay, Gordon, Conny, Tom, Sampi, Logan, Henry, Porter, Agnes
-    
-    case Clementine, Blueberry, Dragon, Grapes, Apple, Pear, Strawberry
-    
-    case Danligter, Ranguit, Greered, Sven, Rangueen, Ragwarm, VIB, Garage, Yenely
-    
-    case Doris, Country, Doug, TinyDC, Blues, Borg, Earl, Coco, Minker, Carl, Sun, LemonFell
-
+    case J1, J2, J3, J4, J5, J6, J7, J8, J9, J10, J11, J12, J13
+//    case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
+//
+//    case Cool, Dust, Neon, Retro, Sunset, Pine, Karma, Greet, Saber, Prim, Dawn
+//
+//    case Harrison, Vinny, Olay, Gordon, Conny, Tom, Sampi, Logan, Henry, Porter, Agnes
+//
+//    case Clementine, Blueberry, Dragon, Grapes, Apple, Pear, Strawberry
+//
+//    case Danligter, Ranguit, Greered, Sven, Rangueen, Ragwarm, VIB, Garage, Yenely
+//
+//    case Doris, Country, Doug, TinyDC, Blues, Borg, Earl, Coco, Minker, Carl, Sun, LemonFell
+//
     static fileprivate let freeLutList: [Lut] = [
         .Natural,
-        .Aladin,
-        .Alex,
-        .Amber,
-        .Anne,
+//        .Aladin,
+//        .Alex,
+//        .Amber,
+//        .Anne,
         .Webtoon
     ]
 
