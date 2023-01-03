@@ -46,16 +46,16 @@ struct SubscriptionView: View {
                     Color.clear.frame(height: 8)
                     VStack(spacing: 8) {
                         GradientImageView {
-                            Text("Rounder monthly plan")
+                            Text(String.monthlyPlanName)
                                 .font(.system(size: 17))
                                 .bold()
                         }
-                        Text("Thanks for using Rounder Camera!")
+                        Text(String.appreciateText)
                             .font(.system(size: 20))
                             .bold()
                     }
                     Spacer()
-                    Text("3-day free trial then $1.49/month")
+                    Text(String.priceText)
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                     Button {
@@ -73,7 +73,7 @@ struct SubscriptionView: View {
                             isPurchasing = false
                         }
                     } label: {
-                        Text("Subscribe")
+                        Text(String.subscribeLabel)
                             .frame(maxWidth: .infinity)
                             .frame(height: 48)
                             .font(.system(size: 16, weight: .semibold))
@@ -93,7 +93,7 @@ struct SubscriptionView: View {
                         }
 
                     } message: {
-                        Text("Please try again.")
+                        Text(String.tryAgainText)
                     }
                     .alert(
                         "Congraturation!",
@@ -106,7 +106,7 @@ struct SubscriptionView: View {
                         }
 
                     } message: {
-                        Text("Take your priceless moment!")
+                        Text(String.subscribeSuccessText)
                     }
                     HStack {
                         Button {

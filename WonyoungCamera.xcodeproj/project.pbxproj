@@ -1123,7 +1123,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1131,8 +1131,8 @@
 				INFOPLIST_FILE = WonyoungCamera/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Rounder;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
-				INFOPLIST_KEY_NSCameraUsageDescription = test;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = test;
+				INFOPLIST_KEY_NSCameraUsageDescription = "To use Rounder, please allow camera usage permission.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To use Rounder, please allow photo library usage permission.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1143,7 +1143,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.16;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1161,7 +1161,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1169,8 +1169,8 @@
 				INFOPLIST_FILE = WonyoungCamera/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Rounder;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
-				INFOPLIST_KEY_NSCameraUsageDescription = test;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = test;
+				INFOPLIST_KEY_NSCameraUsageDescription = "To use Rounder, please allow camera usage permission.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To use Rounder, please allow photo library usage permission.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1181,7 +1181,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.16;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

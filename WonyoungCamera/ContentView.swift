@@ -30,7 +30,7 @@ struct ContentView: View {
                             .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
                             .animation(foreverAnimation, value: isRotating)
                         GradientImageView {
-                            Text("Rounder Camera")
+                            Text(String.APP_NAME)
                                 .font(.system(size: 25))
                                 .bold()
                         }

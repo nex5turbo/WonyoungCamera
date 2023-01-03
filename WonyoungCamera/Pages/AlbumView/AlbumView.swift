@@ -115,7 +115,7 @@ struct AlbumView: View {
                             Spacer()
                             VStack {
                                 Spacer()
-                                Text("No taken photo.")
+                                Text(String.noPhotoText)
                                 Spacer()
                             }
                             Spacer()

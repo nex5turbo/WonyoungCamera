@@ -112,19 +112,19 @@ struct CameraView: View {
                         VStack {
                             if UIScreen.main.bounds.height / UIScreen.main.bounds.width <= 2.0 {
                                 Spacer()
-                                Text("Rounder")
+                                Text(String.APP_NAME_SHORT)
                                     .font(.system(size: 25, weight: .bold))
                                     .foregroundColor(.black)
                             } else {
-                                Text("Rounder")
+                                Text(String.APP_NAME_SHORT)
                                     .font(.system(size: 25, weight: .bold))
                                     .foregroundColor(.black)
                                 Spacer()
-                                Text("Round Your Mind")
+                                Text(String.mindText)
                                     .font(.system(size: 14, weight: .semibold))
                                     .foregroundColor(.black)
                                     .padding(3)
-                                Text("By Rounder camera")
+                                Text(String.byUsText)
                                     .font(.system(size: 10))
                                     .foregroundColor(.gray)
                             }

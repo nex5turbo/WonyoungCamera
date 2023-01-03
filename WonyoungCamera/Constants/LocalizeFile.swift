@@ -8,10 +8,13 @@
 import Foundation
 
 extension String {
+    static let APP_NAME = "Rounder Camera"
+    static let APP_NAME_SHORT = "Rounder"
     var localized: String {
         return NSLocalizedString(self, comment: "")
     }
     static let cancelLabel = NSLocalizedString("Cancel", comment: "")
+    static let subscribeLabel = NSLocalizedString("Subscribe", comment: "")
     static let stickerLabel = NSLocalizedString("Sticker", comment: "")
     static let selectLabel = NSLocalizedString("Select", comment: "")
     static let askDeleteLabel = NSLocalizedString("delete?", comment: "")
@@ -24,6 +27,16 @@ extension String {
         return countedLabel
     }
     static let subscriptionInfoText = NSLocalizedString("Subscribe information text", comment: "")
+    static let noPhotoText = NSLocalizedString("No photo.", comment: "")
+    static let sizeText = NSLocalizedString("297 x 210 (mm)", comment: "")
+    static let shareInfoText = NSLocalizedString("Share info text", comment: "")
+    static let mindText = NSLocalizedString("Round Your Mind", comment: "")
+    static let byUsText = NSLocalizedString("By Rounder Camera", comment: "")
+    static let monthlyPlanName = NSLocalizedString("Rounder monthly plan", comment: "")
+    static let appreciateText = NSLocalizedString("Thanks for using Rounder Camera!", comment: "")
+    static let priceText = NSLocalizedString("3-day free trial then $1.49/month", comment: "")
+    static let tryAgainText = NSLocalizedString("Please try again.", comment: "")
+    static let subscribeSuccessText = NSLocalizedString("Take your priceless moment!", comment: "")
 }
 
 
