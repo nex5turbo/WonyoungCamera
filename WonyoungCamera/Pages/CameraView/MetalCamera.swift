@@ -104,12 +104,14 @@ class MetalCamera: ObservableObject {
         if videoSession.canAddOutput(videoOutput) {
             videoSession.addOutput(videoOutput)
         }
-        
-        var resolution: AVCaptureSession.Preset 
-        if cameraPosition == .front {
-            resolution = .hd1920x1080
-        } else {
-            resolution = .hd4K3840x2160
+        var resolution: AVCaptureSession.Preset {
+            if videoSession.canSetSessionPreset(.hd4K3840x2160) {
+                return .hd4K3840x2160
+            }
+            if videoSession.canSetSessionPreset(.hd1920x1080) {
+                return .hd1920x1080
+            }
+            return .hd1280x720
         }
         if resolution == .hd4K3840x2160 {
             self.width = 2160
