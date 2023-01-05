@@ -10,11 +10,17 @@ import SwiftUI
 struct FilterScrollView: View {
     @Binding var selectedLut: Lut
     @Binding var color: Color
+    @State var isRotating = false
+    @ObservedObject var purchaseManager = PurchaseManager.shared
+    var foreverAnimation: Animation {
+        Animation.linear(duration: 5.0)
+            .repeatForever(autoreverses: false)
+    }
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { value in
-                HStack(spacing: 10) {
-                    HStack {
+                HStack {
+                    Section {
                         ForEach(Array(Lut.allCases).indices, id: \.self) { index in
                             let lut = Array(Lut.allCases)[index]
                             if let image = LutStorage.instance.sampleImages[lut] {
@@ -45,7 +51,6 @@ struct FilterScrollView: View {
                                         }
                                     }
                                     VStack {
-                                        Spacer()
                                         Text(lut.rawValue)
                                             .frame(width: 30)
                                             .font(.system(size: 10))
@@ -58,15 +63,43 @@ struct FilterScrollView: View {
                                 }
                             }
                         }
+                    } header: {
+                        VStack {
+                            Button {
+                                purchaseManager.subscriptionViewPresent.toggle()
+                            } label: {
+                                Image("subIcon")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
+                                    .animation(foreverAnimation, value: isRotating)
+                                    .onAppear {
+                                        isRotating = true
+                                    }
+                            }
+                            
+                            VStack {
+                                GradientImageView {
+                                    Text("Subscribe")
+                                        .frame(width: 30)
+                                        .font(.system(size: 10, weight: .bold))
+                                        .scaledToFill()
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                }
+                            }
+                            .frame(height: 20)
+                        }
+                        .background(.black)
                     }
-                    .onChange(of: selectedLut) { newValue in
-                        let scrollArray = Array(Lut.allCases)
-                        guard let index = scrollArray.firstIndex(of: newValue) else {
-                            return
-                        }
-                        withAnimation {
-                            value.scrollTo(Int(index), anchor: .center)
-                        }
+                }
+                .onChange(of: selectedLut) { newValue in
+                    let scrollArray = Array(Lut.allCases)
+                    guard let index = scrollArray.firstIndex(of: newValue) else {
+                        return
+                    }
+                    withAnimation {
+                        value.scrollTo(Int(index), anchor: .center)
                     }
                 }
             }
