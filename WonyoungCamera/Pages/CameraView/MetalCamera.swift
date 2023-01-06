@@ -26,6 +26,7 @@ class MetalCamera: ObservableObject {
             }
         }
     }
+    
     func setUpCamera() {
         guard let delegate = delegate else {
             return
@@ -67,6 +68,7 @@ class MetalCamera: ObservableObject {
         self.videoSession.sessionPreset = resolution
         self.startSession()
     }
+
     func setUpCamera(delegate: AVCaptureVideoDataOutputSampleBufferDelegate?) {
         guard let delegate = delegate else {
             return
