@@ -40,17 +40,16 @@ class MetalCamera: ObservableObject {
         self.videoSession = AVCaptureSession()
 
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition){
-             do {
-                 let input = try AVCaptureDeviceInput(device: device)
-                 if videoSession.canAddInput(input) {
-                     videoSession.addInput(input)
-                 }
-                 
-             } catch {
-                 fatalError("[Camera] set up error!")
-             }
+            do {
+                let input = try AVCaptureDeviceInput(device: device)
+                if videoSession.canAddInput(input) {
+                    videoSession.addInput(input)
+                }
+            } catch {
+                fatalError("[Camera] set up error!")
+            }
 
-         }
+        }
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_32BGRA]
         videoOutput.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "sample buffer delegate", attributes: []))
@@ -77,18 +76,16 @@ class MetalCamera: ObservableObject {
         self.delegate = delegate
         self.videoSession = AVCaptureSession()
 
-        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition){
-             do {
-                 let input = try AVCaptureDeviceInput(device: device)
-                 if videoSession.canAddInput(input) {
-                     videoSession.addInput(input)
-                 }
-                 
-             } catch {
-                 fatalError("[Camera] set up error!")
-             }
-
-         }
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition) {
+            do {
+                let input = try AVCaptureDeviceInput(device: device)
+                if videoSession.canAddInput(input) {
+                    videoSession.addInput(input)
+                }
+            } catch {
+                fatalError("[Camera] set up error!")
+            }
+        }
         videoOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_32BGRA]
         videoOutput.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "sample buffer delegate", attributes: []))
         if videoSession.canAddOutput(videoOutput) {
