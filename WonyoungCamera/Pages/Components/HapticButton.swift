@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HapticButton<Content: View>: View {
-    let style: UIImpactFeedbackGenerator.FeedbackStyle
+    var style: UIImpactFeedbackGenerator.FeedbackStyle = .soft
     let action: () -> Void
     let content: () -> Content
     var body: some View {

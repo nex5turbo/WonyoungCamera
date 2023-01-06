@@ -44,10 +44,9 @@ struct CameraView: View {
         ZStack {
             VStack(spacing: 0) {
                 HStack {
-                    Button {
-                        HapticManager.instance.impact(style: .soft)
+                    HapticButton {
                         settingPresent.toggle()
-                    } label: {
+                    } content: {
                         Image(systemName: "gearshape.circle.fill")
                             .foregroundColor(self.buttonColor)
                             .font(.system(size:20))
@@ -57,10 +56,9 @@ struct CameraView: View {
                         .foregroundColor(.gray)
                         .font(.system(size:15))
                     Spacer()
-                    Button {
-                        HapticManager.instance.impact(style: .soft)
+                    HapticButton {
                         self.isMute.toggle()
-                    } label: {
+                    } content: {
                         Image(systemName: isMute ? "speaker.slash.circle.fill" : "speaker.wave.2.circle.fill")
                             .foregroundColor(self.buttonColor)
                             .font(.system(size:20))
@@ -150,10 +148,9 @@ struct CameraView: View {
                     FilterScrollView(decoration: $decoration)
                     
                     HStack {
-                        Button {
-                            HapticManager.instance.impact(style: .soft)
+                        HapticButton {
                             self.metalCamera.switchCamera()
-                        } label: {
+                        } content: {
                             Image(systemName: "arrow.triangle.2.circlepath.circle")
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
@@ -161,27 +158,25 @@ struct CameraView: View {
                         }
                         Spacer()
 
-                        Button {
-                            HapticManager.instance.impact(style: .soft)
+                        HapticButton {
                             self.decoration.border.toggle()
-                        } label: {
+                        } content: {
                             Image(systemName: !decoration.border ? "circle" : "circle.fill")
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)
                         }
                         Spacer()
-                        Button {
+                        HapticButton {
                             if !purchaseManager.isPremiumUser, !decoration.colorFilter.isFree {
                                 purchaseManager.subscriptionViewPresent.toggle()
                                 return
                             }
-                            HapticManager.instance.impact(style: .soft)
                             if !isMute {
                                 shutterSound()
                             }
                             // take picture
-                        } label: {
+                        } content: {
                             ZStack {
                                 Image(systemName: "circle.fill")
                                     .font(.system(size: 50))
@@ -198,10 +193,9 @@ struct CameraView: View {
                             }
                         }
                         Spacer()
-                        Button {
-                            HapticManager.instance.impact(style: .soft)
+                        HapticButton {
                             switchSlider()
-                        } label: {
+                        } content: {
                             Image(systemName: getAdjustIconName())
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
