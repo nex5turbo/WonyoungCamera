@@ -22,7 +22,6 @@ struct CameraView: View {
     @State var albumPresent = false
     @State var settingPresent = false
     
-    
     @State var isMute = false
     @State var buttonColor: Color = .white
     @State var selectedAdjustType: AdjustType = .brightness
@@ -201,14 +200,7 @@ struct CameraView: View {
                         Spacer()
                         Button {
                             HapticManager.instance.impact(style: .soft)
-                            switch selectedAdjustType {
-                            case .brightness:
-                                selectedAdjustType = .contrast
-                            case .contrast:
-                                selectedAdjustType = .saturation
-                            case .saturation:
-                                selectedAdjustType = .brightness
-                            }
+                            switchSlider()
                         } label: {
                             Image(systemName: getAdjustIconName())
                                 .font(.system(size: bottomIconSize))
@@ -239,6 +231,16 @@ struct CameraView: View {
         }
         .navigationTitle("")
         .navigationBarHidden(true)
+    }
+    func switchSlider() {
+        switch selectedAdjustType {
+        case .brightness:
+            selectedAdjustType = .contrast
+        case .contrast:
+            selectedAdjustType = .saturation
+        case .saturation:
+            selectedAdjustType = .brightness
+        }
     }
 }
 
