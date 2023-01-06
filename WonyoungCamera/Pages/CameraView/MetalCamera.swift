@@ -15,7 +15,6 @@ class MetalCamera: ObservableObject {
 
     var width: Int = 1080
     @Published var scale: Float = 1
-    @Published var frameOffset: Float = 0.2
 
     func stopSession() {
         if videoSession.isRunning {

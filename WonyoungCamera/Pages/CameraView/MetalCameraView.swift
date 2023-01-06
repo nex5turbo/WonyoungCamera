@@ -85,9 +85,6 @@ class MetalView: UIView {
         self.renderer = Renderer()
         super.init(frame: .zero)
 
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.drag))
-        self.addGestureRecognizer(panGesture)
-
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.pinch))
         self.addGestureRecognizer(pinchGesture)
         self.isUserInteractionEnabled = true
@@ -97,11 +94,7 @@ class MetalView: UIView {
         }
         start()
     }
-    @objc func drag(sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: self)
-        parent.metalCamera.frameOffset -= Float(translation.y / UIScreen.main.bounds.height)
-        sender.setTranslation(.zero, in: self)
-    }
+
     @objc func pinch(sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
         
@@ -131,7 +124,6 @@ class MetalView: UIView {
             with: currentTexture,
             shouldFlip: shouldFlip,
             size: parent.metalCamera.width,
-            frameOffset: parent.metalCamera.frameOffset,
             scale: parent.metalCamera.scale,
             brightness: parent.brightness,
             contrast: parent.contrast,

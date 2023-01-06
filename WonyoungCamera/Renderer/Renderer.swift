@@ -130,7 +130,6 @@ class Renderer {
         with texture: MTLTexture?,
         shouldFlip: Bool,
         size: Int = 1080,
-        frameOffset: Float = 0.2,
         scale: Float = 1,
         brightness: Float = 0.0,
         contrast: Float = 0.0,
@@ -167,7 +166,7 @@ class Renderer {
             lutTexture = nil
         }
         var shouldFilter = lutTexture != nil
-        let quadVertices = getVertices(frameOffset: frameOffset)
+        let quadVertices = getVertices()
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
         
@@ -228,7 +227,7 @@ class Renderer {
         commandBuffer.commit()
     }
 
-    func getVertices(frameOffset: Float) -> [Vertex] {
+    func getVertices() -> [Vertex] {
         let returnValue = [
             Vertex(position: SIMD2<Float>(1, -1), textureCoordinate: SIMD2<Float>(1,1)),
             Vertex(position: SIMD2<Float>(-1, -1), textureCoordinate: SIMD2<Float>(0,1)),
