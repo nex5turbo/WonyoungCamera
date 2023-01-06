@@ -129,7 +129,6 @@ class Renderer {
         to drawable: CAMetalDrawable,
         with texture: MTLTexture?,
         shouldFlip: Bool,
-        size: Int = 1080,
         scale: Float = 1,
         brightness: Float = 0.0,
         contrast: Float = 0.0,
@@ -145,7 +144,10 @@ class Renderer {
         guard let texture = texture else {
             return
         }
-        if emptyTexture == nil || min(texture.height, texture.width) != size {
+        var textureWidth = Float(texture.width)
+        var textureHeight = Float(texture.height)
+        if emptyTexture == nil {
+            let size = Int(min(textureWidth, textureHeight))
             let textureDescriptor = MTLTextureDescriptor()
             textureDescriptor.textureType = .type2D
             textureDescriptor.pixelFormat = .bgra8Unorm
@@ -171,8 +173,7 @@ class Renderer {
         let numVertice = quadVertices.count
         
         var shouldFlip = shouldFlip
-        var textureWidth = Float(texture.width)
-        var textureHeight = Float(texture.height)
+        
         var brightness = brightness
         var contrast = contrast
         var saturation = saturation

@@ -13,7 +13,6 @@ class MetalCamera: ObservableObject {
     
     public var cameraPosition: AVCaptureDevice.Position = .back
 
-    var width: Int = 1080
     @Published var scale: Float = 1
 
     func stopSession() {
@@ -67,13 +66,6 @@ class MetalCamera: ObservableObject {
             }
             return .hd1280x720
         }
-        if resolution == .hd4K3840x2160 {
-            self.width = 2160
-        } else if resolution == .hd1920x1080 {
-            self.width = 1080
-        } else {
-            self.width = 720
-        }
         self.videoSession.sessionPreset = resolution
         self.startSession()
     }
@@ -111,13 +103,6 @@ class MetalCamera: ObservableObject {
                 return .hd1920x1080
             }
             return .hd1280x720
-        }
-        if resolution == .hd4K3840x2160 {
-            self.width = 2160
-        } else if resolution == .hd1920x1080 {
-            self.width = 1080
-        } else {
-            self.width = 720
         }
         self.videoSession.sessionPreset = resolution
         self.startSession()

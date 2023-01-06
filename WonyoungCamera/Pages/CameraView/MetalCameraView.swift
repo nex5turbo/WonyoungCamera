@@ -123,7 +123,6 @@ class MetalView: UIView {
             to: currentDrawable,
             with: currentTexture,
             shouldFlip: shouldFlip,
-            size: parent.metalCamera.width,
             scale: parent.metalCamera.scale,
             brightness: parent.brightness,
             contrast: parent.contrast,
