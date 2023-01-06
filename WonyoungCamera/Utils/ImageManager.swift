@@ -120,3 +120,30 @@ class ImageManager {
         }
     }
 }
+
+func textureToUIImage(texture: MTLTexture) -> UIImage? {
+    guard let cgImage = convertToCGImage(texture: texture) else {
+        return nil
+    }
+    let uiImage = UIImage(cgImage: cgImage)
+    return uiImage
+}
+func convertToCGImage(texture: MTLTexture) -> CGImage? {
+    let options: [CIImageOption: Any] = [
+        .colorSpace: CGColorSpaceCreateDeviceRGB()
+    ]
+    guard let ciImage = CIImage(mtlTexture: texture, options: options) else {
+        fatalError("No ciImage")
+    }
+    guard let cgImage = convertToCGImage(ciImage: ciImage.oriented(.downMirrored)) else {
+        fatalError("No cgImage")
+    }
+    return cgImage
+}
+func convertToCGImage(ciImage: CIImage) -> CGImage? {
+    let context = CIContext(options: nil)
+    if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
+        return cgImage
+    }
+    return nil
+}
