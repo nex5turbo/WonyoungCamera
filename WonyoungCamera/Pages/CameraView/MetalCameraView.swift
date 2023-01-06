@@ -12,7 +12,6 @@ import AVFoundation
 struct MetalCameraView: UIViewRepresentable {
     @ObservedObject var metalCamera: MetalCamera
     @Binding var decoration: Decoration
-    @Binding var shouldStroke: Bool
 
     func makeUIView(context: Context) -> MetalView {
         guard let device = MTLCreateSystemDefaultDevice() else {

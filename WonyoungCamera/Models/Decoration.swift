@@ -56,4 +56,26 @@ struct Decoration {
             scale: 1.0
         )
     }
+
+    mutating public func setAdjustment(_ value: Float, to type: AdjustType) {
+        switch type {
+        case .brightness:
+            brightness = 0.5 + (value / 100)
+        case .contrast:
+            contrast = 0.5 + (value / 100)
+        case .saturation:
+            saturation = 0.5 + (value / 100)
+        }
+    }
+    
+    public func getAdjustment(of type: AdjustType) -> Float {
+        switch type {
+        case .brightness:
+            return (brightness - 0.5) * 100
+        case .contrast:
+            return (contrast - 0.5) * 100
+        case .saturation:
+            return (saturation - 0.5) * 100
+        }
+    }
 }

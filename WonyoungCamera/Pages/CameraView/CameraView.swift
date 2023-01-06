@@ -8,26 +8,26 @@
 import SwiftUI
 import AVFoundation
 
+enum AdjustType {
+    case brightness, contrast, saturation
+}
+
 struct CameraView: View {
-    enum AdjustType {
-        case brightness, contrast, saturation
-    }
-    let bottomIconSize: CGFloat = 25
     @ObservedObject var metalCamera: MetalCamera
     @ObservedObject var purchaseManager = PurchaseManager.shared
 
     @State var decoration: Decoration = Decoration.empty()
     @State var filterPresent = true
     @State var isMute = false
-    @State var colorBackgroundEnabled = false
     @State var albumPresent = false
-    @State var colorBackground: (Int, Int, Int)? = nil
     @State var buttonColor: Color = .white
     @State var selectedAdjustType: AdjustType = .brightness
-    @State var sliderValue: Float = 0
+    @State var sliderValue: Float = 50
     @State var isSliderEditing = false
-    @State var shouldStroke = false
     @State var selectedLut: Lut = .Natural
+    @State var settingPresent = false
+
+    let bottomIconSize: CGFloat = 25
 
     func getAdjustIconName() -> String {
         switch selectedAdjustType {
@@ -45,9 +45,9 @@ struct CameraView: View {
                 HStack {
                     Button {
                         HapticManager.instance.impact(style: .soft)
-                        self.colorBackgroundEnabled.toggle()
+                        settingPresent.toggle()
                     } label: {
-                        Image(systemName: colorBackgroundEnabled ? "circle.fill" : "circle.hexagongrid.circle")
+                        Image(systemName: "gearshape.circle.fill")
                             .foregroundColor(self.buttonColor)
                             .font(.system(size:20))
                     }
@@ -83,8 +83,7 @@ struct CameraView: View {
                         VStack {
                             MetalCameraView(
                                 metalCamera: metalCamera,
-                                decoration: $decoration,
-                                shouldStroke: $shouldStroke
+                                decoration: $decoration
                             )
                         }
                         .cornerRadius(30)
@@ -135,37 +134,20 @@ struct CameraView: View {
                         self.isSliderEditing = editing
                     }
                     .accentColor(.white)
-                    .onAppear {
-                        self.sliderValue = 50
-                    }
                     .onChange(of: sliderValue) { newValue in
                         if newValue == 50 {
                             HapticManager.instance.impact(style: .soft)
                         }
-                        switch selectedAdjustType {
-                        case .brightness:
-                            decoration.brightness = 0.5 + (sliderValue / 100)
-                        case .contrast:
-                            decoration.contrast = 0.5 + (sliderValue / 100)
-                        case .saturation:
-                            decoration.saturation = 0.5 + (sliderValue / 100)
-                        }
+                        decoration.setAdjustment(sliderValue, to: selectedAdjustType)
                     }
                     .onChange(of: selectedAdjustType) { newValue in
-                        switch selectedAdjustType {
-                        case .brightness:
-                            sliderValue = (decoration.brightness - 0.5) * 100
-                        case .contrast:
-                            sliderValue = (decoration.contrast - 0.5) * 100
-                        case .saturation:
-                            sliderValue = (decoration.saturation - 0.5) * 100
-                        }
+                        sliderValue = decoration.getAdjustment(of: selectedAdjustType)
                     }
                     .padding(.horizontal)
                     Color.clear.frame(height: 10)
-                    if filterPresent {
-                        FilterScrollView(selectedLut: $selectedLut, color: $buttonColor)
-                    }
+                    
+                    FilterScrollView(selectedLut: $selectedLut, color: $buttonColor)
+                    
                     HStack {
                         Button {
                             HapticManager.instance.impact(style: .soft)
@@ -180,9 +162,9 @@ struct CameraView: View {
 
                         Button {
                             HapticManager.instance.impact(style: .soft)
-                            self.shouldStroke.toggle()
+                            self.decoration.border.toggle()
                         } label: {
-                            Image(systemName: !shouldStroke ? "circle" : "circle.fill")
+                            Image(systemName: !decoration.border ? "circle" : "circle.fill")
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)
