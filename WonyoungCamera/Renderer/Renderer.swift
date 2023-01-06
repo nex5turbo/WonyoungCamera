@@ -130,9 +130,6 @@ class Renderer {
         with texture: MTLTexture?,
         shouldFlip: Bool,
         scale: Float = 1,
-        brightness: Float = 0.0,
-        contrast: Float = 0.0,
-        saturation: Float = 0.0,
         shouldStroke: Bool = false,
         clearColor: (Int, Int, Int) = (0, 0, 0)
     ) {
@@ -174,9 +171,6 @@ class Renderer {
         
         var shouldFlip = shouldFlip
         
-        var brightness = brightness
-        var contrast = contrast
-        var saturation = saturation
         var scale = scale
         var shouldStroke = shouldStroke
         // compute
@@ -192,9 +186,7 @@ class Renderer {
         computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 2)
         computeEncoder?.setBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 3)
         computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 4)
-        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 5)
-        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 6)
-        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 7)
+        
         computeEncoder?.setBytes(&shouldStroke, length: MemoryLayout<Bool>.stride, index: 8)
         
         let w = computePipelineState.threadExecutionWidth

@@ -13,9 +13,6 @@ struct MetalCameraView: UIViewRepresentable {
     @ObservedObject var metalCamera: MetalCamera
     @Binding var shouldTakePicture: Bool
     @Binding var takenPicture: UIImage?
-    @Binding var brightness: Float
-    @Binding var contrast: Float
-    @Binding var saturation: Float
     @Binding var colorBackgroundEnabled: Bool
     @Binding var shouldStroke: Bool
     @Binding var colorBackgounrd: (Int, Int, Int)?
@@ -124,9 +121,6 @@ class MetalView: UIView {
             with: currentTexture,
             shouldFlip: shouldFlip,
             scale: parent.metalCamera.scale,
-            brightness: parent.brightness,
-            contrast: parent.contrast,
-            saturation: parent.saturation,
             shouldStroke: parent.shouldStroke,
             clearColor: parent.colorBackgounrd == nil ? (255, 255, 255) : parent.colorBackgounrd!
         )

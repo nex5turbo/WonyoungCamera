@@ -16,13 +16,11 @@ struct CameraView: View {
     @ObservedObject var metalCamera: MetalCamera
     @ObservedObject var purchaseManager = PurchaseManager.shared
 
+    @State var decoration: Decoration = Decoration.empty()
     @State var shouldTakePicture = false
     @State var takenImage: UIImage? = nil
     @State var filterPresent = true
     @State var canTakeImage = true
-    @State var brightness: Float = 1.0
-    @State var saturation: Float = 1.0
-    @State var contrast: Float = 1.0
     @State var isMute = false
     @State var colorBackgroundEnabled = false
     @State var settingPresent = false
@@ -90,9 +88,6 @@ struct CameraView: View {
                                 metalCamera: metalCamera,
                                 shouldTakePicture: $shouldTakePicture,
                                 takenPicture: $takenImage,
-                                brightness: $brightness,
-                                contrast: $contrast,
-                                saturation: $saturation,
                                 colorBackgroundEnabled: $colorBackgroundEnabled,
                                 shouldStroke: $shouldStroke,
                                 colorBackgounrd: $colorBackground
@@ -164,21 +159,21 @@ struct CameraView: View {
                             }
                             switch selectedAdjustType {
                             case .brightness:
-                                brightness = 0.5 + (sliderValue / 100)
+                                decoration.brightness = 0.5 + (sliderValue / 100)
                             case .contrast:
-                                contrast = 0.5 + (sliderValue / 100)
+                                decoration.contrast = 0.5 + (sliderValue / 100)
                             case .saturation:
-                                saturation = 0.5 + (sliderValue / 100)
+                                decoration.saturation = 0.5 + (sliderValue / 100)
                             }
                         }
                         .onChange(of: selectedAdjustType) { newValue in
                             switch selectedAdjustType {
                             case .brightness:
-                                sliderValue = (brightness - 0.5) * 100
+                                sliderValue = (decoration.brightness - 0.5) * 100
                             case .contrast:
-                                sliderValue = (contrast - 0.5) * 100
+                                sliderValue = (decoration.contrast - 0.5) * 100
                             case .saturation:
-                                sliderValue = (saturation - 0.5) * 100
+                                sliderValue = (decoration.saturation - 0.5) * 100
                             }
                         }
                         .padding(.horizontal)
