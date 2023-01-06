@@ -12,6 +12,7 @@ half4 applyFilter(half4 textureColor, texture2d<half> filterTexture);
 half4 applyBrightness(half4 color, float brightness);
 half4 applyContrast(half4 inputColor, half contrast);
 half4 applySaturation( half4 inputColor, half saturation);
+
 kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture(0) ]],
                           texture2d<half> readTexture [[ texture(1) ]],
                           texture2d<half> lutTexture [[ texture(2) ]],

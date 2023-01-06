@@ -10,6 +10,7 @@ class MetalCamera: ObservableObject {
     private var videoSession: AVCaptureSession = AVCaptureSession()
     private var cameraDevice: AVCaptureDevice?
     private var delegate: AVCaptureVideoDataOutputSampleBufferDelegate?
+    private var videoOutput: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
     
     public var cameraPosition: AVCaptureDevice.Position = .back
 
@@ -27,7 +28,7 @@ class MetalCamera: ObservableObject {
         }
     }
     
-    func setUpCamera() {
+    func switchCamera() {
         guard let delegate = delegate else {
             return
         }
@@ -74,7 +75,6 @@ class MetalCamera: ObservableObject {
             return
         }
         self.delegate = delegate
-
         self.videoSession = AVCaptureSession()
 
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition){
@@ -89,7 +89,6 @@ class MetalCamera: ObservableObject {
              }
 
          }
-        let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_32BGRA]
         videoOutput.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "sample buffer delegate", attributes: []))
         if videoSession.canAddOutput(videoOutput) {
@@ -108,3 +107,4 @@ class MetalCamera: ObservableObject {
         self.startSession()
     }
 }
+

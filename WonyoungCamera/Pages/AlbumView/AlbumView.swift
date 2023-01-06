@@ -334,9 +334,7 @@ struct AlbumView: View {
         .alert(String.askDeleteLabel, isPresented: $deleteConfirmPresent, actions: {
             Button(role: .destructive) {
                 ImageManager.instance.delete(at: albumImagePaths[selectedIndex])
-                withAnimation {
-                    albumImagePaths.remove(at: self.selectedIndex)
-                }
+                albumImagePaths.remove(at: self.selectedIndex)
             } label: {
                 Text(String.deleteLabel)
             }
@@ -345,6 +343,7 @@ struct AlbumView: View {
                 Text(String.cancelLabel)
             }
         })
+        .animation(.default, value: selectedIndex)
         .overlay(
             ImageViewer(image: $selectedImage, viewerShown: $fullscreenPresent)
         )

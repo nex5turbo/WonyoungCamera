@@ -153,7 +153,7 @@ struct CameraView: View {
                     HStack {
                         Button {
                             HapticManager.instance.impact(style: .soft)
-                            self.metalCamera.setUpCamera()
+                            self.metalCamera.switchCamera()
                         } label: {
                             Image(systemName: "arrow.triangle.2.circlepath.circle")
                                 .font(.system(size: bottomIconSize))
