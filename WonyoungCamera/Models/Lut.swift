@@ -10,7 +10,7 @@ import MetalKit
 
 enum Lut: String, CaseIterable {
     case Natural, Webtoon
-    case J1, J2, J3, J4, J5, J6, J7, J8, J9, J10, J11, J12, J13
+    case J1, J2, J3, J4, J5, J6, J7, J8, J9, J10, J11, J12, J13, J14, J15, J16, J17, J18
 //    case Aladin, Alex, Amber, Anne, Antonio, Bob, Greg, Hagrid, Harry, Ivan, Jean, Josh, Karen, Lucas, Melissa, Peter, Salomon, Sara, Sophia, Tony
 //
 //    case Cool, Dust, Neon, Retro, Sunset, Pine, Karma, Greet, Saber, Prim, Dawn
