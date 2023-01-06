@@ -17,10 +17,7 @@ struct CameraView: View {
     @ObservedObject var purchaseManager = PurchaseManager.shared
 
     @State var decoration: Decoration = Decoration.empty()
-    @State var shouldTakePicture = false
-    @State var takenImage: UIImage? = nil
     @State var filterPresent = true
-    @State var canTakeImage = true
     @State var isMute = false
     @State var colorBackgroundEnabled = false
     @State var settingPresent = false
@@ -87,8 +84,6 @@ struct CameraView: View {
                             MetalCameraView(
                                 metalCamera: metalCamera,
                                 decoration: $decoration,
-                                shouldTakePicture: $shouldTakePicture,
-                                takenPicture: $takenImage,
                                 shouldStroke: $shouldStroke
                             )
                         }
@@ -202,7 +197,7 @@ struct CameraView: View {
                             if !isMute {
                                 shutterSound()
                             }
-                            shouldTakePicture.toggle()
+                            // take picture
                         } label: {
                             ZStack {
                                 Image(systemName: "circle.fill")
@@ -250,17 +245,6 @@ struct CameraView: View {
                 .background(.black)
             }
         }
-        .onChange(of: takenImage, perform: { newValue in
-            if let newValue = newValue {
-                canTakeImage = false
-                DispatchQueue.global().async {
-                    ImageManager.instance.saveImage(image: newValue)
-                    DispatchQueue.main.async {
-                        canTakeImage = true
-                    }
-                }
-            }
-        })
         .background(Color.black)
         .onChange(of: settingPresent) { newValue in
             if newValue {

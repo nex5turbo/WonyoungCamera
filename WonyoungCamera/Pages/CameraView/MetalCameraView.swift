@@ -12,8 +12,6 @@ import AVFoundation
 struct MetalCameraView: UIViewRepresentable {
     @ObservedObject var metalCamera: MetalCamera
     @Binding var decoration: Decoration
-    @Binding var shouldTakePicture: Bool
-    @Binding var takenPicture: UIImage?
     @Binding var shouldStroke: Bool
 
     func makeUIView(context: Context) -> MetalView {
@@ -26,9 +24,6 @@ struct MetalCameraView: UIViewRepresentable {
         return metalView
     }
     func updateUIView(_ uiView: MetalView, context: Context) {
-    }
-    func makeCoordinator() -> Coordinator {
-        
     }
 }
 class MetalView: UIView {
@@ -101,6 +96,7 @@ class MetalView: UIView {
         }
         sender.scale = 1
     }
+    
     public override func draw(_ rect: CGRect) {
     }
 
@@ -120,21 +116,8 @@ class MetalView: UIView {
             with: currentTexture,
             decoration: parent.decoration
         )
-        
-        DispatchQueue.main.async {
-            if self.parent.shouldTakePicture {
-                guard let texture = self.renderer.emptyTexture else {
-                    return
-                }
-                guard let cgImage = convertToCGImage(texture: texture) else {
-                    fatalError("NO cgImage from texture")
-                }
-                let uiImage = UIImage(cgImage: cgImage)
-                self.parent.takenPicture = uiImage
-                self.parent.shouldTakePicture = false
-            }
-        }
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
