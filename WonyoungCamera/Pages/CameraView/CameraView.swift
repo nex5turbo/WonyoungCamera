@@ -20,7 +20,7 @@ struct CameraView: View {
     @State var filterPresent = true
     @State var isMute = false
     @State var colorBackgroundEnabled = false
-    @State var settingPresent = false
+    @State var albumPresent = false
     @State var colorBackground: (Int, Int, Int)? = nil
     @State var buttonColor: Color = .white
     @State var selectedAdjustType: AdjustType = .brightness
@@ -134,34 +134,34 @@ struct CameraView: View {
                     Slider(value: $sliderValue, in: 0...100, step: 1) { editing in
                         self.isSliderEditing = editing
                     }
-                        .accentColor(.white)
-                        .onAppear {
-                            self.sliderValue = 50
+                    .accentColor(.white)
+                    .onAppear {
+                        self.sliderValue = 50
+                    }
+                    .onChange(of: sliderValue) { newValue in
+                        if newValue == 50 {
+                            HapticManager.instance.impact(style: .soft)
                         }
-                        .onChange(of: sliderValue) { newValue in
-                            if newValue == 50 {
-                                HapticManager.instance.impact(style: .soft)
-                            }
-                            switch selectedAdjustType {
-                            case .brightness:
-                                decoration.brightness = 0.5 + (sliderValue / 100)
-                            case .contrast:
-                                decoration.contrast = 0.5 + (sliderValue / 100)
-                            case .saturation:
-                                decoration.saturation = 0.5 + (sliderValue / 100)
-                            }
+                        switch selectedAdjustType {
+                        case .brightness:
+                            decoration.brightness = 0.5 + (sliderValue / 100)
+                        case .contrast:
+                            decoration.contrast = 0.5 + (sliderValue / 100)
+                        case .saturation:
+                            decoration.saturation = 0.5 + (sliderValue / 100)
                         }
-                        .onChange(of: selectedAdjustType) { newValue in
-                            switch selectedAdjustType {
-                            case .brightness:
-                                sliderValue = (decoration.brightness - 0.5) * 100
-                            case .contrast:
-                                sliderValue = (decoration.contrast - 0.5) * 100
-                            case .saturation:
-                                sliderValue = (decoration.saturation - 0.5) * 100
-                            }
+                    }
+                    .onChange(of: selectedAdjustType) { newValue in
+                        switch selectedAdjustType {
+                        case .brightness:
+                            sliderValue = (decoration.brightness - 0.5) * 100
+                        case .contrast:
+                            sliderValue = (decoration.contrast - 0.5) * 100
+                        case .saturation:
+                            sliderValue = (decoration.saturation - 0.5) * 100
                         }
-                        .padding(.horizontal)
+                    }
+                    .padding(.horizontal)
                     Color.clear.frame(height: 10)
                     if filterPresent {
                         FilterScrollView(selectedLut: $selectedLut, color: $buttonColor)
@@ -232,7 +232,7 @@ struct CameraView: View {
                                 .padding(10)
                         }
                         Spacer()
-                        NavigationLink(destination: AlbumView(), isActive: $settingPresent) {
+                        NavigationLink(destination: AlbumView(), isActive: $albumPresent) {
                             Image(systemName: "photo.circle")
                                 .foregroundColor(self.buttonColor)
                                 .font(.system(size: bottomIconSize))
@@ -246,7 +246,7 @@ struct CameraView: View {
             }
         }
         .background(Color.black)
-        .onChange(of: settingPresent) { newValue in
+        .onChange(of: albumPresent) { newValue in
             if newValue {
                 metalCamera.stopSession()
             } else {

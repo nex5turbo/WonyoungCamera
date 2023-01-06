@@ -26,12 +26,14 @@ struct MetalCameraView: UIViewRepresentable {
     func updateUIView(_ uiView: MetalView, context: Context) {
     }
 }
+
 class MetalView: UIView {
     private var parent: MetalCameraView
+    private var renderer: Renderer
     private var textureCache: CVMetalTextureCache?
     private var device: MTLDevice
     private var currentTexture: MTLTexture?
-    private var renderer: Renderer
+    
 
     public var metalLayer: CAMetalLayer {
         return self.layer as! CAMetalLayer
