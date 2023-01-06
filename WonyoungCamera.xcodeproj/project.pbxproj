@@ -66,6 +66,7 @@
 		54D3C33B2966E8CC009BC254 /* J15.png in Resources */ = {isa = PBXBuildFile; fileRef = 54D3C3362966E8CC009BC254 /* J15.png */; };
 		54D3C33C2966E8CC009BC254 /* J17.png in Resources */ = {isa = PBXBuildFile; fileRef = 54D3C3372966E8CC009BC254 /* J17.png */; };
 		54D3C33D2966E8CC009BC254 /* J14.png in Resources */ = {isa = PBXBuildFile; fileRef = 54D3C3382966E8CC009BC254 /* J14.png */; };
+		54D3C355296857C0009BC254 /* HapticButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3C354296857C0009BC254 /* HapticButton.swift */; };
 		54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 54ED1063293CCCBE00926E36 /* SwiftyStoreKit */; };
 		54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54ED1065293CCD1C00926E36 /* Purchase.plist */; };
 		54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED1067293CCE3700926E36 /* SubscriptionView.swift */; };
@@ -170,6 +171,7 @@
 		54D3C3362966E8CC009BC254 /* J15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = J15.png; sourceTree = "<group>"; };
 		54D3C3372966E8CC009BC254 /* J17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = J17.png; sourceTree = "<group>"; };
 		54D3C3382966E8CC009BC254 /* J14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = J14.png; sourceTree = "<group>"; };
+		54D3C354296857C0009BC254 /* HapticButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticButton.swift; sourceTree = "<group>"; };
 		54EA834C291EE6CE007D6A4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		54ED1065293CCD1C00926E36 /* Purchase.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Purchase.plist; sourceTree = "<group>"; };
 		54ED1067293CCE3700926E36 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				6A8FFC34291E097100000C1B /* LottieView.swift */,
 				549051C52944B412005D3353 /* GradientView.swift */,
 				6A51A7972967ED9A00EC83E9 /* ThumbnailView.swift */,
+				54D3C354296857C0009BC254 /* HapticButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				6A8FFC35291E097100000C1B /* LottieView.swift in Sources */,
 				54D358E828DC7BD900A3AB4D /* HapticManager.swift in Sources */,
 				546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */,
+				54D3C355296857C0009BC254 /* HapticButton.swift in Sources */,
 				560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */,
 				545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */,
 				545908A3291299E600B3A658 /* ExportResultView.swift in Sources */,
