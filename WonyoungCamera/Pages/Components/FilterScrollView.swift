@@ -37,11 +37,12 @@ struct FilterScrollView: View {
                                                 .scaledToFill()
                                                 .clipShape(Circle())
                                                 .frame(width: 40, height: 40)
-                                            Image(systemName: "checkmark.circle")
-                                                .resizable()
-                                                .frame(width: 40, height: 40)
-                                                .opacity(self.decoration.colorFilter == lut ? 1 : 0)
-                                                .foregroundColor(.white)
+                                            GradientView {
+                                                Image(systemName: "checkmark.circle")
+                                                    .resizable()
+                                                    .frame(width: 40, height: 40)
+                                                    .opacity(self.decoration.colorFilter == lut ? 1 : 0)
+                                            }
                                         }
                                     }
                                     VStack {
