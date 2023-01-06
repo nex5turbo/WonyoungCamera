@@ -138,10 +138,10 @@ class Renderer {
         guard let texture = texture else {
             return
         }
-        var textureWidth = Float(texture.width)
-        var textureHeight = Float(texture.height)
-        if emptyTexture == nil {
-            let size = Int(min(textureWidth, textureHeight))
+        guard let emptyTexture,
+                min(texture.width, texture.height) ==
+                min(emptyTexture.width, emptyTexture.height) else {
+            let size = Int(min(texture.width, texture.height))
             let textureDescriptor = MTLTextureDescriptor()
             textureDescriptor.textureType = .type2D
             textureDescriptor.pixelFormat = .bgra8Unorm
@@ -152,8 +152,6 @@ class Renderer {
                 fatalError()
             }
             self.emptyTexture = newTexture
-        }
-        guard let emptyTexture = self.emptyTexture else {
             return
         }
 
@@ -165,6 +163,9 @@ class Renderer {
         let quadVertices = getVertices()
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
+        
+        var textureWidth = Float(texture.width)
+        var textureHeight = Float(texture.height)
         
         var scale = decoration.scale
         var border = decoration.border
