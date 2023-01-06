@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct FilterScrollView: View {
-    @Binding var selectedLut: Lut
-    @Binding var color: Color
-    @State var isRotating = false
     @ObservedObject var purchaseManager = PurchaseManager.shared
+    @Binding var decoration: Decoration
+
+    @State var isRotating = false
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
             .repeatForever(autoreverses: false)
     }
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { value in
@@ -28,7 +29,7 @@ struct FilterScrollView: View {
                                     Button {
                                         HapticManager.instance.impact(style: .soft)
                                         LutStorage.instance.selectedLut = lut
-                                        self.selectedLut = lut
+                                        self.decoration.colorFilter = lut
                                     } label: {
                                         ZStack {
                                             Image(uiImage: image!)
@@ -36,17 +37,10 @@ struct FilterScrollView: View {
                                                 .scaledToFill()
                                                 .clipShape(Circle())
                                                 .frame(width: 40, height: 40)
-//                                            if lut.isFree {
-//                                                Text("Free")
-//                                                    .font(.system(size: 8, weight: .bold))
-//                                                    .foregroundColor(.black)
-//                                                    .background(.thinMaterial)
-//                                                    .cornerRadius(3)
-//                                            }
                                             Image(systemName: "checkmark.circle")
                                                 .resizable()
                                                 .frame(width: 40, height: 40)
-                                                .opacity(self.selectedLut == lut ? 1 : 0)
+                                                .opacity(self.decoration.colorFilter == lut ? 1 : 0)
                                                 .foregroundColor(.white)
                                         }
                                     }
@@ -57,7 +51,7 @@ struct FilterScrollView: View {
                                             .scaledToFill()
                                             .minimumScaleFactor(0.5)
                                             .lineLimit(1)
-                                            .foregroundColor(color)
+                                            .foregroundColor(.white)
                                     }
                                     .frame(height: 20)
                                 }
@@ -93,7 +87,7 @@ struct FilterScrollView: View {
                         .background(.black)
                     }
                 }
-                .onChange(of: selectedLut) { newValue in
+                .onChange(of: decoration.colorFilter) { newValue in
                     let scrollArray = Array(Lut.allCases)
                     guard let index = scrollArray.firstIndex(of: newValue) else {
                         return
@@ -109,6 +103,6 @@ struct FilterScrollView: View {
 
 struct FilterScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterScrollView(selectedLut: .constant(Lut.Natural), color: .constant(.black))
+        FilterScrollView(decoration: .constant(.empty()))
     }
 }

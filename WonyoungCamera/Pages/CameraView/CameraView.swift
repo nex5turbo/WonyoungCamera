@@ -15,17 +15,19 @@ enum AdjustType {
 struct CameraView: View {
     @ObservedObject var metalCamera: MetalCamera
     @ObservedObject var purchaseManager = PurchaseManager.shared
-
+    
     @State var decoration: Decoration = Decoration.empty()
+
     @State var filterPresent = true
-    @State var isMute = false
     @State var albumPresent = false
+    @State var settingPresent = false
+    
+    
+    @State var isMute = false
     @State var buttonColor: Color = .white
     @State var selectedAdjustType: AdjustType = .brightness
     @State var sliderValue: Float = 50
     @State var isSliderEditing = false
-    @State var selectedLut: Lut = .Natural
-    @State var settingPresent = false
 
     let bottomIconSize: CGFloat = 25
 
@@ -52,7 +54,7 @@ struct CameraView: View {
                             .font(.system(size:20))
                     }
                     Spacer()
-                    Text(selectedLut.rawValue)
+                    Text(decoration.colorFilter.rawValue)
                         .foregroundColor(.gray)
                         .font(.system(size:15))
                     Spacer()
@@ -146,7 +148,7 @@ struct CameraView: View {
                     .padding(.horizontal)
                     Color.clear.frame(height: 10)
                     
-                    FilterScrollView(selectedLut: $selectedLut, color: $buttonColor)
+                    FilterScrollView(decoration: $decoration)
                     
                     HStack {
                         Button {
@@ -171,7 +173,7 @@ struct CameraView: View {
                         }
                         Spacer()
                         Button {
-                            if !purchaseManager.isPremiumUser, !selectedLut.isFree {
+                            if !purchaseManager.isPremiumUser, !decoration.colorFilter.isFree {
                                 purchaseManager.subscriptionViewPresent.toggle()
                                 return
                             }
