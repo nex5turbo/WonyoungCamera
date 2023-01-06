@@ -79,7 +79,7 @@ struct FilterScrollView: View {
                             }
                             
                             VStack {
-                                GradientImageView {
+                                GradientView {
                                     Text("Subscribe")
                                         .frame(width: 30)
                                         .font(.system(size: 10, weight: .bold))

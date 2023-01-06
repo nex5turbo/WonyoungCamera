@@ -1,5 +1,5 @@
 //
-//  GradientImageView.swift
+//  GradientView.swift
 //  WonyoungCamera
 //
 //  Created by 워뇨옹 on 2022/12/10.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GradientImageView<Content: View>: View {
+struct GradientView<Content: View>: View {
     @ViewBuilder var view: Content
     var gradient: LinearGradient = Color.mainGradientColor
     var body: some View {
@@ -20,8 +20,10 @@ struct GradientImageView<Content: View>: View {
     }
 }
 
-//struct GradientImageView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GradientImageView()
-//    }
-//}
+struct GradientImageView_Previews: PreviewProvider {
+    static var previews: some View {
+        GradientView {
+            Text("Hello World")
+        }
+    }
+}

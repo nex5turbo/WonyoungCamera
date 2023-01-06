@@ -27,7 +27,7 @@ struct SubscriptionView: View {
                         Button {
                             dismiss()
                         } label: {
-                            GradientImageView {
+                            GradientView {
                                 Image(systemName: "xmark.circle")
                                     .font(.system(size:20))
                             }
@@ -45,7 +45,7 @@ struct SubscriptionView: View {
                         }
                     Color.clear.frame(height: 8)
                     VStack(spacing: 8) {
-                        GradientImageView {
+                        GradientView {
                             Text(String.monthlyPlanName)
                                 .font(.system(size: 17))
                                 .bold()
@@ -149,7 +149,7 @@ struct SubscriptionView: View {
                         Button {
                             detailPresent.toggle()
                         } label: {
-                            GradientImageView {
+                            GradientView {
                                 Image(systemName: detailPresent ? "chevron.compact.up" : "chevron.compact.down")
                                     .frame(width: 44, height: 44)
                                     .font(.system(size: 22))

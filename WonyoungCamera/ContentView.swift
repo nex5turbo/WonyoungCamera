@@ -29,7 +29,7 @@ struct ContentView: View {
                             .frame(width: 200, height: 200)
                             .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
                             .animation(foreverAnimation, value: isRotating)
-                        GradientImageView {
+                        GradientView {
                             Text(String.APP_NAME)
                                 .font(.system(size: 25))
                                 .bold()

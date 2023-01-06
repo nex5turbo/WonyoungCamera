@@ -68,7 +68,6 @@ class MetalView: UIView {
     private var isStarting: Bool = false
     public func start() {
         guard isStarting == false else { return }
-        
         createDisplayLink()
     }
 
