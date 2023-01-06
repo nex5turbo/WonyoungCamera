@@ -19,12 +19,11 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
 
                           constant float &textureWidth [[ buffer(0) ]],
                           constant float &textureHeight [[ buffer(1) ]],
-                          constant bool &shouldFilter [[ buffer(2) ]],
-                          constant float &scale [[ buffer(3) ]],
-                          constant float &brightness [[ buffer(4) ]],
-                          constant float &contrast [[ buffer(5) ]],
-                          constant float &saturation [[ buffer(6) ]],
-                          constant bool &shouldStroke [[ buffer(7) ]],
+                          constant float &scale [[ buffer(2) ]],
+                          constant float &brightness [[ buffer(3) ]],
+                          constant float &contrast [[ buffer(4) ]],
+                          constant float &saturation [[ buffer(5) ]],
+                          constant bool &shouldStroke [[ buffer(6) ]],
                           uint2 gid [[ thread_position_in_grid ]]) {
     float halfWidth = textureWidth / 2;
     float halfHeight = textureHeight / 2;
@@ -52,20 +51,11 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
             return;
         }
     }
-
-    if (shouldFilter) {
-        half4 filteredColor = applyFilter(color, lutTexture);
-        filteredColor = applyBrightness(filteredColor, brightness);
-        filteredColor = applyContrast(filteredColor, contrast);
-        filteredColor = applySaturation(filteredColor, saturation);
-        writeTexture.write(filteredColor, gid);
-        return;
-    } else {
-        color = applyBrightness(color, brightness);
-        color = applyContrast(color, contrast);
-        color = applySaturation(color, saturation);
-        writeTexture.write(color, gid);
-    }
+    half4 filteredColor = applyFilter(color, lutTexture);
+    filteredColor = applyBrightness(filteredColor, brightness);
+    filteredColor = applyContrast(filteredColor, contrast);
+    filteredColor = applySaturation(filteredColor, saturation);
+    writeTexture.write(filteredColor, gid);
 }
 
 half4 applyFilter(half4 textureColor, texture2d<half> filterTexture) {

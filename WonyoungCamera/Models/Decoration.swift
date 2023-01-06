@@ -50,10 +50,10 @@ struct Decoration {
             background: nil,
             border: false,
             borderColor: nil,
-            brightness: 0.5,
-            saturation: 0.5,
-            contrast: 0.5,
-            scale: 1
+            brightness: 1.0,
+            saturation: 1.0,
+            contrast: 1.0,
+            scale: 1.0
         )
     }
 }

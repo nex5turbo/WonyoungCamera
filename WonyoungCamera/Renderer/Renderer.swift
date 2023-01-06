@@ -155,11 +155,8 @@ class Renderer {
             return
         }
 
-        var lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut]
-        if LutStorage.instance.selectedLut == .Natural {
-            lutTexture = nil
-        }
-        var shouldFilter = lutTexture != nil
+        guard let lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut] else { return }
+        
         let quadVertices = getVertices()
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
@@ -183,12 +180,11 @@ class Renderer {
         
         computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 0)
         computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 2)
-        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 3)
-        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 4)
-        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 5)
-        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 6)
-        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 7)
+        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 2)
+        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 3)
+        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 4)
+        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 5)
+        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 6)
         
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
@@ -214,7 +210,6 @@ class Renderer {
         renderCommandEncoder.setFragmentBytes(&drawableHeight, length: MemoryLayout<Float>.stride, index: 1)
         var deviceScale = UIScreen.main.scale
         renderCommandEncoder.setFragmentBytes(&deviceScale, length: MemoryLayout<Float>.stride, index: 2)
-        renderCommandEncoder.setFragmentBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 3)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
         renderCommandEncoder.endEncoding()
         commandBuffer.present(drawable)
