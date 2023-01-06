@@ -11,7 +11,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @ObservedObject var metalCamera = MetalCamera()
-    @State var isLoading = true
+    @State var isLoading = false
     @State var isRotating = false
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
@@ -38,13 +38,16 @@ struct ContentView: View {
                 }
                 .transition(.opacity)
                 .onAppear {
-                    isRotating = true
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                        withAnimation {
-                            isLoading = false
-                        }
-                    })
+                    if isLoading {
+                        
+                        isRotating = true
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                            withAnimation {
+                                isLoading = false
+                            }
+                        })
+                    }
                 }
             } else {
                 CameraView(metalCamera: metalCamera)

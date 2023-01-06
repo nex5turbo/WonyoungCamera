@@ -19,6 +19,7 @@ struct Decoration {
     var brightness: Float
     var saturation: Float
     var contrast: Float
+    var scale: Float
     
     init(
         colorFilter: Lut,
@@ -28,7 +29,8 @@ struct Decoration {
         borderColor: UIColor?,
         brightness: Float,
         saturation: Float,
-        contrast: Float
+        contrast: Float,
+        scale: Float
     ) {
         self.colorFilter = colorFilter
         self.sticker = sticker
@@ -38,6 +40,7 @@ struct Decoration {
         self.brightness = brightness
         self.saturation = saturation
         self.contrast = contrast
+        self.scale = scale
     }
 
     static func empty() -> Self {
@@ -49,7 +52,8 @@ struct Decoration {
             borderColor: nil,
             brightness: 0.5,
             saturation: 0.5,
-            contrast: 0.5
+            contrast: 0.5,
+            scale: 1
         )
     }
 }

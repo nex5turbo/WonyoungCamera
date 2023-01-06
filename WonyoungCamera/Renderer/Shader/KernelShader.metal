@@ -17,15 +17,14 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
                           texture2d<half> lutTexture [[ texture(2) ]],
                           texture2d<half> circleTexture [[ texture(3) ]],
 
-                          constant bool &shouldFlip [[ buffer(0) ]],
-                          constant float &textureWidth [[ buffer(1) ]],
-                          constant float &textureHeight [[ buffer(2) ]],
-                          constant bool &shouldFilter [[ buffer(3) ]],
-                          constant float &scale [[ buffer(4) ]],
-                          constant float &brightness [[ buffer(5) ]],
-                          constant float &contrast [[ buffer(6) ]],
-                          constant float &saturation [[ buffer(7) ]],
-                          constant bool &shouldStroke [[ buffer(8) ]],
+                          constant float &textureWidth [[ buffer(0) ]],
+                          constant float &textureHeight [[ buffer(1) ]],
+                          constant bool &shouldFilter [[ buffer(2) ]],
+                          constant float &scale [[ buffer(3) ]],
+                          constant float &brightness [[ buffer(4) ]],
+                          constant float &contrast [[ buffer(5) ]],
+                          constant float &saturation [[ buffer(6) ]],
+                          constant bool &shouldStroke [[ buffer(7) ]],
                           uint2 gid [[ thread_position_in_grid ]]) {
     float halfWidth = textureWidth / 2;
     float halfHeight = textureHeight / 2;
@@ -41,9 +40,7 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
     coord.y += halfHeight;
     coord.x = (coord.x) / textureWidth;
     coord.y = (coord.y) / textureHeight;
-    if (shouldFlip) {
-        coord.x = 1 - coord.x;
-    }
+    
     half4 color = readTexture.sample(colorSampler, coord);
     if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (100 * (textureWidth / 2160))) {
         writeTexture.write(half4(0), gid);

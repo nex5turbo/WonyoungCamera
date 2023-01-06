@@ -66,14 +66,14 @@ class Renderer {
     public func makeTexture(descriptor: MTLTextureDescriptor) -> MTLTexture? {
         return device.makeTexture(descriptor: descriptor)
     }
-    func makeRenderPassDescriptor(texture: MTLTexture, clearColor: Bool, color: (Int, Int, Int)) -> MTLRenderPassDescriptor {
+    func makeRenderPassDescriptor(texture: MTLTexture, clearColor: Bool) -> MTLRenderPassDescriptor {
         let renderPassDescriptor = MTLRenderPassDescriptor()
 
         if clearColor {
             renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(
-                red: Double(color.0) / 255,
-                green: Double(color.1) / 255,
-                blue: Double(color.2) / 255,
+                red: 1,
+                green: 1,
+                blue: 1,
                 alpha: 1
             )
             renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -128,10 +128,7 @@ class Renderer {
     func render(
         to drawable: CAMetalDrawable,
         with texture: MTLTexture?,
-        shouldFlip: Bool,
-        scale: Float = 1,
-        shouldStroke: Bool = false,
-        clearColor: (Int, Int, Int) = (0, 0, 0)
+        decoration: Decoration
     ) {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
@@ -169,10 +166,12 @@ class Renderer {
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
         
-        var shouldFlip = shouldFlip
+        var scale = decoration.scale
+        var border = decoration.border
         
-        var scale = scale
-        var shouldStroke = shouldStroke
+        var brightness = decoration.brightness
+        var contrast = decoration.contrast
+        var saturation = decoration.saturation
         // compute
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
@@ -181,13 +180,14 @@ class Renderer {
         computeEncoder?.setTexture(lutTexture, index: 2)
         computeEncoder?.setTexture(circleTexture, index: 3)
         
-        computeEncoder?.setBytes(&shouldFlip, length: MemoryLayout<Bool>.stride, index: 0)
-        computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 2)
-        computeEncoder?.setBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 3)
-        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 4)
-        
-        computeEncoder?.setBytes(&shouldStroke, length: MemoryLayout<Bool>.stride, index: 8)
+        computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 0)
+        computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 1)
+        computeEncoder?.setBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 2)
+        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 3)
+        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 4)
+        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 5)
+        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 6)
+        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 7)
         
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
@@ -200,20 +200,20 @@ class Renderer {
 
         computeEncoder?.endEncoding()
         //draw primitive
-        let renderPassDescriptor = makeRenderPassDescriptor(texture: drawable.texture, clearColor: true, color: clearColor)
+        let renderPassDescriptor = makeRenderPassDescriptor(texture: drawable.texture, clearColor: true)
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
         renderCommandEncoder.setRenderPipelineState(self.defaultRenderPipelineState)
         renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
         renderCommandEncoder.setFragmentTexture(emptyTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(frameTexture, index: 1)
-        renderCommandEncoder.setFragmentBytes(&shouldFlip, length: MemoryLayout<Bool>.stride, index: 0)
+
         var drawableWidth: Float = Float(drawable.texture.width)
-        renderCommandEncoder.setFragmentBytes(&drawableWidth, length: MemoryLayout<Float>.stride, index: 1)
+        renderCommandEncoder.setFragmentBytes(&drawableWidth, length: MemoryLayout<Float>.stride, index: 0)
         var drawableHeight: Float = Float(drawable.texture.height)
-        renderCommandEncoder.setFragmentBytes(&drawableHeight, length: MemoryLayout<Float>.stride, index: 2)
+        renderCommandEncoder.setFragmentBytes(&drawableHeight, length: MemoryLayout<Float>.stride, index: 1)
         var deviceScale = UIScreen.main.scale
-        renderCommandEncoder.setFragmentBytes(&deviceScale, length: MemoryLayout<Float>.stride, index: 3)
-        renderCommandEncoder.setFragmentBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 4)
+        renderCommandEncoder.setFragmentBytes(&deviceScale, length: MemoryLayout<Float>.stride, index: 2)
+        renderCommandEncoder.setFragmentBytes(&shouldFilter, length: MemoryLayout<Bool>.stride, index: 3)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
         renderCommandEncoder.endEncoding()
         commandBuffer.present(drawable)

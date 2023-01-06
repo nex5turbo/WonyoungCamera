@@ -86,21 +86,11 @@ struct CameraView: View {
                         VStack {
                             MetalCameraView(
                                 metalCamera: metalCamera,
+                                decoration: $decoration,
                                 shouldTakePicture: $shouldTakePicture,
                                 takenPicture: $takenImage,
-                                colorBackgroundEnabled: $colorBackgroundEnabled,
-                                shouldStroke: $shouldStroke,
-                                colorBackgounrd: $colorBackground
+                                shouldStroke: $shouldStroke
                             )
-                        }
-                        .onChange(of: colorBackground?.0) { newValue in
-                            guard let color = colorBackground else {
-                                self.buttonColor = .white
-                                return
-                            }
-                            self.buttonColor = Color(red: Double(255 - color.0) / 255,
-                                                    green: Double(255 - color.1) / 255,
-                                                    blue: Double(255 - color.2) / 255)
                         }
                         .cornerRadius(30)
                         .padding(.horizontal, 10)

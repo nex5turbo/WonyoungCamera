@@ -11,11 +11,11 @@ import AVFoundation
 
 struct MetalCameraView: UIViewRepresentable {
     @ObservedObject var metalCamera: MetalCamera
+    @Binding var decoration: Decoration
     @Binding var shouldTakePicture: Bool
     @Binding var takenPicture: UIImage?
-    @Binding var colorBackgroundEnabled: Bool
     @Binding var shouldStroke: Bool
-    @Binding var colorBackgounrd: (Int, Int, Int)?
+
     func makeUIView(context: Context) -> MetalView {
         guard let device = MTLCreateSystemDefaultDevice() else {
             fatalError()
@@ -37,6 +37,7 @@ class MetalView: UIView {
     private var device: MTLDevice
     private var currentTexture: MTLTexture?
     private var renderer: Renderer
+
     public var metalLayer: CAMetalLayer {
         return self.layer as! CAMetalLayer
     }
@@ -89,7 +90,7 @@ class MetalView: UIView {
         if kCVReturnSuccess != CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) {
             print("[Error] CVMetalTextureCacheCreate")
         }
-        start()
+//        start()
     }
 
     @objc func pinch(sender: UIPinchGestureRecognizer) {
@@ -115,14 +116,10 @@ class MetalView: UIView {
 
     @objc func renderToMetalLayer() {
         guard let currentDrawable = metalLayer.nextDrawable() else { return }
-        let shouldFlip = parent.metalCamera.cameraPosition == .front
         renderer.render(
             to: currentDrawable,
             with: currentTexture,
-            shouldFlip: shouldFlip,
-            scale: parent.metalCamera.scale,
-            shouldStroke: parent.shouldStroke,
-            clearColor: parent.colorBackgounrd == nil ? (255, 255, 255) : parent.colorBackgounrd!
+            decoration: parent.decoration
         )
         
         DispatchQueue.main.async {
@@ -146,6 +143,7 @@ class MetalView: UIView {
 
 extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        connection.isVideoMirrored = self.parent.metalCamera.cameraPosition == .front
         connection.videoOrientation = .portrait
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
@@ -191,21 +189,6 @@ extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0))) }
         self.currentTexture = texture
-        // 배경색 변경
-        if self.parent.colorBackgroundEnabled {
-            let cameraImage = CIImage(cvPixelBuffer: pixelBuffer)
-            let extent = cameraImage.extent
-            let inputExtent = CIVector(x: extent.origin.x, y: extent.origin.y, z: extent.size.width, w: extent.size.height)
-            if let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: cameraImage, kCIInputExtentKey: inputExtent]) {
-                if let outputImage = filter.outputImage {
-                    if let cgImage = convertToCGImage(ciImage: outputImage) {
-                        self.parent.colorBackgounrd = cgImage[0, 0]
-                    }
-                }
-            }
-        } else {
-            self.parent.colorBackgounrd = nil
-        }
 
         DispatchQueue.main.async {
             self.setNeedsDisplay()
