@@ -13,8 +13,6 @@ class MetalCamera: ObservableObject {
     
     public var cameraPosition: AVCaptureDevice.Position = .back
 
-    @Published var scale: Float = 1
-
     func stopSession() {
         if videoSession.isRunning {
             videoSession.stopRunning()

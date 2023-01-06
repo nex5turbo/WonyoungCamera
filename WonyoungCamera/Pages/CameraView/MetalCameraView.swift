@@ -20,7 +20,7 @@ struct MetalCameraView: UIViewRepresentable {
         guard let device = MTLCreateSystemDefaultDevice() else {
             fatalError()
         }
-        let metalView = MetalView(self, device: device)
+        let metalView = MetalView(self)
         metalView.metalLayer.device = device
         metalCamera.setUpCamera(delegate: metalView)
         return metalView
@@ -77,9 +77,9 @@ class MetalView: UIView {
         destroyDisplayLink()
     }
 
-    init(_ parent: MetalCameraView, device: MTLDevice) {
+    init(_ parent: MetalCameraView) {
         self.parent = parent
-        self.device = device
+        self.device = SharedMetalDevice.instance.device
         self.renderer = Renderer()
         super.init(frame: .zero)
 
@@ -90,15 +90,15 @@ class MetalView: UIView {
         if kCVReturnSuccess != CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) {
             print("[Error] CVMetalTextureCacheCreate")
         }
-//        start()
+        start()
     }
 
     @objc func pinch(sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
         
-        parent.metalCamera.scale /= Float(scale)
-        if parent.metalCamera.scale > 1 {
-            parent.metalCamera.scale = 1
+        parent.decoration.scale /= Float(scale)
+        if parent.decoration.scale > 1 {
+            parent.decoration.scale = 1
         }
         sender.scale = 1
     }
