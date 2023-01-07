@@ -12,10 +12,12 @@ class RenderableProvider {
     private var cacheMap: [String: Renderable] = [:]
     
     func getRenderableOrFetch(_ decorator: Decorator) -> Renderable? {
-        return cacheMap[decorator.path]
+        guard let renderable = cacheMap[decorator.id] else {
+            return nil
+        }
+        return renderable
     }
-}
-
-protocol Decorator {
-    var path: String { get }
+    func setRenderable() {
+        
+    }
 }
