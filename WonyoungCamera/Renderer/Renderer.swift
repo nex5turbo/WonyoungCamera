@@ -14,6 +14,7 @@ class Renderer {
     private var device: MTLDevice
     private var deviceSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     private var deviceScale = UIScreen.main.scale
+    private var provider = RenderableProvider()
     var targetTexture: MTLTexture?
     var circleTexture: MTLTexture
     var computePipelineState: MTLComputePipelineState
@@ -137,46 +138,6 @@ class Renderer {
         return textureToUIImage(texture: returnTexture)
     }
 
-    func applyColorFilter(
-        decoration: Decoration,
-        on commandBuffer: MTLCommandBuffer,
-        to outputTexture: MTLTexture,
-        with inputTexture: MTLTexture
-    ) {
-        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else { return }
-
-        var scale = decoration.scale
-        var border = decoration.border
-        
-        var brightness = decoration.brightness
-        var contrast = decoration.contrast
-        var saturation = decoration.saturation
-        // compute
-        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-        computeEncoder?.setComputePipelineState(self.computePipelineState)
-        computeEncoder?.setTexture(outputTexture, index: 0)
-        computeEncoder?.setTexture(inputTexture, index: 1)
-        computeEncoder?.setTexture(filterTexture, index: 2)
-        computeEncoder?.setTexture(circleTexture, index: 3)
-        
-        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
-        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 2)
-        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 3)
-        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 4)
-        
-        let w = computePipelineState.threadExecutionWidth
-        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
-        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
-
-        let threadgroupsPerGrid = MTLSizeMake((outputTexture.width + w - 1) / w,
-                                         (outputTexture.height + h - 1) / h,
-                                         1)
-        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
-
-        computeEncoder?.endEncoding()
-    }
-
     func render(
         on commandBuffer: MTLCommandBuffer,
         to outputTexture: MTLTexture,
@@ -258,6 +219,83 @@ class Renderer {
         ]
         return returnValue
     }
+}
+
+// MARK: apply functions
+extension Renderer {
+    func applyBackground(
+        decoration: Decoration,
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture
+    ) {
+//        let renderable = provider.getRenderableOrFetch(decoration.background)
+//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
+    }
+
+    func applySticker(
+        decoration: Decoration,
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture
+    ) {
+//        let renderable = provider.getRenderableOrFetch(decoration.sticker)
+//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
+    }
+
+    func applyAdjustment(
+        decoration: Decoration,
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture
+    ) {
+//        var scale = decoration.scale
+//        var border = decoration.border
+//
+//        var brightness = decoration.brightness
+//        var contrast = decoration.contrast
+//        var saturation = decoration.saturation
+    }
+    
+    func applyColorFilter(
+        decoration: Decoration,
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture,
+        with inputTexture: MTLTexture
+    ) {
+//        let renderable = provider.getRenderableOrFetch(decoration.colorFilter)
+//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
+        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else { return }
+
+        var scale = decoration.scale
+        var border = decoration.border
+        
+        var brightness = decoration.brightness
+        var contrast = decoration.contrast
+        var saturation = decoration.saturation
+        // compute
+        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
+        computeEncoder?.setComputePipelineState(self.computePipelineState)
+        computeEncoder?.setTexture(outputTexture, index: 0)
+        computeEncoder?.setTexture(inputTexture, index: 1)
+        computeEncoder?.setTexture(filterTexture, index: 2)
+        computeEncoder?.setTexture(circleTexture, index: 3)
+        
+        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
+        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 1)
+        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 2)
+        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 3)
+        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 4)
+        
+        let w = computePipelineState.threadExecutionWidth
+        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
+        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
+
+        let threadgroupsPerGrid = MTLSizeMake((outputTexture.width + w - 1) / w,
+                                         (outputTexture.height + h - 1) / h,
+                                         1)
+        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
+
+        computeEncoder?.endEncoding()
+    }
+
 }
 
 struct Vertex {
