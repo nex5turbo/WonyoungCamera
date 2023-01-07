@@ -18,14 +18,15 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
                           texture2d<half> lutTexture [[ texture(2) ]],
                           texture2d<half> circleTexture [[ texture(3) ]],
 
-                          constant float &textureWidth [[ buffer(0) ]],
-                          constant float &textureHeight [[ buffer(1) ]],
-                          constant float &scale [[ buffer(2) ]],
-                          constant float &brightness [[ buffer(3) ]],
-                          constant float &contrast [[ buffer(4) ]],
-                          constant float &saturation [[ buffer(5) ]],
-                          constant bool &shouldStroke [[ buffer(6) ]],
+                          constant float &scale [[ buffer(0) ]],
+                          constant float &brightness [[ buffer(1) ]],
+                          constant float &contrast [[ buffer(2) ]],
+                          constant float &saturation [[ buffer(3) ]],
+                          constant bool &shouldStroke [[ buffer(4) ]],
                           uint2 gid [[ thread_position_in_grid ]]) {
+    float textureWidth = readTexture.get_width();
+    float textureHeight = readTexture.get_height();
+    
     float halfWidth = textureWidth / 2;
     float halfHeight = textureHeight / 2;
 
@@ -46,16 +47,19 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
         writeTexture.write(half4(0), gid);
         return;
     }
+    
     if (shouldStroke) {
         if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (120 * (textureWidth / 2160))) {
             writeTexture.write(half4(0, 0, 0, 1), gid);
             return;
         }
     }
+    
     half4 filteredColor = applyFilter(color, lutTexture);
     filteredColor = applyBrightness(filteredColor, brightness);
     filteredColor = applyContrast(filteredColor, contrast);
     filteredColor = applySaturation(filteredColor, saturation);
+    
     writeTexture.write(filteredColor, gid);
 }
 

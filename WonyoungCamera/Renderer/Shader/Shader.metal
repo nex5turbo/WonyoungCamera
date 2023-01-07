@@ -60,10 +60,8 @@ half4 gaussianBlur(float2 coord, texture2d<half> texture);
 
 fragment half4 default_fragment(RasterizerData in [[ stage_in ]],
                                 texture2d<half> inputTexture [[texture(0)]],
-                                texture2d<half> cameraTexture [[ texture(1) ]],
                                 constant float &deviceWidth [[ buffer(0) ]],
-                                constant float &deviceHeight [[ buffer(1) ]],
-                                constant float &deviceScale [[ buffer(2) ]]) {
+                                constant float &deviceHeight [[ buffer(1) ]]) {
     constexpr sampler colorSampler(coord::normalized, filter::linear);
     
     float2 size = float2(deviceWidth, deviceHeight);

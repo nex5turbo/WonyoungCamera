@@ -14,13 +14,13 @@ class Renderer {
     private var device: MTLDevice
     private var deviceSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     private var deviceScale = UIScreen.main.scale
-    var emptyTexture: MTLTexture?
-    var frameTexture: MTLTexture?
+    var targetTexture: MTLTexture?
     var circleTexture: MTLTexture
     var computePipelineState: MTLComputePipelineState
     var defaultRenderPipelineState: MTLRenderPipelineState!
     var defaultLibrary: MTLLibrary
     var commandQueue: MTLCommandQueue
+    
     init(compute: String = "roundingImage") {
         self.device = SharedMetalDevice.instance.device
         guard let commandQueue = device.makeCommandQueue() else {
@@ -59,13 +59,22 @@ class Renderer {
         } catch {
             fatalError("Engine Error: Cannot create defaultRenderPipelineState!")
         }
-        if compute == "roundingImage" {
-            self.frameTexture = device.loadFilter(filterName: "cameraFrame")
-        }
     }
+    
     public func makeTexture(descriptor: MTLTextureDescriptor) -> MTLTexture? {
         return device.makeTexture(descriptor: descriptor)
     }
+    
+    public func makeEmptyTexture(size: CGSize) -> MTLTexture? {
+        let textureDescriptor = MTLTextureDescriptor()
+        textureDescriptor.textureType = .type2D
+        textureDescriptor.pixelFormat = .bgra8Unorm
+        textureDescriptor.width = Int(size.width)
+        textureDescriptor.height = Int(size.height)
+        textureDescriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        return makeTexture(descriptor: textureDescriptor)
+    }
+    
     func makeRenderPassDescriptor(texture: MTLTexture, clearColor: Bool) -> MTLRenderPassDescriptor {
         let renderPassDescriptor = MTLRenderPassDescriptor()
 
@@ -83,6 +92,7 @@ class Renderer {
         renderPassDescriptor.colorAttachments[0].texture = texture
         return renderPassDescriptor
     }
+
     func applyLutToSampleImage(_ sampleImageTexture: MTLTexture, lutTexture: MTLTexture) -> UIImage? {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
@@ -123,8 +133,75 @@ class Renderer {
         computeEncoder?.endEncoding()
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
+        
         return textureToUIImage(texture: returnTexture)
     }
+
+    func applyColorFilter(
+        decoration: Decoration,
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture,
+        with inputTexture: MTLTexture
+    ) {
+        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else { return }
+
+        var scale = decoration.scale
+        var border = decoration.border
+        
+        var brightness = decoration.brightness
+        var contrast = decoration.contrast
+        var saturation = decoration.saturation
+        // compute
+        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
+        computeEncoder?.setComputePipelineState(self.computePipelineState)
+        computeEncoder?.setTexture(outputTexture, index: 0)
+        computeEncoder?.setTexture(inputTexture, index: 1)
+        computeEncoder?.setTexture(filterTexture, index: 2)
+        computeEncoder?.setTexture(circleTexture, index: 3)
+        
+        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
+        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 1)
+        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 2)
+        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 3)
+        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 4)
+        
+        let w = computePipelineState.threadExecutionWidth
+        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
+        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
+
+        let threadgroupsPerGrid = MTLSizeMake((outputTexture.width + w - 1) / w,
+                                         (outputTexture.height + h - 1) / h,
+                                         1)
+        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
+
+        computeEncoder?.endEncoding()
+    }
+
+    func render(
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture,
+        with inputTexture: MTLTexture,
+        decoration: Decoration
+    ) {
+        let quadVertices = getVertices()
+        let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
+        let numVertice = quadVertices.count
+        
+        //draw primitive
+        let renderPassDescriptor = makeRenderPassDescriptor(texture: outputTexture, clearColor: true)
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
+        renderCommandEncoder.setRenderPipelineState(self.defaultRenderPipelineState)
+        renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
+        renderCommandEncoder.setFragmentTexture(targetTexture, index: 0)
+
+        var textureWidth: Float = Float(outputTexture.width)
+        renderCommandEncoder.setFragmentBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 0)
+        var textureHeight: Float = Float(outputTexture.height)
+        renderCommandEncoder.setFragmentBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 1)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
+        renderCommandEncoder.endEncoding()
+    }
+
     func render(
         to drawable: CAMetalDrawable,
         with texture: MTLTexture?,
@@ -138,80 +215,23 @@ class Renderer {
         guard let texture = texture else {
             return
         }
-        guard let emptyTexture,
+        guard let targetTexture,
                 min(texture.width, texture.height) ==
-                min(emptyTexture.width, emptyTexture.height) else {
-            let size = Int(min(texture.width, texture.height))
-            let textureDescriptor = MTLTextureDescriptor()
-            textureDescriptor.textureType = .type2D
-            textureDescriptor.pixelFormat = .bgra8Unorm
-            textureDescriptor.width = size
-            textureDescriptor.height = size
-            textureDescriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
-            guard let newTexture = self.makeTexture(descriptor: textureDescriptor) else {
-                fatalError()
-            }
-            self.emptyTexture = newTexture
+                min(targetTexture.width, targetTexture.height) else {
+            let targetLength = Int(min(texture.width, texture.height))
+            let targetSize = CGSize(width: targetLength, height: targetLength)
+            self.targetTexture = self.makeEmptyTexture(size: targetSize)
             return
         }
 
-        guard let lutTexture = LutStorage.instance.luts[LutStorage.instance.selectedLut] else { return }
-        
-        let quadVertices = getVertices()
-        let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
-        let numVertice = quadVertices.count
-        
-        var textureWidth = Float(texture.width)
-        var textureHeight = Float(texture.height)
-        
-        var scale = decoration.scale
-        var border = decoration.border
-        
-        var brightness = decoration.brightness
-        var contrast = decoration.contrast
-        var saturation = decoration.saturation
-        // compute
-        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-        computeEncoder?.setComputePipelineState(self.computePipelineState)
-        computeEncoder?.setTexture(emptyTexture, index: 0)
-        computeEncoder?.setTexture(texture, index: 1)
-        computeEncoder?.setTexture(lutTexture, index: 2)
-        computeEncoder?.setTexture(circleTexture, index: 3)
-        
-        computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 0)
-        computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 2)
-        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 3)
-        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 4)
-        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 5)
-        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 6)
-        
-        let w = computePipelineState.threadExecutionWidth
-        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
-        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
+        applyColorFilter(
+            decoration: decoration,
+            on: commandBuffer,
+            to: targetTexture,
+            with: texture
+        )
 
-        let threadgroupsPerGrid = MTLSizeMake((emptyTexture.width + w - 1) / w,
-                                         (emptyTexture.height + h - 1) / h,
-                                         1)
-        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
-
-        computeEncoder?.endEncoding()
-        //draw primitive
-        let renderPassDescriptor = makeRenderPassDescriptor(texture: drawable.texture, clearColor: true)
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
-        renderCommandEncoder.setRenderPipelineState(self.defaultRenderPipelineState)
-        renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
-        renderCommandEncoder.setFragmentTexture(emptyTexture, index: 0)
-        renderCommandEncoder.setFragmentTexture(frameTexture, index: 1)
-
-        var drawableWidth: Float = Float(drawable.texture.width)
-        renderCommandEncoder.setFragmentBytes(&drawableWidth, length: MemoryLayout<Float>.stride, index: 0)
-        var drawableHeight: Float = Float(drawable.texture.height)
-        renderCommandEncoder.setFragmentBytes(&drawableHeight, length: MemoryLayout<Float>.stride, index: 1)
-        var deviceScale = UIScreen.main.scale
-        renderCommandEncoder.setFragmentBytes(&deviceScale, length: MemoryLayout<Float>.stride, index: 2)
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
-        renderCommandEncoder.endEncoding()
+        render(on: commandBuffer, to: drawable.texture, with: targetTexture, decoration: decoration)
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
