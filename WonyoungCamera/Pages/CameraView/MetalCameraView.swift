@@ -172,5 +172,8 @@ extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0))) }
         self.currentTexture = texture
+        DispatchQueue.main.async {
+            self.setNeedsDisplay()
+        }
     }
 }
