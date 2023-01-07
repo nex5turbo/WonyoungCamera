@@ -21,6 +21,8 @@
 		543B35D42969A25C00ED86C8 /* BackgroundDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35D32969A25C00ED86C8 /* BackgroundDecorator.swift */; };
 		543B35D62969A26500ED86C8 /* StickerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35D52969A26500ED86C8 /* StickerDecorator.swift */; };
 		543B35D82969A95000ED86C8 /* Natural.png in Resources */ = {isa = PBXBuildFile; fileRef = 543B35D72969A95000ED86C8 /* Natural.png */; };
+		543B35DA2969BD8E00ED86C8 /* ProvidingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35D92969BD8E00ED86C8 /* ProvidingOperation.swift */; };
+		543B35DC2969BDAD00ED86C8 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35DB2969BDAD00ED86C8 /* AsyncOperation.swift */; };
 		545908A3291299E600B3A658 /* ExportResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A2291299E600B3A658 /* ExportResultView.swift */; };
 		545908A62913F87E00B3A658 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 545908A52913F87E00B3A658 /* Kingfisher */; };
 		545908A929140C5500B3A658 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A829140C5500B3A658 /* Colors.swift */; };
@@ -120,6 +122,8 @@
 		543B35D32969A25C00ED86C8 /* BackgroundDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundDecorator.swift; sourceTree = "<group>"; };
 		543B35D52969A26500ED86C8 /* StickerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerDecorator.swift; sourceTree = "<group>"; };
 		543B35D72969A95000ED86C8 /* Natural.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Natural.png; sourceTree = "<group>"; };
+		543B35D92969BD8E00ED86C8 /* ProvidingOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidingOperation.swift; sourceTree = "<group>"; };
+		543B35DB2969BDAD00ED86C8 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		545908A2291299E600B3A658 /* ExportResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportResultView.swift; sourceTree = "<group>"; };
 		545908A829140C5500B3A658 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		545908AC291E67EF00B3A658 /* arrowRight.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrowRight.json; sourceTree = "<group>"; };
@@ -465,6 +469,8 @@
 				6A51A7932967D46E00EC83E9 /* Decoration.swift */,
 				543B35CA2969994200ED86C8 /* RenderableProvider.swift */,
 				543B35CC29699CD500ED86C8 /* Renderable.swift */,
+				543B35D92969BD8E00ED86C8 /* ProvidingOperation.swift */,
+				543B35DB2969BDAD00ED86C8 /* AsyncOperation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -701,7 +707,9 @@
 				543B35C929698E7500ED86C8 /* CGSize+Operator.swift in Sources */,
 				5435E650290EF72600F8A331 /* Exporter.swift in Sources */,
 				543B35D42969A25C00ED86C8 /* BackgroundDecorator.swift in Sources */,
+				543B35DA2969BD8E00ED86C8 /* ProvidingOperation.swift in Sources */,
 				5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */,
+				543B35DC2969BDAD00ED86C8 /* AsyncOperation.swift in Sources */,
 				54D358DD28DC7BD900A3AB4D /* CornerRadius+Extensions.swift in Sources */,
 				54D358E128DC7BD900A3AB4D /* MetalCameraView.swift in Sources */,
 				54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */,

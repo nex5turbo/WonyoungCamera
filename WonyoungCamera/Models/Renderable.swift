@@ -17,6 +17,9 @@ class Renderable {
     func getCurrentTexture(on device: MTLDevice) -> MTLTexture? {
         abort()
     }
+    func finish() {
+        abort()
+    }
 }
 
 class ImageRenderable: Renderable {
@@ -50,5 +53,8 @@ class ImageRenderable: Renderable {
         } catch {
             fatalError("Error textureLoader.newTexture - Exception")
         }
+    }
+    override func finish() {
+        self.texture = nil
     }
 }

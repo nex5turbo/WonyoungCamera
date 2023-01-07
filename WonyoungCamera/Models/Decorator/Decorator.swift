@@ -10,4 +10,5 @@ import Foundation
 protocol Decorator {
     var id: String { get }
     var path: String { get }
+    func provide(_ done: (Renderable?) -> Void)
 }
