@@ -12,6 +12,6 @@ class DecoratableProvider {
     private var cacheMap: [String: Decoratable] = [:]
     
     func getDecorationOrFetch() -> MTLTexture? {
-        
+        return nil
     }
 }

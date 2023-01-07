@@ -9,5 +9,5 @@ import Foundation
 import Metal
 
 protocol Decoratable {
-    var texture: MTLTexture
+    var texture: MTLTexture { get set }
 }
