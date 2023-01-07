@@ -11,7 +11,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @ObservedObject var metalCamera = MetalCamera()
-    @State var isLoading = false
+    @State var isLoading = true
     @State var isRotating = false
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
