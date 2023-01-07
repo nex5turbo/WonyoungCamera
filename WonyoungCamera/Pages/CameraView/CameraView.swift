@@ -27,17 +27,21 @@ struct CameraView: View {
     @State var selectedAdjustType: AdjustType = .brightness
     @State var sliderValue: Float = 50
     @State var isSliderEditing = false
+    @State var adjustIconName: String = "sun.max.circle"
 
     let bottomIconSize: CGFloat = 25
 
-    func getAdjustIconName() -> String {
+    func switchSlider() {
         switch selectedAdjustType {
         case .brightness:
-            return "sun.max.circle"
+            selectedAdjustType = .contrast
+            adjustIconName = "circle.righthalf.filled"
         case .contrast:
-            return "circle.righthalf.filled"
+            selectedAdjustType = .saturation
+            adjustIconName = "drop.circle.fill"
         case .saturation:
-            return "drop.circle.fill"
+            selectedAdjustType = .brightness
+            adjustIconName = "sun.max.circle"
         }
     }
     var body: some View {
@@ -69,15 +73,6 @@ struct CameraView: View {
                 .background(.black)
                 GeometryReader { proxy in
                     ZStack {
-                        Color.black
-                            .onAppear {
-                                print(proxy.size.width)
-                                print(proxy.size.height)
-                            }
-                            .onChange(of: proxy.size) { _ in
-                                print(proxy.size.width)
-                                print(proxy.size.height)
-                            }
                         // metal view가 들어갈 자리
                         VStack {
                             MetalCameraView(
@@ -112,7 +107,7 @@ struct CameraView: View {
                         if isSliderEditing {
                             ZStack {
                                 VStack {
-                                    Image(systemName: getAdjustIconName())
+                                    Image(systemName: adjustIconName)
                                         .foregroundColor(.white)
                                         .font(.system(size: 40))
                                     Text("\(Int(sliderValue))%")
@@ -196,7 +191,7 @@ struct CameraView: View {
                         HapticButton {
                             switchSlider()
                         } content: {
-                            Image(systemName: getAdjustIconName())
+                            Image(systemName: adjustIconName)
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)
@@ -225,16 +220,6 @@ struct CameraView: View {
         }
         .navigationTitle("")
         .navigationBarHidden(true)
-    }
-    func switchSlider() {
-        switch selectedAdjustType {
-        case .brightness:
-            selectedAdjustType = .contrast
-        case .contrast:
-            selectedAdjustType = .saturation
-        case .saturation:
-            selectedAdjustType = .brightness
-        }
     }
 }
 
