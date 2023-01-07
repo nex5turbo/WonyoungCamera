@@ -17,7 +17,8 @@ struct CameraView: View {
     @ObservedObject var purchaseManager = PurchaseManager.shared
     
     @State var decoration: Decoration = Decoration.empty()
-
+    @State var takePicture: Bool = false
+    
     @State var filterPresent = true
     @State var albumPresent = false
     @State var settingPresent = false
@@ -77,7 +78,8 @@ struct CameraView: View {
                         VStack {
                             MetalCameraView(
                                 metalCamera: metalCamera,
-                                decoration: $decoration
+                                decoration: $decoration,
+                                takePicture: $takePicture
                             )
                         }
                         .cornerRadius(30)
@@ -170,7 +172,9 @@ struct CameraView: View {
                             if !isMute {
                                 shutterSound()
                             }
-                            // take picture
+                            if !takePicture {
+                                takePicture.toggle()
+                            }
                         } content: {
                             ZStack {
                                 Image(systemName: "circle.fill")

@@ -12,6 +12,7 @@ import AVFoundation
 struct MetalCameraView: UIViewRepresentable {
     @ObservedObject var metalCamera: MetalCamera
     @Binding var decoration: Decoration
+    @Binding var takePicture: Bool
 
     func makeUIView(context: Context) -> MetalView {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -117,10 +118,26 @@ class MetalView: UIView {
             with: currentTexture,
             decoration: parent.decoration
         )
+        if self.parent.takePicture {
+            self.parent.takePicture = false
+            saveCurrentTexture()
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func saveCurrentTexture() {
+        DispatchQueue.global().async {
+            guard let texture = self.renderer.targetTexture else {
+                return
+            }
+            guard let cgImage = convertToCGImage(texture: texture) else {
+                fatalError("NO cgImage from texture")
+            }
+            let uiImage = UIImage(cgImage: cgImage)
+            ImageManager.instance.saveImage(image: uiImage)
+        }
     }
 }
 
