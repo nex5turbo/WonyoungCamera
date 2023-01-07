@@ -224,12 +224,22 @@ class Renderer {
             return
         }
 
+//        applyBackground(
+//            decoration: decoration,
+//            on: commandBuffer,
+//            to: targetTexture
+//        )
         applyColorFilter(
             decoration: decoration,
             on: commandBuffer,
             to: targetTexture,
             with: texture
         )
+//        applySticker(
+//            decoration: decoration,
+//            on: commandBuffer,
+//            to: targetTexture
+//        )
 
         render(on: commandBuffer, to: drawable.texture, with: targetTexture, decoration: decoration)
         commandBuffer.present(drawable)
