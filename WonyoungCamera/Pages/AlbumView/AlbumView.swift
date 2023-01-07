@@ -93,6 +93,7 @@ struct AlbumView: View {
                                     
                             }
                         }
+                        .disabled(isLoading)
                         .onChange(of: isSelectMode) { newValue in
                             if !newValue {
                                 selectedImagePaths.removeAll()
@@ -109,141 +110,130 @@ struct AlbumView: View {
                 .background(.white)
                 Divider()
 
-                if !isLoading {
-                    HStack(spacing: 0) {
-                        if albumImagePaths.isEmpty {
+                HStack(spacing: 0) {
+                    if albumImagePaths.isEmpty {
+                        Spacer()
+                        VStack {
                             Spacer()
-                            VStack {
-                                Spacer()
-                                Text(String.noPhotoText)
-                                Spacer()
-                            }
+                            Text(String.noPhotoText)
                             Spacer()
-                        } else {
-                            ScrollView {
-                                LazyVGrid(columns: [GridItem(.flexible()),
-                                                    GridItem(.flexible()),
-                                                    GridItem(.flexible())]) {
+                        }
+                        Spacer()
+                    } else {
+                        ScrollView {
+                            LazyVGrid(columns: [GridItem(.flexible()),
+                                                GridItem(.flexible()),
+                                                GridItem(.flexible())]) {
 
-                                    ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
+                                ForEach(Array(zip(albumImagePaths.indices, albumImagePaths)), id: \.0) { (index, item) in
+                                    ZStack {
+                                        let resizingProcessor = DownsamplingImageProcessor(size: CGSize(width: 300, height: 300))
+                                        KFImage(URL(string: item))
+                                            .resizable()
+                                            .setProcessor(resizingProcessor)
+                                            .scaledToFill()
+                                            .contextMenu {
+                                                if !isSelectMode {
+                                                    Button(role: .destructive) {
+                                                        self.selectedIndex = index
+                                                        self.deleteConfirmPresent = true
+                                                    } label: {
+                                                        Text(String.deleteLabel)
+                                                        Image(systemName: "trash.circle")
+                                                    }
+                                                    Button {
+                                                        share(path: item)
+                                                    } label: {
+                                                        Text(String.shareLabel)
+                                                        Image(systemName: "square.and.arrow.up.circle")
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    .onDrag {
+                                        draggingItem = item
+                                        isDragging = true
+                                        return NSItemProvider()
+                                    }
+                                    .onTapGesture {
+                                        if isSelectMode {
+                                            guard selectedImagePaths.count < selectedExportCount.rawValue else {
+                                                return
+                                            }
+                                            selectedImagePaths.append(item)
+                                        } else {
+                                            self.selectedPath = item
+                                            var path = item
+                                            if item.contains("file://") {
+                                                path = item.replacingOccurrences(of: "file://", with: "")
+                                            }
+                                            guard let originalImage = UIImage(contentsOfFile: path) else {
+                                                print(item)
+                                                return
+                                            }
+                                            self.selectedImage = Image(uiImage: originalImage)
+                                            self.fullscreenPresent.toggle()
+                                        }
+                                    }
+                                }
+                            }
+                            .padding()
+                            Color.clear.frame(height: 200)
+                        }
+                    }
+                    
+                    if isSelectMode {
+                        ScrollViewReader { scroll in
+                            ScrollView(showsIndicators: false) {
+                                
+                                VStack {
+                                    ForEach(selectedImagePaths.indices, id: \.self) { index in
+                                        let item = selectedImagePaths[index]
+                                        let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
                                         ZStack {
-                                            let resizingProcessor = DownsamplingImageProcessor(size: CGSize(width: 300, height: 300))
                                             KFImage(URL(string: item))
                                                 .resizable()
                                                 .setProcessor(resizingProcessor)
-                                                .scaledToFill()
-                                                .contextMenu {
-                                                    if !isSelectMode {
-                                                        Button(role: .destructive) {
-                                                            self.selectedIndex = index
-                                                            self.deleteConfirmPresent = true
-                                                        } label: {
-                                                            Text(String.deleteLabel)
-                                                            Image(systemName: "trash.circle")
+                                                .frame(width: 90, height: 90)
+                                            HStack {
+                                                Spacer()
+                                                VStack {
+                                                    Image(systemName: "xmark.circle")
+                                                        .foregroundColor(.black)
+                                                        .font(.system(size: 14))
+                                                        .onTapGesture {
+                                                            selectedImagePaths.remove(at: index)
                                                         }
-                                                        Button {
-                                                            share(path: item)
-                                                        } label: {
-                                                            Text(String.shareLabel)
-                                                            Image(systemName: "square.and.arrow.up.circle")
-                                                        }
-                                                    }
+                                                    Spacer()
                                                 }
-                                        }
-                                        .onDrag {
-                                            draggingItem = item
-                                            isDragging = true
-                                            return NSItemProvider()
-                                        }
-                                        .onTapGesture {
-                                            if isSelectMode {
-                                                guard selectedImagePaths.count < selectedExportCount.rawValue else {
-                                                    return
-                                                }
-                                                selectedImagePaths.append(item)
-                                            } else {
-                                                self.selectedPath = item
-                                                var path = item
-                                                if item.contains("file://") {
-                                                    path = item.replacingOccurrences(of: "file://", with: "")
-                                                }
-                                                guard let originalImage = UIImage(contentsOfFile: path) else {
-                                                    print(item)
-                                                    return
-                                                }
-                                                self.selectedImage = Image(uiImage: originalImage)
-                                                self.fullscreenPresent.toggle()
                                             }
                                         }
+                                        .padding(3)
                                     }
                                 }
-                                .padding()
+                                .onChange(of: selectedImagePaths) { _ in
+                                    HapticManager.instance.impact(style: .soft)
+                                }
+                                
                                 Color.clear.frame(height: 200)
                             }
-                        }
-                        
-                        if isSelectMode {
-                            ScrollViewReader { scroll in
-                                ScrollView(showsIndicators: false) {
-                                    
-                                    VStack {
-                                        ForEach(selectedImagePaths.indices, id: \.self) { index in
-                                            let item = selectedImagePaths[index]
-                                            let resizingProcessor = ResizingImageProcessor(referenceSize: CGSize(width: 300, height: 300))
-                                            ZStack {
-                                                KFImage(URL(string: item))
-                                                    .resizable()
-                                                    .setProcessor(resizingProcessor)
-                                                    .frame(width: 90, height: 90)
-                                                HStack {
-                                                    Spacer()
-                                                    VStack {
-                                                        Image(systemName: "xmark.circle")
-                                                            .foregroundColor(.black)
-                                                            .font(.system(size: 14))
-                                                            .onTapGesture {
-                                                                selectedImagePaths.remove(at: index)
-                                                            }
-                                                        Spacer()
-                                                    }
-                                                }
-                                            }
-                                            .padding(3)
-                                        }
+                            .frame(width: 100)
+                            .background(.thinMaterial)
+                            .onDrop(of: [.item], delegate: DragDelegate(
+                                items: $selectedImagePaths,
+                                draggingItem: $draggingItem,
+                                isDragging: $isDragging,
+                                callback: { dropItem in
+                                    if selectedImagePaths.count < selectedExportCount.rawValue {
+                                        selectedImagePaths.append(dropItem)
                                     }
-                                    .onChange(of: selectedImagePaths) { _ in
-                                        HapticManager.instance.impact(style: .soft)
-                                    }
-                                    
-                                    Color.clear.frame(height: 200)
-                                }
-                                .frame(width: 100)
-                                .background(.thinMaterial)
-                                .onDrop(of: [.item], delegate: DragDelegate(
-                                    items: $selectedImagePaths,
-                                    draggingItem: $draggingItem,
-                                    isDragging: $isDragging,
-                                    callback: { dropItem in
-                                        if selectedImagePaths.count < selectedExportCount.rawValue {
-                                            selectedImagePaths.append(dropItem)
-                                        }
-                                    }))
-                            }
+                                }))
                         }
                     }
-                    .background(Color.white)
-                } else {
-                    Color.gray
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            ProgressView()
-                            Spacer()
-                        }
-                        Spacer()
-                    }
-                    .background(.ultraThinMaterial)
+                }
+                .background(Color.white)
+                if isLoading {
+                    ProgressView()
                 }
             }
 
@@ -352,13 +342,9 @@ struct AlbumView: View {
             DispatchQueue.global().async {
                 if albumImagePaths.isEmpty {
                     self.albumImagePaths = ImageManager.instance.loadImageUrls()
-                    DispatchQueue.main.async {
-                        withAnimation {
-                            self.isLoading = false
-                        }
-                    }
+                    self.isLoading = false
                 } else {
-                    isLoading = false
+                    self.isLoading = false
                 }
             }
         }
