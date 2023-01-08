@@ -15,8 +15,7 @@ half4 applySaturation( half4 inputColor, half saturation);
 
 kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture(0) ]],
                           texture2d<half> readTexture [[ texture(1) ]],
-                          texture2d<half> lutTexture [[ texture(2) ]],
-                          texture2d<half> circleTexture [[ texture(3) ]],
+                          texture2d<half> circleTexture [[ texture(2) ]],
 
                           constant float &scale [[ buffer(0) ]],
                           constant float &brightness [[ buffer(1) ]],
@@ -55,12 +54,11 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
         }
     }
     
-    half4 filteredColor = applyFilter(color, lutTexture);
-    filteredColor = applyBrightness(filteredColor, brightness);
-    filteredColor = applyContrast(filteredColor, contrast);
-    filteredColor = applySaturation(filteredColor, saturation);
+    color = applyBrightness(color, brightness);
+    color = applyContrast(color, contrast);
+    color = applySaturation(color, saturation);
     
-    writeTexture.write(filteredColor, gid);
+    writeTexture.write(color, gid);
 }
 
 half4 applyFilter(half4 textureColor, texture2d<half> filterTexture) {
@@ -139,10 +137,10 @@ half4 applySaturation(half4 inputColor, half saturation) {
     
 }
 
-kernel void sampleImage(texture2d<half, access::write> writeTexture [[ texture(0) ]],
-                        texture2d<half> readTexture [[ texture(1) ]],
-                        texture2d<half> lutTexture [[ texture(2) ]],
-                        uint2 gid [[ thread_position_in_grid ]]) {
+kernel void applyColorFilter(texture2d<half, access::write> writeTexture [[ texture(0) ]],
+                             texture2d<half> readTexture [[ texture(1) ]],
+                             texture2d<half> lutTexture [[ texture(2) ]],
+                             uint2 gid [[ thread_position_in_grid ]]) {
     half4 color = readTexture.read(gid);
     half4 filteredColor = applyFilter(color, lutTexture);
     writeTexture.write(filteredColor, gid);

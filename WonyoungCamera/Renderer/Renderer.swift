@@ -18,11 +18,13 @@ class Renderer {
     var targetTexture: MTLTexture?
     var circleTexture: MTLTexture
     var computePipelineState: MTLComputePipelineState
+    var filterPipelineState: MTLComputePipelineState
+    var roundingPipelineState: MTLComputePipelineState?
     var defaultRenderPipelineState: MTLRenderPipelineState!
     var defaultLibrary: MTLLibrary
     var commandQueue: MTLCommandQueue
     
-    init(compute: String = "roundingImage") {
+    init() {
         self.device = SharedMetalDevice.instance.device
         guard let commandQueue = device.makeCommandQueue() else {
             fatalError("[Error] No command queue for device: \(device)")
@@ -31,7 +33,10 @@ class Renderer {
         guard let defaultLibrary = device.makeDefaultLibrary() else {
             fatalError("[Error] No command queue for device: \(device)")
         }
-        guard let computePipelineState = device.loadComputePipelineState(compute) else {
+        guard let computePipelineState = device.loadComputePipelineState("roundingImage") else {
+            fatalError()
+        }
+        guard let filterPipelineState = device.loadComputePipelineState("applyColorFilter") else {
             fatalError()
         }
         guard let circleTexture = device.loadFilter(filterName: "circle") else {
@@ -39,6 +44,7 @@ class Renderer {
         }
         self.circleTexture = circleTexture
         self.computePipelineState = computePipelineState
+        self.filterPipelineState = filterPipelineState
         self.defaultLibrary = defaultLibrary
         let defaultVertexProgram = defaultLibrary.makeFunction(name: "default_vertex")
         let defaultFragmentProgram = defaultLibrary.makeFunction(name: "default_fragment")
@@ -114,7 +120,7 @@ class Renderer {
 
         // compute
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-        computeEncoder?.setComputePipelineState(self.computePipelineState)
+        computeEncoder?.setComputePipelineState(self.filterPipelineState)
         computeEncoder?.setTexture(returnTexture, index: 0)
         computeEncoder?.setTexture(inputTexture, index: 1)
         computeEncoder?.setTexture(lutTexture, index: 2)
@@ -267,7 +273,11 @@ extension Renderer {
     ) {
 //        let renderable = provider.getRenderableOrFetch(decoration.colorFilter)
 //        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
-        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else { return }
+        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else { return
+        }
+        guard let filteredTexture = applyLut(inputTexture, lutTexture: filterTexture) else {
+            return
+        }
 
         var scale = decoration.scale
         var border = decoration.border
@@ -279,9 +289,8 @@ extension Renderer {
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
         computeEncoder?.setTexture(outputTexture, index: 0)
-        computeEncoder?.setTexture(inputTexture, index: 1)
-        computeEncoder?.setTexture(filterTexture, index: 2)
-        computeEncoder?.setTexture(circleTexture, index: 3)
+        computeEncoder?.setTexture(filteredTexture, index: 1)
+        computeEncoder?.setTexture(circleTexture, index: 2)
         
         computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
         computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 1)

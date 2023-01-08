@@ -27,7 +27,7 @@ class LutStorage {
             abort()
         }
         self.sampleImageTexture = sampleImageTexture
-        self.renderer = Renderer(compute: "sampleImage")
+        self.renderer = Renderer()
         guard let sampleImage = UIImage(named: "sample") else {
             abort()
         }
