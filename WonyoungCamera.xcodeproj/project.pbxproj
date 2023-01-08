@@ -17,7 +17,6 @@
 		543B35CB2969994200ED86C8 /* RenderableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35CA2969994200ED86C8 /* RenderableProvider.swift */; };
 		543B35CD29699CD500ED86C8 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35CC29699CD500ED86C8 /* Renderable.swift */; };
 		543B35D02969A24200ED86C8 /* Decorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35CF2969A24200ED86C8 /* Decorator.swift */; };
-		543B35D22969A25000ED86C8 /* ColorDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35D12969A25000ED86C8 /* ColorDecorator.swift */; };
 		543B35D42969A25C00ED86C8 /* BackgroundDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35D32969A25C00ED86C8 /* BackgroundDecorator.swift */; };
 		543B35D62969A26500ED86C8 /* StickerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35D52969A26500ED86C8 /* StickerDecorator.swift */; };
 		543B35D82969A95000ED86C8 /* Natural.png in Resources */ = {isa = PBXBuildFile; fileRef = 543B35D72969A95000ED86C8 /* Natural.png */; };
@@ -25,7 +24,6 @@
 		543B35DC2969BDAD00ED86C8 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35DB2969BDAD00ED86C8 /* AsyncOperation.swift */; };
 		543B35DE2969C17700ED86C8 /* ConcurrentDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35DD2969C17700ED86C8 /* ConcurrentDictionary.swift */; };
 		543B35E3296A905700ED86C8 /* WYBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E2296A905700ED86C8 /* WYBackground.swift */; };
-		543B35E5296A906400ED86C8 /* WYColorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E4296A906400ED86C8 /* WYColorFilter.swift */; };
 		543B35E7296A906C00ED86C8 /* WYSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E6296A906C00ED86C8 /* WYSticker.swift */; };
 		543B35E9296A907800ED86C8 /* WYMaterials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E8296A907800ED86C8 /* WYMaterials.swift */; };
 		543B35EB296AFD6800ED86C8 /* ColorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35EA296AFD6800ED86C8 /* ColorFilter.swift */; };
@@ -124,7 +122,6 @@
 		543B35CA2969994200ED86C8 /* RenderableProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderableProvider.swift; sourceTree = "<group>"; };
 		543B35CC29699CD500ED86C8 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		543B35CF2969A24200ED86C8 /* Decorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decorator.swift; sourceTree = "<group>"; };
-		543B35D12969A25000ED86C8 /* ColorDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorDecorator.swift; sourceTree = "<group>"; };
 		543B35D32969A25C00ED86C8 /* BackgroundDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundDecorator.swift; sourceTree = "<group>"; };
 		543B35D52969A26500ED86C8 /* StickerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerDecorator.swift; sourceTree = "<group>"; };
 		543B35D72969A95000ED86C8 /* Natural.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Natural.png; sourceTree = "<group>"; };
@@ -132,7 +129,6 @@
 		543B35DB2969BDAD00ED86C8 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		543B35DD2969C17700ED86C8 /* ConcurrentDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentDictionary.swift; sourceTree = "<group>"; };
 		543B35E2296A905700ED86C8 /* WYBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYBackground.swift; sourceTree = "<group>"; };
-		543B35E4296A906400ED86C8 /* WYColorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYColorFilter.swift; sourceTree = "<group>"; };
 		543B35E6296A906C00ED86C8 /* WYSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYSticker.swift; sourceTree = "<group>"; };
 		543B35E8296A907800ED86C8 /* WYMaterials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYMaterials.swift; sourceTree = "<group>"; };
 		543B35EA296AFD6800ED86C8 /* ColorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFilter.swift; sourceTree = "<group>"; };
@@ -297,7 +293,6 @@
 			isa = PBXGroup;
 			children = (
 				543B35CF2969A24200ED86C8 /* Decorator.swift */,
-				543B35D12969A25000ED86C8 /* ColorDecorator.swift */,
 				543B35D32969A25C00ED86C8 /* BackgroundDecorator.swift */,
 				543B35D52969A26500ED86C8 /* StickerDecorator.swift */,
 				543B35EA296AFD6800ED86C8 /* ColorFilter.swift */,
@@ -309,7 +304,6 @@
 			isa = PBXGroup;
 			children = (
 				543B35E2296A905700ED86C8 /* WYBackground.swift */,
-				543B35E4296A906400ED86C8 /* WYColorFilter.swift */,
 				543B35E6296A906C00ED86C8 /* WYSticker.swift */,
 				543B35E8296A907800ED86C8 /* WYMaterials.swift */,
 			);
@@ -720,9 +714,7 @@
 				54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */,
 				546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */,
 				54D1727E295DD85B006180FA /* FileManager+Extension.swift in Sources */,
-				543B35D22969A25000ED86C8 /* ColorDecorator.swift in Sources */,
 				54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */,
-				543B35E5296A906400ED86C8 /* WYColorFilter.swift in Sources */,
 				54D358E028DC7BD900A3AB4D /* KernelShader.metal in Sources */,
 				54168B2D28E275030000DF7F /* AlbumView.swift in Sources */,
 				5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */,
