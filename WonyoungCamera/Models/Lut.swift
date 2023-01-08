@@ -53,6 +53,18 @@ class LutStorage {
         }
     }
 
+    func getTexture(_ lut: Lut) -> MTLTexture? {
+        guard let texture = luts[lut] else {
+            return nil
+        }
+        return texture
+    }
+
+    func getTexture(_ name: String) -> MTLTexture? {
+        guard let lut = Lut(rawValue: name) else { return nil }
+        return getTexture(lut)
+    }
+
     func applyRandomLut() -> Lut {
         let lutKeys = Array(luts.keys)
         let randomIndex = Int.random(in: 0 ..< luts.count)

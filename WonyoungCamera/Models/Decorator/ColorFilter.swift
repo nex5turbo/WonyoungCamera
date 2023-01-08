@@ -49,11 +49,36 @@ struct LUTFilter: ColorFilter {
     }
     
     func apply(to texture: MTLTexture, with renderer: Renderer?) -> MTLTexture? {
-        return nil
+        guard let renderer else {
+            return nil
+        }
+        guard let lutTexture = LutStorage.instance.getTexture(name) else {
+            return nil
+        }
+        guard let resultTexture = renderer.applyLut(texture, lutTexture: lutTexture) else {
+            return nil
+        }
+        return resultTexture
     }
     
     func apply(to image: UIImage, with renderer: Renderer?) -> UIImage? {
-        return nil
+        guard let renderer else {
+            return nil
+        }
+        guard let lutTexture = LutStorage.instance.getTexture(name) else {
+            return nil
+        }
+        let device = SharedMetalDevice.instance.device
+        guard let texture = device.makeTexture(image: image) else {
+            return nil
+        }
+        guard let resultTexture = renderer.applyLut(texture, lutTexture: lutTexture) else {
+            return nil
+        }
+        guard let resultImage = textureToUIImage(texture: resultTexture) else {
+            return nil
+        }
+        return resultImage
     }
     
     func getSampleImage() -> UIImage? {
@@ -86,11 +111,11 @@ struct BuiltInFilter: ColorFilter {
         try container.encode(category, forKey: .category)
     }
     
-    func apply(to texture: MTLTexture, with renderer: Renderer?) -> MTLTexture? {
+    func apply(to texture: MTLTexture, with renderer: Renderer? = nil) -> MTLTexture? {
         return nil
     }
     
-    func apply(to image: UIImage, with renderer: Renderer?) -> UIImage? {
+    func apply(to image: UIImage, with renderer: Renderer? = nil) -> UIImage? {
         return nil
     }
     

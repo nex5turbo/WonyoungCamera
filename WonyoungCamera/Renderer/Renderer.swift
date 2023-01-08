@@ -94,30 +94,29 @@ class Renderer {
         return renderPassDescriptor
     }
 
-    func applyLutToSampleImage(_ sampleImageTexture: MTLTexture, lutTexture: MTLTexture) -> UIImage? {
+    func applyLut(_ inputTexture: MTLTexture, lutTexture: MTLTexture) -> MTLTexture? {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
             return nil
         }
-        let texture = sampleImageTexture
         let textureDescriptor = MTLTextureDescriptor()
         textureDescriptor.textureType = .type2D
         textureDescriptor.pixelFormat = .bgra8Unorm
-        textureDescriptor.width = texture.width
-        textureDescriptor.height = texture.height
+        textureDescriptor.width = inputTexture.width
+        textureDescriptor.height = inputTexture.height
         textureDescriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
         guard let returnTexture = self.makeTexture(descriptor: textureDescriptor) else {
             return nil
         }
 
-        var textureWidth = Float(texture.width)
-        var textureHeight = Float(texture.height)
+        var textureWidth = Float(inputTexture.width)
+        var textureHeight = Float(inputTexture.height)
 
         // compute
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
         computeEncoder?.setTexture(returnTexture, index: 0)
-        computeEncoder?.setTexture(texture, index: 1)
+        computeEncoder?.setTexture(inputTexture, index: 1)
         computeEncoder?.setTexture(lutTexture, index: 2)
         
         computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 1)
@@ -134,8 +133,14 @@ class Renderer {
         computeEncoder?.endEncoding()
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
-        
-        return textureToUIImage(texture: returnTexture)
+        return returnTexture
+    }
+    
+    func applyLutToSampleImage(_ sampleImageTexture: MTLTexture, lutTexture: MTLTexture) -> UIImage? {
+        guard let resultTexture = applyLut(sampleImageTexture, lutTexture: lutTexture) else {
+            return nil
+        }
+        return textureToUIImage(texture: resultTexture)
     }
 
     func render(
