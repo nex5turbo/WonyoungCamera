@@ -229,6 +229,13 @@ class Renderer {
             to: targetTexture,
             with: texture
         )
+        
+        roundingImage(
+            decoration: decoration,
+            on: commandBuffer,
+            to: targetTexture,
+            with: cameraTexture
+        )
 //        applySticker(
 //            decoration: decoration,
 //            on: commandBuffer,
@@ -287,27 +294,12 @@ extension Renderer {
 //        var saturation = decoration.saturation
     }
     
-    func applyColorFilter(
+    func roundingImage(
         decoration: Decoration,
         on commandBuffer: MTLCommandBuffer,
         to outputTexture: MTLTexture,
         with inputTexture: MTLTexture
     ) {
-//        let renderable = provider.getRenderableOrFetch(decoration.colorFilter)
-//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
-        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
-            return
-        }
-        guard let cameraTexture else {
-            return
-        }
-        applyLut(
-            on: commandBuffer,
-            to: cameraTexture,
-            from: inputTexture,
-            lutTexture: filterTexture
-        )
-
         var scale = decoration.scale
         var border = decoration.border
         
@@ -318,7 +310,7 @@ extension Renderer {
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
         computeEncoder?.setTexture(outputTexture, index: 0)
-        computeEncoder?.setTexture(cameraTexture, index: 1)
+        computeEncoder?.setTexture(inputTexture, index: 1)
         computeEncoder?.setTexture(circleTexture, index: 2)
         
         computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
@@ -339,6 +331,27 @@ extension Renderer {
         computeEncoder?.endEncoding()
     }
 
+    func applyColorFilter(
+        decoration: Decoration,
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture,
+        with inputTexture: MTLTexture
+    ) {
+//        let renderable = provider.getRenderableOrFetch(decoration.colorFilter)
+//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
+        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
+            return
+        }
+        guard let cameraTexture else {
+            return
+        }
+        applyLut(
+            on: commandBuffer,
+            to: cameraTexture,
+            from: inputTexture,
+            lutTexture: filterTexture
+        )
+    }
 }
 
 struct Vertex {
