@@ -55,7 +55,7 @@ struct LUTFilter: ColorFilter {
         guard let lutTexture = LutStorage.instance.getTexture(name) else {
             return nil
         }
-        guard let resultTexture = renderer.applyLut(texture, lutTexture: lutTexture) else {
+        guard let resultTexture = renderer.applyLut(to: texture, lutTexture: lutTexture) else {
             return nil
         }
         return resultTexture
@@ -72,7 +72,7 @@ struct LUTFilter: ColorFilter {
         guard let texture = device.makeTexture(image: image) else {
             return nil
         }
-        guard let resultTexture = renderer.applyLut(texture, lutTexture: lutTexture) else {
+        guard let resultTexture = renderer.applyLut(to: texture, lutTexture: lutTexture) else {
             return nil
         }
         guard let resultImage = textureToUIImage(texture: resultTexture) else {

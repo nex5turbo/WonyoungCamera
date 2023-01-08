@@ -16,6 +16,7 @@ class Renderer {
     private var deviceScale = UIScreen.main.scale
     private var provider = RenderableProvider()
     var targetTexture: MTLTexture?
+    var cameraTexture: MTLTexture?
     var circleTexture: MTLTexture
     var computePipelineState: MTLComputePipelineState
     var filterPipelineState: MTLComputePipelineState
@@ -100,7 +101,38 @@ class Renderer {
         return renderPassDescriptor
     }
 
-    func applyLut(_ inputTexture: MTLTexture, lutTexture: MTLTexture) -> MTLTexture? {
+    func applyLut(
+        on commandBuffer: MTLCommandBuffer,
+        to outputTexture: MTLTexture,
+        from inputTexture: MTLTexture,
+        lutTexture: MTLTexture
+    ) {
+
+        var textureWidth = Float(inputTexture.width)
+        var textureHeight = Float(inputTexture.height)
+
+        // compute
+        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
+        computeEncoder?.setComputePipelineState(self.filterPipelineState)
+        computeEncoder?.setTexture(outputTexture, index: 0)
+        computeEncoder?.setTexture(inputTexture, index: 1)
+        computeEncoder?.setTexture(lutTexture, index: 2)
+        
+        computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 1)
+        computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 2)
+        let w = computePipelineState.threadExecutionWidth
+        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
+        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
+
+        let threadgroupsPerGrid = MTLSizeMake((outputTexture.width + w - 1) / w,
+                                         (outputTexture.height + h - 1) / h,
+                                         1)
+        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
+
+        computeEncoder?.endEncoding()
+    }
+
+    func applyLut(to inputTexture: MTLTexture, lutTexture: MTLTexture) -> MTLTexture? {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
             return nil
@@ -114,36 +146,19 @@ class Renderer {
         guard let returnTexture = self.makeTexture(descriptor: textureDescriptor) else {
             return nil
         }
-
-        var textureWidth = Float(inputTexture.width)
-        var textureHeight = Float(inputTexture.height)
-
-        // compute
-        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-        computeEncoder?.setComputePipelineState(self.filterPipelineState)
-        computeEncoder?.setTexture(returnTexture, index: 0)
-        computeEncoder?.setTexture(inputTexture, index: 1)
-        computeEncoder?.setTexture(lutTexture, index: 2)
-        
-        computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 2)
-        let w = computePipelineState.threadExecutionWidth
-        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
-        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
-
-        let threadgroupsPerGrid = MTLSizeMake((returnTexture.width + w - 1) / w,
-                                         (returnTexture.height + h - 1) / h,
-                                         1)
-        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
-
-        computeEncoder?.endEncoding()
+        applyLut(
+            on: commandBuffer,
+            to: returnTexture,
+            from: inputTexture,
+            lutTexture: lutTexture
+        )
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         return returnTexture
     }
     
     func applyLutToSampleImage(_ sampleImageTexture: MTLTexture, lutTexture: MTLTexture) -> UIImage? {
-        guard let resultTexture = applyLut(sampleImageTexture, lutTexture: lutTexture) else {
+        guard let resultTexture = applyLut(to: sampleImageTexture, lutTexture: lutTexture) else {
             return nil
         }
         return textureToUIImage(texture: resultTexture)
@@ -193,6 +208,13 @@ class Renderer {
             let targetLength = Int(min(texture.width, texture.height))
             let targetSize = CGSize(width: targetLength, height: targetLength)
             self.targetTexture = self.makeEmptyTexture(size: targetSize)
+            return
+        }
+        guard let cameraTexture,
+              cameraTexture.width == texture.width,
+              cameraTexture.height == texture.height else {
+            let targetSize = CGSize(width: texture.width, height: texture.height)
+            self.cameraTexture = self.makeEmptyTexture(size: targetSize)
             return
         }
 
@@ -273,11 +295,18 @@ extension Renderer {
     ) {
 //        let renderable = provider.getRenderableOrFetch(decoration.colorFilter)
 //        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
-        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else { return
-        }
-        guard let filteredTexture = applyLut(inputTexture, lutTexture: filterTexture) else {
+        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
             return
         }
+        guard let cameraTexture else {
+            return
+        }
+        applyLut(
+            on: commandBuffer,
+            to: cameraTexture,
+            from: inputTexture,
+            lutTexture: filterTexture
+        )
 
         var scale = decoration.scale
         var border = decoration.border
@@ -289,7 +318,7 @@ extension Renderer {
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
         computeEncoder?.setTexture(outputTexture, index: 0)
-        computeEncoder?.setTexture(filteredTexture, index: 1)
+        computeEncoder?.setTexture(cameraTexture, index: 1)
         computeEncoder?.setTexture(circleTexture, index: 2)
         
         computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
