@@ -24,6 +24,10 @@
 		543B35DA2969BD8E00ED86C8 /* ProvidingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35D92969BD8E00ED86C8 /* ProvidingOperation.swift */; };
 		543B35DC2969BDAD00ED86C8 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35DB2969BDAD00ED86C8 /* AsyncOperation.swift */; };
 		543B35DE2969C17700ED86C8 /* ConcurrentDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35DD2969C17700ED86C8 /* ConcurrentDictionary.swift */; };
+		543B35E3296A905700ED86C8 /* WYBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E2296A905700ED86C8 /* WYBackground.swift */; };
+		543B35E5296A906400ED86C8 /* WYColorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E4296A906400ED86C8 /* WYColorFilter.swift */; };
+		543B35E7296A906C00ED86C8 /* WYSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E6296A906C00ED86C8 /* WYSticker.swift */; };
+		543B35E9296A907800ED86C8 /* WYMaterials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E8296A907800ED86C8 /* WYMaterials.swift */; };
 		545908A3291299E600B3A658 /* ExportResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A2291299E600B3A658 /* ExportResultView.swift */; };
 		545908A62913F87E00B3A658 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 545908A52913F87E00B3A658 /* Kingfisher */; };
 		545908A929140C5500B3A658 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908A829140C5500B3A658 /* Colors.swift */; };
@@ -126,6 +130,10 @@
 		543B35D92969BD8E00ED86C8 /* ProvidingOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidingOperation.swift; sourceTree = "<group>"; };
 		543B35DB2969BDAD00ED86C8 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		543B35DD2969C17700ED86C8 /* ConcurrentDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentDictionary.swift; sourceTree = "<group>"; };
+		543B35E2296A905700ED86C8 /* WYBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYBackground.swift; sourceTree = "<group>"; };
+		543B35E4296A906400ED86C8 /* WYColorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYColorFilter.swift; sourceTree = "<group>"; };
+		543B35E6296A906C00ED86C8 /* WYSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYSticker.swift; sourceTree = "<group>"; };
+		543B35E8296A907800ED86C8 /* WYMaterials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYMaterials.swift; sourceTree = "<group>"; };
 		545908A2291299E600B3A658 /* ExportResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportResultView.swift; sourceTree = "<group>"; };
 		545908A829140C5500B3A658 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		545908AC291E67EF00B3A658 /* arrowRight.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = arrowRight.json; sourceTree = "<group>"; };
@@ -292,6 +300,17 @@
 				543B35D52969A26500ED86C8 /* StickerDecorator.swift */,
 			);
 			path = Decorator;
+			sourceTree = "<group>";
+		};
+		543B35DF296A902C00ED86C8 /* Materials */ = {
+			isa = PBXGroup;
+			children = (
+				543B35E2296A905700ED86C8 /* WYBackground.swift */,
+				543B35E4296A906400ED86C8 /* WYColorFilter.swift */,
+				543B35E6296A906C00ED86C8 /* WYSticker.swift */,
+				543B35E8296A907800ED86C8 /* WYMaterials.swift */,
+			);
+			path = Materials;
 			sourceTree = "<group>";
 		};
 		545908A729140C4C00B3A658 /* Constants */ = {
@@ -466,6 +485,7 @@
 		54D358D628DC7BD900A3AB4D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				543B35DF296A902C00ED86C8 /* Materials */,
 				543B35CE2969A23600ED86C8 /* Decorator */,
 				54D358D728DC7BD900A3AB4D /* Lut.swift */,
 				6A51A7932967D46E00EC83E9 /* Decoration.swift */,
@@ -698,9 +718,11 @@
 				54D1727E295DD85B006180FA /* FileManager+Extension.swift in Sources */,
 				543B35D22969A25000ED86C8 /* ColorDecorator.swift in Sources */,
 				54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */,
+				543B35E5296A906400ED86C8 /* WYColorFilter.swift in Sources */,
 				54D358E028DC7BD900A3AB4D /* KernelShader.metal in Sources */,
 				54168B2D28E275030000DF7F /* AlbumView.swift in Sources */,
 				5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */,
+				543B35E3296A905700ED86C8 /* WYBackground.swift in Sources */,
 				54D358E728DC7BD900A3AB4D /* SoundManager.swift in Sources */,
 				54D358E228DC7BD900A3AB4D /* Renderer.swift in Sources */,
 				543B35DE2969C17700ED86C8 /* ConcurrentDictionary.swift in Sources */,
@@ -720,9 +742,11 @@
 				54D358DF28DC7BD900A3AB4D /* Shader.metal in Sources */,
 				54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */,
 				549051C62944B412005D3353 /* GradientView.swift in Sources */,
+				543B35E9296A907800ED86C8 /* WYMaterials.swift in Sources */,
 				545D583328DEACC200A874DB /* Brightness.swift in Sources */,
 				54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */,
 				545D583728DEB0FB00A874DB /* Brightness.metal in Sources */,
+				543B35E7296A906C00ED86C8 /* WYSticker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

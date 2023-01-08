@@ -7,8 +7,8 @@
 
 import Foundation
 import Metal
-import QuartzCore
 import UIKit
+import MetalKit
 
 class Renderer {
     private var device: MTLDevice
@@ -303,7 +303,6 @@ struct Vertex {
     var textureCoordinate: SIMD2<Float>
 }
 
-import MetalKit
 extension MTLDevice {
     func loadImage(path: String) -> MTLTexture? {
         let textureLoader = MTKTextureLoader(device: self)
