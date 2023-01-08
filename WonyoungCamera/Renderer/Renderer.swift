@@ -226,7 +226,7 @@ class Renderer {
         applyColorFilter(
             decoration: decoration,
             on: commandBuffer,
-            to: targetTexture,
+            to: cameraTexture,
             with: texture
         )
         
@@ -337,17 +337,13 @@ extension Renderer {
         to outputTexture: MTLTexture,
         with inputTexture: MTLTexture
     ) {
-//        let renderable = provider.getRenderableOrFetch(decoration.colorFilter)
-//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
         guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
             return
         }
-        guard let cameraTexture else {
-            return
-        }
+//        decoration.colorFilter.apply(to: cameraTexture, with: self)
         applyLut(
             on: commandBuffer,
-            to: cameraTexture,
+            to: outputTexture,
             from: inputTexture,
             lutTexture: filterTexture
         )
