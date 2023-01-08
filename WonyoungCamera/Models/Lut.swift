@@ -11,15 +11,6 @@ import MetalKit
 enum Lut: String, CaseIterable {
     case Natural, Webtoon
     case J1, J2, J3, J4, J5, J6, J7, J8, J9, J10, J11, J12, J13, J14, J15, J16, J17, J18
-    static fileprivate let freeLutList: [Lut] = Lut.allCases
-
-    var isFree: Bool {
-        if Lut.freeLutList.contains(self) {
-            return true
-        }
-        
-        return false
-    }
 }
 
 class LutStorage {
@@ -63,13 +54,6 @@ class LutStorage {
     func getTexture(_ name: String) -> MTLTexture? {
         guard let lut = Lut(rawValue: name) else { return nil }
         return getTexture(lut)
-    }
-
-    func applyRandomLut() -> Lut {
-        let lutKeys = Array(luts.keys)
-        let randomIndex = Int.random(in: 0 ..< luts.count)
-        self.selectedLut = lutKeys[randomIndex]
-        return self.selectedLut
     }
 
     func getSampleImage(lut: MTLTexture) -> UIImage? {

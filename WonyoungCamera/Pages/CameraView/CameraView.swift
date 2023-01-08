@@ -165,10 +165,6 @@ struct CameraView: View {
                         }
                         Spacer()
                         HapticButton {
-                            if !purchaseManager.isPremiumUser, !decoration.colorFilter.isFree {
-                                purchaseManager.subscriptionViewPresent.toggle()
-                                return
-                            }
                             if !isMute {
                                 shutterSound()
                             }
