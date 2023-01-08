@@ -11,6 +11,7 @@ struct FilterScrollView: View {
     @ObservedObject var purchaseManager = PurchaseManager.shared
     @Binding var decoration: Decoration
 
+    @State var filters: [ColorFilter] = []
     @State var isRotating = false
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
