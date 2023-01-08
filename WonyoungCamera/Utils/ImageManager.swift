@@ -128,22 +128,34 @@ func textureToUIImage(texture: MTLTexture) -> UIImage? {
     let uiImage = UIImage(cgImage: cgImage)
     return uiImage
 }
-func convertToCGImage(texture: MTLTexture) -> CGImage? {
+
+func convertToCIImage(texture: MTLTexture) -> CIImage? {
     let options: [CIImageOption: Any] = [
         .colorSpace: CGColorSpaceCreateDeviceRGB()
     ]
     guard let ciImage = CIImage(mtlTexture: texture, options: options) else {
-        fatalError("No ciImage")
+        return nil
     }
+    return ciImage
+}
+
+func convertToCGImage(texture: MTLTexture) -> CGImage? {
+    guard let ciImage = convertToCIImage(texture: texture) else {
+        return nil
+    }
+    
     guard let cgImage = convertToCGImage(ciImage: ciImage.oriented(.downMirrored)) else {
-        fatalError("No cgImage")
+        return nil
     }
+    
     return cgImage
 }
+
 func convertToCGImage(ciImage: CIImage) -> CGImage? {
     let context = CIContext(options: nil)
-    if let cgImage = context.createCGImage(ciImage, from: ciImage.extent) {
-        return cgImage
+    guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
+        return nil
     }
-    return nil
+    
+    return cgImage
 }
