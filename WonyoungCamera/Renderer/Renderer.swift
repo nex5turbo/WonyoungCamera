@@ -15,6 +15,7 @@ class Renderer {
     private var deviceSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     private var deviceScale = UIScreen.main.scale
     private var provider = RenderableProvider()
+    private var textureCache: CVMetalTextureCache?
     var targetTexture: MTLTexture?
     var cameraTexture: MTLTexture?
     var circleTexture: MTLTexture
@@ -66,6 +67,9 @@ class Renderer {
             defaultRenderPipelineState = try device.makeRenderPipelineState(descriptor: defaultRenderPipelineDesc)
         } catch {
             fatalError("Engine Error: Cannot create defaultRenderPipelineState!")
+        }
+        if kCVReturnSuccess != CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) {
+            print("[Error] CVMetalTextureCacheCreate")
         }
     }
     
@@ -189,6 +193,15 @@ class Renderer {
         renderCommandEncoder.endEncoding()
     }
 
+    func render(
+        to drawable: CAMetalDrawable,
+        with pixelBuffer: CVPixelBuffer?,
+        decoration: Decoration
+    ) {
+        let texture = pixelBufferToTexture(pixelBuffer)
+        render(to: drawable, with: texture, decoration: decoration)
+    }
+    
     func render(
         to drawable: CAMetalDrawable,
         with texture: MTLTexture?,
@@ -347,6 +360,51 @@ extension Renderer {
             from: inputTexture,
             lutTexture: filterTexture
         )
+    }
+    
+    func pixelBufferToTexture(_ pixelBuffer: CVPixelBuffer?) -> MTLTexture? {
+        guard let pixelBuffer else { return nil }
+        CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
+
+        guard self.textureCache != nil else {
+            return nil
+        }
+
+        // Create a Metal texture from the image buffer
+        var cvTextureOut: CVMetalTexture?
+        CVMetalTextureCacheCreateTextureFromImage(
+            kCFAllocatorDefault,
+            textureCache!,
+            pixelBuffer,
+            nil,
+            .bgra8Unorm,
+            CVPixelBufferGetWidth(pixelBuffer),
+            CVPixelBufferGetHeight(pixelBuffer),
+            0,
+            &cvTextureOut
+        )
+
+        guard let cvTexture = cvTextureOut else {
+            CVMetalTextureCacheFlush(textureCache!, 0)
+            CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
+            #if DEBUG
+            fatalError("NO cvMetalTexture - makeTextureFromSampleBuffer")
+            #else
+            return nil
+            #endif
+        }
+        guard let texture = CVMetalTextureGetTexture(cvTexture) else {
+            CVMetalTextureCacheFlush(textureCache!, 0)
+            CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
+            #if DEBUG
+            fatalError("NO texture - makeTextureFromSampleBuffer")
+            #else
+            return nil
+            #endif
+        }
+
+        defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0))) }
+        return texture
     }
 }
 
