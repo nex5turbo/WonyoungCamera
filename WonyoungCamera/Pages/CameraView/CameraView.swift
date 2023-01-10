@@ -47,6 +47,13 @@ struct CameraView: View {
     }
     var body: some View {
         ZStack {
+            NavigationLink(
+                isActive: $settingPresent) {
+                    SettingView()
+                } label: {
+                    EmptyView()
+                }
+
             VStack(spacing: 0) {
                 HStack {
                     HapticButton {
