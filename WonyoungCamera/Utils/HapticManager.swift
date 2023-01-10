@@ -11,13 +11,13 @@ import UIKit
 class HapticManager {
     
     static let instance = HapticManager()
-    private var hapticEnabled: Bool
+    var hapticEnabled: Bool
     init() {
         self.hapticEnabled = UserDefaults.standard.bool(forKey: "haptic")
     }
     
-    func toggleHaptic() {
-        self.hapticEnabled.toggle()
+    func toggleHaptic(to value: Bool) {
+        self.hapticEnabled = value
         UserDefaults.standard.set(hapticEnabled, forKey: "haptic")
     }
     

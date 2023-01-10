@@ -17,7 +17,7 @@ struct SettingView: View {
     @State var result: Result<MFMailComposeResult, Error>?
     @State var presentMailView = false
     @State var presentMailFailure = false
-
+    @State var hapticEnabled = true
     var body: some View {
         List {
             if !purchaseManager.isPremiumUser {
@@ -32,6 +32,17 @@ struct SettingView: View {
                 }
             }
 
+            Section("Settings") {
+                Toggle(isOn: $hapticEnabled) {
+                    Text("Haptic")
+                }
+                .onChange(of: hapticEnabled, perform: { newValue in
+                    HapticManager.instance.toggleHaptic(to: newValue)
+                })
+                .onAppear {
+                    self.hapticEnabled = HapticManager.instance.hapticEnabled
+                }
+            }
             Section("About") {
                 Button {
                     guard let currentScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
