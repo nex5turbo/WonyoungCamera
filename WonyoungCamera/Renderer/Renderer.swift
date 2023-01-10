@@ -28,13 +28,11 @@ class Renderer {
     
     init() {
         self.device = SharedMetalDevice.instance.device
+        self.defaultLibrary = SharedMetalDevice.instance.defaultLibrary
         guard let commandQueue = device.makeCommandQueue() else {
             fatalError("[Error] No command queue for device: \(device)")
         }
         self.commandQueue = commandQueue
-        guard let defaultLibrary = device.makeDefaultLibrary() else {
-            fatalError("[Error] No command queue for device: \(device)")
-        }
         guard let computePipelineState = device.loadComputePipelineState("roundingImage") else {
             fatalError()
         }
@@ -47,7 +45,6 @@ class Renderer {
         self.circleTexture = circleTexture
         self.computePipelineState = computePipelineState
         self.filterPipelineState = filterPipelineState
-        self.defaultLibrary = defaultLibrary
         let defaultVertexProgram = defaultLibrary.makeFunction(name: "default_vertex")
         let defaultFragmentProgram = defaultLibrary.makeFunction(name: "default_fragment")
         let defaultRenderPipelineDesc = MTLRenderPipelineDescriptor()
