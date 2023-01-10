@@ -133,6 +133,12 @@ class MetalView: UIView {
             }
             let uiImage = UIImage(cgImage: cgImage)
             ImageManager.instance.saveImage(image: uiImage)
+            if UserSettings.instance.saveOriginal {
+                guard let texture = self.renderer.cameraTexture else { return }
+                guard let cgImage = convertToCGImage(texture: texture) else { return }
+                let uiImage = UIImage(cgImage: cgImage)
+                UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+            }
         }
     }
 }

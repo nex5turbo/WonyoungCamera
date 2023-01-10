@@ -18,6 +18,8 @@ struct SettingView: View {
     @State var presentMailView = false
     @State var presentMailFailure = false
     @State var hapticEnabled = true
+    @State var saveOriginal = true
+
     var body: some View {
         List {
             if !purchaseManager.isPremiumUser {
@@ -41,6 +43,15 @@ struct SettingView: View {
                 })
                 .onAppear {
                     self.hapticEnabled = HapticManager.instance.hapticEnabled
+                }
+                Toggle(isOn: $saveOriginal) {
+                    Text("Save Original Photo")
+                }
+                .onChange(of: saveOriginal) { newValue in
+                    UserSettings.instance.setSaveOriginal(to: newValue)
+                }
+                .onAppear {
+                    self.saveOriginal = UserSettings.instance.saveOriginal
                 }
             }
             Section("About") {

@@ -85,6 +85,7 @@
 		54E31C4B296DA63400EE8178 /* cuteCat.png in Resources */ = {isa = PBXBuildFile; fileRef = 54E31C45296DA63400EE8178 /* cuteCat.png */; };
 		54E31C4C296DA63400EE8178 /* colorfulWoman.png in Resources */ = {isa = PBXBuildFile; fileRef = 54E31C46296DA63400EE8178 /* colorfulWoman.png */; };
 		54E31C4D296DA63400EE8178 /* couple.png in Resources */ = {isa = PBXBuildFile; fileRef = 54E31C47296DA63400EE8178 /* couple.png */; };
+		54E31C4F296DC43100EE8178 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E31C4E296DC43100EE8178 /* UserSettings.swift */; };
 		54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 54ED1063293CCCBE00926E36 /* SwiftyStoreKit */; };
 		54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54ED1065293CCD1C00926E36 /* Purchase.plist */; };
 		54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED1067293CCE3700926E36 /* SubscriptionView.swift */; };
@@ -209,6 +210,7 @@
 		54E31C45296DA63400EE8178 /* cuteCat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cuteCat.png; sourceTree = "<group>"; };
 		54E31C46296DA63400EE8178 /* colorfulWoman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorfulWoman.png; sourceTree = "<group>"; };
 		54E31C47296DA63400EE8178 /* couple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = couple.png; sourceTree = "<group>"; };
+		54E31C4E296DC43100EE8178 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		54EA834C291EE6CE007D6A4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		54ED1065293CCD1C00926E36 /* Purchase.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Purchase.plist; sourceTree = "<group>"; };
 		54ED1067293CCE3700926E36 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				54D358D528DC7BD900A3AB4D /* HapticManager.swift */,
 				545908B8291E828400B3A658 /* IAPManager.swift */,
 				54ED1065293CCD1C00926E36 /* Purchase.plist */,
+				54E31C4E296DC43100EE8178 /* UserSettings.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				6A51A79D296812A900EC83E9 /* SettingView.swift in Sources */,
 				6A51A7982967ED9A00EC83E9 /* ThumbnailView.swift in Sources */,
 				545908A929140C5500B3A658 /* Colors.swift in Sources */,
+				54E31C4F296DC43100EE8178 /* UserSettings.swift in Sources */,
 				54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */,
 				546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */,
 				54D1727E295DD85B006180FA /* FileManager+Extension.swift in Sources */,
