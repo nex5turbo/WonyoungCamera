@@ -41,9 +41,9 @@ class FilterPipeline {
     var highlightsAndShadowsBuffer1: MTLBuffer?
     var highlightsAndShadowsBuffer2: MTLBuffer?
 
-    public init(with library: MTLLibrary, on device: MTLDevice) {
-        self.library = library
-        self.device = device
+    public init() {
+        self.device = SharedMetalDevice.instance.device
+        self.library = SharedMetalDevice.instance.defaultLibrary
     }
     func getRenderPipelineState() -> MTLRenderPipelineState? {
         if let pipelineState = pipelineState {

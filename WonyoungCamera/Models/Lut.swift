@@ -9,8 +9,10 @@ import Foundation
 import MetalKit
 
 enum Lut: String, CaseIterable {
-    case Natural, Webtoon
-    case J1, J2, J3, J4, J5, J6, J7, J8, J9, J10, J11, J12, J13, J14, J15, J16, J17, J18
+    case Natural
+    case JE1, JE2, JE3, JE4, JE5
+    case JJ1, JJ2, JJ3, JJ4, JJ5
+    case RD1, RD2, RD3, RD4
 }
 
 class LutStorage {
@@ -18,26 +20,27 @@ class LutStorage {
     var luts: [Lut: MTLTexture] = [:]
     var sampleImages: [Lut: UIImage?] = [:]
     var selectedLut: Lut = .Natural
-    var sampleImageTexture: MTLTexture
-    var sampleImage: UIImage
     let renderer: Renderer
+    let device: MTLDevice
+    let categories = ["Natural", "JE", "JJ", "RD"]
+    let categoryMap: [String: String] = [
+        "Natural": "sample",
+        "JE": "cuteCat",
+        "JJ": "smileDog",
+        "RD": "colorfulWoman"
+    ]
     init() {
-        let device = SharedMetalDevice.instance.device
-        guard let sampleImageTexture = device.loadFilter(filterName: "sample") else {
-            abort()
-        }
-        self.sampleImageTexture = sampleImageTexture
+        self.device = SharedMetalDevice.instance.device
         self.renderer = Renderer()
-        guard let sampleImage = UIImage(named: "sample") else {
-            abort()
-        }
-        self.sampleImage = sampleImage
         for lut in Lut.allCases {
             guard let texture = device.loadFilter(filterName: lut.rawValue) else {
                 continue
             }
             self.luts[lut] = texture
-            guard let image = getSampleImage(lut: texture) else {
+            guard let sampleName = getSampleImage(of: lut.rawValue) else {
+                continue
+            }
+            guard let image = getSampleImage(sampleName: sampleName, lut: texture) else {
                 continue
             }
             self.sampleImages[lut] = image
@@ -56,7 +59,18 @@ class LutStorage {
         return getTexture(lut)
     }
 
-    func getSampleImage(lut: MTLTexture) -> UIImage? {
+    func getSampleImage(sampleName: String, lut: MTLTexture) -> UIImage? {
+        guard let sampleImageTexture = device.loadFilter(filterName: sampleName) else {
+            return nil
+        }
         return renderer.applyLutToSampleImage(sampleImageTexture, lutTexture: lut)
+    }
+    func getSampleImage(of filterName: String) -> String? {
+        for category in categories {
+            if filterName.contains(category) {
+                return categoryMap[category]
+            }
+        }
+        return nil
     }
 }
