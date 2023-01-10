@@ -60,33 +60,35 @@ struct FilterScrollView: View {
                             }
                         }
                     } header: {
-                        VStack {
-                            Button {
-                                purchaseManager.subscriptionViewPresent.toggle()
-                            } label: {
-                                Image("subIcon")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
-                                    .animation(foreverAnimation, value: isRotating)
-                                    .onAppear {
-                                        isRotating = true
-                                    }
-                            }
-                            
+                        if !purchaseManager.isPremiumUser {
                             VStack {
-                                GradientView {
-                                    Text("Subscribe")
-                                        .frame(width: 30)
-                                        .font(.system(size: 10, weight: .bold))
-                                        .scaledToFill()
-                                        .minimumScaleFactor(0.5)
-                                        .lineLimit(1)
+                                Button {
+                                    purchaseManager.subscriptionViewPresent.toggle()
+                                } label: {
+                                    Image("subIcon")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
+                                        .animation(foreverAnimation, value: isRotating)
+                                        .onAppear {
+                                            isRotating = true
+                                        }
                                 }
+                                
+                                VStack {
+                                    GradientView {
+                                        Text("Subscribe")
+                                            .frame(width: 30)
+                                            .font(.system(size: 10, weight: .bold))
+                                            .scaledToFill()
+                                            .minimumScaleFactor(0.5)
+                                            .lineLimit(1)
+                                    }
+                                }
+                                .frame(height: 20)
                             }
-                            .frame(height: 20)
+                            .background(.black)
                         }
-                        .background(.black)
                     }
                 }
                 .onChange(of: decoration.colorFilter) { newValue in
