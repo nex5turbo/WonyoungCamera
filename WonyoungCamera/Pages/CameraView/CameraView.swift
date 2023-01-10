@@ -173,10 +173,11 @@ struct CameraView: View {
                             }
                         } content: {
                             ZStack {
-                                Image(systemName: "circle.fill")
-                                    .font(.system(size: 50))
-                                    .foregroundColor(.highlightColor)
-                                    .padding(10)
+                                GradientView {
+                                    Image(systemName: "circle.fill")
+                                        .font(.system(size: 50))
+                                        .padding(10)
+                                }
                                 Image(systemName: "circle.fill")
                                     .font(.system(size: 40))
                                     .foregroundColor(.black)
