@@ -86,7 +86,7 @@ struct LUTFilter: ColorFilter {
     }
 }
 
-struct BuiltInFilter: ColorFilter {
+struct RounderFilter: ColorFilter {
     var name: String
     var isFree: Bool
     var category: String
