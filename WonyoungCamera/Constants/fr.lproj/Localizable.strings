@@ -6,36 +6,36 @@
   
 */
 
-"Cancel" = "Cancel";
-"delete?" = "Delete this pic?";
-"delete" = "Delete";
-"%d / %d selected" = "%d / %d Selected";
-"share" = "Share";
+"Cancel" = "Annuler";
+"delete?" = "Supprimer cette photo?";
+"delete" = "Supprimer";
+"%d / %d selected" = "%d / %d Sélectionné";
+"share" = "partage";
 "Sticker" = "Sticker";
-"Select" = "Select";
+"Select" = "Sélectionner";
 "appName" = "Rounder";
 "Subscribe" = "Subscribe";
 
-"Subscribe information text" = "The subscription auto-renews at the end of each period term at the same price, unless cancelled 24 hours in advance.\n\nThe subscription fee is charged to your iTunes account at confirmation of purchase.\n\nYou may manage your subscription and turn off auto-renewal by going to your settings.\n\nNo cancellation of the current subscription is allowed during the active period.\n\nBy starting you accept our Terms of Use & Privacy Policy";
+"Subscribe information text" = "L'abonnement se renouvelle automatiquement à la fin de chaque période au même prix, sauf annulation 24 heures à l'avance.\n\n Les frais d'abonnement sont facturés sur votre compte iTunes lors de la confirmation de l'achat.\n\n Vous pouvez gérer votre abonnement et désactiver l'auto-renouvellement en allant dans vos paramètres.\n\n Aucune annulation de l'abonnement en cours n'est autorisée pendant la période active.\n\n En commençant par accepter nos Conditions d'utilisation et notre Politique de confidentialité";
 
-"No photo." = "No taken photo.";
+"No photo." = "Pas de photo prise.";
 "297 x 210 (mm)" = "297 x 210 (mm)";
-"Share info text" = "Share this to your friends, or print with your home printer. This image designed to fit in A4 printing paper. And be aware, if you print this with home printer, that the color of printed sticker could be different with the original.";
+"Share info text" = "Partager ceci à vos amis, ou imprimer avec votre imprimante maison. Cette image est conçue pour s'intégrer dans le papier d'impression A4. Et sachez que si vous imprimez ceci avec une imprimante maison, la couleur de l'autocollant imprimé pourrait être différente avec l'original.";
 
-"No photo." = "No photo.";
+"No photo." = "Pas de photo.";
 "297 x 210 (mm)" = "297 x 210 (mm)";
 "Round Your Mind" = "Round Your Mind";
 "By Rounder Camera" = "By Rounder Camera";
-"Rounder monthly plan" = "Rounder monthly plan";
-"Thanks for using Rounder Camera!" = "Thanks for using Rounder Camera!";
-"3-day free trial then $1.49/month" = "3-day free trial then $1.49/month";
-"Please try again." = "Please try again.";
-"Take your priceless moment!" = "Take your priceless moment!";
+"Rounder monthly plan" = "Régime mensuel ordinaire";
+"Thanks for using Rounder Camera!" = "Merci d'avoir utilisé Rounder Camera!";
+"3-day free trial then $1.49/month" = "essai gratuit de trois jours, puis 1,49 $/mois";
+"Please try again." = "S'il vous plaît réessayez.";
+"Take your priceless moment!" = "Prends ton moment inestimable !";
 
-"Save Original Photo" = "Save Original Photo";
-"Haptic" = "Haptic";
-"Settings" = "Settings";
-"About" = "About";
-"Rate" = "Rate";
+"Save Original Photo" = "Enregistrer la photo originale";
+"Haptic" = "Haptique";
+"Settings" = "Paramètres";
+"About" = "À propos";
+"Rate" = "Taux";
 "Contact" = "Contact";
-"View App Permissions" = "View App Permissions";
+"View App Permissions" = "Visualiser les permissions";
