@@ -10,9 +10,13 @@ import MetalKit
 
 enum Lut: String, CaseIterable {
     case Natural
+    case VT1, VT2, VT3, VT4, VT5, VT6
     case JE1, JE2, JE3, JE4, JE5
+    case CR10, CR11, CR12, CR13, CR14, CR15
     case JJ1, JJ2, JJ3, JJ4, JJ5
     case RD1, RD2, RD3, RD4
+    case GMT3, GMT4, GMT5, GMT6
+    
 }
 
 class LutStorage {
@@ -22,12 +26,15 @@ class LutStorage {
     var selectedLut: Lut = .Natural
     let renderer: Renderer
     let device: MTLDevice
-    let categories = ["Natural", "JE", "JJ", "RD"]
+    let categories = ["Natural", "VT", "JE", "JJ", "RD", "GMT", "CR"]
     let categoryMap: [String: String] = [
         "Natural": "sample",
         "JE": "cuteCat",
         "JJ": "smileDog",
-        "RD": "colorfulWoman"
+        "RD": "colorfulWoman",
+        "CR": "couple",
+        "GMT": "hairWoman",
+        "VT": "whiteWoman"
     ]
     init() {
         self.device = SharedMetalDevice.instance.device
