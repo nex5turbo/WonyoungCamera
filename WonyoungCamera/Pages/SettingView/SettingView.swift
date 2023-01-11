@@ -105,7 +105,7 @@ struct SettingView: View {
 
             Section("VERSION") {
                 HStack {
-                    Text("1.0.1")
+                    Text("1.0.2")
                     Spacer()
                 }
                 .contentShape(Rectangle())
