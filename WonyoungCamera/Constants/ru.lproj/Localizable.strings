@@ -6,36 +6,36 @@
   
 */
 
-"Cancel" = "Cancel";
-"delete?" = "Delete this pic?";
-"delete" = "Delete";
+"Cancel" = "Отмена";
+"delete?" = "Удалить эту фотографию?";
+"delete" = "Удалить";
 "%d / %d selected" = "%d / %d Selected";
-"share" = "Share";
-"Sticker" = "Sticker";
-"Select" = "Select";
+"share" = "доля";
+"Sticker" = "Стикер";
+"Select" = "Выбрать";
 "appName" = "Rounder";
 "Subscribe" = "Subscribe";
 
-"Subscribe information text" = "The subscription auto-renews at the end of each period term at the same price, unless cancelled 24 hours in advance.\n\nThe subscription fee is charged to your iTunes account at confirmation of purchase.\n\nYou may manage your subscription and turn off auto-renewal by going to your settings.\n\nNo cancellation of the current subscription is allowed during the active period.\n\nBy starting you accept our Terms of Use & Privacy Policy";
+"Subscribe information text" = "Абонемент автоматически обновляется в конце каждого периода по той же цене, если не отменен за 24 часа.\n\n Плата за подписку взимается на ваш iTunes счет при подтверждении покупки.\n\nВы можете управлять подпиской и отключить автоматическое обновление, перейдя к настройкам.\n\n Не допускается отмена текущей подписки в течение активного периода.«в начале вы принимаете наши Условия использования и Политика конфиденциальности";
 
-"No photo." = "No taken photo.";
+"No photo." = "Нет фотографирования";
 "297 x 210 (mm)" = "297 x 210 (mm)";
-"Share info text" = "Share this to your friends, or print with your home printer. This image designed to fit in A4 printing paper. And be aware, if you print this with home printer, that the color of printed sticker could be different with the original.";
+"Share info text" = "Обменять это своим друзьям, или распечатать с домашним принтером. Это изображение предназначено для того, чтобы вместиться в печатную бумагу A4. И будьте в курсе, если вы печатаете это с домашним принтером, что цвет наклейки может отличаться от оригинала.";
 
-"No photo." = "No photo.";
+"No photo." = "Нет фотографии";
 "297 x 210 (mm)" = "297 x 210 (mm)";
 "Round Your Mind" = "Round Your Mind";
 "By Rounder Camera" = "By Rounder Camera";
 "Rounder monthly plan" = "Rounder monthly plan";
 "Thanks for using Rounder Camera!" = "Thanks for using Rounder Camera!";
-"3-day free trial then $1.49/month" = "3-day free trial then $1.49/month";
-"Please try again." = "Please try again.";
-"Take your priceless moment!" = "Take your priceless moment!";
+"3-day free trial then $1.49/month" = "3-дневный бесплатный проб, затем $1,49/месяц";
+"Please try again." = "Попробуйте снова.";
+"Take your priceless moment!" = "Возьмите свой бесценный момент!";
 
-"Save Original Photo" = "Save Original Photo";
+"Save Original Photo" = "Сохранить оригинальное фото";
 "Haptic" = "Haptic";
-"Settings" = "Settings";
+"Settings" = "Настройки";
 "About" = "About";
-"Rate" = "Rate";
-"Contact" = "Contact";
-"View App Permissions" = "View App Permissions";
+"Rate" = "Оценка";
+"Contact" = "Контакт";
+"View App Permissions" = "Просмотр разрешений приложений";
