@@ -48,7 +48,16 @@ struct SettingView: View {
                     Text("Save Original Photo")
                 }
                 .onChange(of: saveOriginal) { newValue in
-                    UserSettings.instance.setSaveOriginal(to: newValue)
+                    if newValue {
+                        if purchaseManager.isPremiumUser {
+                            UserSettings.instance.setSaveOriginal(to: newValue)
+                        } else {
+                            saveOriginal = false
+                            purchaseManager.subscriptionViewPresent.toggle()
+                        }
+                    } else {
+                        UserSettings.instance.setSaveOriginal(to: newValue)
+                    }
                 }
                 .onAppear {
                     self.saveOriginal = UserSettings.instance.saveOriginal
