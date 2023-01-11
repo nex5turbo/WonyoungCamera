@@ -34,9 +34,9 @@ struct SettingView: View {
                 }
             }
 
-            Section("Settings") {
+            Section(String.settingLabel) {
                 Toggle(isOn: $hapticEnabled) {
-                    Text("Haptic")
+                    Text(String.hapticLabel)
                 }
                 .onChange(of: hapticEnabled, perform: { newValue in
                     HapticManager.instance.toggleHaptic(to: newValue)
@@ -45,7 +45,7 @@ struct SettingView: View {
                     self.hapticEnabled = HapticManager.instance.hapticEnabled
                 }
                 Toggle(isOn: $saveOriginal) {
-                    Text("Save Original Photo")
+                    Text(String.saveOriginalLabel)
                 }
                 .onChange(of: saveOriginal) { newValue in
                     if newValue {
@@ -63,14 +63,14 @@ struct SettingView: View {
                     self.saveOriginal = UserSettings.instance.saveOriginal
                 }
             }
-            Section("About") {
+            Section(String.aboutLabel) {
                 Button {
                     guard let currentScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
                         return
                     }
                     SKStoreReviewController.requestReview(in: currentScene)
                 } label: {
-                    Text("Rate")
+                    Text(String.rateLabel)
                 }
 
                 Button {
@@ -80,7 +80,7 @@ struct SettingView: View {
                         presentMailFailure = true
                     }
                 } label: {
-                    Text("Contact")
+                    Text(String.contactLabel)
                 }
                 .sheet(isPresented: $presentMailView) {
                     MailView(
@@ -97,7 +97,7 @@ struct SettingView: View {
                 Button {
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 } label: {
-                    Text("View App Permissions")
+                    Text(String.viewPermissionLabel)
                 }
 
                 Link("Data Privacy", destination: URL(string: "https://sites.google.com/view/rounderprivacy/")!)

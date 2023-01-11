@@ -37,6 +37,15 @@ extension String {
     static let priceText = NSLocalizedString("3-day free trial then $1.49/month", comment: "")
     static let tryAgainText = NSLocalizedString("Please try again.", comment: "")
     static let subscribeSuccessText = NSLocalizedString("Take your priceless moment!", comment: "")
+    
+    // SettingView
+    static let saveOriginalLabel = NSLocalizedString("Save Original Photo", comment: "")
+    static let hapticLabel = NSLocalizedString("Haptic", comment: "")
+    static let settingLabel = NSLocalizedString("Settings", comment: "")
+    static let aboutLabel = NSLocalizedString("About", comment: "")
+    static let rateLabel = NSLocalizedString("Rate", comment: "")
+    static let contactLabel = NSLocalizedString("Contact", comment: "")
+    static let viewPermissionLabel = NSLocalizedString("View App Permissions", comment: "")
 }
 
 
