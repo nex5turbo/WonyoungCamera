@@ -38,6 +38,12 @@ struct FilterScrollView: View {
                                                 .scaledToFill()
                                                 .clipShape(Circle())
                                                 .frame(width: 40, height: 40)
+                                            Group {
+                                                self.decoration.colorFilter == lut
+                                                ? Color.black.opacity(0.7)
+                                                : Color.clear
+                                            }
+                                            .frame(width: 40, height: 40)
                                             GradientView {
                                                 Image(systemName: "checkmark.circle")
                                                     .resizable()
