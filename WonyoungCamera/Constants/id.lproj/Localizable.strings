@@ -6,36 +6,36 @@
   
 */
 
-"Cancel" = "Cancel";
-"delete?" = "Delete this pic?";
-"delete" = "Delete";
-"%d / %d selected" = "%d / %d Selected";
-"share" = "Share";
+"Cancel" = "Batalkan";
+"delete?" = "Hapus gambar ini?";
+"delete" = "hapus";
+"%d / %d selected" = "%d / %d Terpilih";
+"share" = "Berbagi";
 "Sticker" = "Sticker";
-"Select" = "Select";
+"Select" = "Pilih";
 "appName" = "Rounder";
 "Subscribe" = "Subscribe";
 
-"Subscribe information text" = "The subscription auto-renews at the end of each period term at the same price, unless cancelled 24 hours in advance.\n\nThe subscription fee is charged to your iTunes account at confirmation of purchase.\n\nYou may manage your subscription and turn off auto-renewal by going to your settings.\n\nNo cancellation of the current subscription is allowed during the active period.\n\nBy starting you accept our Terms of Use & Privacy Policy";
+"Subscribe information text" = "Pembaruan otomatis berlangganan pada akhir periode dengan harga yang sama, kecuali dibatalkan 24 jam sebelumnya.\n\nBiaya langganan dibebankan ke akun iTunes Anda saat konfirmasi pembelian.\n\nAnda dapat mengelola langganan Anda dan mematikan pembaruan otomatis dengan pergi ke pengaturan Anda.\n\nTidak ada pembatalan langganan saat ini yang diperbolehkan selama periode aktif.\n\nDengan memulai Anda menerima Syarat Penggunaan & Kebijakan Privasi kami";
 
-"No photo." = "No taken photo.";
+"No photo." = "Tidak ada foto yang diambil.";
 "297 x 210 (mm)" = "297 x 210 (mm)";
-"Share info text" = "Share this to your friends, or print with your home printer. This image designed to fit in A4 printing paper. And be aware, if you print this with home printer, that the color of printed sticker could be different with the original.";
+"Share info text" = "Share this to friends, or print with your home printer. Gambar ini dirancang untuk muat dalam kertas cetak A4. Dan berhati-hatilah, jika Anda mencetak ini dengan printer rumahan, bahwa warna stiker yang dicetak bisa berbeda dengan aslinya.";
 
-"No photo." = "No photo.";
+"No photo." = "Tidak ada foto.";
 "297 x 210 (mm)" = "297 x 210 (mm)";
 "Round Your Mind" = "Round Your Mind";
 "By Rounder Camera" = "By Rounder Camera";
 "Rounder monthly plan" = "Rounder monthly plan";
 "Thanks for using Rounder Camera!" = "Thanks for using Rounder Camera!";
-"3-day free trial then $1.49/month" = "3-day free trial then $1.49/month";
-"Please try again." = "Please try again.";
-"Take your priceless moment!" = "Take your priceless moment!";
+"3-day free trial then $1.49/month" = "3 hari percobaan gratis kemudian $1,49/bulan";
+"Please try again." = "Silakan coba lagi.";
+"Take your priceless moment!" = "Ambil momen berharga Anda!";
 
-"Save Original Photo" = "Save Original Photo";
+"Save Original Photo" = "Simpan Foto Asli";
 "Haptic" = "Haptic";
-"Settings" = "Settings";
-"About" = "About";
+"Settings" = "Pengaturan";
+"About" = "Tentang";
 "Rate" = "Rate";
-"Contact" = "Contact";
-"View App Permissions" = "View App Permissions";
+"Contact" = "Kontak";
+"View App Permissions" = "Lihat Perizinan Aplikasi";
