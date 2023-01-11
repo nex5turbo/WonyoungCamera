@@ -147,6 +147,12 @@ struct AlbumView: View {
                                                         Text(String.shareLabel)
                                                         Image(systemName: "square.and.arrow.up.circle")
                                                     }
+                                                    Button {
+                                                        exportToAlbum(path: item)
+                                                    } label: {
+                                                        Text("Save to album")
+                                                        Image(systemName: "photo.circle")
+                                                    }
                                                 }
                                             }
                                     }

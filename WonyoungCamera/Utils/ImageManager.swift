@@ -159,3 +159,19 @@ func convertToCGImage(ciImage: CIImage) -> CGImage? {
     
     return cgImage
 }
+
+func exportToAlbum(image: UIImage) {
+    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+}
+func exportToAlbum(path: String) {
+    guard let url = URL(string: path) else {
+        return
+    }
+    guard let data = try? Data(contentsOf: url) else {
+        return
+    }
+    guard let image = UIImage(data: data) else {
+        return
+    }
+    exportToAlbum(image: image)
+}
