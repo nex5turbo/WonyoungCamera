@@ -6,36 +6,36 @@
   
 */
 
-"Cancel" = "Cancel";
-"delete?" = "Delete this pic?";
-"delete" = "Delete";
+"Cancel" = "取消";
+"delete?" = "删除这张照片？";
+"delete" = "删除";
 "%d / %d selected" = "%d / %d Selected";
-"share" = "Share";
-"Sticker" = "Sticker";
-"Select" = "Select";
+"share" = "分享";
+"Sticker" = "贴纸";
+"Select" = "选择";
 "appName" = "Rounder";
 "Subscribe" = "Subscribe";
 
-"Subscribe information text" = "The subscription auto-renews at the end of each period term at the same price, unless cancelled 24 hours in advance.\n\nThe subscription fee is charged to your iTunes account at confirmation of purchase.\n\nYou may manage your subscription and turn off auto-renewal by going to your settings.\n\nNo cancellation of the current subscription is allowed during the active period.\n\nBy starting you accept our Terms of Use & Privacy Policy";
+"Subscribe information text" = "除非提前24小时取消，否则每期结束时订阅将按相同价格自动续订。\n\n订阅费在确认购买时计入您的iTunes帐户。\n\n 您可以通过进入您的设置来管理订阅并关闭自动续费。\n\n 在活动期间不允许取消当前订阅。\n\n开始接受我们的使用条款及私隐政策。";
 
-"No photo." = "No taken photo.";
+"No photo." = "禁止拍照";
 "297 x 210 (mm)" = "297 x 210 (mm)";
-"Share info text" = "Share this to your friends, or print with your home printer. This image designed to fit in A4 printing paper. And be aware, if you print this with home printer, that the color of printed sticker could be different with the original.";
+"Share info text" = "分享给你的朋友，或者用家用打印机打印。 此图像设计适合在A4打印纸。 请注意，如果你用家用打印机打印，打印的贴纸颜色可能与原件不同。";
 
-"No photo." = "No photo.";
+"No photo." = "没有照片。";
 "297 x 210 (mm)" = "297 x 210 (mm)";
 "Round Your Mind" = "Round Your Mind";
 "By Rounder Camera" = "By Rounder Camera";
 "Rounder monthly plan" = "Rounder monthly plan";
-"Thanks for using Rounder Camera!" = "Thanks for using Rounder Camera!";
-"3-day free trial then $1.49/month" = "3-day free trial then $1.49/month";
-"Please try again." = "Please try again.";
-"Take your priceless moment!" = "Take your priceless moment!";
+"Thanks for using Rounder Camera!" = "谢谢你使用圆形相机！";
+"3-day free trial then $1.49/month" = "3天免费试用,然后每月$1.49";
+"Please try again." = "请再试一次。";
+"Take your priceless moment!" = "抓住你的宝贵时刻！";
 
-"Save Original Photo" = "Save Original Photo";
-"Haptic" = "Haptic";
-"Settings" = "Settings";
-"About" = "About";
-"Rate" = "Rate";
-"Contact" = "Contact";
-"View App Permissions" = "View App Permissions";
+"Save Original Photo" = "保存原始相片";
+"Haptic" = "触觉";
+"Settings" = "设定";
+"About" = "关于";
+"Rate" = "费率";
+"Contact" = "联络";
+"View App Permissions" = "查看应用程序权限";
