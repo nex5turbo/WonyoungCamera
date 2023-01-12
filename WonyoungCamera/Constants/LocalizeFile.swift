@@ -46,6 +46,7 @@ extension String {
     static let rateLabel = NSLocalizedString("Rate", comment: "")
     static let contactLabel = NSLocalizedString("Contact", comment: "")
     static let viewPermissionLabel = NSLocalizedString("View App Permissions", comment: "")
+    static let removeWatermarkLabel = NSLocalizedString("Remove watermark for original photo", comment: "")
 }
 
 

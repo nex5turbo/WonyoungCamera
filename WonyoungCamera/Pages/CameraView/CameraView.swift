@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import Photos
 
 enum AdjustType {
     case brightness, contrast, saturation
@@ -22,6 +23,7 @@ struct CameraView: View {
     @State var filterPresent = true
     @State var albumPresent = false
     @State var settingPresent = false
+    @State var permissionPresent = false
     
     @State var isMute = false
     @State var buttonColor: Color = .white
@@ -172,6 +174,11 @@ struct CameraView: View {
                         }
                         Spacer()
                         HapticButton {
+                            let photos = PHPhotoLibrary.authorizationStatus()
+                            if photos == .denied || photos == .notDetermined {
+                                permissionPresent.toggle()
+                                return
+                            }
                             if !isMute {
                                 shutterSound()
                             }
@@ -193,6 +200,16 @@ struct CameraView: View {
                                     .font(.system(size: 30))
                                     .foregroundColor(self.buttonColor)
                                     .padding(10)
+                            }
+                        }
+                        .alert("Please allow album usage permission!", isPresented: $permissionPresent) {
+                            Button(String.settingLabel) {
+                                if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(settingsUrl)
+                                }
+                            }
+                            Button(String.cancelLabel, role: .cancel) {
+                                
                             }
                         }
                         Spacer()

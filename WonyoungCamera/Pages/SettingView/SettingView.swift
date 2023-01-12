@@ -18,7 +18,8 @@ struct SettingView: View {
     @State var presentMailView = false
     @State var presentMailFailure = false
     @State var hapticEnabled = true
-    @State var saveOriginal = true
+    @State var saveOriginal = false
+    @State var removeWatermark = false
 
     var body: some View {
         List {
@@ -35,6 +36,7 @@ struct SettingView: View {
             }
 
             Section(String.settingLabel) {
+                // Haptic
                 Toggle(isOn: $hapticEnabled) {
                     Text(String.hapticLabel)
                 }
@@ -44,23 +46,36 @@ struct SettingView: View {
                 .onAppear {
                     self.hapticEnabled = HapticManager.instance.hapticEnabled
                 }
+                
+                // Save original
                 Toggle(isOn: $saveOriginal) {
                     Text(String.saveOriginalLabel)
                 }
                 .onChange(of: saveOriginal) { newValue in
-                    if newValue {
-                        if purchaseManager.isPremiumUser {
-                            UserSettings.instance.setSaveOriginal(to: newValue)
-                        } else {
-                            saveOriginal = false
-                            purchaseManager.subscriptionViewPresent.toggle()
-                        }
-                    } else {
-                        UserSettings.instance.setSaveOriginal(to: newValue)
-                    }
+                    UserSettings.instance.setSaveOriginal(to: newValue)
                 }
                 .onAppear {
                     self.saveOriginal = UserSettings.instance.saveOriginal
+                }
+                
+                // Watermark
+                Toggle(isOn: $removeWatermark) {
+                    Text(String.removeWatermarkLabel)
+                }
+                .onChange(of: removeWatermark) { newValue in
+                    if !newValue {
+                        if purchaseManager.isPremiumUser {
+                            UserSettings.instance.setShouldWatermark(to: !newValue)
+                        } else {
+                            removeWatermark = false
+                            purchaseManager.subscriptionViewPresent.toggle()
+                        }
+                    } else {
+                        UserSettings.instance.setShouldWatermark(to: !newValue)
+                    }
+                }
+                .onAppear {
+                    self.removeWatermark = !UserSettings.instance.shouldWatermark
                 }
             }
             Section(String.aboutLabel) {

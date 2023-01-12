@@ -134,10 +134,21 @@ class MetalView: UIView {
             let uiImage = UIImage(cgImage: cgImage)
             ImageManager.instance.saveImage(image: uiImage)
             if UserSettings.instance.saveOriginal {
-                guard let texture = self.renderer.cameraTexture else { return }
-                guard let cgImage = convertToCGImage(texture: texture) else { return }
-                let uiImage = UIImage(cgImage: cgImage)
-                UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                guard let readTexture = self.renderer.cameraTexture else { return }
+                if UserSettings.instance.shouldWatermark {
+                    guard let texture = self.renderer.makeEmptyTexture(size: CGSize(width: readTexture.width, height: readTexture.height)) else { return }
+                    guard let commandBuffer = self.renderer.commandQueue.makeCommandBuffer() else { return }
+                    self.renderer.watermarkPipeline.render(from: readTexture, to: texture, commandBuffer: commandBuffer)
+                    commandBuffer.commit()
+                    commandBuffer.waitUntilCompleted()
+                    guard let cgImage = convertToCGImage(texture: texture) else { return }
+                    let uiImage = UIImage(cgImage: cgImage)
+                    UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                } else {
+                    guard let cgImage = convertToCGImage(texture: readTexture) else { return }
+                    let uiImage = UIImage(cgImage: cgImage)
+                    UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                }
             }
         }
     }

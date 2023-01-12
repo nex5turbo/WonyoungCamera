@@ -26,6 +26,8 @@ class Renderer {
     var defaultLibrary: MTLLibrary
     var commandQueue: MTLCommandQueue
     
+    let watermarkPipeline = WatermarkPipeline()
+    
     init() {
         self.device = SharedMetalDevice.instance.device
         self.defaultLibrary = SharedMetalDevice.instance.defaultLibrary
