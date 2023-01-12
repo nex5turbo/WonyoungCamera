@@ -104,6 +104,7 @@
 		54E31C72296F14B200EE8178 /* VT1.png in Resources */ = {isa = PBXBuildFile; fileRef = 54E31C6C296F14B200EE8178 /* VT1.png */; };
 		54E31C74296F159500EE8178 /* whiteWoman.png in Resources */ = {isa = PBXBuildFile; fileRef = 54E31C73296F159500EE8178 /* whiteWoman.png */; };
 		54E31C782970242900EE8178 /* coffeePlate.png in Resources */ = {isa = PBXBuildFile; fileRef = 54E31C772970242900EE8178 /* coffeePlate.png */; };
+		54E31C7A297024FB00EE8178 /* tomatoPlate.png in Resources */ = {isa = PBXBuildFile; fileRef = 54E31C79297024FB00EE8178 /* tomatoPlate.png */; };
 		54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 54ED1063293CCCBE00926E36 /* SwiftyStoreKit */; };
 		54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54ED1065293CCD1C00926E36 /* Purchase.plist */; };
 		54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED1067293CCE3700926E36 /* SubscriptionView.swift */; };
@@ -247,6 +248,7 @@
 		54E31C6C296F14B200EE8178 /* VT1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VT1.png; sourceTree = "<group>"; };
 		54E31C73296F159500EE8178 /* whiteWoman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteWoman.png; sourceTree = "<group>"; };
 		54E31C772970242900EE8178 /* coffeePlate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coffeePlate.png; sourceTree = "<group>"; };
+		54E31C79297024FB00EE8178 /* tomatoPlate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tomatoPlate.png; sourceTree = "<group>"; };
 		54EA834C291EE6CE007D6A4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		54ED1065293CCD1C00926E36 /* Purchase.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Purchase.plist; sourceTree = "<group>"; };
 		54ED1067293CCE3700926E36 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 		54E31C32296D9AD400EE8178 /* Samples */ = {
 			isa = PBXGroup;
 			children = (
+				54E31C79297024FB00EE8178 /* tomatoPlate.png */,
 				54E31C772970242900EE8178 /* coffeePlate.png */,
 				54E31C73296F159500EE8178 /* whiteWoman.png */,
 				54E31C46296DA63400EE8178 /* colorfulWoman.png */,
@@ -806,6 +809,7 @@
 				54E31C782970242900EE8178 /* coffeePlate.png in Resources */,
 				54D3C3392966E8CC009BC254 /* JJ4.png in Resources */,
 				54E31C65296F14A000EE8178 /* CR11.png in Resources */,
+				54E31C7A297024FB00EE8178 /* tomatoPlate.png in Resources */,
 				54E31C4B296DA63400EE8178 /* cuteCat.png in Resources */,
 				54E31C74296F159500EE8178 /* whiteWoman.png in Resources */,
 				54E31C66296F14A000EE8178 /* CR13.png in Resources */,

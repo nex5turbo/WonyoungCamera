@@ -31,7 +31,7 @@ class LutStorage {
         "Natural": "sample",
         "JE": "cuteCat",
         "JJ": "smileDog",
-        "RD": "colorfulWoman",
+        "RD": "tomatoPlate",
         "CR": "couple",
         "GMT": "coffeePlate",
         "VT": "whiteWoman"
