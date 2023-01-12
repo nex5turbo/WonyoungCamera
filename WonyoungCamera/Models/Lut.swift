@@ -33,7 +33,7 @@ class LutStorage {
         "JJ": "smileDog",
         "RD": "colorfulWoman",
         "CR": "couple",
-        "GMT": "hairWoman",
+        "GMT": "coffeePlate",
         "VT": "whiteWoman"
     ]
     init() {
