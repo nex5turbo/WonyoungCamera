@@ -120,7 +120,7 @@ struct SettingView: View {
 
             Section("VERSION") {
                 HStack {
-                    Text("1.1.0")
+                    Text("\(getVersion())")
                     Spacer()
                 }
                 .contentShape(Rectangle())
@@ -128,6 +128,12 @@ struct SettingView: View {
         }
         .navigationTitle("Rounder Setting")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    func getVersion() -> String {
+        let dictionary = Bundle.main.infoDictionary
+        let version = dictionary?["CFBundleShortVersionString"] as? String
+        let build = dictionary?["CFBundleVersion"] as? String
+        return "\(version ?? "Unknown") (\(build ?? "Unknown"))"
     }
 }
 
