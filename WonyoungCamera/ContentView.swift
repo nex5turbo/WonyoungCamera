@@ -57,16 +57,16 @@ struct ContentView: View {
             SubscriptionView()
         })
         .navigationViewStyle(.stack)
-//        .onChange(of: scenePhase, perform: { newValue in
-//            switch newValue {
-//            case .active:
-//                if purchaseManager.isPremiumUser {
-//                    purchaseManager.verifySubscription { _ in }
-//                }
-//            default:
-//                break
-//            }
-//        })
+        .onChange(of: scenePhase, perform: { newValue in
+            switch newValue {
+            case .active:
+                if purchaseManager.isPremiumUser {
+                    purchaseManager.verifySubscription { _ in }
+                }
+            default:
+                break
+            }
+        })
     }
 }
 

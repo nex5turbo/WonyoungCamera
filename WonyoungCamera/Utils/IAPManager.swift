@@ -33,7 +33,7 @@ class PurchaseManager: ObservableObject {
             fatalError("[IAPHelper] Cannot get store properties")
         }
         self.purchaseProperties = purchaseProperties
-        self.isPremiumUser = true //UserDefaults.standard.bool(forKey: "isPremium")
+        self.isPremiumUser = UserDefaults.standard.bool(forKey: "isPremium")
     }
 
     func purchaseMonthlyPremium(_ completion: @escaping (PurchaseResult) -> Void) {
