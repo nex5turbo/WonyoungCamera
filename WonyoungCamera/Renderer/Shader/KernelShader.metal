@@ -43,13 +43,16 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
     coord.y = (coord.y + ((textureHeight - outputHeight) / 3)) / textureHeight;
     
     half4 color = readTexture.sample(colorSampler, coord);
-    if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (100 * (textureWidth / 2160))) {
+    float outterSize = halfWidth - (100 * (textureWidth / 2160));
+    float innerSize = halfWidth - (120 * (textureWidth / 2160));
+    float currentDistance = distance(float2(gid), float2(halfWidth, halfWidth));
+    if (currentDistance > outterSize) {
         writeTexture.write(half4(0), gid);
         return;
     }
     
     if (shouldStroke) {
-        if (distance(float2(gid), float2(halfWidth, halfWidth)) > halfWidth - (120 * (textureWidth / 2160))) {
+        if (currentDistance > innerSize) {
             writeTexture.write(half4(0, 0, 0, 1), gid);
             return;
         }
