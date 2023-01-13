@@ -95,10 +95,7 @@ struct CameraView: View {
                         .padding(.horizontal, 10)
                         VStack {
                             if UIScreen.main.bounds.height / UIScreen.main.bounds.width <= 2.0 {
-                                Spacer()
-                                Text(String.APP_NAME_SHORT)
-                                    .font(.system(size: 25, weight: .bold))
-                                    .foregroundColor(.black)
+                                EmptyView()
                             } else {
                                 Text(String.APP_NAME_SHORT)
                                     .font(.system(size: 25, weight: .bold))
