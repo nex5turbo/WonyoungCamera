@@ -63,19 +63,19 @@ struct SettingView: View {
                     Text(String.removeWatermarkLabel)
                 }
                 .onChange(of: removeWatermark) { newValue in
-                    if !newValue {
+                    if newValue {
                         if purchaseManager.isPremiumUser {
-                            UserSettings.instance.setShouldWatermark(to: !newValue)
+                            UserSettings.instance.setRemoveWatermark(to: newValue)
                         } else {
                             removeWatermark = false
                             purchaseManager.subscriptionViewPresent.toggle()
                         }
                     } else {
-                        UserSettings.instance.setShouldWatermark(to: !newValue)
+                        UserSettings.instance.setRemoveWatermark(to: newValue)
                     }
                 }
                 .onAppear {
-                    self.removeWatermark = !UserSettings.instance.shouldWatermark
+                    self.removeWatermark = UserSettings.instance.removeWatermark
                 }
             }
             Section(String.aboutLabel) {

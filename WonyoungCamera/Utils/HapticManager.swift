@@ -13,12 +13,12 @@ class HapticManager {
     static let instance = HapticManager()
     var hapticEnabled: Bool
     init() {
-        self.hapticEnabled = UserDefaults.standard.optionalBool(forKey: "haptic") ?? true
+        self.hapticEnabled = UserDefaults.standard.optionalBool(forKey: .hapticKey) ?? true
     }
     
     func toggleHaptic(to value: Bool) {
         self.hapticEnabled = value
-        UserDefaults.standard.set(hapticEnabled, forKey: "haptic")
+        UserDefaults.standard.set(hapticEnabled, forKey: .hapticKey)
     }
     
     func notification(type: UINotificationFeedbackGenerator.FeedbackType) {

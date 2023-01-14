@@ -135,7 +135,7 @@ class MetalView: UIView {
             ImageManager.instance.saveImage(image: uiImage)
             if UserSettings.instance.saveOriginal {
                 guard let readTexture = self.renderer.cameraTexture else { return }
-                if UserSettings.instance.shouldWatermark {
+                if !UserSettings.instance.removeWatermark {
                     guard let texture = self.renderer.makeEmptyTexture(size: CGSize(width: readTexture.width, height: readTexture.height)) else { return }
                     guard let commandBuffer = self.renderer.commandQueue.makeCommandBuffer() else { return }
                     self.renderer.watermarkPipeline.render(from: readTexture, to: texture, commandBuffer: commandBuffer)

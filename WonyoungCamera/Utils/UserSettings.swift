@@ -6,23 +6,27 @@
 //
 
 import Foundation
-
+extension String {
+    static let saveOriginalKey = "saveOriginal"
+    static let removeWatermarkKey = "removeWatermark"
+    static let hapticKey = "haptic"
+}
 class UserSettings {
     static let instance = UserSettings()
     
     var saveOriginal: Bool
-    var shouldWatermark: Bool
+    var removeWatermark: Bool
     private init() {
-        self.saveOriginal = UserDefaults.standard.optionalBool(forKey: "saveOriginal") ?? true
-        self.shouldWatermark = UserDefaults.standard.optionalBool(forKey: "shouldWatermark") ?? true
+        self.saveOriginal = UserDefaults.standard.optionalBool(forKey: .saveOriginalKey) ?? true
+        self.removeWatermark = UserDefaults.standard.optionalBool(forKey: .removeWatermarkKey) ?? false
     }
     func setSaveOriginal(to value: Bool) {
         self.saveOriginal = value
-        UserDefaults.standard.set(saveOriginal, forKey: "saveOriginal")
+        UserDefaults.standard.set(saveOriginal, forKey: .saveOriginalKey)
     }
-    func setShouldWatermark(to value: Bool) {
-        self.shouldWatermark = value
-        UserDefaults.standard.set(shouldWatermark, forKey: "shouldWatermark")
+    func setRemoveWatermark(to value: Bool) {
+        self.removeWatermark = value
+        UserDefaults.standard.set(removeWatermark, forKey: .removeWatermarkKey)
     }
 }
 
