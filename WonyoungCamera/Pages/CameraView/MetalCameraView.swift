@@ -143,11 +143,11 @@ class MetalView: UIView {
                     commandBuffer.waitUntilCompleted()
                     guard let cgImage = convertToCGImage(texture: texture) else { return }
                     let uiImage = UIImage(cgImage: cgImage)
-                    UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                    ImageManager.instance.saveImageToAlbum(image: uiImage)
                 } else {
                     guard let cgImage = convertToCGImage(texture: readTexture) else { return }
                     let uiImage = UIImage(cgImage: cgImage)
-                    UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                    ImageManager.instance.saveImageToAlbum(image: uiImage)
                 }
             }
         }

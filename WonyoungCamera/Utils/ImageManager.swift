@@ -43,6 +43,17 @@ class ImageManager {
     private var timestamp: String {
         return "\(NSDate().timeIntervalSince1970)"
     }
+
+    func saveImageToAlbum(image: UIImage) {
+        guard let data = image.pngData() else {
+            return
+        }
+        guard let targetImage = UIImage(data: data) else {
+            return
+        }
+        UIImageWriteToSavedPhotosAlbum(targetImage, nil, nil, nil)
+    }
+
     func saveImage(image: UIImage) {
         do {
             guard let documentDir = getDocumentDir() else { return }
@@ -61,9 +72,9 @@ class ImageManager {
             
             UIImageWriteToSavedPhotosAlbum(targetImage, nil, nil, nil)
         } catch {
-            #if DEBUG
+#if DEBUG
             print(error.localizedDescription)
-            #endif
+#endif
         }
     }
     func delete(at: String) {

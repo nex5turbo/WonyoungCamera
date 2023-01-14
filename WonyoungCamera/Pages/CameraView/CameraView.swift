@@ -19,7 +19,8 @@ struct CameraView: View {
     
     @State var decoration: Decoration = Decoration.empty()
     @State var takePicture: Bool = false
-    
+    @State var canTakePicture: Bool = true
+
     @State var filterPresent = true
     @State var albumPresent = false
     @State var settingPresent = false
@@ -176,11 +177,19 @@ struct CameraView: View {
                                 permissionPresent.toggle()
                                 return
                             }
-                            if !isMute {
-                                shutterSound()
-                            }
-                            if !takePicture {
-                                takePicture.toggle()
+                            if canTakePicture {
+                                canTakePicture = false
+                                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                                    DispatchQueue.main.async {
+                                        canTakePicture = true
+                                    }
+                                }
+                                if !isMute {
+                                    shutterSound()
+                                }
+                                if !takePicture {
+                                    takePicture.toggle()
+                                }
                             }
                         } content: {
                             ZStack {
@@ -199,6 +208,7 @@ struct CameraView: View {
                                     .padding(10)
                             }
                         }
+                        .disabled(!canTakePicture)
                         .alert("Please allow album usage permission!", isPresented: $permissionPresent) {
                             Button(String.settingLabel) {
                                 if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
