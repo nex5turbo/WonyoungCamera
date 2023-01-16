@@ -172,11 +172,6 @@ struct CameraView: View {
                         }
                         Spacer()
                         HapticButton {
-                            let photos = PHPhotoLibrary.authorizationStatus()
-                            if photos == .denied || photos == .notDetermined {
-                                permissionPresent.toggle()
-                                return
-                            }
                             if canTakePicture {
                                 canTakePicture = false
                                 DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
