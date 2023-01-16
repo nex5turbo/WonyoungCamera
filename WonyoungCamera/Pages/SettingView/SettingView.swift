@@ -127,7 +127,7 @@ struct SettingView: View {
             }
         }
         .navigationTitle("Rounder Setting")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
     }
     func getVersion() -> String {
         let dictionary = Bundle.main.infoDictionary
