@@ -60,8 +60,6 @@
 		545908B9291E828400B3A658 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545908B8291E828400B3A658 /* IAPManager.swift */; };
 		545908BB291E854E00B3A658 /* photo.json in Resources */ = {isa = PBXBuildFile; fileRef = 545908BA291E854E00B3A658 /* photo.json */; };
 		545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D578328DDFB2100A874DB /* SharedMetalDevice.swift */; };
-		545D583328DEACC200A874DB /* Brightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D583228DEACC200A874DB /* Brightness.swift */; };
-		545D583728DEB0FB00A874DB /* Brightness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 545D583628DEB0FB00A874DB /* Brightness.metal */; };
 		545FF9DB29619DBB00BECC3C /* JE3.png in Resources */ = {isa = PBXBuildFile; fileRef = 545FF9CE29619DBA00BECC3C /* JE3.png */; };
 		545FF9DC29619DBB00BECC3C /* JE2.png in Resources */ = {isa = PBXBuildFile; fileRef = 545FF9CF29619DBA00BECC3C /* JE2.png */; };
 		545FF9DF29619DBB00BECC3C /* JE1.png in Resources */ = {isa = PBXBuildFile; fileRef = 545FF9D229619DBA00BECC3C /* JE1.png */; };
@@ -211,8 +209,6 @@
 		545908B8291E828400B3A658 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		545908BA291E854E00B3A658 /* photo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photo.json; sourceTree = "<group>"; };
 		545D578328DDFB2100A874DB /* SharedMetalDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMetalDevice.swift; sourceTree = "<group>"; };
-		545D583228DEACC200A874DB /* Brightness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brightness.swift; sourceTree = "<group>"; };
-		545D583628DEB0FB00A874DB /* Brightness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Brightness.metal; sourceTree = "<group>"; };
 		545FF9CE29619DBA00BECC3C /* JE3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JE3.png; sourceTree = "<group>"; };
 		545FF9CF29619DBA00BECC3C /* JE2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JE2.png; sourceTree = "<group>"; };
 		545FF9D229619DBA00BECC3C /* JE1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JE1.png; sourceTree = "<group>"; };
@@ -448,15 +444,6 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		545D583128DEACB600A874DB /* Adjustment */ = {
-			isa = PBXGroup;
-			children = (
-				545D583228DEACC200A874DB /* Brightness.swift */,
-				545D583628DEB0FB00A874DB /* Brightness.metal */,
-			);
-			path = Adjustment;
-			sourceTree = "<group>";
-		};
 		545FF9B129619CC800BECC3C /* JE-Series */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,7 +548,6 @@
 		54D358C828DC7BD900A3AB4D /* CameraView */ = {
 			isa = PBXGroup;
 			children = (
-				545D583128DEACB600A874DB /* Adjustment */,
 				54D358C928DC7BD900A3AB4D /* MetalCamera.swift */,
 				54D358CC28DC7BD900A3AB4D /* MetalCameraView.swift */,
 				546ED8C528F03C3700C62AE5 /* CameraView.swift */,
@@ -996,9 +982,7 @@
 				54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */,
 				549051C62944B412005D3353 /* GradientView.swift in Sources */,
 				543B35E9296A907800ED86C8 /* WYMaterials.swift in Sources */,
-				545D583328DEACC200A874DB /* Brightness.swift in Sources */,
 				54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */,
-				545D583728DEB0FB00A874DB /* Brightness.metal in Sources */,
 				54426CC42976C3EF002F7CD2 /* HighlightsAndShadowsPipeline.swift in Sources */,
 				543B35E7296A906C00ED86C8 /* WYSticker.swift in Sources */,
 			);
