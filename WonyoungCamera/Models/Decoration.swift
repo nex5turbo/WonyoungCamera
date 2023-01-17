@@ -26,7 +26,7 @@ struct Decoration {
  var exposure: Float
   whiteBalance
  var vibrance: Float
-  vignette
+  vignette -> Array
  var grain: Float
 */
     var scale: Float
