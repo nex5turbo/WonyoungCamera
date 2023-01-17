@@ -49,6 +49,8 @@
 		54426CE02976C5C8002F7CD2 /* WhiteBalance.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CDF2976C5C8002F7CD2 /* WhiteBalance.metal */; };
 		54426CE22976C5D0002F7CD2 /* Sharpness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE12976C5D0002F7CD2 /* Sharpness.metal */; };
 		54426CE42976C5E5002F7CD2 /* HighlightsAndShadows.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE32976C5E5002F7CD2 /* HighlightsAndShadows.metal */; };
+		54426CE82976E0E1002F7CD2 /* ProCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE72976E0E1002F7CD2 /* ProCameraView.swift */; };
+		54426CEA2976E0F3002F7CD2 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE92976E0F3002F7CD2 /* EditorView.swift */; };
 		5444215E296D833200B056D6 /* FilterPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5444215D296D833200B056D6 /* FilterPipeline.swift */; };
 		54442160296D85B000B056D6 /* Common.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5444215F296D85B000B056D6 /* Common.metal */; };
 		54442163296D85F800B056D6 /* Contrast.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54442162296D85F800B056D6 /* Contrast.metal */; };
@@ -198,6 +200,8 @@
 		54426CDF2976C5C8002F7CD2 /* WhiteBalance.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WhiteBalance.metal; sourceTree = "<group>"; };
 		54426CE12976C5D0002F7CD2 /* Sharpness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sharpness.metal; sourceTree = "<group>"; };
 		54426CE32976C5E5002F7CD2 /* HighlightsAndShadows.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = HighlightsAndShadows.metal; sourceTree = "<group>"; };
+		54426CE72976E0E1002F7CD2 /* ProCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProCameraView.swift; sourceTree = "<group>"; };
+		54426CE92976E0F3002F7CD2 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		5444215D296D833200B056D6 /* FilterPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPipeline.swift; sourceTree = "<group>"; };
 		5444215F296D85B000B056D6 /* Common.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Common.metal; sourceTree = "<group>"; };
 		54442161296D85D500B056D6 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
@@ -345,6 +349,7 @@
 			children = (
 				54168B2C28E275030000DF7F /* AlbumView.swift */,
 				546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */,
+				54426CE92976E0F3002F7CD2 /* EditorView.swift */,
 				545908A2291299E600B3A658 /* ExportResultView.swift */,
 			);
 			path = AlbumView;
@@ -550,6 +555,7 @@
 			children = (
 				54D358C928DC7BD900A3AB4D /* MetalCamera.swift */,
 				54D358CC28DC7BD900A3AB4D /* MetalCameraView.swift */,
+				54426CE72976E0E1002F7CD2 /* ProCameraView.swift */,
 				546ED8C528F03C3700C62AE5 /* CameraView.swift */,
 			);
 			path = CameraView;
@@ -917,6 +923,7 @@
 				54426CD02976C4C9002F7CD2 /* GrayscalePipeline.swift in Sources */,
 				543B35EB296AFD6800ED86C8 /* ColorFilter.swift in Sources */,
 				54D358DE28DC7BD900A3AB4D /* MetalCamera.swift in Sources */,
+				54426CE82976E0E1002F7CD2 /* ProCameraView.swift in Sources */,
 				54426CC02976C399002F7CD2 /* BrightnessPipeline.swift in Sources */,
 				54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */,
 				54426CDA2976C5AB002F7CD2 /* Vignette.metal in Sources */,
@@ -950,6 +957,7 @@
 				54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */,
 				54426CDE2976C5BB002F7CD2 /* Exposure.metal in Sources */,
 				54E31C8029703A2900EE8178 /* Watermark.metal in Sources */,
+				54426CEA2976E0F3002F7CD2 /* EditorView.swift in Sources */,
 				54D358E028DC7BD900A3AB4D /* KernelShader.metal in Sources */,
 				54168B2D28E275030000DF7F /* AlbumView.swift in Sources */,
 				5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */,
