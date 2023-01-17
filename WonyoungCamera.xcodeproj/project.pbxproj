@@ -27,6 +27,28 @@
 		543B35E7296A906C00ED86C8 /* WYSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E6296A906C00ED86C8 /* WYSticker.swift */; };
 		543B35E9296A907800ED86C8 /* WYMaterials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35E8296A907800ED86C8 /* WYMaterials.swift */; };
 		543B35EB296AFD6800ED86C8 /* ColorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543B35EA296AFD6800ED86C8 /* ColorFilter.swift */; };
+		54426CBA2976C30C002F7CD2 /* WatermarkPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CB92976C30C002F7CD2 /* WatermarkPipeline.swift */; };
+		54426CBC2976C33B002F7CD2 /* ContrastPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CBB2976C33B002F7CD2 /* ContrastPipeline.swift */; };
+		54426CBE2976C377002F7CD2 /* SaturationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CBD2976C377002F7CD2 /* SaturationPipeline.swift */; };
+		54426CC02976C399002F7CD2 /* BrightnessPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CBF2976C399002F7CD2 /* BrightnessPipeline.swift */; };
+		54426CC22976C3B8002F7CD2 /* SharpnessPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CC12976C3B8002F7CD2 /* SharpnessPipeline.swift */; };
+		54426CC42976C3EF002F7CD2 /* HighlightsAndShadowsPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CC32976C3EF002F7CD2 /* HighlightsAndShadowsPipeline.swift */; };
+		54426CC62976C400002F7CD2 /* ExposurePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CC52976C400002F7CD2 /* ExposurePipeline.swift */; };
+		54426CC82976C433002F7CD2 /* WhiteBalancePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CC72976C433002F7CD2 /* WhiteBalancePipeline.swift */; };
+		54426CCA2976C45A002F7CD2 /* VibrancePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CC92976C45A002F7CD2 /* VibrancePipeline.swift */; };
+		54426CCC2976C485002F7CD2 /* VignettePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CCB2976C485002F7CD2 /* VignettePipeline.swift */; };
+		54426CCE2976C49F002F7CD2 /* GrainPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CCD2976C49F002F7CD2 /* GrainPipeline.swift */; };
+		54426CD02976C4C9002F7CD2 /* GrayscalePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CCF2976C4C9002F7CD2 /* GrayscalePipeline.swift */; };
+		54426CD22976C579002F7CD2 /* Saturation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CD12976C579002F7CD2 /* Saturation.metal */; };
+		54426CD42976C587002F7CD2 /* Brightness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CD32976C587002F7CD2 /* Brightness.metal */; };
+		54426CD62976C596002F7CD2 /* Grayscale.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CD52976C596002F7CD2 /* Grayscale.metal */; };
+		54426CD82976C59F002F7CD2 /* Grain.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CD72976C59F002F7CD2 /* Grain.metal */; };
+		54426CDA2976C5AB002F7CD2 /* Vignette.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CD92976C5AB002F7CD2 /* Vignette.metal */; };
+		54426CDC2976C5B4002F7CD2 /* Vibrance.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CDB2976C5B4002F7CD2 /* Vibrance.metal */; };
+		54426CDE2976C5BB002F7CD2 /* Exposure.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CDD2976C5BB002F7CD2 /* Exposure.metal */; };
+		54426CE02976C5C8002F7CD2 /* WhiteBalance.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CDF2976C5C8002F7CD2 /* WhiteBalance.metal */; };
+		54426CE22976C5D0002F7CD2 /* Sharpness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE12976C5D0002F7CD2 /* Sharpness.metal */; };
+		54426CE42976C5E5002F7CD2 /* HighlightsAndShadows.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE32976C5E5002F7CD2 /* HighlightsAndShadows.metal */; };
 		5444215E296D833200B056D6 /* FilterPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5444215D296D833200B056D6 /* FilterPipeline.swift */; };
 		54442160296D85B000B056D6 /* Common.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5444215F296D85B000B056D6 /* Common.metal */; };
 		54442163296D85F800B056D6 /* Contrast.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54442162296D85F800B056D6 /* Contrast.metal */; };
@@ -156,6 +178,28 @@
 		543B35E6296A906C00ED86C8 /* WYSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYSticker.swift; sourceTree = "<group>"; };
 		543B35E8296A907800ED86C8 /* WYMaterials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYMaterials.swift; sourceTree = "<group>"; };
 		543B35EA296AFD6800ED86C8 /* ColorFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFilter.swift; sourceTree = "<group>"; };
+		54426CB92976C30C002F7CD2 /* WatermarkPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatermarkPipeline.swift; sourceTree = "<group>"; };
+		54426CBB2976C33B002F7CD2 /* ContrastPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContrastPipeline.swift; sourceTree = "<group>"; };
+		54426CBD2976C377002F7CD2 /* SaturationPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaturationPipeline.swift; sourceTree = "<group>"; };
+		54426CBF2976C399002F7CD2 /* BrightnessPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessPipeline.swift; sourceTree = "<group>"; };
+		54426CC12976C3B8002F7CD2 /* SharpnessPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharpnessPipeline.swift; sourceTree = "<group>"; };
+		54426CC32976C3EF002F7CD2 /* HighlightsAndShadowsPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightsAndShadowsPipeline.swift; sourceTree = "<group>"; };
+		54426CC52976C400002F7CD2 /* ExposurePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposurePipeline.swift; sourceTree = "<group>"; };
+		54426CC72976C433002F7CD2 /* WhiteBalancePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBalancePipeline.swift; sourceTree = "<group>"; };
+		54426CC92976C45A002F7CD2 /* VibrancePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibrancePipeline.swift; sourceTree = "<group>"; };
+		54426CCB2976C485002F7CD2 /* VignettePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VignettePipeline.swift; sourceTree = "<group>"; };
+		54426CCD2976C49F002F7CD2 /* GrainPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrainPipeline.swift; sourceTree = "<group>"; };
+		54426CCF2976C4C9002F7CD2 /* GrayscalePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayscalePipeline.swift; sourceTree = "<group>"; };
+		54426CD12976C579002F7CD2 /* Saturation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Saturation.metal; sourceTree = "<group>"; };
+		54426CD32976C587002F7CD2 /* Brightness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Brightness.metal; sourceTree = "<group>"; };
+		54426CD52976C596002F7CD2 /* Grayscale.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Grayscale.metal; sourceTree = "<group>"; };
+		54426CD72976C59F002F7CD2 /* Grain.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Grain.metal; sourceTree = "<group>"; };
+		54426CD92976C5AB002F7CD2 /* Vignette.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Vignette.metal; sourceTree = "<group>"; };
+		54426CDB2976C5B4002F7CD2 /* Vibrance.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Vibrance.metal; sourceTree = "<group>"; };
+		54426CDD2976C5BB002F7CD2 /* Exposure.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Exposure.metal; sourceTree = "<group>"; };
+		54426CDF2976C5C8002F7CD2 /* WhiteBalance.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = WhiteBalance.metal; sourceTree = "<group>"; };
+		54426CE12976C5D0002F7CD2 /* Sharpness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Sharpness.metal; sourceTree = "<group>"; };
+		54426CE32976C5E5002F7CD2 /* HighlightsAndShadows.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = HighlightsAndShadows.metal; sourceTree = "<group>"; };
 		5444215D296D833200B056D6 /* FilterPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPipeline.swift; sourceTree = "<group>"; };
 		5444215F296D85B000B056D6 /* Common.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Common.metal; sourceTree = "<group>"; };
 		54442161296D85D500B056D6 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
@@ -338,6 +382,16 @@
 				5444215F296D85B000B056D6 /* Common.metal */,
 				54442161296D85D500B056D6 /* Common.h */,
 				54442162296D85F800B056D6 /* Contrast.metal */,
+				54426CD12976C579002F7CD2 /* Saturation.metal */,
+				54426CD32976C587002F7CD2 /* Brightness.metal */,
+				54426CD52976C596002F7CD2 /* Grayscale.metal */,
+				54426CD72976C59F002F7CD2 /* Grain.metal */,
+				54426CD92976C5AB002F7CD2 /* Vignette.metal */,
+				54426CDB2976C5B4002F7CD2 /* Vibrance.metal */,
+				54426CDD2976C5BB002F7CD2 /* Exposure.metal */,
+				54426CDF2976C5C8002F7CD2 /* WhiteBalance.metal */,
+				54426CE12976C5D0002F7CD2 /* Sharpness.metal */,
+				54426CE32976C5E5002F7CD2 /* HighlightsAndShadows.metal */,
 				54E31C7F29703A2900EE8178 /* Watermark.metal */,
 			);
 			path = Shader;
@@ -368,6 +422,18 @@
 			isa = PBXGroup;
 			children = (
 				5444215D296D833200B056D6 /* FilterPipeline.swift */,
+				54426CBB2976C33B002F7CD2 /* ContrastPipeline.swift */,
+				54426CC12976C3B8002F7CD2 /* SharpnessPipeline.swift */,
+				54426CC32976C3EF002F7CD2 /* HighlightsAndShadowsPipeline.swift */,
+				54426CC52976C400002F7CD2 /* ExposurePipeline.swift */,
+				54426CC72976C433002F7CD2 /* WhiteBalancePipeline.swift */,
+				54426CC92976C45A002F7CD2 /* VibrancePipeline.swift */,
+				54426CCB2976C485002F7CD2 /* VignettePipeline.swift */,
+				54426CCD2976C49F002F7CD2 /* GrainPipeline.swift */,
+				54426CCF2976C4C9002F7CD2 /* GrayscalePipeline.swift */,
+				54426CB92976C30C002F7CD2 /* WatermarkPipeline.swift */,
+				54426CBD2976C377002F7CD2 /* SaturationPipeline.swift */,
+				54426CBF2976C399002F7CD2 /* BrightnessPipeline.swift */,
 			);
 			path = Pipelines;
 			sourceTree = "<group>";
@@ -861,36 +927,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				545908B9291E828400B3A658 /* IAPManager.swift in Sources */,
+				54426CCA2976C45A002F7CD2 /* VibrancePipeline.swift in Sources */,
+				54426CD02976C4C9002F7CD2 /* GrayscalePipeline.swift in Sources */,
 				543B35EB296AFD6800ED86C8 /* ColorFilter.swift in Sources */,
 				54D358DE28DC7BD900A3AB4D /* MetalCamera.swift in Sources */,
+				54426CC02976C399002F7CD2 /* BrightnessPipeline.swift in Sources */,
 				54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */,
+				54426CDA2976C5AB002F7CD2 /* Vignette.metal in Sources */,
+				54426CBC2976C33B002F7CD2 /* ContrastPipeline.swift in Sources */,
 				6A8FFC35291E097100000C1B /* LottieView.swift in Sources */,
 				54D358E828DC7BD900A3AB4D /* HapticManager.swift in Sources */,
+				54426CE22976C5D0002F7CD2 /* Sharpness.metal in Sources */,
 				543B35CB2969994200ED86C8 /* RenderableProvider.swift in Sources */,
 				546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */,
 				54D3C355296857C0009BC254 /* HapticButton.swift in Sources */,
+				54426CDC2976C5B4002F7CD2 /* Vibrance.metal in Sources */,
 				560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */,
+				54426CC82976C433002F7CD2 /* WhiteBalancePipeline.swift in Sources */,
 				545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */,
 				545908A3291299E600B3A658 /* ExportResultView.swift in Sources */,
+				54426CE02976C5C8002F7CD2 /* WhiteBalance.metal in Sources */,
+				54426CC62976C400002F7CD2 /* ExposurePipeline.swift in Sources */,
 				54442160296D85B000B056D6 /* Common.metal in Sources */,
 				543B35D62969A26500ED86C8 /* StickerDecorator.swift in Sources */,
+				54426CBA2976C30C002F7CD2 /* WatermarkPipeline.swift in Sources */,
+				54426CD42976C587002F7CD2 /* Brightness.metal in Sources */,
 				6A51A79D296812A900EC83E9 /* SettingView.swift in Sources */,
+				54426CCE2976C49F002F7CD2 /* GrainPipeline.swift in Sources */,
 				6A51A7982967ED9A00EC83E9 /* ThumbnailView.swift in Sources */,
 				545908A929140C5500B3A658 /* Colors.swift in Sources */,
+				54426CBE2976C377002F7CD2 /* SaturationPipeline.swift in Sources */,
 				54E31C4F296DC43100EE8178 /* UserSettings.swift in Sources */,
 				54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */,
 				546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */,
 				54D1727E295DD85B006180FA /* FileManager+Extension.swift in Sources */,
 				54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */,
+				54426CDE2976C5BB002F7CD2 /* Exposure.metal in Sources */,
 				54E31C8029703A2900EE8178 /* Watermark.metal in Sources */,
 				54D358E028DC7BD900A3AB4D /* KernelShader.metal in Sources */,
 				54168B2D28E275030000DF7F /* AlbumView.swift in Sources */,
 				5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */,
 				543B35E3296A905700ED86C8 /* WYBackground.swift in Sources */,
 				54D358E728DC7BD900A3AB4D /* SoundManager.swift in Sources */,
+				54426CE42976C5E5002F7CD2 /* HighlightsAndShadows.metal in Sources */,
+				54426CCC2976C485002F7CD2 /* VignettePipeline.swift in Sources */,
 				54D358E228DC7BD900A3AB4D /* Renderer.swift in Sources */,
+				54426CD22976C579002F7CD2 /* Saturation.metal in Sources */,
 				543B35DE2969C17700ED86C8 /* ConcurrentDictionary.swift in Sources */,
 				543B35D02969A24200ED86C8 /* Decorator.swift in Sources */,
+				54426CD62976C596002F7CD2 /* Grayscale.metal in Sources */,
 				6A51A7942967D46E00EC83E9 /* Decoration.swift in Sources */,
 				54442163296D85F800B056D6 /* Contrast.metal in Sources */,
 				543B35CD29699CD500ED86C8 /* Renderable.swift in Sources */,
@@ -901,9 +986,11 @@
 				543B35DA2969BD8E00ED86C8 /* ProvidingOperation.swift in Sources */,
 				5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */,
 				543B35DC2969BDAD00ED86C8 /* AsyncOperation.swift in Sources */,
+				54426CC22976C3B8002F7CD2 /* SharpnessPipeline.swift in Sources */,
 				54D358DD28DC7BD900A3AB4D /* CornerRadius+Extensions.swift in Sources */,
 				54D358E128DC7BD900A3AB4D /* MetalCameraView.swift in Sources */,
 				54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */,
+				54426CD82976C59F002F7CD2 /* Grain.metal in Sources */,
 				5444215E296D833200B056D6 /* FilterPipeline.swift in Sources */,
 				54D358DF28DC7BD900A3AB4D /* Shader.metal in Sources */,
 				54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */,
@@ -912,6 +999,7 @@
 				545D583328DEACC200A874DB /* Brightness.swift in Sources */,
 				54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */,
 				545D583728DEB0FB00A874DB /* Brightness.metal in Sources */,
+				54426CC42976C3EF002F7CD2 /* HighlightsAndShadowsPipeline.swift in Sources */,
 				543B35E7296A906C00ED86C8 /* WYSticker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1093,7 +1181,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1113,7 +1201,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1131,7 +1219,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1151,7 +1239,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
