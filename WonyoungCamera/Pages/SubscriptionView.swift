@@ -15,6 +15,7 @@ struct SubscriptionView: View {
     @State var successAlertPresent = false
     @State var errorAlertPresent = false
     @State var detailPresent = false
+    @State var errorDescription = ""
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
             .repeatForever(autoreverses: false)
@@ -66,8 +67,10 @@ struct SubscriptionView: View {
                                 purchaseManager.setUserPremium(as: true)
                                 successAlertPresent.toggle()
                             case .deferred:
+                                errorDescription = "Network error"
                                 errorAlertPresent.toggle()
-                            case .error:
+                            case .error(let error):
+                                self.errorDescription = error.localizedDescription
                                 errorAlertPresent.toggle()
                             }
                             isPurchasing = false
@@ -84,7 +87,7 @@ struct SubscriptionView: View {
                     .padding(.horizontal, 32)
                     .padding(.bottom, 5)
                     .alert(
-                        "Network error",
+                        errorDescription,
                         isPresented: $errorAlertPresent
                     ) {
                         Button(role: .cancel) {
