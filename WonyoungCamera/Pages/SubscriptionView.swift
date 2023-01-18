@@ -67,7 +67,7 @@ struct SubscriptionView: View {
                                 purchaseManager.setUserPremium(as: true)
                                 successAlertPresent.toggle()
                             case .deferred:
-                                errorDescription = "Network error"
+                                errorDescription = .tryAgainText
                                 errorAlertPresent.toggle()
                             case .error(let error):
                                 self.errorDescription = error.localizedDescription
@@ -87,7 +87,7 @@ struct SubscriptionView: View {
                     .padding(.horizontal, 32)
                     .padding(.bottom, 5)
                     .alert(
-                        errorDescription,
+                        "Network error",
                         isPresented: $errorAlertPresent
                     ) {
                         Button(role: .cancel) {
@@ -96,7 +96,7 @@ struct SubscriptionView: View {
                         }
 
                     } message: {
-                        Text(String.tryAgainText)
+                        Text(errorDescription)
                     }
                     .alert(
                         "Congraturation!",
