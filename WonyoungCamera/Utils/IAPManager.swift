@@ -27,18 +27,20 @@ class PurchaseManager: ObservableObject {
     @Published var isPremiumUser: Bool = false
     @Published var subscriptionViewPresent: Bool = false
 
-    private var purchaseProperties: PurchaseProperties
+    private var purchaseProperties: PurchaseProperties?
     private init() {
-        guard let purchaseProperties = try? getPurchaseProperties() else {
-            fatalError("[IAPHelper] Cannot get store properties")
-        }
+        let purchaseProperties = try? getPurchaseProperties()
         self.purchaseProperties = purchaseProperties
         self.isPremiumUser = UserDefaults.standard.bool(forKey: "isPremium")
     }
 
     func purchaseMonthlyPremium(_ completion: @escaping (PurchaseResult) -> Void) {
+        guard let purchaseProperties = self.purchaseProperties else {
+            completion(.error(error: .init(.unknown)))
+            return
+        }
         SwiftyStoreKit.purchaseProduct(
-            self.purchaseProperties.monthlyPremium,
+            purchaseProperties.monthlyPremium,
             quantity: 1,
             atomically: true
         ) { result in
@@ -47,6 +49,10 @@ class PurchaseManager: ObservableObject {
     }
 
     func restorePremium(_ completion: @escaping (Bool) -> Void) {
+        guard let purchaseProperties = self.purchaseProperties else {
+            completion(false)
+            return
+        }
         SwiftyStoreKit.restorePurchases(atomically: true) { results in
             if results.restoredPurchases.count > 0 {
                 guard let purchase = results.restoredPurchases.last else {
@@ -54,7 +60,7 @@ class PurchaseManager: ObservableObject {
                 }
                 let appleValidator = AppleReceiptValidator(
                     service: .production,
-                    sharedSecret: self.purchaseProperties.sharedSecret
+                    sharedSecret: purchaseProperties.sharedSecret
                 )
                 SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
                     switch result {
@@ -81,14 +87,17 @@ class PurchaseManager: ObservableObject {
     }
 
     func verifySubscription(_ completion: @escaping (VerifySubscriptionResult) -> Void) {
+        guard let purchaseProperties = self.purchaseProperties else {
+            return
+        }
         let appleValidator = AppleReceiptValidator(
             service: .production,
-            sharedSecret: self.purchaseProperties.sharedSecret
+            sharedSecret: purchaseProperties.sharedSecret
         )
         SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
             switch result {
             case .success(receipt: let receipt):
-                let productId = self.purchaseProperties.monthlyPremium
+                let productId = purchaseProperties.monthlyPremium
                 let purchaseResult = SwiftyStoreKit.verifySubscription(
                     ofType: .autoRenewable,
                     productId: productId,
