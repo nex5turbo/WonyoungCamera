@@ -35,6 +35,12 @@ extension String {
     static let monthlyPlanName = NSLocalizedString("Rounder monthly plan", comment: "")
     static let appreciateText = NSLocalizedString("Thanks for using Rounder Camera!", comment: "")
     static let priceText = NSLocalizedString("3-day free trial then $1.49/month", comment: "")
+    static func priceText(_ price: String?) -> String {
+        let monthlyPrice = price ?? "$1.49"
+        let countedLabel = String(format: NSLocalizedString("3-day free trial then %@/month", comment: ""), monthlyPrice)
+        //let countLabel = NSLocalizedString("%d / %d Selected", comment: "")
+        return countedLabel
+    }
     static let tryAgainText = NSLocalizedString("Please try again.", comment: "")
     static let subscribeSuccessText = NSLocalizedString("Take your priceless moment!", comment: "")
     

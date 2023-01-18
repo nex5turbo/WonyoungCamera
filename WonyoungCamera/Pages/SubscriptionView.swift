@@ -56,7 +56,7 @@ struct SubscriptionView: View {
                             .bold()
                     }
                     Spacer()
-                    Text(String.priceText)
+                    Text(String.priceText(purchaseManager.getMonthlyPrice()))
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                     Button {

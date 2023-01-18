@@ -1,4 +1,5 @@
 import Foundation
+import StoreKit
 import SwiftyStoreKit
 
 struct PurchaseProperties: Decodable {
@@ -28,10 +29,18 @@ class PurchaseManager: ObservableObject {
     @Published var subscriptionViewPresent: Bool = false
 
     private var purchaseProperties: PurchaseProperties?
+    private var products: Set<SKProduct> = []
+    
     private init() {
-        let purchaseProperties = try? getPurchaseProperties()
-        self.purchaseProperties = purchaseProperties
         self.isPremiumUser = UserDefaults.standard.bool(forKey: "isPremium")
+        guard let purchaseProperties = try? getPurchaseProperties() else {
+            return
+        }
+        self.purchaseProperties = purchaseProperties
+        
+        SwiftyStoreKit.retrieveProductsInfo([purchaseProperties.monthlyPremium]) { result in
+            self.products = result.retrievedProducts
+        }
     }
 
     func purchaseMonthlyPremium(_ completion: @escaping (PurchaseResult) -> Void) {
@@ -136,5 +145,15 @@ class PurchaseManager: ObservableObject {
 #endif
             self.setUserPremium(as: false)
         }
+    }
+    func getMonthlyPrice() -> String? {
+        guard let purchaseProperties = self.purchaseProperties else {
+            return nil
+        }
+
+        for product in self.products where product.productIdentifier == purchaseProperties.monthlyPremium {
+            return product.localizedPrice
+        }
+        return nil
     }
 }
