@@ -51,6 +51,9 @@
 		54426CE42976C5E5002F7CD2 /* HighlightsAndShadows.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE32976C5E5002F7CD2 /* HighlightsAndShadows.metal */; };
 		54426CE82976E0E1002F7CD2 /* ProCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE72976E0E1002F7CD2 /* ProCameraView.swift */; };
 		54426CEA2976E0F3002F7CD2 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54426CE92976E0F3002F7CD2 /* EditorView.swift */; };
+		54426CEE29783E47002F7CD2 /* heartCloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 54426CEB29783E47002F7CD2 /* heartCloud.png */; };
+		54426CEF29783E47002F7CD2 /* purpleFlower.png in Resources */ = {isa = PBXBuildFile; fileRef = 54426CEC29783E47002F7CD2 /* purpleFlower.png */; };
+		54426CF029783E47002F7CD2 /* smokyGirl.png in Resources */ = {isa = PBXBuildFile; fileRef = 54426CED29783E47002F7CD2 /* smokyGirl.png */; };
 		5444215E296D833200B056D6 /* FilterPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5444215D296D833200B056D6 /* FilterPipeline.swift */; };
 		54442160296D85B000B056D6 /* Common.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5444215F296D85B000B056D6 /* Common.metal */; };
 		54442163296D85F800B056D6 /* Contrast.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54442162296D85F800B056D6 /* Contrast.metal */; };
@@ -202,6 +205,9 @@
 		54426CE32976C5E5002F7CD2 /* HighlightsAndShadows.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = HighlightsAndShadows.metal; sourceTree = "<group>"; };
 		54426CE72976E0E1002F7CD2 /* ProCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProCameraView.swift; sourceTree = "<group>"; };
 		54426CE92976E0F3002F7CD2 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		54426CEB29783E47002F7CD2 /* heartCloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heartCloud.png; sourceTree = "<group>"; };
+		54426CEC29783E47002F7CD2 /* purpleFlower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purpleFlower.png; sourceTree = "<group>"; };
+		54426CED29783E47002F7CD2 /* smokyGirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smokyGirl.png; sourceTree = "<group>"; };
 		5444215D296D833200B056D6 /* FilterPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPipeline.swift; sourceTree = "<group>"; };
 		5444215F296D85B000B056D6 /* Common.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Common.metal; sourceTree = "<group>"; };
 		54442161296D85D500B056D6 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
@@ -623,6 +629,9 @@
 		54E31C32296D9AD400EE8178 /* Samples */ = {
 			isa = PBXGroup;
 			children = (
+				54426CEB29783E47002F7CD2 /* heartCloud.png */,
+				54426CEC29783E47002F7CD2 /* purpleFlower.png */,
+				54426CED29783E47002F7CD2 /* smokyGirl.png */,
 				54E31C79297024FB00EE8178 /* tomatoPlate.png */,
 				54E31C772970242900EE8178 /* coffeePlate.png */,
 				54E31C73296F159500EE8178 /* whiteWoman.png */,
@@ -853,11 +862,13 @@
 				54E31C6F296F14B200EE8178 /* VT4.png in Resources */,
 				54E31C62296F14A000EE8178 /* CR12.png in Resources */,
 				54D3589E28DC7B6A00A3AB4D /* Preview Assets.xcassets in Resources */,
+				54426CF029783E47002F7CD2 /* smokyGirl.png in Resources */,
 				54E31C41296D9EDD00EE8178 /* JE5.png in Resources */,
 				545908B7291E812B00B3A658 /* finish.json in Resources */,
 				560C70FC2919E6EE00F679A3 /* Localizable.strings in Resources */,
 				54E31C6D296F14B200EE8178 /* VT3.png in Resources */,
 				54E31C72296F14B200EE8178 /* VT1.png in Resources */,
+				54426CEF29783E47002F7CD2 /* purpleFlower.png in Resources */,
 				54D1727A295B3CA7006180FA /* Webtoon.png in Resources */,
 				545908AD291E67EF00B3A658 /* arrowRight.json in Resources */,
 				545FF9E229619DBB00BECC3C /* JE4.png in Resources */,
@@ -887,6 +898,7 @@
 				54E31C6E296F14B200EE8178 /* VT5.png in Resources */,
 				54D1727C295DBFB3006180FA /* circle.png in Resources */,
 				54E31C64296F14A000EE8178 /* CR10.png in Resources */,
+				54426CEE29783E47002F7CD2 /* heartCloud.png in Resources */,
 				54E31C31296D99B700EE8178 /* RD3.png in Resources */,
 				54E31C70296F14B200EE8178 /* VT6.png in Resources */,
 				6A8FFC39291E1AA400000C1B /* cancel.json in Resources */,
