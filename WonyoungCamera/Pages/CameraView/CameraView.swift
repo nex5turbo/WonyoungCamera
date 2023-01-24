@@ -48,7 +48,7 @@ struct CameraView: View {
             adjustIconName = "drop.circle.fill"
         case .saturation:
             sliderRange = 0...100
-            sliderDefaultValue = 0
+            sliderDefaultValue = 50
             selectedAdjustType = .whiteBalance
             adjustIconName = "thermometer.sun.circle"
         case .whiteBalance:
