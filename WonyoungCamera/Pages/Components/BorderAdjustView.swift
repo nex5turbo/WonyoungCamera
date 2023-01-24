@@ -21,8 +21,8 @@ struct BorderAdjustView: View {
                             color = currentColor
                         } label: {
                             currentColor
+                                .clipShape(Circle())
                                 .frame(width: 44, height: 44)
-                                .cornerRadius(10)
                                 .overlay(
                                     Circle()
                                         .stroke(.gray, lineWidth: 1)
