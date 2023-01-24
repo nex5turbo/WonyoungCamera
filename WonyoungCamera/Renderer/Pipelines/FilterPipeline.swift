@@ -120,7 +120,7 @@ class FilterPipeline {
     // MARK: - MSAA
     // 1이 넘으면 MSAA, 4로 하기를 바람
     // https://developer.apple.com/documentation/metal/mtldevice/1433355-supportstexturesamplecount
-    var sampleCount: Int = 4
+    var sampleCount: Int = 1
     private var msaaTexture: MTLTexture?
     private func msaaTexture(width: Int, height: Int) -> MTLTexture {
         if let texture = msaaTexture, texture.width == width && texture.height == height {
