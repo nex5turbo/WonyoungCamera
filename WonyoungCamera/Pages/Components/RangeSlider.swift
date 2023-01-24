@@ -12,12 +12,13 @@ struct RangeSlider: View {
     @Binding var value: Float
     var `in`: ClosedRange<Float> = 0...1
     var defaultValue: Float = 0.5
+    var systemImageColor: Color = .white
     var onEditingChanged: (Bool) -> Void = { _ in }
     var body: some View {
         HStack {
             Image(systemName: systemName)
                 .font(.system(size: 22))
-                .foregroundColor(.white)
+                .foregroundColor(systemImageColor)
             Slider(value: $value, in: `in`) { isEditing in
                 onEditingChanged(isEditing)
             }

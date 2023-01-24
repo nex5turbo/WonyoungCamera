@@ -22,6 +22,7 @@ struct CameraView: View {
     @State var albumPresent = false
     @State var settingPresent = false
     @State var permissionPresent = false
+    @State var borderPresent = false
     
     @State var isMute = false
     @State var buttonColor: Color = .white
@@ -175,9 +176,9 @@ struct CameraView: View {
                         Spacer()
 
                         HapticButton {
-                            self.decoration.border.toggle()
+                            self.borderPresent.toggle()
                         } content: {
-                            Image(systemName: !decoration.border ? "circle" : "circle.fill")
+                            Image(systemName: "circle")
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)
@@ -247,6 +248,9 @@ struct CameraView: View {
                 }
                 .cornerRadius(30, corners: [.topLeft, .topRight])
                 .background(.black)
+            }
+            BottomSheet(sheetPresent: $borderPresent) {
+                BorderAdjustView(decoration: $decoration)
             }
         }
         .background(Color.black)

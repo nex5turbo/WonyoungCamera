@@ -313,8 +313,13 @@ extension Renderer {
         with inputTexture: MTLTexture
     ) {
         var scale = decoration.scale
-        var border = decoration.border
-        
+        var borderWidth = decoration.borderThickness
+        var borderColor = SIMD4<Float>(
+            Float(decoration.borderColor.red),
+            Float(decoration.borderColor.green),
+            Float(decoration.borderColor.blue),
+            Float(decoration.borderColor.alpha)
+        )
         var brightness = decoration.brightness
         var contrast = decoration.contrast
         var saturation = decoration.saturation
@@ -329,7 +334,8 @@ extension Renderer {
         computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 1)
         computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 2)
         computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 3)
-        computeEncoder?.setBytes(&border, length: MemoryLayout<Bool>.stride, index: 4)
+        computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 4)
+        computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 5)
         
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w

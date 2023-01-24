@@ -17,8 +17,8 @@ struct Decoration {
     var sticker: String?
     var background: String?
     
-    var border: Bool
-    var borderColor: UIColor?
+    var borderThickness: Float = 0.5 // 0 ~ 1, 0.1 default
+    var borderColor: CodableColor = .init(uiColor: .black)
     
     var brightness: Float
     var saturation: Float
@@ -40,8 +40,6 @@ struct Decoration {
         colorFilter: Lut,
         sticker: String?,
         background: String?,
-        border: Bool,
-        borderColor: UIColor?,
         brightness: Float,
         saturation: Float,
         contrast: Float,
@@ -51,8 +49,6 @@ struct Decoration {
         self.colorFilter = colorFilter
         self.sticker = sticker
         self.background = background
-        self.border = border
-        self.borderColor = borderColor
         self.brightness = brightness
         self.saturation = saturation
         self.contrast = contrast
@@ -65,8 +61,6 @@ struct Decoration {
             colorFilter: .Natural,
             sticker: nil,
             background: nil,
-            border: false,
-            borderColor: nil,
             brightness: 1.0,
             saturation: 1.0,
             contrast: 1.0,

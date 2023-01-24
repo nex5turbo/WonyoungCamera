@@ -51,9 +51,7 @@ class WhiteBalancePipeline: FilterPipeline {
         renderEncoder.setVertexBuffer(texture0CoordinatesFillBuffer, offset: 0, index: 1) // the texture
         // setup fragment buffer
         let newTemperature: Float = convertTemperature2(whiteBalanceProperties.temperature)
-        print("newTemplature: \(newTemperature)")
         let convertedTint = convertTint(whiteBalanceProperties.tint)
-        print("tint - ", convertedTint)
         renderEncoder.setFragmentTexture(sourceTexture, index: 0)
         if whiteBalanceBuffer1 == nil {
             whiteBalanceBuffer1 = makeBuffer(float: newTemperature)
