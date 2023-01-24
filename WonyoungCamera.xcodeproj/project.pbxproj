@@ -10,6 +10,7 @@
 		54168B2D28E275030000DF7F /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B2C28E275030000DF7F /* AlbumView.swift */; };
 		54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B2E28E278E50000DF7F /* ImageManager.swift */; };
 		54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B3228E33E2E0000DF7F /* Hidden.swift */; };
+		541D8A85297FD1F400ED06BE /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D8A84297FD1F400ED06BE /* RangeSlider.swift */; };
 		5435E650290EF72600F8A331 /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435E64F290EF72600F8A331 /* Exporter.swift */; };
 		5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435E651290EFAE600F8A331 /* ExportRenderer.swift */; };
 		5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5435E655290EFD9C00F8A331 /* ExportShader.metal */; };
@@ -164,6 +165,7 @@
 		54168B2C28E275030000DF7F /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		54168B2E28E278E50000DF7F /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		54168B3228E33E2E0000DF7F /* Hidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hidden.swift; sourceTree = "<group>"; };
+		541D8A84297FD1F400ED06BE /* RangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		5435E64F290EF72600F8A331 /* Exporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exporter.swift; sourceTree = "<group>"; };
 		5435E651290EFAE600F8A331 /* ExportRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportRenderer.swift; sourceTree = "<group>"; };
 		5435E655290EFD9C00F8A331 /* ExportShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ExportShader.metal; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				549051C52944B412005D3353 /* GradientView.swift */,
 				6A51A7972967ED9A00EC83E9 /* ThumbnailView.swift */,
 				54D3C354296857C0009BC254 /* HapticButton.swift */,
+				541D8A84297FD1F400ED06BE /* RangeSlider.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -966,6 +969,7 @@
 				54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */,
 				546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */,
 				54D1727E295DD85B006180FA /* FileManager+Extension.swift in Sources */,
+				541D8A85297FD1F400ED06BE /* RangeSlider.swift in Sources */,
 				54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */,
 				54426CDE2976C5BB002F7CD2 /* Exposure.metal in Sources */,
 				54E31C8029703A2900EE8178 /* Watermark.metal in Sources */,

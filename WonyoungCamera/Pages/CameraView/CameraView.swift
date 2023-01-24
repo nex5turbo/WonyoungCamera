@@ -9,9 +9,6 @@ import SwiftUI
 import AVFoundation
 import Photos
 
-enum AdjustType {
-    case brightness, contrast, saturation
-}
 
 struct CameraView: View {
     @ObservedObject var metalCamera: MetalCamera
@@ -32,18 +29,31 @@ struct CameraView: View {
     @State var sliderValue: Float = 50
     @State var isSliderEditing = false
     @State var adjustIconName: String = "sun.max.circle"
+    @State var sliderRange: ClosedRange<Float> = 0...100
+    @State var sliderDefaultValue: Float = 50
 
     let bottomIconSize: CGFloat = 25
 
     func switchSlider() {
         switch selectedAdjustType {
         case .brightness:
+            sliderRange = 0...100
+            sliderDefaultValue = 50
             selectedAdjustType = .contrast
             adjustIconName = "circle.righthalf.filled"
         case .contrast:
+            sliderRange = 0...100
+            sliderDefaultValue = 50
             selectedAdjustType = .saturation
             adjustIconName = "drop.circle.fill"
         case .saturation:
+            sliderRange = 0...100
+            sliderDefaultValue = 0
+            selectedAdjustType = .whiteBalance
+            adjustIconName = "thermometer.sun.circle"
+        case .whiteBalance:
+            sliderRange = 0...100
+            sliderDefaultValue = 50
             selectedAdjustType = .brightness
             adjustIconName = "sun.max.circle"
         }
@@ -119,7 +129,7 @@ struct CameraView: View {
                                     Image(systemName: adjustIconName)
                                         .foregroundColor(.white)
                                         .font(.system(size: 40))
-                                    Text("\(Int(sliderValue))%")
+                                    Text("\(Int(sliderValue))\(selectedAdjustType == .whiteBalance ? "" : "%")")
                                         .foregroundColor(.white)
                                         .font(.system(size: 30))
                                 }
@@ -133,14 +143,16 @@ struct CameraView: View {
                 }
                 VStack {
                     Color.clear.frame(height: 10)
-                    Slider(value: $sliderValue, in: 0...100, step: 1) { editing in
+                    RangeSlider(
+                        systemName: adjustIconName,
+                        value: $sliderValue,
+                        in: sliderRange,
+                        defaultValue: sliderDefaultValue
+                    ) { editing in
                         self.isSliderEditing = editing
                     }
                     .accentColor(.white)
                     .onChange(of: sliderValue) { newValue in
-                        if newValue == 50 {
-                            HapticManager.instance.impact(style: .soft)
-                        }
                         decoration.setAdjustment(sliderValue, to: selectedAdjustType)
                     }
                     .onChange(of: selectedAdjustType) { newValue in

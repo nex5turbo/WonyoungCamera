@@ -8,6 +8,10 @@
 import UIKit
 import Foundation
 
+enum AdjustType {
+    case brightness, contrast, saturation, whiteBalance
+}
+
 struct Decoration {
     var colorFilter: Lut
     var sticker: String?
@@ -19,6 +23,7 @@ struct Decoration {
     var brightness: Float
     var saturation: Float
     var contrast: Float
+    var whiteBalance: Float
 /**
  var sharpness: Float
  var highlights: Float
@@ -40,7 +45,8 @@ struct Decoration {
         brightness: Float,
         saturation: Float,
         contrast: Float,
-        scale: Float
+        scale: Float,
+        whiteBalance: Float
     ) {
         self.colorFilter = colorFilter
         self.sticker = sticker
@@ -51,6 +57,7 @@ struct Decoration {
         self.saturation = saturation
         self.contrast = contrast
         self.scale = scale
+        self.whiteBalance = whiteBalance
     }
 
     static func empty() -> Self {
@@ -63,7 +70,8 @@ struct Decoration {
             brightness: 1.0,
             saturation: 1.0,
             contrast: 1.0,
-            scale: 1.0
+            scale: 1.0,
+            whiteBalance: 0.5
         )
     }
 
@@ -75,6 +83,8 @@ struct Decoration {
             contrast = 0.5 + (value / 100)
         case .saturation:
             saturation = 0.5 + (value / 100)
+        case .whiteBalance:
+            whiteBalance = (value / 100)
         }
     }
     
@@ -86,6 +96,8 @@ struct Decoration {
             return (contrast - 0.5) * 100
         case .saturation:
             return (saturation - 0.5) * 100
+        case .whiteBalance:
+            return (whiteBalance) * 100
         }
     }
 }

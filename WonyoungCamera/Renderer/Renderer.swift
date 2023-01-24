@@ -359,6 +359,7 @@ extension Renderer {
             from: inputTexture,
             lutTexture: filterTexture
         )
+        WhiteBalancePipeline().render(whiteBalanceProperties: WhiteBalanceProperties(tint: 0, temperature: decoration.whiteBalance), from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
     }
     
     func pixelBufferToTexture(_ pixelBuffer: CVPixelBuffer?) -> MTLTexture? {
