@@ -15,5 +15,10 @@ fragment half4 contrastFragment(SingleInputVertexIO fragmentInput [[stage_in]],
 {
     constexpr sampler quadSampler;
     half4 color = inputTexture.sample(quadSampler, fragmentInput.textureCoordinate);
-    return half4(((color.rgb - half3(0.5)) * contrast + half3(0.5)), color.a);
+    half4 outputColor;
+    outputColor.rgb = (color.rgb - 0.5) * contrast + 0.5;
+    outputColor.a = color.a;
+    return outputColor;
+//    from RSContrast
+//    return half4(((color.rgb - half3(0.5)) * contrast + half3(0.5)), color.a);
 }

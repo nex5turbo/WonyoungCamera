@@ -148,12 +148,6 @@ fragment half4 normalBlendFragment(TwoInputVertexIO fragmentInput [[stage_in]],
     return outputColor;
 }
 
-
-
-
-
-
-
 struct VertexIn {
     packed_float3 position;
     packed_float4 color;
@@ -178,4 +172,25 @@ fragment float4 basic_fragment(VertexOut interpolated [[stage_in]])
 {
     return float4(1.0, 0.0, 1.0, 1.0);
 //  return float4(interpolated.color);
+}
+
+half3 rgb2hsv(half3 rgb) {
+    half3 hsv;
+    half4 K = half4(0.0, -1.0/3.0, 2.0/3.0, -1.0);
+    half4 p = mix(half4(rgb.bg, K.wz), half4(rgb.gb, K.xy), step(rgb.b, rgb.g));
+    half4 q = mix(half4(p.xyw, rgb.r), half4(rgb.r, p.yzx), step(p.x, rgb.r));
+    float d = q.x - min(q.w, q.y);
+    float e = 1.0e-10;
+    hsv.x = abs(q.z + (q.w - q.y) / (6.0 * d + e));
+    hsv.y = d / (q.x + e);
+    hsv.z = q.x;
+    return hsv;
+}
+
+half3 hsv2rgb(half3 hsv) {
+    half3 rgb;
+    half4 K = half4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
+    half3 p = abs(fract(hsv.xxx + K.xyz) * 6.0 - K.www);
+    rgb = hsv.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), hsv.y);
+    return rgb;
 }

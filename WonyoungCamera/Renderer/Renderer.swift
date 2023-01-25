@@ -310,9 +310,6 @@ extension Renderer {
             Float(decoration.borderColor.blue),
             Float(decoration.borderColor.alpha)
         )
-        var brightness = decoration.brightness
-        var contrast = decoration.contrast
-        var saturation = decoration.saturation
         // compute
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
@@ -321,11 +318,8 @@ extension Renderer {
         computeEncoder?.setTexture(circleTexture, index: 2)
         
         computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
-        computeEncoder?.setBytes(&brightness, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&contrast, length: MemoryLayout<Float>.stride, index: 2)
-        computeEncoder?.setBytes(&saturation, length: MemoryLayout<Float>.stride, index: 3)
-        computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 4)
-        computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 5)
+        computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 1)
+        computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 2)
         
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
@@ -354,31 +348,75 @@ extension Renderer {
             from: inputTexture,
             lutTexture: filterTexture
         )
-        whiteBalancePipeline.render(whiteBalanceProperties: WhiteBalanceProperties(tint: 0, temperature: decoration.whiteBalance), from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
-    }
-    
-    func applyColorFilter(
-        to outputTexture: MTLTexture,
-        with inputTexture: MTLTexture,
-        decoration: Decoration
-    ) {
-        guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
-            return
-        }
-        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
-            return
-        }
-        applyLut(
-            on: commandBuffer,
+        ContrastPipeline().render(
+            contrast: decoration.contrast,
+            from: outputTexture,
             to: outputTexture,
-            from: inputTexture,
-            lutTexture: filterTexture
+            commandBuffer: commandBuffer
         )
-        whiteBalancePipeline.render(whiteBalanceProperties: WhiteBalanceProperties(tint: 0, temperature: decoration.whiteBalance), from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
+        BrightnessPipeline().render(
+            brightness: decoration.brightness,
+            from: outputTexture,
+            to: outputTexture,
+            commandBuffer: commandBuffer
+        )
+        SaturationPipeline().render(
+            saturation: decoration.saturation,
+            from: outputTexture,
+            to: outputTexture,
+            commandBuffer: commandBuffer
+        )
+        whiteBalancePipeline.render(
+            whiteBalanceProperties: WhiteBalanceProperties(
+                tint: 0,
+                temperature: decoration.whiteBalance
+            ),
+            from: outputTexture,
+            to: outputTexture,
+            commandBuffer: commandBuffer
+        )
+    }
+}
+
+extension Renderer {
+    func roundingImage(
+        with texture: MTLTexture,
+        decoration: Decoration
+    ) -> MTLTexture? {
+        let targetLength = min(texture.width, texture.height)
+        let targetSize = CGSize(width: targetLength, height: targetLength)
+        guard let outputTexture = self.makeEmptyTexture(size: targetSize) else { return nil }
+        guard let emptyTexture = self.makeEmptyTexture(size: CGSize(width: texture.width, height: texture.height)) else { return nil }
+        guard let commandBuffer = self.commandQueue.makeCommandBuffer() else { return nil }
+        applyColorFilter(decoration: decoration, on: commandBuffer, to: emptyTexture, with: texture)
+        roundingImage(decoration: decoration, on: commandBuffer, to: outputTexture, with: emptyTexture)
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
+        return outputTexture
     }
     
+    func roundingImage(
+        with pixelBuffer: CVPixelBuffer,
+        decoration: Decoration
+    ) -> MTLTexture? {
+        guard let texture = pixelBufferToTexture(pixelBuffer) else {
+            return nil
+        }
+        return roundingImage(with: texture, decoration: decoration)
+    }
+    
+    func roundingImage(
+        with sampleBuffer: CMSampleBuffer,
+        decoration: Decoration
+    ) -> MTLTexture? {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return nil
+        }
+        return roundingImage(with: pixelBuffer, decoration: decoration)
+    }
+}
+
+extension Renderer {
     func pixelBufferToTexture(_ pixelBuffer: CVPixelBuffer?) -> MTLTexture? {
         guard let pixelBuffer else { return nil }
         CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
@@ -422,44 +460,6 @@ extension Renderer {
 
         defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0))) }
         return texture
-    }
-}
-
-extension Renderer {
-    func roundingImage(
-        with texture: MTLTexture,
-        decoration: Decoration
-    ) -> MTLTexture? {
-        let targetLength = min(texture.width, texture.height)
-        let targetSize = CGSize(width: targetLength, height: targetLength)
-        guard let outputTexture = self.makeEmptyTexture(size: targetSize) else { return nil }
-        guard let emptyTexture = self.makeEmptyTexture(size: CGSize(width: texture.width, height: texture.height)) else { return nil }
-        guard let commandBuffer = self.commandQueue.makeCommandBuffer() else { return nil }
-        applyColorFilter(decoration: decoration, on: commandBuffer, to: emptyTexture, with: texture)
-        roundingImage(decoration: decoration, on: commandBuffer, to: outputTexture, with: emptyTexture)
-        commandBuffer.commit()
-        commandBuffer.waitUntilCompleted()
-        return outputTexture
-    }
-    
-    func roundingImage(
-        with pixelBuffer: CVPixelBuffer,
-        decoration: Decoration
-    ) -> MTLTexture? {
-        guard let texture = pixelBufferToTexture(pixelBuffer) else {
-            return nil
-        }
-        return roundingImage(with: texture, decoration: decoration)
-    }
-    
-    func roundingImage(
-        with sampleBuffer: CMSampleBuffer,
-        decoration: Decoration
-    ) -> MTLTexture? {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            return nil
-        }
-        return roundingImage(with: pixelBuffer, decoration: decoration)
     }
 }
 

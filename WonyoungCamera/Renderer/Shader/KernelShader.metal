@@ -18,11 +18,8 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
                           texture2d<half> circleTexture [[ texture(2) ]],
 
                           constant float &scale [[ buffer(0) ]],
-                          constant float &brightness [[ buffer(1) ]],
-                          constant float &contrast [[ buffer(2) ]],
-                          constant float &saturation [[ buffer(3) ]],
-                          constant float &borderWidth [[ buffer(4) ]],
-                          constant float4 &borderColor [[ buffer(5) ]],
+                          constant float &borderWidth [[ buffer(1) ]],
+                          constant float4 &borderColor [[ buffer(2) ]],
                           uint2 gid [[ thread_position_in_grid ]]) {
     float textureWidth = readTexture.get_width();
     float textureHeight = readTexture.get_height();
@@ -57,10 +54,6 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
         return;
     }
     
-    color = applyBrightness(color, brightness);
-    color = applyContrast(color, contrast);
-    color = applySaturation(color, saturation);
-    
     writeTexture.write(color, gid);
 }
 
@@ -92,52 +85,6 @@ half4 applyFilter(half4 textureColor, texture2d<half> filterTexture) {
 
     half4 newColor = mix(newColor1, newColor2, fract(blueColor));
     return half4(mix(base, half4(newColor.rgb, base.w), half(1)));
-}
-
-//half4 applyBrightness(half4 color, float brightness) {
-//    return half4(color.rgb + brightness, color.a);
-//}
-
-half3 rgb2hsv(half3 rgb) {
-    half3 hsv;
-    half4 K = half4(0.0, -1.0/3.0, 2.0/3.0, -1.0);
-    half4 p = mix(half4(rgb.bg, K.wz), half4(rgb.gb, K.xy), step(rgb.b, rgb.g));
-    half4 q = mix(half4(p.xyw, rgb.r), half4(rgb.r, p.yzx), step(p.x, rgb.r));
-    float d = q.x - min(q.w, q.y);
-    float e = 1.0e-10;
-    hsv.x = abs(q.z + (q.w - q.y) / (6.0 * d + e));
-    hsv.y = d / (q.x + e);
-    hsv.z = q.x;
-    return hsv;
-}
-half3 hsv2rgb(half3 hsv) {
-    half3 rgb;
-    half4 K = half4(1.0, 2.0/3.0, 1.0/3.0, 3.0);
-    half3 p = abs(fract(hsv.xxx + K.xyz) * 6.0 - K.www);
-    rgb = hsv.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), hsv.y);
-    return rgb;
-}
-
-half4 applyBrightness(half4 color, float brightness) {
-    half3 hsv = rgb2hsv(color.rgb);
-    hsv.z *= brightness;
-    return half4(hsv2rgb(hsv), color.a);
-}
-
-half4 applyContrast(half4 inputColor, half contrast) {
-    half4 outputColor;
-    outputColor.rgb = (inputColor.rgb - 0.5) * contrast + 0.5;
-    outputColor.a = inputColor.a;
-    return outputColor;
-}
-
-half4 applySaturation(half4 inputColor, half saturation) {
-    half3 hsv = rgb2hsv(inputColor.rgb);
-    hsv.y = hsv.y * saturation;
-    half3 rgb = hsv2rgb(hsv);
-    half4 outputColor = half4(rgb, 1);
-    return outputColor;
-    
 }
 
 kernel void applyColorFilter(texture2d<half, access::write> writeTexture [[ texture(0) ]],

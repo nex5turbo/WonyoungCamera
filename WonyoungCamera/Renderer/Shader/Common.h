@@ -14,6 +14,8 @@ half4 blendMix(half4 overlay, half4 base);
 half4 blendSourceOver(half4 overlay, half4 base);
 half4 blendAdd(half4 overlay, half4 base);
 half4 blendNormal(half4 color1, half4 color2);
+half3 rgb2hsv(half3 rgb);
+half3 hsv2rgb(half3 hsv);
 
 // Luminance Constants
 constant half3 luminanceWeighting = half3(0.2125, 0.7154, 0.0721);  // Values from "Graphics Shaders: Theory and Practice" by Bailey and Cunningham
