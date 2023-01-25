@@ -433,9 +433,10 @@ extension Renderer {
         let targetLength = min(texture.width, texture.height)
         let targetSize = CGSize(width: targetLength, height: targetLength)
         guard let outputTexture = self.makeEmptyTexture(size: targetSize) else { return nil }
+        guard let emptyTexture = self.makeEmptyTexture(size: CGSize(width: texture.width, height: texture.height)) else { return nil }
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else { return nil }
-        applyColorFilter(decoration: decoration, on: commandBuffer, to: outputTexture, with: texture)
-        roundingImage(decoration: decoration, on: commandBuffer, to: outputTexture, with: outputTexture)
+        applyColorFilter(decoration: decoration, on: commandBuffer, to: emptyTexture, with: texture)
+        roundingImage(decoration: decoration, on: commandBuffer, to: outputTexture, with: emptyTexture)
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
         return outputTexture
