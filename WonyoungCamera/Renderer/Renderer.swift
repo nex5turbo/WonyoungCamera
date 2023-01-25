@@ -9,6 +9,7 @@ import Foundation
 import Metal
 import UIKit
 import MetalKit
+import CoreMedia
 
 class Renderer {
     private var device: MTLDevice
@@ -27,6 +28,7 @@ class Renderer {
     var commandQueue: MTLCommandQueue
     
     let watermarkPipeline = WatermarkPipeline()
+    let whiteBalancePipeline = WhiteBalancePipeline()
     
     init() {
         self.device = SharedMetalDevice.instance.device
@@ -293,25 +295,13 @@ extension Renderer {
 //        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
     }
 
-    func applyAdjustment(
-        decoration: Decoration,
-        on commandBuffer: MTLCommandBuffer,
-        to outputTexture: MTLTexture
-    ) {
-//        var scale = decoration.scale
-//        var border = decoration.border
-//
-//        var brightness = decoration.brightness
-//        var contrast = decoration.contrast
-//        var saturation = decoration.saturation
-    }
-    
     func roundingImage(
         decoration: Decoration,
         on commandBuffer: MTLCommandBuffer,
         to outputTexture: MTLTexture,
         with inputTexture: MTLTexture
     ) {
+        // MARK: - This should be changed with fragment shader
         var scale = decoration.scale
         var borderWidth = decoration.borderThickness
         var borderColor = SIMD4<Float>(
@@ -358,14 +348,35 @@ extension Renderer {
         guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
             return
         }
-//        decoration.colorFilter.apply(to: cameraTexture, with: self)
         applyLut(
             on: commandBuffer,
             to: outputTexture,
             from: inputTexture,
             lutTexture: filterTexture
         )
-        WhiteBalancePipeline().render(whiteBalanceProperties: WhiteBalanceProperties(tint: 0, temperature: decoration.whiteBalance), from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
+        whiteBalancePipeline.render(whiteBalanceProperties: WhiteBalanceProperties(tint: 0, temperature: decoration.whiteBalance), from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
+    }
+    
+    func applyColorFilter(
+        to outputTexture: MTLTexture,
+        with inputTexture: MTLTexture,
+        decoration: Decoration
+    ) {
+        guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
+            return
+        }
+        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
+            return
+        }
+        applyLut(
+            on: commandBuffer,
+            to: outputTexture,
+            from: inputTexture,
+            lutTexture: filterTexture
+        )
+        whiteBalancePipeline.render(whiteBalanceProperties: WhiteBalanceProperties(tint: 0, temperature: decoration.whiteBalance), from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
     }
     
     func pixelBufferToTexture(_ pixelBuffer: CVPixelBuffer?) -> MTLTexture? {
@@ -414,50 +425,44 @@ extension Renderer {
     }
 }
 
+extension Renderer {
+    func roundingImage(
+        with texture: MTLTexture,
+        decoration: Decoration
+    ) -> MTLTexture? {
+        let targetLength = min(texture.width, texture.height)
+        let targetSize = CGSize(width: targetLength, height: targetLength)
+        guard let outputTexture = self.makeEmptyTexture(size: targetSize) else { return nil }
+        guard let commandBuffer = self.commandQueue.makeCommandBuffer() else { return nil }
+        applyColorFilter(decoration: decoration, on: commandBuffer, to: outputTexture, with: texture)
+        roundingImage(decoration: decoration, on: commandBuffer, to: outputTexture, with: outputTexture)
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        return outputTexture
+    }
+    
+    func roundingImage(
+        with pixelBuffer: CVPixelBuffer,
+        decoration: Decoration
+    ) -> MTLTexture? {
+        guard let texture = pixelBufferToTexture(pixelBuffer) else {
+            return nil
+        }
+        return roundingImage(with: texture, decoration: decoration)
+    }
+    
+    func roundingImage(
+        with sampleBuffer: CMSampleBuffer,
+        decoration: Decoration
+    ) -> MTLTexture? {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return nil
+        }
+        return roundingImage(with: pixelBuffer, decoration: decoration)
+    }
+}
+
 struct Vertex {
     var position: SIMD2<Float>
     var textureCoordinate: SIMD2<Float>
-}
-
-extension MTLDevice {
-    func loadImage(path: String) -> MTLTexture? {
-        let textureLoader = MTKTextureLoader(device: self)
-        if let url = URL(string: "file://\(path)") {
-            let returnTexture = try? textureLoader.newTexture(URL: url, options: [.SRGB: false])
-            return returnTexture
-        }
-        return nil
-    }
-    func loadFilter(filterName: String, ext: String = "png") -> MTLTexture? {
-        let textureLoader = MTKTextureLoader(device: self)
-        if let url = Bundle.main.url(forResource: filterName, withExtension: ext) {
-            let returnTexture = try? textureLoader.newTexture(URL: url, options: [.SRGB: false])
-            return returnTexture
-        }
-        return nil
-    }
-    func loadComputePipelineState(_ functionName: String = "roundingImage") -> MTLComputePipelineState? {
-        let bundle = Bundle.main
-        guard let url = bundle.url(forResource: "default", withExtension: "metallib") else { return nil }
-        guard let library = try? self.makeLibrary(URL: url) else {
-            return nil
-        }
-        guard let function = library.makeFunction(name: functionName) else { return nil }
-        
-        guard let returnValue = try? self.makeComputePipelineState(function: function) else {
-            return nil
-        }
-        
-        return returnValue
-    }
-    func makeTexture(image: UIImage?) -> MTLTexture? {
-        guard let image = image else {
-            print("RSRenderer makeTexture(_) Error: The image is nil!")
-            return nil
-        }
-
-        let textureLoader = MTKTextureLoader(device: self)
-        let texture = try! textureLoader.newTexture(cgImage: image.cgImage!)
-        return texture
-    }
 }

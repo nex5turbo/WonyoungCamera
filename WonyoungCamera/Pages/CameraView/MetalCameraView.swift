@@ -32,7 +32,7 @@ class MetalView: UIView {
     private var renderer: Renderer
     private var device: MTLDevice
     private var currentTexture: MTLTexture?
-    private var currentPixelBuffer: CVPixelBuffer?
+    private var currentSampleBuffer: CMSampleBuffer?
 
     public var metalLayer: CAMetalLayer {
         return self.layer as! CAMetalLayer
@@ -109,46 +109,56 @@ class MetalView: UIView {
 
     @objc func renderToMetalLayer() {
         guard let currentDrawable = metalLayer.nextDrawable() else { return }
+        guard let currentSampleBuffer else { return }
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(currentSampleBuffer) else { return }
         renderer.render(
             to: currentDrawable,
-            with: currentPixelBuffer,
+            with: pixelBuffer,
             decoration: parent.decoration
         )
         if self.parent.takePicture {
             self.parent.takePicture = false
-            saveCurrentTexture()
+            saveCurrentTexture(currentSampleBuffer)
         }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func saveCurrentTexture() {
+    func saveCurrentTexture(_ sampleBuffer: CMSampleBuffer) {
         DispatchQueue.global().async {
-            guard let texture = self.renderer.targetTexture else {
-                return
-            }
+            guard let texture = self.renderer.roundingImage(with: sampleBuffer, decoration: self.parent.decoration) else { return }
             guard let cgImage = convertToCGImage(texture: texture) else {
                 fatalError("NO cgImage from texture")
             }
             let uiImage = UIImage(cgImage: cgImage)
             ImageManager.instance.saveImage(image: uiImage)
             if UserSettings.instance.saveOriginal {
-                guard let readTexture = self.renderer.cameraTexture else { return }
-                if !UserSettings.instance.removeWatermark {
-                    guard let texture = self.renderer.makeEmptyTexture(size: CGSize(width: readTexture.width, height: readTexture.height)) else { return }
-                    guard let commandBuffer = self.renderer.commandQueue.makeCommandBuffer() else { return }
-                    self.renderer.watermarkPipeline.render(from: readTexture, to: texture, commandBuffer: commandBuffer)
-                    commandBuffer.commit()
-                    commandBuffer.waitUntilCompleted()
-                    guard let cgImage = convertToCGImage(texture: texture) else { return }
-                    let uiImage = UIImage(cgImage: cgImage)
-                    ImageManager.instance.saveImageToAlbum(image: uiImage)
-                } else {
-                    guard let cgImage = convertToCGImage(texture: readTexture) else { return }
-                    let uiImage = UIImage(cgImage: cgImage)
-                    ImageManager.instance.saveImageToAlbum(image: uiImage)
+                guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+                    return
                 }
+                guard let originalTexture = self.renderer.pixelBufferToTexture(pixelBuffer) else {
+                    return
+                }
+                guard let outputTexture = self.renderer.makeEmptyTexture(size: CGSize(width: originalTexture.width, height: originalTexture.height)) else { return }
+                guard let commandBuffer = self.renderer.commandQueue.makeCommandBuffer() else {
+                    return
+                }
+                self.renderer.applyColorFilter(
+                    decoration: self.parent.decoration,
+                    on: commandBuffer,
+                    to: outputTexture,
+                    with: originalTexture
+                )
+                if !UserSettings.instance.removeWatermark {
+                    self.renderer.watermarkPipeline.render(from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
+
+                }
+                commandBuffer.commit()
+                commandBuffer.waitUntilCompleted()
+                guard let cgImage = convertToCGImage(texture: outputTexture) else { return }
+                let uiImage = UIImage(cgImage: cgImage)
+                ImageManager.instance.saveImageToAlbum(image: uiImage)
             }
         }
     }
@@ -158,8 +168,7 @@ extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         connection.isVideoMirrored = self.parent.metalCamera.cameraPosition == .front
         connection.videoOrientation = .portrait
-        let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
-        self.currentPixelBuffer = pixelBuffer
+        self.currentSampleBuffer = sampleBuffer
         DispatchQueue.main.async {
             self.setNeedsDisplay()
         }

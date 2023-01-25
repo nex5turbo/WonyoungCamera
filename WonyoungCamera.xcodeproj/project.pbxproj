@@ -14,6 +14,7 @@
 		541D8A87297FE10200ED06BE /* BorderAdjustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D8A86297FE10200ED06BE /* BorderAdjustView.swift */; };
 		541D8A89297FE7E900ED06BE /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D8A88297FE7E900ED06BE /* BottomSheet.swift */; };
 		541D8A8B297FF0FA00ED06BE /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D8A8A297FF0FA00ED06BE /* CodableColor.swift */; };
+		541D8A8F29815D7800ED06BE /* MTLDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D8A8E29815D7800ED06BE /* MTLDevice+Extension.swift */; };
 		5435E650290EF72600F8A331 /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435E64F290EF72600F8A331 /* Exporter.swift */; };
 		5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5435E651290EFAE600F8A331 /* ExportRenderer.swift */; };
 		5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5435E655290EFD9C00F8A331 /* ExportShader.metal */; };
@@ -172,6 +173,7 @@
 		541D8A86297FE10200ED06BE /* BorderAdjustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderAdjustView.swift; sourceTree = "<group>"; };
 		541D8A88297FE7E900ED06BE /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		541D8A8A297FF0FA00ED06BE /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
+		541D8A8E29815D7800ED06BE /* MTLDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLDevice+Extension.swift"; sourceTree = "<group>"; };
 		5435E64F290EF72600F8A331 /* Exporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exporter.swift; sourceTree = "<group>"; };
 		5435E651290EFAE600F8A331 /* ExportRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportRenderer.swift; sourceTree = "<group>"; };
 		5435E655290EFD9C00F8A331 /* ExportShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ExportShader.metal; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				54168B3228E33E2E0000DF7F /* Hidden.swift */,
 				54D1727D295DD85B006180FA /* FileManager+Extension.swift */,
 				543B35C829698E7500ED86C8 /* CGSize+Operator.swift */,
+				541D8A8E29815D7800ED06BE /* MTLDevice+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -983,6 +986,7 @@
 				54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */,
 				54426CDE2976C5BB002F7CD2 /* Exposure.metal in Sources */,
 				54E31C8029703A2900EE8178 /* Watermark.metal in Sources */,
+				541D8A8F29815D7800ED06BE /* MTLDevice+Extension.swift in Sources */,
 				54426CEA2976E0F3002F7CD2 /* EditorView.swift in Sources */,
 				54D358E028DC7BD900A3AB4D /* KernelShader.metal in Sources */,
 				54168B2D28E275030000DF7F /* AlbumView.swift in Sources */,
