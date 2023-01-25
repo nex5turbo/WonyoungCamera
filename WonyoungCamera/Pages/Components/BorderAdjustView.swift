@@ -11,9 +11,10 @@ struct BorderAdjustView: View {
     @Binding var decoration: Decoration
     @State var color: Color = .black
     var body: some View {
-        VStack {
-            RangeSlider(systemName: "circle", value: $decoration.borderThickness, systemImageColor: color)
-                .accentColor(color)
+        VStack() {
+            RangeSlider(systemName: "circle", value: $decoration.borderThickness, systemImageColor: .gray)
+                .accentColor(.gray)
+                .padding()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(Color.defaultColors, id: \.self) { currentColor in
@@ -31,13 +32,14 @@ struct BorderAdjustView: View {
                         }
                     }
                 }
+                .padding()
             }
             .onChange(of: color) { newValue in
                 decoration.borderColor = CodableColor(uiColor: UIColor(newValue))
             }
             Color.clear.frame(height: 30)
         }
-        .padding()
+        .padding(.bottom)
     }
 }
 
