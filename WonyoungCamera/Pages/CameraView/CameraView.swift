@@ -26,38 +26,12 @@ struct CameraView: View {
     
     @State var isMute = false
     @State var buttonColor: Color = .white
-    @State var selectedAdjustType: AdjustType = .brightness
-    @State var sliderValue: Float = 50
     @State var isSliderEditing = false
-    @State var adjustIconName: String = "sun.max.circle"
-    @State var sliderRange: ClosedRange<Float> = 0...100
-    @State var sliderDefaultValue: Float = 50
 
     let bottomIconSize: CGFloat = 25
 
     func switchSlider() {
-        switch selectedAdjustType {
-        case .brightness:
-            sliderRange = 0...100
-            sliderDefaultValue = 50
-            selectedAdjustType = .contrast
-            adjustIconName = "circle.righthalf.filled"
-        case .contrast:
-            sliderRange = 0...100
-            sliderDefaultValue = 50
-            selectedAdjustType = .saturation
-            adjustIconName = "drop.circle.fill"
-        case .saturation:
-            sliderRange = 0...100
-            sliderDefaultValue = 50
-            selectedAdjustType = .whiteBalance
-            adjustIconName = "thermometer.sun.circle"
-        case .whiteBalance:
-            sliderRange = 0...100
-            sliderDefaultValue = 50
-            selectedAdjustType = .brightness
-            adjustIconName = "sun.max.circle"
-        }
+        self.decoration.switchAdjustment()
     }
     var body: some View {
         ZStack {
@@ -127,10 +101,10 @@ struct CameraView: View {
                         if isSliderEditing {
                             ZStack {
                                 VStack {
-                                    Image(systemName: adjustIconName)
+                                    Image(systemName: decoration.selectedAdjustment.type.getIconName())
                                         .foregroundColor(.white)
                                         .font(.system(size: 40))
-                                    Text("\(Int(sliderValue))\(selectedAdjustType == .whiteBalance ? "" : "%")")
+                                    Text("\(decoration.selectedAdjustment.presentValue)")
                                         .foregroundColor(.white)
                                         .font(.system(size: 30))
                                 }
@@ -145,20 +119,11 @@ struct CameraView: View {
                 VStack {
                     Color.clear.frame(height: 10)
                     RangeSlider(
-                        systemName: adjustIconName,
-                        value: $sliderValue,
-                        in: sliderRange,
-                        defaultValue: sliderDefaultValue
+                        decoration: $decoration
                     ) { editing in
                         self.isSliderEditing = editing
                     }
                     .accentColor(.white)
-                    .onChange(of: sliderValue) { newValue in
-                        decoration.setAdjustment(sliderValue, to: selectedAdjustType)
-                    }
-                    .onChange(of: selectedAdjustType) { newValue in
-                        sliderValue = decoration.getAdjustment(of: selectedAdjustType)
-                    }
                     .padding(.horizontal)
                     Color.clear.frame(height: 10)
                     
@@ -231,7 +196,7 @@ struct CameraView: View {
                         HapticButton {
                             switchSlider()
                         } content: {
-                            Image(systemName: adjustIconName)
+                            Image(systemName: decoration.selectedAdjustment.type.getIconName())
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)

@@ -8,8 +8,86 @@
 import UIKit
 import Foundation
 
+protocol Adjustment {
+    var range: ClosedRange<Float> { get }
+    var defaultValue: Float { get }
+    var currentValue: Float { get set }
+    var presentFactor: Float { get }
+    var presentValue: String { get }
+    var type: AdjustType { get }
+    mutating func reset()
+}
+
+extension Adjustment {
+    mutating func reset() {
+        self.currentValue = defaultValue
+    }
+    var presentValue: String {
+        return String(format: "%.2f", currentValue * presentFactor)
+    }
+}
+
+//struct Brightness: Adjustment {
+//    var range: ClosedRange<Float> = 0...2
+//    var defaultValue: Float = 1
+//    var currentValue: Float = 1
+//    var presentFactor: Float = 50
+//    var type: AdjustType = .brightness
+//}
+
+struct Contrast: Adjustment {
+    var range: ClosedRange<Float> = 0...2.5
+    var defaultValue: Float = 1.25
+    var type: AdjustType = .contrast
+    var presentFactor: Float = 40
+    var currentValue: Float = 1.25
+}
+
+struct Saturation: Adjustment {
+    var range: ClosedRange<Float> = 0...2.5
+    var defaultValue: Float = 1.25
+    var type: AdjustType = .saturation
+    var presentFactor: Float = 40
+    var currentValue: Float = 1.25
+}
+
+struct WhiteBalance: Adjustment {
+    var range: ClosedRange<Float> = 0...1.2
+    var defaultValue: Float = 0.6
+    var type: AdjustType = .whiteBalance
+    var presentFactor: Float = 100 / 1.2
+    var currentValue: Float = 0.6
+}
+
+struct Exposure: Adjustment {
+    var range: ClosedRange<Float> = -1...1
+    var defaultValue: Float = 0
+    var type: AdjustType = .exposure
+    var presentFactor: Float = 1
+    var currentValue: Float = 0
+}
+
 enum AdjustType {
-    case brightness, contrast, saturation, whiteBalance
+    case exposure
+//    case brightness
+    case contrast
+    case saturation
+    case whiteBalance
+    func getIconName() -> String {
+        switch self {
+        case .exposure:
+            return "sun.max.circle"
+//            return "circle.righthalf.filled"
+//        case .brightness:
+//            return "sun.max.circle"
+        case .contrast:
+            return "circle.righthalf.filled"
+        case .saturation:
+            return "drop.circle.fill"
+        case .whiteBalance:
+            return "thermometer.sun.circle"
+        }
+    }
 }
 
 struct Decoration {
@@ -17,19 +95,19 @@ struct Decoration {
     var sticker: String?
     var background: String?
     
-    var borderThickness: Float = 0.5 // 0 ~ 1, 0.1 default
+    var borderThickness: Float = 0.5 // 0 ~ 1, 0.5 default
     var borderColor: CodableColor = .init(uiColor: .black)
     
-    var brightness: Float
-    var saturation: Float
-    var contrast: Float
-    var whiteBalance: Float
+//    var brightness: Brightness = Brightness()
+    var saturation: Saturation = Saturation()
+    var contrast: Contrast = Contrast()
+    var whiteBalance: WhiteBalance = WhiteBalance()
+    var exposure: Exposure = Exposure() // default 0, -1 ~ 1
+    var selectedAdjustment: Adjustment
 /**
  var sharpness: Float
  var highlights: Float
  var shadows: Float
- var exposure: Float
-  whiteBalance
  var vibrance: Float
   vignette -> Array
  var grain: Float
@@ -40,20 +118,13 @@ struct Decoration {
         colorFilter: Lut,
         sticker: String?,
         background: String?,
-        brightness: Float,
-        saturation: Float,
-        contrast: Float,
-        scale: Float,
-        whiteBalance: Float
+        scale: Float
     ) {
         self.colorFilter = colorFilter
         self.sticker = sticker
         self.background = background
-        self.brightness = brightness
-        self.saturation = saturation
-        self.contrast = contrast
         self.scale = scale
-        self.whiteBalance = whiteBalance
+        self.selectedAdjustment = exposure
     }
 
     static func empty() -> Self {
@@ -61,37 +132,21 @@ struct Decoration {
             colorFilter: .Natural,
             sticker: nil,
             background: nil,
-            brightness: 1.0,
-            saturation: 1.0,
-            contrast: 1.0,
-            scale: 1.0,
-            whiteBalance: 0.5
+            scale: 1.0
         )
     }
-
-    mutating public func setAdjustment(_ value: Float, to type: AdjustType) {
-        switch type {
-        case .brightness:
-            brightness = 0.5 + (value / 100)
+    mutating func switchAdjustment() {
+        switch selectedAdjustment.type {
+        case .exposure:
+            self.selectedAdjustment = contrast
+//        case .brightness:
+//            self.selectedAdjustment = contrast
         case .contrast:
-            contrast = 0.5 + (value / 100)
+            self.selectedAdjustment = saturation
         case .saturation:
-            saturation = 0.5 + (value / 100)
+            self.selectedAdjustment = whiteBalance
         case .whiteBalance:
-            whiteBalance = (value / 100)
-        }
-    }
-    
-    public func getAdjustment(of type: AdjustType) -> Float {
-        switch type {
-        case .brightness:
-            return (brightness - 0.5) * 100
-        case .contrast:
-            return (contrast - 0.5) * 100
-        case .saturation:
-            return (saturation - 0.5) * 100
-        case .whiteBalance:
-            return (whiteBalance) * 100
+            self.selectedAdjustment = exposure
         }
     }
 }

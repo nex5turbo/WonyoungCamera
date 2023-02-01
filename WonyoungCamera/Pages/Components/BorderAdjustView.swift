@@ -12,9 +12,22 @@ struct BorderAdjustView: View {
     @State var color: Color = .black
     var body: some View {
         VStack() {
-            RangeSlider(systemName: "circle", value: $decoration.borderThickness, systemImageColor: .gray)
-                .accentColor(.gray)
-                .padding()
+            HStack {
+                Image(systemName: "circle")
+                    .font(.system(size: 22))
+                    .foregroundColor(.gray)
+                Slider(
+                    value: $decoration.borderThickness
+                )
+                HapticButton {
+                    decoration.borderThickness = 0.5
+                } content: {
+                    Image(systemName: "arrow.triangle.2.circlepath.circle")
+                        .font(.system(size: 22))
+                }
+            }
+            .accentColor(.gray)
+            .padding()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(Color.defaultColors, id: \.self) { currentColor in

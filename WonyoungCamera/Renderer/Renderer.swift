@@ -342,35 +342,61 @@ extension Renderer {
         guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
             return
         }
+        /**
+         RAW Processing: Convert the raw image file into a usable format, such as TIFF or JPEG, and make basic adjustments, such as white balance and exposure.
+         
+         Cropping and Straightening: Crop the image to the desired aspect ratio and straighten the image if necessary.
+         
+         Adjusting Tonality: Adjust the overall brightness, contrast, and mid-tones of the image.
+         
+         Color Correction: Adjust the hue, saturation, and luminance of specific colors in the image.
+         
+         Sharpening: Increase the clarity and definition of the image's edges and details.
+         
+         Noise Reduction: Reduce image noise, which can be introduced by shooting in low light conditions or using high ISO settings.
+         
+         Spot Removal: Remove any distracting spots, blemishes, or dust from the image.
+         
+         Local Adjustments: Make specific adjustments to certain areas of the image, such as dodging and burning, selective color correction, or local sharpening.
+         
+         Export: Save the final image in the desired format and quality.
+
+         */
         applyLut(
             on: commandBuffer,
             to: outputTexture,
             from: inputTexture,
             lutTexture: filterTexture
         )
-        ContrastPipeline().render(
-            contrast: decoration.contrast,
-            from: outputTexture,
-            to: outputTexture,
-            commandBuffer: commandBuffer
-        )
-        BrightnessPipeline().render(
-            brightness: decoration.brightness,
-            from: outputTexture,
-            to: outputTexture,
-            commandBuffer: commandBuffer
-        )
-        SaturationPipeline().render(
-            saturation: decoration.saturation,
-            from: outputTexture,
-            to: outputTexture,
-            commandBuffer: commandBuffer
-        )
         whiteBalancePipeline.render(
             whiteBalanceProperties: WhiteBalanceProperties(
                 tint: 0,
-                temperature: decoration.whiteBalance
+                temperature: decoration.whiteBalance.currentValue
             ),
+            from: outputTexture,
+            to: outputTexture,
+            commandBuffer: commandBuffer
+        )
+        ExposurePipeline().render(
+            exposure: decoration.exposure.currentValue,
+            from: outputTexture,
+            to: outputTexture,
+            commandBuffer: commandBuffer
+        )
+        ContrastPipeline().render(
+            contrast: decoration.contrast.currentValue,
+            from: outputTexture,
+            to: outputTexture,
+            commandBuffer: commandBuffer
+        )
+//        BrightnessPipeline().render(
+//            brightness: decoration.brightness.currentValue,
+//            from: outputTexture,
+//            to: outputTexture,
+//            commandBuffer: commandBuffer
+//        )
+        SaturationPipeline().render(
+            saturation: decoration.saturation.currentValue,
             from: outputTexture,
             to: outputTexture,
             commandBuffer: commandBuffer
