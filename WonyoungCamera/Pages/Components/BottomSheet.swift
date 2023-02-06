@@ -113,7 +113,7 @@ struct BottomSheet<Content: View>: View {
                                 }
                         }
                     )
-                    .background(colorScheme == .light ? .white : .black)
+                    .background(Color.bottomSheetColor)
                     .frame(height: height)
                     .cornerRadius(15)
                     .offset(
