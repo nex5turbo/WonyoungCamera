@@ -127,38 +127,11 @@ class MetalView: UIView {
     }
     func saveCurrentTexture(_ sampleBuffer: CMSampleBuffer) {
         DispatchQueue.global().async {
-            guard let texture = self.renderer.roundingImage(with: sampleBuffer, decoration: self.parent.decoration) else { return }
-            guard let cgImage = convertToCGImage(texture: texture) else {
-                fatalError("NO cgImage from texture")
-            }
-            let uiImage = UIImage(cgImage: cgImage)
-            ImageManager.instance.saveImage(image: uiImage)
+            guard let circleImage = self.renderer.captureCirclePhoto(of: sampleBuffer, decoration: self.parent.decoration) else { return }
+            ImageManager.instance.saveImage(image: circleImage)
             if UserSettings.instance.saveOriginal {
-                guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-                    return
-                }
-                guard let originalTexture = self.renderer.pixelBufferToTexture(pixelBuffer) else {
-                    return
-                }
-                guard let outputTexture = self.renderer.makeEmptyTexture(size: CGSize(width: originalTexture.width, height: originalTexture.height)) else { return }
-                guard let commandBuffer = self.renderer.commandQueue.makeCommandBuffer() else {
-                    return
-                }
-                self.renderer.applyColorFilter(
-                    decoration: self.parent.decoration,
-                    on: commandBuffer,
-                    to: outputTexture,
-                    with: originalTexture
-                )
-                if !UserSettings.instance.removeWatermark {
-                    self.renderer.watermarkPipeline.render(from: outputTexture, to: outputTexture, commandBuffer: commandBuffer)
-
-                }
-                commandBuffer.commit()
-                commandBuffer.waitUntilCompleted()
-                guard let cgImage = convertToCGImage(texture: outputTexture) else { return }
-                let uiImage = UIImage(cgImage: cgImage)
-                ImageManager.instance.saveImageToAlbum(image: uiImage)
+                guard let originalImage = self.renderer.captureOriginalPhoto(of: sampleBuffer, decoration: self.parent.decoration) else { return }
+                ImageManager.instance.saveImage(image: originalImage)
             }
         }
     }

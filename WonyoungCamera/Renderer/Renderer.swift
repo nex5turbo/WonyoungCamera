@@ -500,10 +500,75 @@ struct Vertex {
 }
 
 extension Renderer {
-    func captureCirclePhoto(of sampleBuffer: CMSampleBuffer, decoration: Decoration) {
+    func captureCirclePhoto(of sampleBuffer: CMSampleBuffer, decoration: Decoration) -> UIImage? {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return nil
+        }
+        guard let texture = pixelBufferToTexture(pixelBuffer) else {
+            return nil
+        }
+        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+            return nil
+        }
+        let targetLength = Int(min(texture.width, texture.height))
+        let targetSize = CGSize(width: targetLength, height: targetLength)
+        guard let squareTexture = self.makeEmptyTexture(size: targetSize) else {
+            return nil
+        }
+        let originalSize = CGSize(width: texture.width, height: texture.height)
+        guard let originalTexture = self.makeEmptyTexture(size: originalSize) else {
+            return nil
+        }
+        applyBackground(
+            decoration: decoration,
+            on: commandBuffer,
+            to: squareTexture
+        )
+        applyColorFilter(
+            decoration: decoration,
+            on: commandBuffer,
+            to: originalTexture,
+            with: texture
+        )
         
+        roundingImage(
+            decoration: decoration,
+            on: commandBuffer,
+            to: squareTexture,
+            with: originalTexture
+        )
+        if !UserSettings.instance.removeWatermark {
+            watermarkPipeline.render(from: squareTexture, to: squareTexture, commandBuffer: commandBuffer)
+        }
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        return textureToUIImage(texture: squareTexture)
     }
-    func captureOriginalPhoto(of sampleBuffer: CMSampleBuffer, decoration: Decoration) {
-        
+    func captureOriginalPhoto(of sampleBuffer: CMSampleBuffer, decoration: Decoration) -> UIImage? {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return nil
+        }
+        guard let texture = pixelBufferToTexture(pixelBuffer) else {
+            return nil
+        }
+        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+            return nil
+        }
+        let originalSize = CGSize(width: texture.width, height: texture.height)
+        guard let originalTexture = self.makeEmptyTexture(size: originalSize) else {
+            return nil
+        }
+        applyColorFilter(
+            decoration: decoration,
+            on: commandBuffer,
+            to: originalTexture,
+            with: texture
+        )
+        if !UserSettings.instance.removeWatermark {
+            watermarkPipeline.render(from: originalTexture, to: originalTexture, commandBuffer: commandBuffer)
+        }
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        return textureToUIImage(texture: originalTexture)
     }
 }
