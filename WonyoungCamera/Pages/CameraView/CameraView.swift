@@ -215,7 +215,7 @@ struct CameraView: View {
                 .background(.black)
             }
             BottomSheet(sheetPresent: $borderPresent) {
-                BorderAdjustView(decoration: $decoration)
+                DecorationView(decoration: $decoration)
             }
         }
         .background(Color.black)

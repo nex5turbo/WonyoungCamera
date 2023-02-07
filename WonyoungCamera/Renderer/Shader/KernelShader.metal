@@ -20,6 +20,7 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
                           constant float &scale [[ buffer(0) ]],
                           constant float &borderWidth [[ buffer(1) ]],
                           constant float4 &borderColor [[ buffer(2) ]],
+                          constant bool &hasBackground [[ buffer(3) ]],
                           uint2 gid [[ thread_position_in_grid ]]) {
     float textureWidth = readTexture.get_width();
     float textureHeight = readTexture.get_height();
@@ -45,8 +46,12 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
     float innerSize = halfWidth - ((100 + ((halfWidth - 100) / 10) * borderWidth) * (textureWidth / 2160));
     float currentDistance = distance(float2(gid), float2(halfWidth, halfWidth));
     if (currentDistance > outterSize) {
-        writeTexture.write(half4(0), gid);
-        return;
+        if (hasBackground) {
+            return;
+        } else {
+            writeTexture.write(half4(0), gid);
+            return;
+        }
     }
     
     if (currentDistance > innerSize) {

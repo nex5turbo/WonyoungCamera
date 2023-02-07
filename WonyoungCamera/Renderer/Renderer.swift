@@ -29,6 +29,7 @@ class Renderer {
     
     let watermarkPipeline = WatermarkPipeline()
     let whiteBalancePipeline = WhiteBalancePipeline()
+    let backgroundPipeline = BackgroundPipeline()
     
     init() {
         self.device = SharedMetalDevice.instance.device
@@ -232,11 +233,11 @@ class Renderer {
             return
         }
 
-//        applyBackground(
-//            decoration: decoration,
-//            on: commandBuffer,
-//            to: targetTexture
-//        )
+        applyBackground(
+            decoration: decoration,
+            on: commandBuffer,
+            to: targetTexture
+        )
         applyColorFilter(
             decoration: decoration,
             on: commandBuffer,
@@ -282,8 +283,10 @@ extension Renderer {
         on commandBuffer: MTLCommandBuffer,
         to outputTexture: MTLTexture
     ) {
-//        let renderable = provider.getRenderableOrFetch(decoration.background)
-//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
+        guard let backgroundTexture = decoration.backgroundTexture else {
+            return
+        }
+        backgroundPipeline.render(from: backgroundTexture, to: outputTexture, commandBuffer: commandBuffer)
     }
 
     func applySticker(
@@ -310,6 +313,7 @@ extension Renderer {
             Float(decoration.borderColor.blue),
             Float(decoration.borderColor.alpha)
         )
+        var hasBackground = decoration.backgroundTexture != nil
         // compute
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
@@ -320,6 +324,7 @@ extension Renderer {
         computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
         computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 1)
         computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 2)
+        computeEncoder?.setBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 3)
         
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
@@ -492,4 +497,13 @@ extension Renderer {
 struct Vertex {
     var position: SIMD2<Float>
     var textureCoordinate: SIMD2<Float>
+}
+
+extension Renderer {
+    func captureCirclePhoto(of sampleBuffer: CMSampleBuffer, decoration: Decoration) {
+        
+    }
+    func captureOriginalPhoto(of sampleBuffer: CMSampleBuffer, decoration: Decoration) {
+        
+    }
 }

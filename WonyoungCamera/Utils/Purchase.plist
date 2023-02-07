@@ -4,6 +4,8 @@
 <dict>
 	<key>sharedSecret</key>
 	<string>71ede09526bb4a599f1e777e1f25c98e</string>
+	<key>permanent</key>
+	<string>PERMANENT</string>
 	<key>monthlyPremium</key>
 	<string>monthly</string>
 </dict>

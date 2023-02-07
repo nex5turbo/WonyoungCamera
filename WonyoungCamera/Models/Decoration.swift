@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Metal
 import Foundation
 
 protocol Adjustment {
@@ -93,7 +94,19 @@ enum AdjustType {
 struct Decoration {
     var colorFilter: Lut
     var sticker: String?
-    var background: String?
+    var background: String? {
+        didSet {
+            guard let background else {
+                backgroundTexture = nil
+                return
+            }
+            guard let texture = BackgroundsStorage.instance.getTexture(background) else {
+                return
+            }
+            backgroundTexture = texture
+        }
+    }
+    var backgroundTexture: MTLTexture?
     
     var borderThickness: Float = 0.5 // 0 ~ 1, 0.5 default
     var borderColor: CodableColor = .init(uiColor: .black)
