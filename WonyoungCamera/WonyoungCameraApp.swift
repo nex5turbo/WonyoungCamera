@@ -36,7 +36,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                         SwiftyStoreKit.finishTransaction(purchase.transaction)
                     }
                     // Unlock content
-                    PurchaseManager.shared.setUserPremium(as: true)
+                    InAppPurchaseManager.shared.setUserPremium(as: true)
                 case .failed, .purchasing, .deferred:
                     break
                 @unknown default:

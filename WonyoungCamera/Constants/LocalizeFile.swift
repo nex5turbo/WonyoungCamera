@@ -33,11 +33,12 @@ extension String {
     static let mindText = NSLocalizedString("Round Your Mind", comment: "")
     static let byUsText = NSLocalizedString("By Rounder Camera", comment: "")
     static let monthlyPlanName = NSLocalizedString("Rounder monthly plan", comment: "")
+    static let purchaseTitle = NSLocalizedString("Enjoy our premium contents!", comment: "")
     static let appreciateText = NSLocalizedString("Thanks for using Rounder Camera!", comment: "")
     static let priceText = NSLocalizedString("3-day free trial then $1.49/month", comment: "")
     static func priceText(_ price: String?) -> String {
-        let monthlyPrice = price ?? "$1.49"
-        let countedLabel = String(format: NSLocalizedString("3-day free trial then %@/month", comment: ""), monthlyPrice)
+        let monthlyPrice = price ?? "$1.99"
+        let countedLabel = String(format: NSLocalizedString("Access all contents with %@!", comment: ""), monthlyPrice)
         //let countLabel = NSLocalizedString("%d / %d Selected", comment: "")
         return countedLabel
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FilterScrollView: View {
-    @ObservedObject var purchaseManager = PurchaseManager.shared
+    @ObservedObject var purchaseManager = InAppPurchaseManager.shared
     @Binding var decoration: Decoration
 
     @State var filters: [ColorFilter] = []

@@ -4,6 +4,7 @@ import SwiftyStoreKit
 
 struct PurchaseProperties: Decodable {
     var monthlyPremium: String
+    var permanent: String
     var sharedSecret: String
 }
 
@@ -152,6 +153,16 @@ class PurchaseManager: ObservableObject {
         }
 
         for product in self.products where product.productIdentifier == purchaseProperties.monthlyPremium {
+            return product.localizedPrice
+        }
+        return nil
+    }
+    func getPermanentPrice() -> String? {
+        guard let purchaseProperties = self.purchaseProperties else {
+            return nil
+        }
+
+        for product in self.products where product.productIdentifier == purchaseProperties.permanent {
             return product.localizedPrice
         }
         return nil

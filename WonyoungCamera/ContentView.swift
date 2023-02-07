@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @ObservedObject var purchaseManager = PurchaseManager.shared
+    @ObservedObject var purchaseManager = InAppPurchaseManager.shared
     @ObservedObject var metalCamera = MetalCamera()
     @State var isLoading = true
     @State var isRotating = false
@@ -57,16 +57,6 @@ struct ContentView: View {
             SubscriptionView()
         })
         .navigationViewStyle(.stack)
-        .onChange(of: scenePhase, perform: { newValue in
-            switch newValue {
-            case .active:
-                if purchaseManager.isPremiumUser {
-                    purchaseManager.verifySubscription { _ in }
-                }
-            default:
-                break
-            }
-        })
     }
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExportResultView: View {
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var purchaseManager = PurchaseManager.shared
+    @ObservedObject var purchaseManager = InAppPurchaseManager.shared
     @Binding var resultImage: UIImage
     @Binding var resultNSData: NSData?
     @Binding var resultURL: String?

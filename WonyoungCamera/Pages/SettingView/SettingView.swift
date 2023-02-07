@@ -11,7 +11,7 @@ import MessageUI
 
 struct SettingView: View {
     // Subscription
-    @ObservedObject private var purchaseManager = PurchaseManager.shared
+    @ObservedObject private var purchaseManager = InAppPurchaseManager.shared
 
     // Contact
     @State var result: Result<MFMailComposeResult, Error>?

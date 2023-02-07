@@ -12,7 +12,7 @@ import Photos
 
 struct CameraView: View {
     @ObservedObject var metalCamera: MetalCamera
-    @ObservedObject var purchaseManager = PurchaseManager.shared
+    @ObservedObject var purchaseManager = InAppPurchaseManager.shared
     
     @State var decoration: Decoration = Decoration.empty()
     @State var takePicture: Bool = false
