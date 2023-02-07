@@ -131,7 +131,7 @@ class MetalView: UIView {
             ImageManager.instance.saveImage(image: circleImage)
             if UserSettings.instance.saveOriginal {
                 guard let originalImage = self.renderer.captureOriginalPhoto(of: sampleBuffer, decoration: self.parent.decoration) else { return }
-                ImageManager.instance.saveImage(image: originalImage)
+                ImageManager.instance.saveImageToAlbum(image: originalImage)
             }
         }
     }
