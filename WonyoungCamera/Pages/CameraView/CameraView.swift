@@ -139,6 +139,11 @@ struct CameraView: View {
                                         canTakePicture = true
                                     }
                                 }
+                                if !purchaseManager.isPremiumUser &&
+                                    decoration.background != nil {
+                                    purchaseManager.subscriptionViewPresent.toggle()
+                                    return
+                                }
                                 if !isMute {
                                     shutterSound()
                                 }

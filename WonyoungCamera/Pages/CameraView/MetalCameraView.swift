@@ -46,7 +46,7 @@ class MetalView: UIView {
     func createDisplayLink() {
         guard displayLink == nil else { return }
         let displayLink = CADisplayLink(target: self, selector: #selector(onDisplay))
-        displayLink.add(to: .main, forMode: .default)
+        displayLink.add(to: .main, forMode: .common)
         self.displayLink = displayLink
     }
 
@@ -142,8 +142,5 @@ extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
         connection.isVideoMirrored = self.parent.metalCamera.cameraPosition == .front
         connection.videoOrientation = .portrait
         self.currentSampleBuffer = sampleBuffer
-        DispatchQueue.main.async {
-            self.setNeedsDisplay()
-        }
     }
 }
