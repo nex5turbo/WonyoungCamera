@@ -52,9 +52,10 @@ struct CameraView: View {
                             .font(.system(size:20))
                     }
                     Spacer()
-                    Text(decoration.colorFilter.rawValue)
-                        .foregroundColor(.gray)
-                        .font(.system(size:15))
+                    GradientView {
+                        Text(String.APP_NAME_SHORT)
+                            .font(.system(size: 25, weight: .bold))
+                    }
                     Spacer()
                     HapticButton {
                         self.isMute.toggle()
@@ -65,57 +66,38 @@ struct CameraView: View {
                     }
                 }
                 .padding(.horizontal, 20)
-                .padding(.bottom, 20)
                 .background(.black)
-                GeometryReader { proxy in
-                    ZStack {
-                        // metal view가 들어갈 자리
-                        VStack {
-                            MetalCameraView(
-                                metalCamera: metalCamera,
-                                decoration: $decoration,
-                                takePicture: $takePicture
-                            )
-                        }
-                        .cornerRadius(30)
-                        .padding(.horizontal, 10)
-                        VStack {
-                            if UIScreen.main.bounds.height / UIScreen.main.bounds.width <= 2.0 {
-                                EmptyView()
-                            } else {
-                                Text(String.APP_NAME_SHORT)
-                                    .font(.system(size: 25, weight: .bold))
-                                    .foregroundColor(.black)
-                                Spacer()
-                                Text(String.mindText)
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(.black)
-                                    .padding(3)
-                                Text(String.byUsText)
-                                    .font(.system(size: 10))
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                        .padding()
-
-                        if isSliderEditing {
-                            ZStack {
-                                VStack {
-                                    Image(systemName: decoration.selectedAdjustment.type.getIconName())
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 40))
-                                    Text("\(decoration.selectedAdjustment.presentValue)")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 30))
-                                }
-                            }
-                            .frame(width: 120, height: 120)
-                            .background(.black.opacity(0.5))
-                            .cornerRadius(10)
-                        }
+                Spacer() 
+                ZStack {
+                    // metal view가 들어갈 자리
+                    VStack {
+                        MetalCameraView(
+                            metalCamera: metalCamera,
+                            decoration: $decoration,
+                            takePicture: $takePicture
+                        )
                     }
-                    
+                    .frame(height: UIScreen.main.bounds.width - 20)
+                    .cornerRadius(30)
+                    .padding(.horizontal, 10)
+
+                    if isSliderEditing {
+                        ZStack {
+                            VStack {
+                                Image(systemName: decoration.selectedAdjustment.type.getIconName())
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 40))
+                                Text("\(decoration.selectedAdjustment.presentValue)")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 30))
+                            }
+                        }
+                        .frame(width: 120, height: 120)
+                        .background(.black.opacity(0.5))
+                        .cornerRadius(10)
+                    }
                 }
+                Spacer()
                 VStack {
                     Color.clear.frame(height: 10)
                     RangeSlider(

@@ -109,7 +109,7 @@ struct Decoration {
     var backgroundTexture: MTLTexture?
     
     var borderThickness: Float = 0.5 // 0 ~ 1, 0.5 default
-    var borderColor: CodableColor = .init(uiColor: .black)
+    var borderColor: CodableColor?
     
 //    var brightness: Brightness = Brightness()
     var saturation: Saturation = Saturation()

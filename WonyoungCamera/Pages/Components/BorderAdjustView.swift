@@ -9,7 +9,8 @@ import SwiftUI
 
 struct BorderAdjustView: View {
     @Binding var decoration: Decoration
-    @State var color: Color = .black
+    @State var color: Color?
+    @State var pickerColor: Color = .white
     var body: some View {
         VStack() {
             HStack {
@@ -30,6 +31,16 @@ struct BorderAdjustView: View {
             .padding()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
+                    Button {
+                        color = nil
+                    } label: {
+                        Image(systemName: "xmark.circle")
+                            .resizable()
+                            .clipShape(Circle())
+                            .frame(width: 44, height: 44)
+                            .padding(1)
+                            .foregroundColor(.white)
+                    }
                     ForEach(Color.defaultColors, id: \.self) { currentColor in
                         Button {
                             color = currentColor
@@ -48,7 +59,14 @@ struct BorderAdjustView: View {
                 .padding()
             }
             .onChange(of: color) { newValue in
-                decoration.borderColor = CodableColor(uiColor: UIColor(newValue))
+                if let newValue {
+                    decoration.borderColor = CodableColor(uiColor: UIColor(newValue))
+                } else {
+                    decoration.borderColor = nil
+                }
+            }
+            .onChange(of: pickerColor) { newValue in
+                color = pickerColor
             }
             Color.clear.frame(height: 30)
         }

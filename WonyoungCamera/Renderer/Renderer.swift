@@ -94,9 +94,9 @@ class Renderer {
 
         if clearColor {
             renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(
-                red: 1,
-                green: 1,
-                blue: 1,
+                red: 0 / 255.0,
+                green: 0 / 255.0,
+                blue: 0 / 255.0,
                 alpha: 1
             )
             renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -307,13 +307,17 @@ extension Renderer {
         // MARK: - This should be changed with fragment shader
         var scale = decoration.scale
         var borderWidth = decoration.borderThickness
-        var borderColor = SIMD4<Float>(
-            Float(decoration.borderColor.red),
-            Float(decoration.borderColor.green),
-            Float(decoration.borderColor.blue),
-            Float(decoration.borderColor.alpha)
-        )
+        var borderColor = SIMD4<Float>(0, 0, 0, 0)
+        if let color = decoration.borderColor {
+            borderColor = SIMD4<Float>(
+                Float(color.red),
+                Float(color.green),
+                Float(color.blue),
+                Float(color.alpha)
+            )
+        }
         var hasBackground = decoration.backgroundTexture != nil
+        var hasBorder = decoration.borderColor != nil
         // compute
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()
         computeEncoder?.setComputePipelineState(self.computePipelineState)
@@ -325,6 +329,7 @@ extension Renderer {
         computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 1)
         computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 2)
         computeEncoder?.setBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 3)
+        computeEncoder?.setBytes(&hasBorder, length: MemoryLayout<Bool>.stride, index: 4)
         
         let w = computePipelineState.threadExecutionWidth
         let h = computePipelineState.maxTotalThreadsPerThreadgroup / w

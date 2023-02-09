@@ -27,7 +27,9 @@ struct BackgroundView: View {
                                 decoration.background = name.rawValue
                             } label: {
                                 Image(uiImage: image)
-                                .cornerRadius(10)
+                                    .resizable()
+                                    .frame(width: imageSize, height: imageSize)
+                                    .cornerRadius(10)
                             }
                         }
                     }
