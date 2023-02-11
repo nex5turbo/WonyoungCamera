@@ -37,7 +37,7 @@ struct SubscriptionView: View {
                 .padding()
                 Image("subIcon")
                     .resizable()
-                    .frame(width: detailPresent ? 200 : 300, height: detailPresent ? 200 : 300)
+                    .frame(width: 200, height: 200)
                     .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
                     .animation(foreverAnimation, value: isRotating)
                     .onAppear {
