@@ -78,6 +78,13 @@ struct SubscriptionView: View {
                                 .font(.system(size: 20))
                                 .bold()
                         }
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .font(.system(size: 20))
+                            Text("Remove Ad.")
+                                .font(.system(size: 20))
+                                .bold()
+                        }
                     }
                 }
                 Spacer()

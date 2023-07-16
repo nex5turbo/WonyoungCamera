@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GoogleMobileAds
 
 struct ExportResultView: View {
     @Environment(\.dismiss) private var dismiss
@@ -13,6 +14,7 @@ struct ExportResultView: View {
     @Binding var resultImage: UIImage
     @Binding var resultNSData: NSData?
     @Binding var resultURL: String?
+    let reward = RewardedAd()
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -75,7 +77,13 @@ struct ExportResultView: View {
                         share(data: nsdata)
                     }
                 } else {
-                    purchaseManager.subscriptionViewPresent.toggle()
+                    _ = reward.showAd {
+                        if let resultURL {
+                            share(path: resultURL)
+                        } else if let nsdata = resultNSData {
+                            share(data: nsdata)
+                        }
+                    }
                 }
             } label: {
                 Text(String.shareLabel)
@@ -87,6 +95,10 @@ struct ExportResultView: View {
                     .cornerRadius(8)
             }
             .padding(.horizontal, 32)
+            if !purchaseManager.isPremiumUser {
+                Color.clear.frame(height: 10)
+                GADBanner().frame(width: GADAdSizeBanner.size.width, height: GADAdSizeBanner.size.height)
+            }
         }
         .background(.white)
         .navigationTitle("")

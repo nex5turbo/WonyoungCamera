@@ -82,6 +82,9 @@
 		549051C62944B412005D3353 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549051C52944B412005D3353 /* GradientView.swift */; };
 		549BEE3C2A63D93A0019CDE9 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 549BEE3B2A63D93A0019CDE9 /* GoogleMobileAds */; };
 		549BEE3F2A63D9E80019CDE9 /* AppOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE3E2A63D9E80019CDE9 /* AppOpen.swift */; };
+		549BEE412A63E7AC0019CDE9 /* InterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE402A63E7AC0019CDE9 /* InterstitialAd.swift */; };
+		549BEE432A63EA8C0019CDE9 /* RewardAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE422A63EA8C0019CDE9 /* RewardAd.swift */; };
+		549BEE452A63EB5C0019CDE9 /* BannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE442A63EB5C0019CDE9 /* BannerAd.swift */; };
 		54ACA6592991206F00690B11 /* DecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA6582991206F00690B11 /* DecorationView.swift */; };
 		54ACA65B299120FD00690B11 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65A299120FD00690B11 /* TabBar.swift */; };
 		54ACA65D299121BC00690B11 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65C299121BC00690B11 /* BackgroundView.swift */; };
@@ -291,6 +294,9 @@
 		546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		549051C52944B412005D3353 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		549BEE3E2A63D9E80019CDE9 /* AppOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppOpen.swift; sourceTree = "<group>"; };
+		549BEE402A63E7AC0019CDE9 /* InterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAd.swift; sourceTree = "<group>"; };
+		549BEE422A63EA8C0019CDE9 /* RewardAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardAd.swift; sourceTree = "<group>"; };
+		549BEE442A63EB5C0019CDE9 /* BannerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAd.swift; sourceTree = "<group>"; };
 		54ACA6582991206F00690B11 /* DecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationView.swift; sourceTree = "<group>"; };
 		54ACA65A299120FD00690B11 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		54ACA65C299121BC00690B11 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
@@ -563,6 +569,9 @@
 			isa = PBXGroup;
 			children = (
 				549BEE3E2A63D9E80019CDE9 /* AppOpen.swift */,
+				549BEE402A63E7AC0019CDE9 /* InterstitialAd.swift */,
+				549BEE422A63EA8C0019CDE9 /* RewardAd.swift */,
+				549BEE442A63EB5C0019CDE9 /* BannerAd.swift */,
 			);
 			path = GoogleAdMob;
 			sourceTree = "<group>";
@@ -1121,6 +1130,7 @@
 				54426CE82976E0E1002F7CD2 /* ProCameraView.swift in Sources */,
 				54426CC02976C399002F7CD2 /* BrightnessPipeline.swift in Sources */,
 				54ACA6592991206F00690B11 /* DecorationView.swift in Sources */,
+				549BEE452A63EB5C0019CDE9 /* BannerAd.swift in Sources */,
 				54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */,
 				54426CDA2976C5AB002F7CD2 /* Vignette.metal in Sources */,
 				54426CBC2976C33B002F7CD2 /* ContrastPipeline.swift in Sources */,
@@ -1128,6 +1138,7 @@
 				54D358E828DC7BD900A3AB4D /* HapticManager.swift in Sources */,
 				54ACA66129912DC000690B11 /* Background.metal in Sources */,
 				54426CE22976C5D0002F7CD2 /* Sharpness.metal in Sources */,
+				549BEE432A63EA8C0019CDE9 /* RewardAd.swift in Sources */,
 				543B35CB2969994200ED86C8 /* RenderableProvider.swift in Sources */,
 				546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */,
 				54D3C355296857C0009BC254 /* HapticButton.swift in Sources */,
@@ -1150,6 +1161,7 @@
 				54426CBE2976C377002F7CD2 /* SaturationPipeline.swift in Sources */,
 				549BEE3F2A63D9E80019CDE9 /* AppOpen.swift in Sources */,
 				54E31C4F296DC43100EE8178 /* UserSettings.swift in Sources */,
+				549BEE412A63E7AC0019CDE9 /* InterstitialAd.swift in Sources */,
 				54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */,
 				546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */,
 				54D1727E295DD85B006180FA /* FileManager+Extension.swift in Sources */,
@@ -1381,7 +1393,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1401,7 +1413,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1420,7 +1432,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_ASSET_PATHS = "\"WonyoungCamera/Preview Content\"";
 				DEVELOPMENT_TEAM = 352B2432VD;
 				ENABLE_PREVIEWS = YES;
@@ -1440,7 +1452,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";

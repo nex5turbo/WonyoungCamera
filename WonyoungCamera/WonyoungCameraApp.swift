@@ -21,7 +21,7 @@ struct WonyoungCameraApp: App {
             ContentView()
         }
         .onChange(of: scenePhase) { phase in
-            if phase == .active {
+            if phase == .active && !InAppPurchaseManager.shared.isPremiumUser {
                 ad.tryToPresentAd()
             }
         }
