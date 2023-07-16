@@ -30,7 +30,7 @@ kernel void roundingImage(texture2d<half, access::write> writeTexture [[ texture
     float halfWidth = textureWidth / 2;
     float halfHeight = textureHeight / 2;
 
-    constexpr sampler colorSampler;
+    constexpr sampler colorSampler(filter::linear);
     float2 coord = float2(gid);
     // 절반 사이즈를 빼서 scale 적용한 다음 다시 절반 사이즈 더해주면 된다.
     coord.x -= halfWidth;

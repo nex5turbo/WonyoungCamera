@@ -8,13 +8,22 @@
 import SwiftUI
 import AVFoundation
 import SwiftyStoreKit
+import GoogleMobileAds
 
 @main
 struct WonyoungCameraApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @Environment(\.scenePhase) private var scenePhase
+    var ad = OpenAd()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .active {
+                ad.tryToPresentAd()
+            }
         }
     }
 }
@@ -27,6 +36,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return AppDelegate.orientationLock
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        GADMobileAds.sharedInstance().start()
         SwiftyStoreKit.completeTransactions(atomically: false) { purchases in
             for purchase in purchases {
                 switch purchase.transaction.transactionState {

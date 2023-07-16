@@ -80,6 +80,8 @@
 		546ED8C628F03C3700C62AE5 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED8C528F03C3700C62AE5 /* CameraView.swift */; };
 		546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */; };
 		549051C62944B412005D3353 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549051C52944B412005D3353 /* GradientView.swift */; };
+		549BEE3C2A63D93A0019CDE9 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 549BEE3B2A63D93A0019CDE9 /* GoogleMobileAds */; };
+		549BEE3F2A63D9E80019CDE9 /* AppOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE3E2A63D9E80019CDE9 /* AppOpen.swift */; };
 		54ACA6592991206F00690B11 /* DecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA6582991206F00690B11 /* DecorationView.swift */; };
 		54ACA65B299120FD00690B11 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65A299120FD00690B11 /* TabBar.swift */; };
 		54ACA65D299121BC00690B11 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65C299121BC00690B11 /* BackgroundView.swift */; };
@@ -288,6 +290,7 @@
 		546ED8C528F03C3700C62AE5 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		546ED8CA28F71C2F00C62AE5 /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		549051C52944B412005D3353 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		549BEE3E2A63D9E80019CDE9 /* AppOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppOpen.swift; sourceTree = "<group>"; };
 		54ACA6582991206F00690B11 /* DecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationView.swift; sourceTree = "<group>"; };
 		54ACA65A299120FD00690B11 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		54ACA65C299121BC00690B11 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
@@ -401,6 +404,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				549BEE3C2A63D93A0019CDE9 /* GoogleMobileAds in Frameworks */,
 				54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */,
 				545908A62913F87E00B3A658 /* Kingfisher in Frameworks */,
 				6A8FFC30291E082900000C1B /* Lottie in Frameworks */,
@@ -553,6 +557,14 @@
 				545FF9CE29619DBA00BECC3C /* JE3.png */,
 			);
 			path = "JE-Series";
+			sourceTree = "<group>";
+		};
+		549BEE3D2A63D9510019CDE9 /* GoogleAdMob */ = {
+			isa = PBXGroup;
+			children = (
+				549BEE3E2A63D9E80019CDE9 /* AppOpen.swift */,
+			);
+			path = GoogleAdMob;
 			sourceTree = "<group>";
 		};
 		54ACA65529911FB500690B11 /* backgrounds */ = {
@@ -721,6 +733,7 @@
 		54D358D328DC7BD900A3AB4D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				549BEE3D2A63D9510019CDE9 /* GoogleAdMob */,
 				545D578328DDFB2100A874DB /* SharedMetalDevice.swift */,
 				54168B2E28E278E50000DF7F /* ImageManager.swift */,
 				54D358D428DC7BD900A3AB4D /* SoundManager.swift */,
@@ -885,6 +898,7 @@
 				545908A52913F87E00B3A658 /* Kingfisher */,
 				6A8FFC2F291E082900000C1B /* Lottie */,
 				54ED1063293CCCBE00926E36 /* SwiftyStoreKit */,
+				549BEE3B2A63D93A0019CDE9 /* GoogleMobileAds */,
 			);
 			productName = WonyoungCamera;
 			productReference = 54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */;
@@ -973,6 +987,7 @@
 				545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
+				549BEE3A2A63D93A0019CDE9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 54D3589428DC7B6900A3AB4D /* Products */;
 			projectDirPath = "";
@@ -1133,6 +1148,7 @@
 				545908A929140C5500B3A658 /* Colors.swift in Sources */,
 				541D8A8B297FF0FA00ED06BE /* CodableColor.swift in Sources */,
 				54426CBE2976C377002F7CD2 /* SaturationPipeline.swift in Sources */,
+				549BEE3F2A63D9E80019CDE9 /* AppOpen.swift in Sources */,
 				54E31C4F296DC43100EE8178 /* UserSettings.swift in Sources */,
 				54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */,
 				546ED8CB28F71C2F00C62AE5 /* ImageViewer.swift in Sources */,
@@ -1386,6 +1402,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1424,6 +1441,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = Youngs.YoungsCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1561,6 +1579,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		549BEE3A2A63D93A0019CDE9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit.git";
@@ -1584,6 +1610,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 545908A42913F87E00B3A658 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		549BEE3B2A63D93A0019CDE9 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 549BEE3A2A63D93A0019CDE9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		54ED1063293CCCBE00926E36 /* SwiftyStoreKit */ = {
 			isa = XCSwiftPackageProductDependency;
