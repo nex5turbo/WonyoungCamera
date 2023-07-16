@@ -9,8 +9,8 @@ import GoogleMobileAds
 import Foundation
 
 final class RewardedAd {
-    private let rewardId = "ca-app-pub-3940256099942544/1712485313" // test ID
-//    private let rewardId = "ca-app-pub-6235545617614297/9385161422" // product ID
+//    private let rewardId = "ca-app-pub-3940256099942544/1712485313" // test ID
+    private let rewardId = "ca-app-pub-6235545617614297/9385161422" // product ID
     var rewardedAd: GADRewardedAd?
     
     init() {

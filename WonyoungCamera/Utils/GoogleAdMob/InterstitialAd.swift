@@ -37,8 +37,8 @@ extension UIApplication {
 }
 
 final class Interstitial: NSObject, GADFullScreenContentDelegate {
-     let adUnitID = "ca-app-pub-3940256099942544/4411468910" // test Id
-//    let adUnitID = "ca-app-pub-6235545617614297/7025402029" // produt Id
+//     let adUnitID = "ca-app-pub-3940256099942544/4411468910" // test Id
+    let adUnitID = "ca-app-pub-6235545617614297/7025402029" // produt Id
     private var interstitial: GADInterstitialAd?
     
     override init() {
