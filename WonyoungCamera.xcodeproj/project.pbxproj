@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		540CA0492A651A42007AF1E8 /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 540CA0482A651A42007AF1E8 /* Shader.metal */; };
 		54168B2D28E275030000DF7F /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B2C28E275030000DF7F /* AlbumView.swift */; };
 		54168B2F28E278E50000DF7F /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B2E28E278E50000DF7F /* ImageManager.swift */; };
 		54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54168B3228E33E2E0000DF7F /* Hidden.swift */; };
@@ -136,7 +137,6 @@
 		54D358D928DC7BD900A3AB4D /* FilterScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358C228DC7BD900A3AB4D /* FilterScrollView.swift */; };
 		54D358DD28DC7BD900A3AB4D /* CornerRadius+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358C728DC7BD900A3AB4D /* CornerRadius+Extensions.swift */; };
 		54D358DE28DC7BD900A3AB4D /* MetalCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358C928DC7BD900A3AB4D /* MetalCamera.swift */; };
-		54D358DF28DC7BD900A3AB4D /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54D358CA28DC7BD900A3AB4D /* Shader.metal */; };
 		54D358E028DC7BD900A3AB4D /* KernelShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 54D358CB28DC7BD900A3AB4D /* KernelShader.metal */; };
 		54D358E128DC7BD900A3AB4D /* MetalCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358CC28DC7BD900A3AB4D /* MetalCameraView.swift */; };
 		54D358E228DC7BD900A3AB4D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D358CD28DC7BD900A3AB4D /* Renderer.swift */; };
@@ -209,6 +209,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		540CA0482A651A42007AF1E8 /* Shader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		54168B2C28E275030000DF7F /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		54168B2E28E278E50000DF7F /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		54168B3228E33E2E0000DF7F /* Hidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hidden.swift; sourceTree = "<group>"; };
@@ -351,7 +352,6 @@
 		54D358C228DC7BD900A3AB4D /* FilterScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterScrollView.swift; sourceTree = "<group>"; };
 		54D358C728DC7BD900A3AB4D /* CornerRadius+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CornerRadius+Extensions.swift"; sourceTree = "<group>"; };
 		54D358C928DC7BD900A3AB4D /* MetalCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalCamera.swift; sourceTree = "<group>"; };
-		54D358CA28DC7BD900A3AB4D /* Shader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		54D358CB28DC7BD900A3AB4D /* KernelShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = KernelShader.metal; sourceTree = "<group>"; };
 		54D358CC28DC7BD900A3AB4D /* MetalCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalCameraView.swift; sourceTree = "<group>"; };
 		54D358CD28DC7BD900A3AB4D /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
@@ -479,7 +479,7 @@
 		5435E654290EFD8900F8A331 /* Shader */ = {
 			isa = PBXGroup;
 			children = (
-				54D358CA28DC7BD900A3AB4D /* Shader.metal */,
+				540CA0482A651A42007AF1E8 /* Shader.metal */,
 				54D358CB28DC7BD900A3AB4D /* KernelShader.metal */,
 				5435E655290EFD9C00F8A331 /* ExportShader.metal */,
 				5444215F296D85B000B056D6 /* Common.metal */,
@@ -1148,6 +1148,7 @@
 				545D578428DDFB2100A874DB /* SharedMetalDevice.swift in Sources */,
 				545908A3291299E600B3A658 /* ExportResultView.swift in Sources */,
 				54426CE02976C5C8002F7CD2 /* WhiteBalance.metal in Sources */,
+				540CA0492A651A42007AF1E8 /* Shader.metal in Sources */,
 				54426CC62976C400002F7CD2 /* ExposurePipeline.swift in Sources */,
 				54442160296D85B000B056D6 /* Common.metal in Sources */,
 				543B35D62969A26500ED86C8 /* StickerDecorator.swift in Sources */,
@@ -1202,7 +1203,6 @@
 				54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */,
 				54426CD82976C59F002F7CD2 /* Grain.metal in Sources */,
 				5444215E296D833200B056D6 /* FilterPipeline.swift in Sources */,
-				54D358DF28DC7BD900A3AB4D /* Shader.metal in Sources */,
 				54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */,
 				541D8A87297FE10200ED06BE /* BorderAdjustView.swift in Sources */,
 				54ACA65B299120FD00690B11 /* TabBar.swift in Sources */,
