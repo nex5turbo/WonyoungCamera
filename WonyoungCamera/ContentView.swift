@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @ObservedObject var purchaseManager = InAppPurchaseManager.shared
-    @ObservedObject var metalCamera = MetalCamera()
     @State var isLoading = true
     @State var isRotating = false
     var foreverAnimation: Animation {
@@ -50,7 +49,7 @@ struct ContentView: View {
                     }
                 }
             } else {
-                CameraView(metalCamera: metalCamera)
+                CameraView()
             }
         }
         .sheet(isPresented: $purchaseManager.subscriptionViewPresent, content: {

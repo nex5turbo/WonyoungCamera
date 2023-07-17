@@ -11,7 +11,6 @@ import Photos
 
 
 struct CameraView: View {
-    @ObservedObject var metalCamera: MetalCamera
     @ObservedObject var purchaseManager = InAppPurchaseManager.shared
     
     @State var decoration: Decoration = Decoration.empty()
@@ -72,7 +71,6 @@ struct CameraView: View {
                     // metal view가 들어갈 자리
                     VStack {
                         MetalCameraView(
-                            metalCamera: metalCamera,
                             decoration: $decoration,
                             takePicture: $takePicture
                         )
@@ -113,7 +111,7 @@ struct CameraView: View {
                     
                     HStack {
                         HapticButton {
-                            self.metalCamera.switchCamera()
+                            MetalCamera.instance.switchCamera()
                         } content: {
                             Image(systemName: "arrow.triangle.2.circlepath.circle")
                                 .font(.system(size: bottomIconSize))
@@ -208,9 +206,9 @@ struct CameraView: View {
         .background(Color.black)
         .onChange(of: albumPresent) { newValue in
             if newValue {
-                metalCamera.stopSession()
+                MetalCamera.instance.stopSession()
             } else {
-                metalCamera.startSession()
+                MetalCamera.instance.startSession()
             }
         }
         .navigationTitle("")
@@ -220,6 +218,6 @@ struct CameraView: View {
 
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView(metalCamera: MetalCamera())
+        CameraView()
     }
 }

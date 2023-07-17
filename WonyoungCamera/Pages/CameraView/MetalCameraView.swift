@@ -10,7 +10,6 @@ import MetalKit
 import AVFoundation
 
 struct MetalCameraView: UIViewRepresentable {
-    @ObservedObject var metalCamera: MetalCamera
     @Binding var decoration: Decoration
     @Binding var takePicture: Bool
 
@@ -20,7 +19,7 @@ struct MetalCameraView: UIViewRepresentable {
         }
         let metalView = MetalView(self)
         metalView.metalLayer.device = device
-        metalCamera.setUpCamera(delegate: metalView)
+        MetalCamera.instance.setUpCamera(delegate: metalView)
         return metalView
     }
     func updateUIView(_ uiView: MetalView, context: Context) {
@@ -139,7 +138,7 @@ class MetalView: UIView {
 
 extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        connection.isVideoMirrored = self.parent.metalCamera.cameraPosition == .front
+        connection.isVideoMirrored = MetalCamera.instance.cameraPosition == .front
         connection.videoOrientation = .portrait
         self.currentSampleBuffer = sampleBuffer
     }

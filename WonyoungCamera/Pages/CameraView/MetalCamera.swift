@@ -9,10 +9,11 @@ import AVFoundation
 class MetalCamera: ObservableObject {
     private var videoSession: AVCaptureSession = AVCaptureSession()
     private var cameraDevice: AVCaptureDevice?
-    private var delegate: AVCaptureVideoDataOutputSampleBufferDelegate?
     private var videoOutput: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
     
     public var cameraPosition: AVCaptureDevice.Position = .back
+    static let instance = MetalCamera()
+    private init() {}
 
     func stopSession() {
         if videoSession.isRunning {
@@ -29,16 +30,15 @@ class MetalCamera: ObservableObject {
     }
     
     func switchCamera() {
-        guard let delegate = delegate else {
-            return
-        }
         if cameraPosition == .back {
             cameraPosition = .front
         } else {
             cameraPosition = .back
         }
-        self.videoSession = AVCaptureSession()
-
+        guard let currentInput = self.videoSession.inputs.first else {
+            return
+        }
+        self.videoSession.removeInput(currentInput)
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition){
             do {
                 let input = try AVCaptureDeviceInput(device: device)
@@ -50,12 +50,7 @@ class MetalCamera: ObservableObject {
             }
 
         }
-        let videoOutput = AVCaptureVideoDataOutput()
-        videoOutput.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_32BGRA]
-        videoOutput.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "sample buffer delegate", attributes: []))
-        if videoSession.canAddOutput(videoOutput) {
-            videoSession.addOutput(videoOutput)
-        }
+        
         var resolution: AVCaptureSession.Preset {
             if videoSession.canSetSessionPreset(.hd4K3840x2160) {
                 return .hd4K3840x2160
@@ -70,10 +65,6 @@ class MetalCamera: ObservableObject {
     }
 
     func setUpCamera(delegate: AVCaptureVideoDataOutputSampleBufferDelegate?) {
-        guard let delegate = delegate else {
-            return
-        }
-        self.delegate = delegate
         self.videoSession = AVCaptureSession()
 
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: cameraPosition) {
