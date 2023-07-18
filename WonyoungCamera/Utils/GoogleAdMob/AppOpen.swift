@@ -21,18 +21,20 @@ final class OpenAd: NSObject, GADFullScreenContentDelegate {
             self.appOpenAd = appOpenAdIn
             self.appOpenAd?.fullScreenContentDelegate = self
             self.loadTime = Date()
-            print("[OPEN AD] Ad is ready")
+            if let gOpenAd = self.appOpenAd {
+                gOpenAd.present(fromRootViewController: (UIApplication.shared.windows.first?.rootViewController)!)
+            }
         })
     }
     
-    func tryToPresentAd() {
-        if let gOpenAd = self.appOpenAd, wasLoadTimeLessThanNHoursAgo(thresholdN: 4) {
-            gOpenAd.present(fromRootViewController: (UIApplication.shared.windows.first?.rootViewController)!)
-        } else {
-            self.requestAppOpenAd()
-        }
-    }
-    
+//    func tryToPresentAd() {
+//        if let gOpenAd = self.appOpenAd, wasLoadTimeLessThanNHoursAgo(thresholdN: 4) {
+//            gOpenAd.present(fromRootViewController: (UIApplication.shared.windows.first?.rootViewController)!)
+//        } else {
+//            self.requestAppOpenAd()
+//        }
+//    }
+//
     func wasLoadTimeLessThanNHoursAgo(thresholdN: Int) -> Bool {
         let now = Date()
         let timeIntervalBetweenNowAndLoadTime = now.timeIntervalSince(self.loadTime)
@@ -43,11 +45,11 @@ final class OpenAd: NSObject, GADFullScreenContentDelegate {
     
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         print("[OPEN AD] Failed: \(error)")
-        requestAppOpenAd()
+//        requestAppOpenAd()
     }
     
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        requestAppOpenAd()
+//        requestAppOpenAd()
         print("[OPEN AD] Ad dismissed")
     }
     

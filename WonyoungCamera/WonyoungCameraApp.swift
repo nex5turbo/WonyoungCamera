@@ -22,7 +22,7 @@ struct WonyoungCameraApp: App {
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active && !InAppPurchaseManager.shared.isPremiumUser {
-                ad.tryToPresentAd()
+                ad.requestAppOpenAd()
             }
         }
     }
