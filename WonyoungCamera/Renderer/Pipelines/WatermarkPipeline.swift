@@ -15,7 +15,7 @@ class WatermarkPipeline: FilterPipeline {
     public func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture,
                        commandBuffer: MTLCommandBuffer) {
-        guard let watermarkTexture = device.loadFilter(filterName: "watermark") else { return }
+        guard let watermarkTexture = self.watermarkTexture else { return }
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {
             fatalError("Could not make CommandEncoder")
         }

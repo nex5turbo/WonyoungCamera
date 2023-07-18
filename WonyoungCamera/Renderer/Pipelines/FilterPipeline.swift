@@ -40,10 +40,12 @@ class FilterPipeline {
     var grainBuffer: MTLBuffer?
     var highlightsAndShadowsBuffer1: MTLBuffer?
     var highlightsAndShadowsBuffer2: MTLBuffer?
+    var watermarkTexture: MTLTexture?
 
     public init() {
         self.device = SharedMetalDevice.instance.device
         self.library = SharedMetalDevice.instance.defaultLibrary
+        self.watermarkTexture = self.device.loadFilter(filterName: "watermark")
     }
     func getRenderPipelineState() -> MTLRenderPipelineState? {
         if let pipelineState = pipelineState {
