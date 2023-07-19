@@ -15,6 +15,7 @@ struct ExportResultView: View {
     @Binding var resultNSData: NSData?
     @Binding var resultURL: String?
     let reward = RewardedAd()
+    @State var hasReward: Bool = false
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -77,13 +78,25 @@ struct ExportResultView: View {
                         share(data: nsdata)
                     }
                 } else {
-                    _ = reward.showAd {
+                    if hasReward {
                         if let resultURL {
                             share(path: resultURL)
+                            hasReward = false
+                            print("debug4 : url")
                         } else if let nsdata = resultNSData {
                             share(data: nsdata)
+                            hasReward = false
+                            print("debug4 : data")
+                        } else {
+                            hasReward = true
+                            print("debug4 : no")
+                        }
+                    } else {
+                        _ = reward.showAd {
+                            hasReward = true
                         }
                     }
+                    
                 }
             } label: {
                 Text(String.shareLabel)
