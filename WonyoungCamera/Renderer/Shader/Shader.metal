@@ -92,7 +92,8 @@ float2 squareToCircle(float2 uv, float2 center, float radius) {
 fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
                                  texture2d<half> textureIn [[texture(0)]],
                                  texture2d<half> backgroundTexture [[texture(1)]],
-                                 constant bool &hasBG [[ buffer(0) ]]) {
+                                 constant bool &hasBG [[ buffer(0) ]],
+                                 constant float &ratio [[ buffer(1) ]]) {
     constexpr float radius = 0.45; // 반지름은 텍스처의 크기의 절반
     constexpr sampler colorSampler(address::clamp_to_zero ,coord::normalized, filter::linear);
     
@@ -107,7 +108,10 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
             return half4(0.0, 0.0, 0.0, 0.0); // 투명한 색상 반환
         }
     }
-    
+    float y = in.textureCoordinate.y;
+    y = y - 0.5;
+    y = y * (ratio);
+    y = y + 0.5;
     // 텍스처에서 해당 좌표에 있는 색상을 샘플링하여 반환
-    return textureIn.sample(colorSampler, in.textureCoordinate);
+    return textureIn.sample(colorSampler, float2(in.textureCoordinate.x, y));
 }

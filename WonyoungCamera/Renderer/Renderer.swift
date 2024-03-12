@@ -187,10 +187,9 @@ class Renderer {
         }
         
         guard let cameraTexture,
-                min(texture.width, texture.height) ==
-                min(cameraTexture.width, cameraTexture.height) else {
-            let targetLength = Int(min(texture.width, texture.height))
-            let targetSize = CGSize(width: targetLength, height: targetLength)
+              cameraTexture.width == texture.width,
+              cameraTexture.height == texture.height else {
+            let targetSize = CGSize(width: texture.width, height: texture.height)
             self.cameraTexture = self.makeEmptyTexture(size: targetSize)
             return
         }
@@ -200,8 +199,11 @@ class Renderer {
         }
         
         rounding(decoration: decoration, on: commandBuffer, to: targetTexture, with: cameraTexture)
-
+        if !UserSettings.instance.removeWatermark {
+            watermarkPipeline.render(from: targetTexture, to: targetTexture, commandBuffer: commandBuffer)
+        }
         render(on: commandBuffer, to: drawable.texture, with: targetTexture, decoration: decoration)
+        
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
@@ -257,6 +259,9 @@ extension Renderer {
         let quadVertices = getVertices()
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
+        let outputRatio = Float(outputTexture.height) / Float(outputTexture.width)
+        let inputRatio = Float(inputTexture.height) / Float(inputTexture.width)
+        var ratio = outputRatio / inputRatio
         
         //draw primitive
         let renderPassDescriptor = makeRenderPassDescriptor(texture: outputTexture, clearColor: true)
@@ -266,6 +271,7 @@ extension Renderer {
         renderCommandEncoder.setFragmentTexture(inputTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(decoration.backgroundTexture, index: 1)
         renderCommandEncoder.setFragmentBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 0)
+        renderCommandEncoder.setFragmentBytes(&ratio, length: MemoryLayout<Float>.stride, index: 1)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
         renderCommandEncoder.endEncoding()
