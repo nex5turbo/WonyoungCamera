@@ -76,7 +76,6 @@ float2 squareToCircle(float2 uv, float2 center, float radius) {
     float2 centerUV = center; // 텍스처 중심
     
     // 중심을 기준으로 uv 좌표 변환
-    float2 delta = uv - centerUV;
     float distance = metal::distance(uv, centerUV);
     
     // 중심에서 거리가 radius를 넘어가는 경우, 원 밖에 있는 부분은 제거
@@ -90,6 +89,7 @@ float2 squareToCircle(float2 uv, float2 center, float radius) {
 fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
                                  texture2d<half> textureIn [[texture(0)]],
                                  texture2d<half> backgroundTexture [[texture(1)]],
+                                 texture2d<half> frameTexture [[texture(2)]],
                                  constant bool &hasBG [[ buffer(0) ]],
                                  constant float &ratio [[ buffer(1) ]],
                                  constant bool &hasBorder [[ buffer(2) ]],
@@ -97,28 +97,14 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
                                  constant float &borderWidth [[ buffer(4) ]],
                                  constant float &scale [[ buffer(5) ]],
                                  constant float &tx [[ buffer(6) ]],
-                                 constant float &ty [[ buffer(7) ]]) {
+                                 constant float &ty [[ buffer(7) ]],
+                                 constant bool &hasFrame [[ buffer(8) ]]) {
     float radius = 0.48 * scale;
 //    width * 0.02
     constexpr sampler colorSampler(address::clamp_to_zero ,coord::normalized, filter::linear);
     
     // 정사각형 좌표를 원 좌표로 변환
     float2 circleUV = squareToCircle(in.textureCoordinate, float2(0.5 + tx, 0.5 + ty), radius);
-    
-    // 원 밖에 있는 부분은 투명하게 처리
-    if (circleUV.x < 0.0 || circleUV.y < 0.0) {
-        if (hasBG) {
-            return backgroundTexture.sample(colorSampler, in.textureCoordinate);
-        } else {
-            return half4(0.0, 0.0, 0.0, 0.0); // 투명한 색상 반환
-        }
-    }
-    if (hasBorder) {
-        float2 borderUV = squareToCircle(in.textureCoordinate, float2(0.5 + tx, 0.5 + ty), (radius - (borderWidth * 0.05 * scale)));
-        if (borderUV.x < 0.0 || borderUV.y < 0.0) {
-            return half4(borderColor);
-        }
-    }
     float y = in.textureCoordinate.y;
     y = y - 0.5;
 //    y = y * (ratio) / scale;
@@ -128,8 +114,39 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
     x = x - 0.5;
 //    x = x / scale;
     x = x + 0.5;
+    half4 color = textureIn.sample(colorSampler, float2(x, y));
     
+    // 원 밖에 있는 부분은 투명하게 처리
+    if (hasBorder) {
+        float2 borderUV = squareToCircle(in.textureCoordinate, float2(0.5 + tx, 0.5 + ty), (radius - (borderWidth * 0.05 * scale)));
+        if (borderUV.x < 0.0 || borderUV.y < 0.0) {
+            color = half4(borderColor);
+        }
+    }
+    
+    if (circleUV.x < 0.0 || circleUV.y < 0.0) {
+        if (hasBG) {
+            color = backgroundTexture.sample(colorSampler, in.textureCoordinate);
+        } else {
+            if (hasFrame) {
+                half4 frameColor = frameTexture.sample(colorSampler, in.textureCoordinate);
+                if (frameColor.a != 0) {
+                    color = frameColor;
+                }
+            }
+            color = half4(0.0, 0.0, 0.0, 0.0); // 투명한 색상 반환
+        }
+    }
+    
+    if (hasFrame) {
+        half4 frameColor = frameTexture.sample(colorSampler, in.textureCoordinate);
+        return mix(color, frameColor, frameColor.a);
+        if (frameColor.a != 0) {
+            return frameColor;
+        }
+    }
+
     // 사진도 덩달아 작아지도록 변경해야함
     // 텍스처에서 해당 좌표에 있는 색상을 샘플링하여 반환
-    return textureIn.sample(colorSampler, float2(x, y));
+    return color;
 }

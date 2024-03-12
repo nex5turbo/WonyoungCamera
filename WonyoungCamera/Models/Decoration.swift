@@ -10,7 +10,6 @@ import Metal
 import Foundation
 
 struct Decoration {
-    var sticker: String?
     var background: String? {
         didSet {
             guard let background else {
@@ -23,6 +22,19 @@ struct Decoration {
             backgroundTexture = texture
         }
     }
+    var frame: String? {
+        didSet {
+            guard let frame else {
+                frameTexture = nil
+                return
+            }
+            guard let texture = FramesStorage.instance.getTexture(frame) else {
+                return
+            }
+            frameTexture = texture
+        }
+    }
+    var frameTexture: MTLTexture?
     var backgroundTexture: MTLTexture?
     
     var borderThickness: Float = 0.5 // 0 ~ 1, 0.5 default
@@ -33,23 +45,23 @@ struct Decoration {
     var positionY: Float
     
     init(
-        sticker: String?,
         background: String?,
+        frame: String?,
         scale: Float,
         x: Float = 0.0,
         y: Float = 0.0
     ) {
-        self.sticker = sticker
         self.background = background
         self.scale = scale
+        self.frame = frame
         self.positionX = x
         self.positionY = y
     }
 
     static func empty() -> Self {
         return Decoration(
-            sticker: nil,
             background: nil,
+            frame: nil,
             scale: 1.0
         )
     }

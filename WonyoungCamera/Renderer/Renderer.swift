@@ -15,7 +15,6 @@ class Renderer {
     private var device: MTLDevice
     private var deviceSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     private var deviceScale = UIScreen.main.scale
-    private var provider = RenderableProvider()
     private var textureCache: CVMetalTextureCache?
     var targetTexture: MTLTexture?
     var cameraTexture: MTLTexture?
@@ -230,6 +229,7 @@ extension Renderer {
         }
         var hasBackground = decoration.backgroundTexture != nil
         var hasBorder = decoration.borderColor != nil
+        var hasFrame = decoration.frameTexture != nil
 
         let quadVertices = getVertices()
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
@@ -245,6 +245,7 @@ extension Renderer {
         renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
         renderCommandEncoder.setFragmentTexture(inputTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(decoration.backgroundTexture, index: 1)
+        renderCommandEncoder.setFragmentTexture(decoration.frameTexture, index: 2)
         renderCommandEncoder.setFragmentBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 0)
         renderCommandEncoder.setFragmentBytes(&ratio, length: MemoryLayout<Float>.stride, index: 1)
         renderCommandEncoder.setFragmentBytes(&hasBorder, length: MemoryLayout<Bool>.stride, index: 2)
@@ -253,6 +254,7 @@ extension Renderer {
         renderCommandEncoder.setFragmentBytes(&scale, length: MemoryLayout<Float>.stride, index: 5)
         renderCommandEncoder.setFragmentBytes(&tx, length: MemoryLayout<Float>.stride, index: 6)
         renderCommandEncoder.setFragmentBytes(&ty, length: MemoryLayout<Float>.stride, index: 7)
+        renderCommandEncoder.setFragmentBytes(&hasFrame, length: MemoryLayout<Float>.stride, index: 8)
         
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
         renderCommandEncoder.endEncoding()
