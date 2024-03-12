@@ -78,7 +78,11 @@ class MetalView: UIView {
         super.init(frame: .zero)
 
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.pinch))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.pan))
+        pinchGesture.delegate = self
+        panGesture.delegate = self
         self.addGestureRecognizer(pinchGesture)
+        self.addGestureRecognizer(panGesture)
         self.isUserInteractionEnabled = true
         metalLayer.framebufferOnly = false
         start()
@@ -87,11 +91,37 @@ class MetalView: UIView {
     @objc func pinch(sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
         
-        parent.decoration.scale /= Float(scale)
+        parent.decoration.scale *= Float(scale)
         if parent.decoration.scale > 1 {
             parent.decoration.scale = 1
         }
+        
+        if parent.decoration.scale < 0.4 {
+            parent.decoration.scale = 0.4
+        }
         sender.scale = 1
+    }
+    
+    @objc func pan(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: sender.view)
+        
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        let translateX = translation.x
+        let translateY = translation.y
+        
+        let normalizedX = translateX / width
+        let normalizedY = translateY / height
+        
+        parent.decoration.positionX += Float(normalizedX)
+        parent.decoration.positionY += Float(normalizedY)
+        print(parent.decoration.positionX, parent.decoration.positionY, "before")
+        parent.decoration.positionX = min(0.3, max(parent.decoration.positionX, -0.3))
+        parent.decoration.positionY = min(0.3, max(parent.decoration.positionY, -0.3))
+        print(parent.decoration.positionX, parent.decoration.positionY)
+        
+        sender.setTranslation(.zero, in: sender.view)
     }
     
     public override func draw(_ rect: CGRect) {
@@ -141,5 +171,12 @@ extension MetalView: AVCaptureVideoDataOutputSampleBufferDelegate {
         connection.isVideoMirrored = MetalCamera.instance.cameraPosition == .front
         connection.videoOrientation = .portrait
         self.currentSampleBuffer = sampleBuffer
+    }
+}
+
+extension MetalView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

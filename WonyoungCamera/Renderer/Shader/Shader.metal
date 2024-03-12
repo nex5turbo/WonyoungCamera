@@ -73,20 +73,18 @@ fragment half4 default_fragment(RasterizerData in [[ stage_in ]],
 
 
 float2 squareToCircle(float2 uv, float2 center, float radius) {
-    float2 centerUV = float2(0.5, 0.5); // 텍스처 중심
+    float2 centerUV = center; // 텍스처 중심
     
     // 중심을 기준으로 uv 좌표 변환
     float2 delta = uv - centerUV;
-    float distance = length(delta);
+    float distance = metal::distance(uv, centerUV);
     
     // 중심에서 거리가 radius를 넘어가는 경우, 원 밖에 있는 부분은 제거
     if (distance > radius) {
         return float2(-1.0); // 텍스처 바깥에 있는 부분은 (-1, -1) 반환
     }
     
-    // 원 안에 있는 부분의 좌표를 계산
-    float2 circleUV = centerUV + delta * (sqrt(radius * radius - distance * distance) / distance);
-    return circleUV;
+    return float2(1.0);
 }
 
 fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
@@ -96,13 +94,16 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
                                  constant float &ratio [[ buffer(1) ]],
                                  constant bool &hasBorder [[ buffer(2) ]],
                                  constant float4 &borderColor [[ buffer(3) ]],
-                                 constant float &borderWidth [[ buffer(4) ]]) {
-    constexpr float radius = 0.48; // 반지름은 텍스처의 크기의 절반
+                                 constant float &borderWidth [[ buffer(4) ]],
+                                 constant float &scale [[ buffer(5) ]],
+                                 constant float &tx [[ buffer(6) ]],
+                                 constant float &ty [[ buffer(7) ]]) {
+    float radius = 0.48 * scale;
 //    width * 0.02
     constexpr sampler colorSampler(address::clamp_to_zero ,coord::normalized, filter::linear);
     
     // 정사각형 좌표를 원 좌표로 변환
-    float2 circleUV = squareToCircle(in.textureCoordinate, float2(0.5), radius);
+    float2 circleUV = squareToCircle(in.textureCoordinate, float2(0.5 + tx, 0.5 + ty), radius);
     
     // 원 밖에 있는 부분은 투명하게 처리
     if (circleUV.x < 0.0 || circleUV.y < 0.0) {
@@ -113,15 +114,22 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
         }
     }
     if (hasBorder) {
-        float2 borderUV = squareToCircle(in.textureCoordinate, float2(0.5), (radius - (borderWidth * 0.05)));
+        float2 borderUV = squareToCircle(in.textureCoordinate, float2(0.5 + tx, 0.5 + ty), (radius - (borderWidth * 0.05 * scale)));
         if (borderUV.x < 0.0 || borderUV.y < 0.0) {
             return half4(borderColor);
         }
     }
     float y = in.textureCoordinate.y;
     y = y - 0.5;
+//    y = y * (ratio) / scale;
     y = y * (ratio);
     y = y + 0.5;
+    float x = in.textureCoordinate.x;
+    x = x - 0.5;
+//    x = x / scale;
+    x = x + 0.5;
+    
+    // 사진도 덩달아 작아지도록 변경해야함
     // 텍스처에서 해당 좌표에 있는 색상을 샘플링하여 반환
-    return textureIn.sample(colorSampler, float2(in.textureCoordinate.x, y));
+    return textureIn.sample(colorSampler, float2(x, y));
 }

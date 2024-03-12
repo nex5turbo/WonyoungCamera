@@ -215,6 +215,9 @@ extension Renderer {
         to outputTexture: MTLTexture,
         with inputTexture: MTLTexture
     ) {
+        var scale = decoration.scale
+        var tx = decoration.positionX
+        var ty = decoration.positionY
         var borderWidth = decoration.borderThickness
         var borderColor = SIMD4<Float>(0, 0, 0, 0)
         if let color = decoration.borderColor {
@@ -247,7 +250,10 @@ extension Renderer {
         renderCommandEncoder.setFragmentBytes(&hasBorder, length: MemoryLayout<Bool>.stride, index: 2)
         renderCommandEncoder.setFragmentBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 3)
         renderCommandEncoder.setFragmentBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 4)
-
+        renderCommandEncoder.setFragmentBytes(&scale, length: MemoryLayout<Float>.stride, index: 5)
+        renderCommandEncoder.setFragmentBytes(&tx, length: MemoryLayout<Float>.stride, index: 6)
+        renderCommandEncoder.setFragmentBytes(&ty, length: MemoryLayout<Float>.stride, index: 7)
+        
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
         renderCommandEncoder.endEncoding()
     }

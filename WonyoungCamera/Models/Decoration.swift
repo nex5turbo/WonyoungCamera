@@ -29,15 +29,21 @@ struct Decoration {
     var borderColor: CodableColor?
 
     var scale: Float
+    var positionX: Float
+    var positionY: Float
     
     init(
         sticker: String?,
         background: String?,
-        scale: Float
+        scale: Float,
+        x: Float = 0.0,
+        y: Float = 0.0
     ) {
         self.sticker = sticker
         self.background = background
         self.scale = scale
+        self.positionX = x
+        self.positionY = y
     }
 
     static func empty() -> Self {
