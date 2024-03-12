@@ -19,12 +19,8 @@ class Renderer {
     private var textureCache: CVMetalTextureCache?
     var targetTexture: MTLTexture?
     var cameraTexture: MTLTexture?
-    var circleTexture: MTLTexture
-    var computePipelineState: MTLComputePipelineState
-    var filterPipelineState: MTLComputePipelineState
-    var roundingPipelineState: MTLComputePipelineState?
-    var defaultRenderPipelineState: MTLRenderPipelineState!
-    var roundingRenderPipelineState: MTLRenderPipelineState!
+    var defaultRenderPipelineState: MTLRenderPipelineState
+    var roundingRenderPipelineState: MTLRenderPipelineState
     var defaultLibrary: MTLLibrary
     var commandQueue: MTLCommandQueue
     
@@ -39,18 +35,7 @@ class Renderer {
             fatalError("[Error] No command queue for device: \(device)")
         }
         self.commandQueue = commandQueue
-        guard let computePipelineState = device.loadComputePipelineState("roundingImage") else {
-            fatalError()
-        }
-        guard let filterPipelineState = device.loadComputePipelineState("applyColorFilter") else {
-            fatalError()
-        }
-        guard let circleTexture = device.loadFilter(filterName: "circle") else {
-            fatalError()
-        }
-        self.circleTexture = circleTexture
-        self.computePipelineState = computePipelineState
-        self.filterPipelineState = filterPipelineState
+        
         let defaultVertexProgram = defaultLibrary.makeFunction(name: "default_vertex")
         let defaultFragmentProgram = defaultLibrary.makeFunction(name: "default_fragment")
         let defaultRenderPipelineDesc = MTLRenderPipelineDescriptor()
@@ -230,32 +215,19 @@ extension Renderer {
         to outputTexture: MTLTexture,
         with inputTexture: MTLTexture
     ) {
-//        var scale = decoration.scale
-//        var borderWidth = decoration.borderThickness
-//        var borderColor = SIMD4<Float>(0, 0, 0, 0)
-//        if let color = decoration.borderColor {
-//            borderColor = SIMD4<Float>(
-//                Float(color.red),
-//                Float(color.green),
-//                Float(color.blue),
-//                Float(color.alpha)
-//            )
-//        }
+        var borderWidth = decoration.borderThickness
+        var borderColor = SIMD4<Float>(0, 0, 0, 0)
+        if let color = decoration.borderColor {
+            borderColor = SIMD4<Float>(
+                Float(color.red),
+                Float(color.green),
+                Float(color.blue),
+                Float(color.alpha)
+            )
+        }
         var hasBackground = decoration.backgroundTexture != nil
-//        var hasBorder = decoration.borderColor != nil
-        // compute
-//        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-//        computeEncoder?.setComputePipelineState(self.computePipelineState)
-//        computeEncoder?.setTexture(outputTexture, index: 0)
-//        computeEncoder?.setTexture(inputTexture, index: 1)
-//        computeEncoder?.setTexture(circleTexture, index: 2)
-//        
-//        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
-//        computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 1)
-//        computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 2)
-//        computeEncoder?.setBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 3)
-//        computeEncoder?.setBytes(&hasBorder, length: MemoryLayout<Bool>.stride, index: 4)
-        
+        var hasBorder = decoration.borderColor != nil
+
         let quadVertices = getVertices()
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
         let numVertice = quadVertices.count
@@ -272,6 +244,9 @@ extension Renderer {
         renderCommandEncoder.setFragmentTexture(decoration.backgroundTexture, index: 1)
         renderCommandEncoder.setFragmentBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 0)
         renderCommandEncoder.setFragmentBytes(&ratio, length: MemoryLayout<Float>.stride, index: 1)
+        renderCommandEncoder.setFragmentBytes(&hasBorder, length: MemoryLayout<Bool>.stride, index: 2)
+        renderCommandEncoder.setFragmentBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 3)
+        renderCommandEncoder.setFragmentBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 4)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
         renderCommandEncoder.endEncoding()

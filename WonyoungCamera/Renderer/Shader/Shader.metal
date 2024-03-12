@@ -93,8 +93,12 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
                                  texture2d<half> textureIn [[texture(0)]],
                                  texture2d<half> backgroundTexture [[texture(1)]],
                                  constant bool &hasBG [[ buffer(0) ]],
-                                 constant float &ratio [[ buffer(1) ]]) {
-    constexpr float radius = 0.45; // 반지름은 텍스처의 크기의 절반
+                                 constant float &ratio [[ buffer(1) ]],
+                                 constant bool &hasBorder [[ buffer(2) ]],
+                                 constant float4 &borderColor [[ buffer(3) ]],
+                                 constant float &borderWidth [[ buffer(4) ]]) {
+    constexpr float radius = 0.48; // 반지름은 텍스처의 크기의 절반
+//    width * 0.02
     constexpr sampler colorSampler(address::clamp_to_zero ,coord::normalized, filter::linear);
     
     // 정사각형 좌표를 원 좌표로 변환
@@ -106,6 +110,12 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
             return backgroundTexture.sample(colorSampler, in.textureCoordinate);
         } else {
             return half4(0.0, 0.0, 0.0, 0.0); // 투명한 색상 반환
+        }
+    }
+    if (hasBorder) {
+        float2 borderUV = squareToCircle(in.textureCoordinate, float2(0.5), (radius - (borderWidth * 0.05)));
+        if (borderUV.x < 0.0 || borderUV.y < 0.0) {
+            return half4(borderColor);
         }
     }
     float y = in.textureCoordinate.y;
