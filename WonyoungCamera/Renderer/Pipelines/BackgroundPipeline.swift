@@ -13,7 +13,7 @@ class BackgroundPipeline: FilterPipeline {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "backgroundFragment")
     }
 
-    public func render(from sourceTexture: MTLTexture,
+    override public func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture, commandBuffer: MTLCommandBuffer) {
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {
             fatalError("Could not make CommandEncoder")

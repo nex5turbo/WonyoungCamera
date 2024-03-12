@@ -8,9 +8,14 @@
 import Foundation
 import MetalKit
 
-class FilterPipeline {
+class FilterPipeline: Equatable {
+    static func == (lhs: FilterPipeline, rhs: FilterPipeline) -> Bool {
+        lhs.name == rhs.name
+    }
+    
     static let standardImageVertices: [Float] = [-1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0]
     static let textureCoordinatesFill: [Float] = [0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0]
+    var name: String { return "" }
     var device: MTLDevice
     var library: MTLLibrary
     private var pipelineState: MTLRenderPipelineState?
@@ -37,6 +42,7 @@ class FilterPipeline {
     var whiteBalanceBuffer1: MTLBuffer?
     var whiteBalanceBuffer2: MTLBuffer?
     var vignetteBuffer: MTLBuffer?
+    var hslBuffer: MTLBuffer?
     var grainBuffer: MTLBuffer?
     var highlightsAndShadowsBuffer1: MTLBuffer?
     var highlightsAndShadowsBuffer2: MTLBuffer?
@@ -45,7 +51,7 @@ class FilterPipeline {
     public init() {
         self.device = SharedMetalDevice.instance.device
         self.library = SharedMetalDevice.instance.defaultLibrary
-        self.watermarkTexture = self.device.loadFilter(filterName: "watermark")
+        self.watermarkTexture = self.device.loadImage(imageName: "logo")
     }
     func getRenderPipelineState() -> MTLRenderPipelineState? {
         if let pipelineState = pipelineState {
@@ -163,6 +169,11 @@ class FilterPipeline {
         depthTexture = texture
         return texture
     }
+    public func render(from sourceTexture: MTLTexture,
+                       to outputTexture: MTLTexture,
+                       commandBuffer: MTLCommandBuffer) {
+        fatalError("MUST IMPLEMENT")
+    }
     // MARK: - make buffers
     func makeBuffer(floatBytes: [Float], _ label: String? = nil) -> MTLBuffer {
         guard let buffer = device.makeBuffer(bytes: floatBytes,
@@ -268,6 +279,27 @@ class FilterPipeline {
             Float(leftBottom1.x), Float(leftBottom1.y),
             Float(rightBottom1.x), Float(rightBottom1.y)
         ]
+    }
+    
+    func samplerTexture(named name: String) -> MTLTexture? {
+        guard let bundleURL = Bundle.main.url(forResource: "FilterAssets", withExtension: "bundle") else {
+            return nil
+        }
+        guard let bundle = Bundle(url: bundleURL) else {
+            return nil
+        }
+        if let imageUrl = bundle.url(forResource: name, withExtension: nil) {
+            let loader = MTKTextureLoader(device: SharedMetalDevice.instance.device)
+            do {
+                let texture = try loader.newTexture(URL: imageUrl, options: [
+                    MTKTextureLoader.Option.SRGB: false
+                ])
+                return texture
+            } catch {
+                print(error)
+            }
+        }
+        return nil
     }
 }
 

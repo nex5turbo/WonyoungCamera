@@ -29,9 +29,6 @@ struct CameraView: View {
 
     let bottomIconSize: CGFloat = 25
 
-    func switchSlider() {
-        self.decoration.switchAdjustment()
-    }
     var body: some View {
         ZStack {
             NavigationLink(
@@ -79,21 +76,6 @@ struct CameraView: View {
                     .cornerRadius(30)
                     .padding(.horizontal, 10)
 
-                    if isSliderEditing {
-                        ZStack {
-                            VStack {
-                                Image(systemName: decoration.selectedAdjustment.type.getIconName())
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 40))
-                                Text("\(decoration.selectedAdjustment.presentValue)")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 30))
-                            }
-                        }
-                        .frame(width: 120, height: 120)
-                        .background(.black.opacity(0.5))
-                        .cornerRadius(10)
-                    }
                 }
                 Spacer()
                 VStack {
@@ -179,9 +161,9 @@ struct CameraView: View {
                         }
                         Spacer()
                         HapticButton {
-                            switchSlider()
+                            
                         } content: {
-                            Image(systemName: decoration.selectedAdjustment.type.getIconName())
+                            Image(systemName: "circle") // 다른 컨텐츠
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)

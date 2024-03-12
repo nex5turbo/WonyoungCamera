@@ -1,21 +1,27 @@
 //
-//  WatermarkPipeline.swift
-//  WonyoungCamera
+//  TempPipeline.swift
+//  Imica
 //
-//  Created by 워뇨옹 on 2023/01/17.
+//  Created by 워뇨옹 on 2023/09/09.
 //
 
 import Foundation
-import MetalKit
+import Metal
 
-class WatermarkPipeline: FilterPipeline {
+class TempPipeline: FilterPipeline {
+    override var name: String { return "Gangnam" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
-        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "watermarkFragment")
+        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTGinghamVideoFragment")
     }
-    override public func render(from sourceTexture: MTLTexture,
+    override func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture,
                        commandBuffer: MTLCommandBuffer) {
-        guard let watermarkTexture = self.watermarkTexture else { return }
+        guard let map = samplerTexture(named: "vintage_signature_curves1.png") else {
+            return
+        }
+        guard let mapLgg = samplerTexture(named: "vintage_signature_lgg_curves.png") else {
+            return
+        }
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {
             fatalError("Could not make CommandEncoder")
         }
@@ -31,10 +37,12 @@ class WatermarkPipeline: FilterPipeline {
         renderEncoder.setVertexBuffer(texture0CoordinatesFillBuffer, offset: 0, index: 1) // the texture
         // setup fragment buffer
         renderEncoder.setFragmentTexture(sourceTexture, index: 0)
-        renderEncoder.setFragmentTexture(watermarkTexture, index: 1)
+        renderEncoder.setFragmentTexture(map, index: 1)
+        renderEncoder.setFragmentTexture(mapLgg, index: 2)
+        var strength: Float = 1.0
+        renderEncoder.setFragmentBytes(&strength, length: MemoryLayout<Float>.stride, index: 0)
         // draw
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         renderEncoder.endEncoding()
     }
 }
-

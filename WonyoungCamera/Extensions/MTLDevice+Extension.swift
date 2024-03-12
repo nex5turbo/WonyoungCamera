@@ -16,6 +16,15 @@ extension MTLDevice {
         }
         return nil
     }
+    func loadImage(imageName: String, ext: String = "png") -> MTLTexture? {
+        let textureLoader = MTKTextureLoader(device: self)
+        if let url = Bundle.main.url(forResource: imageName, withExtension: ext) {
+            let returnTexture = try? textureLoader.newTexture(URL: url, options: [.SRGB: false])
+            return returnTexture
+        }
+        return nil
+    }
+    
     func loadFilter(filterName: String, ext: String = "png") -> MTLTexture? {
         let textureLoader = MTKTextureLoader(device: self)
         if let url = Bundle.main.url(forResource: filterName, withExtension: ext) {

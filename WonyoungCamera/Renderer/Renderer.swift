@@ -107,69 +107,6 @@ class Renderer {
         return renderPassDescriptor
     }
 
-    func applyLut(
-        on commandBuffer: MTLCommandBuffer,
-        to outputTexture: MTLTexture,
-        from inputTexture: MTLTexture,
-        lutTexture: MTLTexture
-    ) {
-
-        var textureWidth = Float(inputTexture.width)
-        var textureHeight = Float(inputTexture.height)
-
-        // compute
-        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-        computeEncoder?.setComputePipelineState(self.filterPipelineState)
-        computeEncoder?.setTexture(outputTexture, index: 0)
-        computeEncoder?.setTexture(inputTexture, index: 1)
-        computeEncoder?.setTexture(lutTexture, index: 2)
-        
-        computeEncoder?.setBytes(&textureWidth, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&textureHeight, length: MemoryLayout<Float>.stride, index: 2)
-        let w = computePipelineState.threadExecutionWidth
-        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
-        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
-
-        let threadgroupsPerGrid = MTLSizeMake((outputTexture.width + w - 1) / w,
-                                         (outputTexture.height + h - 1) / h,
-                                         1)
-        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
-
-        computeEncoder?.endEncoding()
-    }
-
-    func applyLut(to inputTexture: MTLTexture, lutTexture: MTLTexture) -> MTLTexture? {
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
-            return nil
-        }
-        let textureDescriptor = MTLTextureDescriptor()
-        textureDescriptor.textureType = .type2D
-        textureDescriptor.pixelFormat = .bgra8Unorm
-        textureDescriptor.width = inputTexture.width
-        textureDescriptor.height = inputTexture.height
-        textureDescriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
-        guard let returnTexture = self.makeTexture(descriptor: textureDescriptor) else {
-            return nil
-        }
-        applyLut(
-            on: commandBuffer,
-            to: returnTexture,
-            from: inputTexture,
-            lutTexture: lutTexture
-        )
-        commandBuffer.commit()
-        commandBuffer.waitUntilCompleted()
-        return returnTexture
-    }
-    
-    func applyLutToSampleImage(_ sampleImageTexture: MTLTexture, lutTexture: MTLTexture) -> UIImage? {
-        guard let resultTexture = applyLut(to: sampleImageTexture, lutTexture: lutTexture) else {
-            return nil
-        }
-        return textureToUIImage(texture: resultTexture)
-    }
-
     func render(
         on commandBuffer: MTLCommandBuffer,
         to outputTexture: MTLTexture,
@@ -238,12 +175,7 @@ class Renderer {
             on: commandBuffer,
             to: targetTexture
         )
-        applyColorFilter(
-            decoration: decoration,
-            on: commandBuffer,
-            to: cameraTexture,
-            with: texture
-        )
+
         
         roundingImage(
             decoration: decoration,
@@ -251,11 +183,6 @@ class Renderer {
             to: targetTexture,
             with: cameraTexture
         )
-//        applySticker(
-//            decoration: decoration,
-//            on: commandBuffer,
-//            to: targetTexture
-//        )
 
         render(on: commandBuffer, to: drawable.texture, with: targetTexture, decoration: decoration)
         commandBuffer.present(drawable)
@@ -349,68 +276,7 @@ extension Renderer {
         to outputTexture: MTLTexture,
         with inputTexture: MTLTexture
     ) {
-        guard let filterTexture = LutStorage.instance.luts[decoration.colorFilter] else {
-            return
-        }
-        /**
-         RAW Processing: Convert the raw image file into a usable format, such as TIFF or JPEG, and make basic adjustments, such as white balance and exposure.
-         
-         Cropping and Straightening: Crop the image to the desired aspect ratio and straighten the image if necessary.
-         
-         Adjusting Tonality: Adjust the overall brightness, contrast, and mid-tones of the image.
-         
-         Color Correction: Adjust the hue, saturation, and luminance of specific colors in the image.
-         
-         Sharpening: Increase the clarity and definition of the image's edges and details.
-         
-         Noise Reduction: Reduce image noise, which can be introduced by shooting in low light conditions or using high ISO settings.
-         
-         Spot Removal: Remove any distracting spots, blemishes, or dust from the image.
-         
-         Local Adjustments: Make specific adjustments to certain areas of the image, such as dodging and burning, selective color correction, or local sharpening.
-         
-         Export: Save the final image in the desired format and quality.
 
-         */
-        applyLut(
-            on: commandBuffer,
-            to: outputTexture,
-            from: inputTexture,
-            lutTexture: filterTexture
-        )
-        whiteBalancePipeline.render(
-            whiteBalanceProperties: WhiteBalanceProperties(
-                tint: 0,
-                temperature: decoration.whiteBalance.currentValue
-            ),
-            from: outputTexture,
-            to: outputTexture,
-            commandBuffer: commandBuffer
-        )
-        ExposurePipeline().render(
-            exposure: decoration.exposure.currentValue,
-            from: outputTexture,
-            to: outputTexture,
-            commandBuffer: commandBuffer
-        )
-        ContrastPipeline().render(
-            contrast: decoration.contrast.currentValue,
-            from: outputTexture,
-            to: outputTexture,
-            commandBuffer: commandBuffer
-        )
-//        BrightnessPipeline().render(
-//            brightness: decoration.brightness.currentValue,
-//            from: outputTexture,
-//            to: outputTexture,
-//            commandBuffer: commandBuffer
-//        )
-        SaturationPipeline().render(
-            saturation: decoration.saturation.currentValue,
-            from: outputTexture,
-            to: outputTexture,
-            commandBuffer: commandBuffer
-        )
     }
 }
 
@@ -529,13 +395,7 @@ extension Renderer {
             on: commandBuffer,
             to: squareTexture
         )
-        applyColorFilter(
-            decoration: decoration,
-            on: commandBuffer,
-            to: originalTexture,
-            with: texture
-        )
-        
+
         roundingImage(
             decoration: decoration,
             on: commandBuffer,
@@ -563,12 +423,7 @@ extension Renderer {
         guard let originalTexture = self.makeEmptyTexture(size: originalSize) else {
             return nil
         }
-        applyColorFilter(
-            decoration: decoration,
-            on: commandBuffer,
-            to: originalTexture,
-            with: texture
-        )
+
         if !UserSettings.instance.removeWatermark {
             watermarkPipeline.render(from: originalTexture, to: originalTexture, commandBuffer: commandBuffer)
         }

@@ -1,21 +1,24 @@
 //
-//  WatermarkPipeline.swift
-//  WonyoungCamera
+//  MTJunoPipeline.swift
+//  Imica
 //
-//  Created by 워뇨옹 on 2023/01/17.
+//  Created by 워뇨옹 on 2023/07/24.
 //
 
 import Foundation
 import MetalKit
 
-class WatermarkPipeline: FilterPipeline {
+class ShinePipeline: FilterPipeline {
+    override var name: String { return "Shine" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
-        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "watermarkFragment")
+        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTJunoFragment")
     }
-    override public func render(from sourceTexture: MTLTexture,
+    override func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture,
                        commandBuffer: MTLCommandBuffer) {
-        guard let watermarkTexture = self.watermarkTexture else { return }
+        guard let lookup = samplerTexture(named: "juno_map.png") else {
+            return
+        }
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {
             fatalError("Could not make CommandEncoder")
         }
@@ -31,10 +34,11 @@ class WatermarkPipeline: FilterPipeline {
         renderEncoder.setVertexBuffer(texture0CoordinatesFillBuffer, offset: 0, index: 1) // the texture
         // setup fragment buffer
         renderEncoder.setFragmentTexture(sourceTexture, index: 0)
-        renderEncoder.setFragmentTexture(watermarkTexture, index: 1)
+        renderEncoder.setFragmentTexture(lookup, index: 1)
+        var strength: Float = 1.0
+        renderEncoder.setFragmentBytes(&strength, length: MemoryLayout<Float>.stride, index: 0)
         // draw
         renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
         renderEncoder.endEncoding()
     }
 }
-
