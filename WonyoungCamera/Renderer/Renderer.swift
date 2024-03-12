@@ -24,6 +24,7 @@ class Renderer {
     var filterPipelineState: MTLComputePipelineState
     var roundingPipelineState: MTLComputePipelineState?
     var defaultRenderPipelineState: MTLRenderPipelineState!
+    var roundingRenderPipelineState: MTLRenderPipelineState!
     var defaultLibrary: MTLLibrary
     var commandQueue: MTLCommandQueue
     
@@ -69,6 +70,28 @@ class Renderer {
             defaultRenderPipelineState = try device.makeRenderPipelineState(descriptor: defaultRenderPipelineDesc)
         } catch {
             fatalError("Engine Error: Cannot create defaultRenderPipelineState!")
+        }
+        if kCVReturnSuccess != CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) {
+            print("[Error] CVMetalTextureCacheCreate")
+        }
+        
+        let roundingFragmentProgram = defaultLibrary.makeFunction(name: "rounding_fragment")
+        let roundingRenderPipelineDesc = MTLRenderPipelineDescriptor()
+        roundingRenderPipelineDesc.vertexFunction = defaultVertexProgram
+        roundingRenderPipelineDesc.fragmentFunction = roundingFragmentProgram
+        roundingRenderPipelineDesc.colorAttachments[0].pixelFormat = .bgra8Unorm
+        roundingRenderPipelineDesc.colorAttachments[0].isBlendingEnabled = true
+        roundingRenderPipelineDesc.colorAttachments[0].rgbBlendOperation = .add
+        roundingRenderPipelineDesc.colorAttachments[0].alphaBlendOperation = .add
+        roundingRenderPipelineDesc.colorAttachments[0].sourceRGBBlendFactor =  .sourceAlpha
+        roundingRenderPipelineDesc.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
+        roundingRenderPipelineDesc.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
+        roundingRenderPipelineDesc.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+
+        do {
+            roundingRenderPipelineState = try device.makeRenderPipelineState(descriptor: roundingRenderPipelineDesc)
+        } catch {
+            fatalError("Engine Error: Cannot create roundingRenderPipelineState!")
         }
         if kCVReturnSuccess != CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) {
             print("[Error] CVMetalTextureCacheCreate")
@@ -162,27 +185,8 @@ class Renderer {
             self.targetTexture = self.makeEmptyTexture(size: targetSize)
             return
         }
-        guard let cameraTexture,
-              cameraTexture.width == texture.width,
-              cameraTexture.height == texture.height else {
-            let targetSize = CGSize(width: texture.width, height: texture.height)
-            self.cameraTexture = self.makeEmptyTexture(size: targetSize)
-            return
-        }
 
-        applyBackground(
-            decoration: decoration,
-            on: commandBuffer,
-            to: targetTexture
-        )
-
-        
-        roundingImage(
-            decoration: decoration,
-            on: commandBuffer,
-            to: targetTexture,
-            with: cameraTexture
-        )
+        rounding(decoration: decoration, on: commandBuffer, to: targetTexture, with: texture)
 
         render(on: commandBuffer, to: drawable.texture, with: targetTexture, decoration: decoration)
         commandBuffer.present(drawable)
@@ -205,116 +209,53 @@ class Renderer {
 
 // MARK: apply functions
 extension Renderer {
-    func applyBackground(
-        decoration: Decoration,
-        on commandBuffer: MTLCommandBuffer,
-        to outputTexture: MTLTexture
-    ) {
-        guard let backgroundTexture = decoration.backgroundTexture else {
-            return
-        }
-        backgroundPipeline.render(from: backgroundTexture, to: outputTexture, commandBuffer: commandBuffer)
-    }
-
-    func applySticker(
-        decoration: Decoration,
-        on commandBuffer: MTLCommandBuffer,
-        to outputTexture: MTLTexture
-    ) {
-//        let renderable = provider.getRenderableOrFetch(decoration.sticker)
-//        guard let texture = renderable?.getCurrentTexture(on: device) else { return }
-    }
-
-    func roundingImage(
+    func rounding(
         decoration: Decoration,
         on commandBuffer: MTLCommandBuffer,
         to outputTexture: MTLTexture,
         with inputTexture: MTLTexture
     ) {
-        // MARK: - This should be changed with fragment shader
-        var scale = decoration.scale
-        var borderWidth = decoration.borderThickness
-        var borderColor = SIMD4<Float>(0, 0, 0, 0)
-        if let color = decoration.borderColor {
-            borderColor = SIMD4<Float>(
-                Float(color.red),
-                Float(color.green),
-                Float(color.blue),
-                Float(color.alpha)
-            )
-        }
+//        var scale = decoration.scale
+//        var borderWidth = decoration.borderThickness
+//        var borderColor = SIMD4<Float>(0, 0, 0, 0)
+//        if let color = decoration.borderColor {
+//            borderColor = SIMD4<Float>(
+//                Float(color.red),
+//                Float(color.green),
+//                Float(color.blue),
+//                Float(color.alpha)
+//            )
+//        }
         var hasBackground = decoration.backgroundTexture != nil
-        var hasBorder = decoration.borderColor != nil
+//        var hasBorder = decoration.borderColor != nil
         // compute
-        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
-        computeEncoder?.setComputePipelineState(self.computePipelineState)
-        computeEncoder?.setTexture(outputTexture, index: 0)
-        computeEncoder?.setTexture(inputTexture, index: 1)
-        computeEncoder?.setTexture(circleTexture, index: 2)
+//        let computeEncoder = commandBuffer.makeComputeCommandEncoder()
+//        computeEncoder?.setComputePipelineState(self.computePipelineState)
+//        computeEncoder?.setTexture(outputTexture, index: 0)
+//        computeEncoder?.setTexture(inputTexture, index: 1)
+//        computeEncoder?.setTexture(circleTexture, index: 2)
+//        
+//        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
+//        computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 1)
+//        computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 2)
+//        computeEncoder?.setBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 3)
+//        computeEncoder?.setBytes(&hasBorder, length: MemoryLayout<Bool>.stride, index: 4)
         
-        computeEncoder?.setBytes(&scale, length: MemoryLayout<Float>.stride, index: 0)
-        computeEncoder?.setBytes(&borderWidth, length: MemoryLayout<Float>.stride, index: 1)
-        computeEncoder?.setBytes(&borderColor, length: MemoryLayout<SIMD4<Float>>.stride, index: 2)
-        computeEncoder?.setBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 3)
-        computeEncoder?.setBytes(&hasBorder, length: MemoryLayout<Bool>.stride, index: 4)
+        let quadVertices = getVertices()
+        let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
+        let numVertice = quadVertices.count
         
-        let w = computePipelineState.threadExecutionWidth
-        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
-        let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
+        //draw primitive
+        let renderPassDescriptor = makeRenderPassDescriptor(texture: outputTexture, clearColor: true)
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
+        renderCommandEncoder.setRenderPipelineState(self.roundingRenderPipelineState)
+        renderCommandEncoder.setVertexBuffer(vertices, offset: 0, index: 0)
+        renderCommandEncoder.setFragmentTexture(inputTexture, index: 0)
+        renderCommandEncoder.setFragmentTexture(decoration.backgroundTexture, index: 1)
+        renderCommandEncoder.setFragmentBytes(&hasBackground, length: MemoryLayout<Bool>.stride, index: 0)
 
-        let threadgroupsPerGrid = MTLSizeMake((outputTexture.width + w - 1) / w,
-                                         (outputTexture.height + h - 1) / h,
-                                         1)
-        computeEncoder?.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
-
-        computeEncoder?.endEncoding()
-    }
-
-    func applyColorFilter(
-        decoration: Decoration,
-        on commandBuffer: MTLCommandBuffer,
-        to outputTexture: MTLTexture,
-        with inputTexture: MTLTexture
-    ) {
-
-    }
-}
-
-extension Renderer {
-    func roundingImage(
-        with texture: MTLTexture,
-        decoration: Decoration
-    ) -> MTLTexture? {
-        let targetLength = min(texture.width, texture.height)
-        let targetSize = CGSize(width: targetLength, height: targetLength)
-        guard let outputTexture = self.makeEmptyTexture(size: targetSize) else { return nil }
-        guard let emptyTexture = self.makeEmptyTexture(size: CGSize(width: texture.width, height: texture.height)) else { return nil }
-        guard let commandBuffer = self.commandQueue.makeCommandBuffer() else { return nil }
-        applyColorFilter(decoration: decoration, on: commandBuffer, to: emptyTexture, with: texture)
-        roundingImage(decoration: decoration, on: commandBuffer, to: outputTexture, with: emptyTexture)
-        commandBuffer.commit()
-        commandBuffer.waitUntilCompleted()
-        return outputTexture
-    }
-    
-    func roundingImage(
-        with pixelBuffer: CVPixelBuffer,
-        decoration: Decoration
-    ) -> MTLTexture? {
-        guard let texture = pixelBufferToTexture(pixelBuffer) else {
-            return nil
-        }
-        return roundingImage(with: texture, decoration: decoration)
-    }
-    
-    func roundingImage(
-        with sampleBuffer: CMSampleBuffer,
-        decoration: Decoration
-    ) -> MTLTexture? {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            return nil
-        }
-        return roundingImage(with: pixelBuffer, decoration: decoration)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
+        renderCommandEncoder.endEncoding()
     }
 }
 
@@ -383,32 +324,20 @@ extension Renderer {
         }
         let targetLength = Int(min(texture.width, texture.height))
         let targetSize = CGSize(width: targetLength, height: targetLength)
-        guard let squareTexture = self.makeEmptyTexture(size: targetSize) else {
+        guard let targetTexture = self.makeEmptyTexture(size: targetSize) else {
             return nil
         }
-        let originalSize = CGSize(width: texture.width, height: texture.height)
-        guard let originalTexture = self.makeEmptyTexture(size: originalSize) else {
-            return nil
-        }
-        applyBackground(
-            decoration: decoration,
-            on: commandBuffer,
-            to: squareTexture
-        )
 
-        roundingImage(
-            decoration: decoration,
-            on: commandBuffer,
-            to: squareTexture,
-            with: originalTexture
-        )
+        rounding(decoration: decoration, on: commandBuffer, to: targetTexture, with: texture)
+        
         if !UserSettings.instance.removeWatermark {
-            watermarkPipeline.render(from: squareTexture, to: squareTexture, commandBuffer: commandBuffer)
+            watermarkPipeline.render(from: targetTexture, to: targetTexture, commandBuffer: commandBuffer)
         }
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
-        return textureToUIImage(texture: squareTexture)
+        return textureToUIImage(texture: targetTexture)
     }
+
     func captureOriginalPhoto(of sampleBuffer: CMSampleBuffer, decoration: Decoration) -> UIImage? {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return nil
