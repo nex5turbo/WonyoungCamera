@@ -30,12 +30,13 @@ class MetalCamera: ObservableObject {
     }
     
     func switchCamera() {
+        self.videoSession.beginConfiguration()
         if cameraPosition == .back {
             cameraPosition = .front
         } else {
             cameraPosition = .back
         }
-        guard let currentInput = self.videoSession.inputs.first else {
+        guard let currentInput = self.videoSession.inputs.first as? AVCaptureDeviceInput else {
             return
         }
         self.videoSession.removeInput(currentInput)
@@ -61,7 +62,7 @@ class MetalCamera: ObservableObject {
             return .hd1280x720
         }
         self.videoSession.sessionPreset = resolution
-        self.startSession()
+        self.videoSession.commitConfiguration()
     }
 
     func setUpCamera(delegate: AVCaptureVideoDataOutputSampleBufferDelegate?) {
