@@ -49,6 +49,7 @@ class FilterManager: ObservableObject {
 //            sampleImages[filter.name] = getFilteredSampleImage(pipeline: filter)
             sampleImages[filter.name] = UIImage(named: "Natural")
         }
+        self.selectedFilter = filters.first
     }
     
 //    func getFilteredSampleImage(pipeline: FilterPipeline) -> UIImage? {

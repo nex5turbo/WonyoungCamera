@@ -26,6 +26,7 @@ struct CameraView: View {
     @State var isMute = false
     @State var buttonColor: Color = .white
     @State var isSliderEditing = false
+    @State private var shutterScreenPresented: Bool = false
 
     let bottomIconSize: CGFloat = 25
 
@@ -75,7 +76,6 @@ struct CameraView: View {
                     .frame(height: UIScreen.main.bounds.width - 20)
                     .cornerRadius(30)
                     .padding(.horizontal, 10)
-
                 }
                 Spacer()
                 VStack {
@@ -161,9 +161,9 @@ struct CameraView: View {
                         }
                         Spacer()
                         HapticButton {
-                            
+                            self.decoration = Decoration.empty()
                         } content: {
-                            Image(systemName: "circle") // 다른 컨텐츠
+                            Image(systemName: "arrow.uturn.backward.circle") // 다른 컨텐츠
                                 .font(.system(size: bottomIconSize))
                                 .foregroundColor(self.buttonColor)
                                 .padding(10)
@@ -195,6 +195,21 @@ struct CameraView: View {
         }
         .navigationTitle("")
         .navigationBarHidden(true)
+        .overlay {
+            if shutterScreenPresented {
+                Color.white
+            }
+        }
+        .onChange(of: takePicture) { newValue in
+            if newValue {
+                shutterScreenPresented = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation {
+                        shutterScreenPresented = false
+                    }
+                }
+            }
+        }
     }
 }
 
