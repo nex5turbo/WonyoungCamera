@@ -185,8 +185,21 @@ class Renderer {
             self.targetTexture = self.makeEmptyTexture(size: targetSize)
             return
         }
-
-        rounding(decoration: decoration, on: commandBuffer, to: targetTexture, with: texture)
+        
+        guard let cameraTexture,
+                min(texture.width, texture.height) ==
+                min(cameraTexture.width, cameraTexture.height) else {
+            let targetLength = Int(min(texture.width, texture.height))
+            let targetSize = CGSize(width: targetLength, height: targetLength)
+            self.cameraTexture = self.makeEmptyTexture(size: targetSize)
+            return
+        }
+              
+        if let pipeline = FilterManager.shared.selectedFilter {
+            pipeline.render(from: texture, to: cameraTexture, commandBuffer: commandBuffer)
+        }
+        
+        rounding(decoration: decoration, on: commandBuffer, to: targetTexture, with: cameraTexture)
 
         render(on: commandBuffer, to: drawable.texture, with: targetTexture, decoration: decoration)
         commandBuffer.present(drawable)
@@ -327,8 +340,16 @@ extension Renderer {
         guard let targetTexture = self.makeEmptyTexture(size: targetSize) else {
             return nil
         }
+        let originalSize = CGSize(width: texture.width, height: texture.height)
+        guard let originalTexture = self.makeEmptyTexture(size: originalSize) else {
+            return nil
+        }
 
-        rounding(decoration: decoration, on: commandBuffer, to: targetTexture, with: texture)
+        if let pipeline = FilterManager.shared.selectedFilter {
+            pipeline.render(from: texture, to: originalTexture, commandBuffer: commandBuffer)
+        }
+        
+        rounding(decoration: decoration, on: commandBuffer, to: targetTexture, with: originalTexture)
         
         if !UserSettings.instance.removeWatermark {
             watermarkPipeline.render(from: targetTexture, to: targetTexture, commandBuffer: commandBuffer)
@@ -353,6 +374,10 @@ extension Renderer {
             return nil
         }
 
+        if let pipeline = FilterManager.shared.selectedFilter {
+            pipeline.render(from: texture, to: originalTexture, commandBuffer: commandBuffer)
+        }
+        
         if !UserSettings.instance.removeWatermark {
             watermarkPipeline.render(from: originalTexture, to: originalTexture, commandBuffer: commandBuffer)
         }

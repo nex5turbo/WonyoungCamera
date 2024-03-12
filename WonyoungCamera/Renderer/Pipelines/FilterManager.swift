@@ -15,13 +15,13 @@ class FilterManager: ObservableObject {
     
     var filters: [FilterPipeline] = []
     var sampleImages: [String: UIImage?] = [:]
-    private var resourceBundle: Bundle
     
     var device: MTLDevice
-    @Published var shouldFilter: Bool = true
     let renderer = Renderer()
     
-    init() {
+    static let shared = FilterManager()
+    
+    private init() {
         filters.append(LovelyPipeline())
         filters.append(IdolPipeline())
         filters.append(MonoPipeline())
@@ -45,10 +45,9 @@ class FilterManager: ObservableObject {
         filters.append(Temp7Pipeline())
         
         self.device = SharedMetalDevice.instance.device
-        let url = Bundle.main.url(forResource: "FilterAssets", withExtension: "bundle")!
-        resourceBundle = Bundle(url: url)!
         for filter in filters {
 //            sampleImages[filter.name] = getFilteredSampleImage(pipeline: filter)
+            sampleImages[filter.name] = UIImage(named: "Natural")
         }
     }
     
@@ -63,8 +62,4 @@ class FilterManager: ObservableObject {
 //            return nil
 //        }
 //    }
-    
-    func url(forResource name: String) -> URL? {
-        return resourceBundle.url(forResource: name, withExtension: nil)
-    }
 }
