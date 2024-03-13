@@ -21,10 +21,10 @@ struct BackgroundView: View {
                         Color.white.frame(width: imageSize, height: imageSize)
                             .cornerRadius(10)
                     }
-                    ForEach(Backgrounds.allCases, id: \.self) { name in
-                        if let image = UIImage(named: name.rawValue + ".jpg")?.preparingThumbnail(of: CGSize(width: imageSize * scale, height: imageSize * scale)) {
+                    ForEach(Backgrounds.allCases, id: \.self) { background in
+                        if let image = background.getImage()?.preparingThumbnail(of: CGSize(width: imageSize * scale, height: imageSize * scale)) {
                             Button {
-                                decoration.background = name.rawValue
+                                decoration.background = background.rawValue
                             } label: {
                                 Image(uiImage: image)
                                     .resizable()

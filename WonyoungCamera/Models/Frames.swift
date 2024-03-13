@@ -9,7 +9,7 @@ import Foundation
 import MetalKit
 
 enum Frames: String, CaseIterable {
-    case f1
+    case f1, f2, f3, f5, f6, f7, f8, f10, f11, f12, f13
 }
 
 class FramesStorage {
