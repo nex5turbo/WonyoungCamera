@@ -46,21 +46,20 @@ class FilterManager: ObservableObject {
         
         self.device = SharedMetalDevice.instance.device
         for filter in filters {
-//            sampleImages[filter.name] = getFilteredSampleImage(pipeline: filter)
-            sampleImages[filter.name] = UIImage(named: "Natural")
+            sampleImages[filter.name] = getFilteredSampleImage(pipeline: filter)
         }
         self.selectedFilter = filters.first
     }
     
-//    func getFilteredSampleImage(pipeline: FilterPipeline) -> UIImage? {
-//        if let sampleImageTexture = device.loadImage(imageName: "bicycle", ext: "jpg") {
-//            if let resultTexture = self.renderer.filterSampleImageTexture(texture: sampleImageTexture, pipeline: pipeline) {
-//                return textureToUIImage(texture: resultTexture, orientation: .portrait)
-//            } else {
-//                return nil
-//            }
-//        } else {
-//            return nil
-//        }
-//    }
+    func getFilteredSampleImage(pipeline: FilterPipeline) -> UIImage? {
+        if let sampleImageTexture = device.loadImage(imageName: "sample", ext: "png") {
+            if let result = self.renderer.applyFilter(to: sampleImageTexture, with: pipeline) {
+                return result
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
 }

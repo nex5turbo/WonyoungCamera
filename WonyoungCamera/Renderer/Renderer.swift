@@ -148,6 +148,25 @@ class Renderer {
         render(to: drawable, with: texture, decoration: decoration)
     }
     
+    func applyFilter(
+        to texture: MTLTexture,
+        with pipeline: FilterPipeline
+    ) -> UIImage? {
+        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+            print("[Error] no commandBuffer for commandQueue: \(commandQueue)")
+            return nil
+        }
+        
+        guard let returnTexture = self.makeEmptyTexture(size: CGSize(width: texture.width, height: texture.height)) else {
+            print("Cannot make empty texture")
+            return nil
+        }
+        pipeline.render(from: texture, to: returnTexture, commandBuffer: commandBuffer)
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        return textureToUIImage(texture: returnTexture)
+    }
+    
     func render(
         to drawable: CAMetalDrawable,
         with texture: MTLTexture?,
