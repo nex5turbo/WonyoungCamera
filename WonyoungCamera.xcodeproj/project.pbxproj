@@ -115,6 +115,11 @@
 		54C865BE2BA16E71007F53BD /* p_p8.png in Resources */ = {isa = PBXBuildFile; fileRef = 54C865AE2BA16E71007F53BD /* p_p8.png */; };
 		54C865BF2BA16E71007F53BD /* p_p9.png in Resources */ = {isa = PBXBuildFile; fileRef = 54C865AF2BA16E71007F53BD /* p_p9.png */; };
 		54C865C02BA16E71007F53BD /* p_p10.png in Resources */ = {isa = PBXBuildFile; fileRef = 54C865B02BA16E71007F53BD /* p_p10.png */; };
+		54C865C32BA17DE9007F53BD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 54C865C22BA17DE9007F53BD /* FirebaseAnalytics */; };
+		54C865C52BA17DE9007F53BD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 54C865C42BA17DE9007F53BD /* FirebaseAnalyticsOnDeviceConversion */; };
+		54C865C72BA17DE9007F53BD /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 54C865C62BA17DE9007F53BD /* FirebaseAnalyticsSwift */; };
+		54C865C92BA17DE9007F53BD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 54C865C82BA17DE9007F53BD /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		54C865CB2BA17DE9007F53BD /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 54C865CA2BA17DE9007F53BD /* FirebaseCrashlytics */; };
 		54D1727A295B3CA7006180FA /* Webtoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 54D17279295B3CA7006180FA /* Webtoon.png */; };
 		54D1727C295DBFB3006180FA /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 54D1727B295DBFB3006180FA /* circle.png */; };
 		54D1727E295DD85B006180FA /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D1727D295DD85B006180FA /* FileManager+Extension.swift */; };
@@ -523,9 +528,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				549BEE3C2A63D93A0019CDE9 /* GoogleMobileAds in Frameworks */,
+				54C865C52BA17DE9007F53BD /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				54ED1064293CCCBE00926E36 /* SwiftyStoreKit in Frameworks */,
 				545908A62913F87E00B3A658 /* Kingfisher in Frameworks */,
+				54C865C72BA17DE9007F53BD /* FirebaseAnalyticsSwift in Frameworks */,
+				54C865C32BA17DE9007F53BD /* FirebaseAnalytics in Frameworks */,
+				54C865CB2BA17DE9007F53BD /* FirebaseCrashlytics in Frameworks */,
 				6A8FFC30291E082900000C1B /* Lottie in Frameworks */,
+				54C865C92BA17DE9007F53BD /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1101,6 +1111,11 @@
 				6A8FFC2F291E082900000C1B /* Lottie */,
 				54ED1063293CCCBE00926E36 /* SwiftyStoreKit */,
 				549BEE3B2A63D93A0019CDE9 /* GoogleMobileAds */,
+				54C865C22BA17DE9007F53BD /* FirebaseAnalytics */,
+				54C865C42BA17DE9007F53BD /* FirebaseAnalyticsOnDeviceConversion */,
+				54C865C62BA17DE9007F53BD /* FirebaseAnalyticsSwift */,
+				54C865C82BA17DE9007F53BD /* FirebaseAnalyticsWithoutAdIdSupport */,
+				54C865CA2BA17DE9007F53BD /* FirebaseCrashlytics */,
 			);
 			productName = WonyoungCamera;
 			productReference = 54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */;
@@ -1190,6 +1205,7 @@
 				6A8FFC2E291E082900000C1B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
 				549BEE3A2A63D93A0019CDE9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				54C865C12BA17DE9007F53BD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 54D3589428DC7B6900A3AB4D /* Products */;
 			projectDirPath = "";
@@ -1847,6 +1863,14 @@
 				kind = branch;
 			};
 		};
+		54C865C12BA17DE9007F53BD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.22.1;
+			};
+		};
 		54ED1062293CCCBE00926E36 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit.git";
@@ -1875,6 +1899,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 549BEE3A2A63D93A0019CDE9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
 			productName = GoogleMobileAds;
+		};
+		54C865C22BA17DE9007F53BD /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54C865C12BA17DE9007F53BD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		54C865C42BA17DE9007F53BD /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54C865C12BA17DE9007F53BD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		54C865C62BA17DE9007F53BD /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54C865C12BA17DE9007F53BD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		54C865C82BA17DE9007F53BD /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54C865C12BA17DE9007F53BD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		54C865CA2BA17DE9007F53BD /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54C865C12BA17DE9007F53BD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		54ED1063293CCCBE00926E36 /* SwiftyStoreKit */ = {
 			isa = XCSwiftPackageProductDependency;

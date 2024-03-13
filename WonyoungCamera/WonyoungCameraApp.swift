@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 import SwiftyStoreKit
 import GoogleMobileAds
+import FirebaseCore
 
 @main
 struct WonyoungCameraApp: App {
@@ -40,6 +41,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         GADMobileAds.sharedInstance().start()
+        FirebaseApp.configure()
         SwiftyStoreKit.completeTransactions(atomically: false) { purchases in
             for purchase in purchases {
                 switch purchase.transaction.transactionState {
