@@ -74,6 +74,10 @@
 		549BEE412A63E7AC0019CDE9 /* InterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE402A63E7AC0019CDE9 /* InterstitialAd.swift */; };
 		549BEE432A63EA8C0019CDE9 /* RewardAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE422A63EA8C0019CDE9 /* RewardAd.swift */; };
 		549BEE452A63EB5C0019CDE9 /* BannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE442A63EB5C0019CDE9 /* BannerAd.swift */; };
+		54A41CF82BA2D65E00535467 /* s3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF42BA2D65E00535467 /* s3.jpg */; };
+		54A41CF92BA2D65E00535467 /* s4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF52BA2D65E00535467 /* s4.jpg */; };
+		54A41CFA2BA2D65E00535467 /* s1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF62BA2D65E00535467 /* s1.jpg */; };
+		54A41CFB2BA2D65E00535467 /* s2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF72BA2D65E00535467 /* s2.jpg */; };
 		54ACA6592991206F00690B11 /* DecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA6582991206F00690B11 /* DecorationView.swift */; };
 		54ACA65B299120FD00690B11 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65A299120FD00690B11 /* TabBar.swift */; };
 		54ACA65D299121BC00690B11 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65C299121BC00690B11 /* BackgroundView.swift */; };
@@ -170,23 +174,23 @@
 		54D237C12BA0777800545ADD /* HypnosisPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237AC2BA0777700545ADD /* HypnosisPipeline.swift */; };
 		54D237C22BA0777800545ADD /* SilentPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237AD2BA0777700545ADD /* SilentPipeline.swift */; };
 		54D237C32BA0777800545ADD /* ShinePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237AE2BA0777700545ADD /* ShinePipeline.swift */; };
-		54D237C42BA0777800545ADD /* Temp2Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237AF2BA0777700545ADD /* Temp2Pipeline.swift */; };
-		54D237C52BA0777800545ADD /* Temp3Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B02BA0777700545ADD /* Temp3Pipeline.swift */; };
-		54D237C62BA0777800545ADD /* TempPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B12BA0777700545ADD /* TempPipeline.swift */; };
+		54D237C42BA0777800545ADD /* CK2Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237AF2BA0777700545ADD /* CK2Pipeline.swift */; };
+		54D237C52BA0777800545ADD /* PenTouchPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B02BA0777700545ADD /* PenTouchPipeline.swift */; };
+		54D237C62BA0777800545ADD /* GangnamPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B12BA0777700545ADD /* GangnamPipeline.swift */; };
 		54D237C72BA0777800545ADD /* MonoPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B22BA0777700545ADD /* MonoPipeline.swift */; };
 		54D237C82BA0777800545ADD /* LovelyPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B32BA0777700545ADD /* LovelyPipeline.swift */; };
 		54D237C92BA0777800545ADD /* ArcadePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B42BA0777700545ADD /* ArcadePipeline.swift */; };
 		54D237CA2BA0777800545ADD /* CreamPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B52BA0777700545ADD /* CreamPipeline.swift */; };
 		54D237CB2BA0777800545ADD /* WhisperVideoPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B62BA0777800545ADD /* WhisperVideoPipeline.swift */; };
 		54D237CC2BA0777800545ADD /* SveltePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B72BA0777800545ADD /* SveltePipeline.swift */; };
-		54D237CD2BA0777800545ADD /* Temp7Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B82BA0777800545ADD /* Temp7Pipeline.swift */; };
+		54D237CD2BA0777800545ADD /* RiptonPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B82BA0777800545ADD /* RiptonPipeline.swift */; };
 		54D237CE2BA0777800545ADD /* HyphenPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237B92BA0777800545ADD /* HyphenPipeline.swift */; };
 		54D237CF2BA0777800545ADD /* PilotPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BA2BA0777800545ADD /* PilotPipeline.swift */; };
 		54D237D02BA0777800545ADD /* FrigiaPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BB2BA0777800545ADD /* FrigiaPipeline.swift */; };
-		54D237D12BA0777800545ADD /* Temp5Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BC2BA0777800545ADD /* Temp5Pipeline.swift */; };
-		54D237D22BA0777800545ADD /* Temp4Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BD2BA0777800545ADD /* Temp4Pipeline.swift */; };
+		54D237D12BA0777800545ADD /* SiriPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BC2BA0777800545ADD /* SiriPipeline.swift */; };
+		54D237D22BA0777800545ADD /* ReyesPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BD2BA0777800545ADD /* ReyesPipeline.swift */; };
 		54D237D32BA0777800545ADD /* IdolPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BE2BA0777800545ADD /* IdolPipeline.swift */; };
-		54D237D42BA0777800545ADD /* Temp6Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BF2BA0777800545ADD /* Temp6Pipeline.swift */; };
+		54D237D42BA0777800545ADD /* BreadPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237BF2BA0777800545ADD /* BreadPipeline.swift */; };
 		54D237D52BA0777800545ADD /* PastPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D237C02BA0777800545ADD /* PastPipeline.swift */; };
 		54D3589728DC7B6900A3AB4D /* WonyoungCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3589628DC7B6900A3AB4D /* WonyoungCameraApp.swift */; };
 		54D3589928DC7B6900A3AB4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D3589828DC7B6900A3AB4D /* ContentView.swift */; };
@@ -346,6 +350,10 @@
 		549BEE402A63E7AC0019CDE9 /* InterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAd.swift; sourceTree = "<group>"; };
 		549BEE422A63EA8C0019CDE9 /* RewardAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardAd.swift; sourceTree = "<group>"; };
 		549BEE442A63EB5C0019CDE9 /* BannerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAd.swift; sourceTree = "<group>"; };
+		54A41CF42BA2D65E00535467 /* s3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s3.jpg; sourceTree = "<group>"; };
+		54A41CF52BA2D65E00535467 /* s4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s4.jpg; sourceTree = "<group>"; };
+		54A41CF62BA2D65E00535467 /* s1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s1.jpg; sourceTree = "<group>"; };
+		54A41CF72BA2D65E00535467 /* s2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s2.jpg; sourceTree = "<group>"; };
 		54ACA6582991206F00690B11 /* DecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationView.swift; sourceTree = "<group>"; };
 		54ACA65A299120FD00690B11 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		54ACA65C299121BC00690B11 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
@@ -439,23 +447,23 @@
 		54D237AC2BA0777700545ADD /* HypnosisPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HypnosisPipeline.swift; sourceTree = "<group>"; };
 		54D237AD2BA0777700545ADD /* SilentPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SilentPipeline.swift; sourceTree = "<group>"; };
 		54D237AE2BA0777700545ADD /* ShinePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShinePipeline.swift; sourceTree = "<group>"; };
-		54D237AF2BA0777700545ADD /* Temp2Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp2Pipeline.swift; sourceTree = "<group>"; };
-		54D237B02BA0777700545ADD /* Temp3Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp3Pipeline.swift; sourceTree = "<group>"; };
-		54D237B12BA0777700545ADD /* TempPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempPipeline.swift; sourceTree = "<group>"; };
+		54D237AF2BA0777700545ADD /* CK2Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CK2Pipeline.swift; sourceTree = "<group>"; };
+		54D237B02BA0777700545ADD /* PenTouchPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenTouchPipeline.swift; sourceTree = "<group>"; };
+		54D237B12BA0777700545ADD /* GangnamPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GangnamPipeline.swift; sourceTree = "<group>"; };
 		54D237B22BA0777700545ADD /* MonoPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonoPipeline.swift; sourceTree = "<group>"; };
 		54D237B32BA0777700545ADD /* LovelyPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LovelyPipeline.swift; sourceTree = "<group>"; };
 		54D237B42BA0777700545ADD /* ArcadePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArcadePipeline.swift; sourceTree = "<group>"; };
 		54D237B52BA0777700545ADD /* CreamPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreamPipeline.swift; sourceTree = "<group>"; };
 		54D237B62BA0777800545ADD /* WhisperVideoPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhisperVideoPipeline.swift; sourceTree = "<group>"; };
 		54D237B72BA0777800545ADD /* SveltePipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SveltePipeline.swift; sourceTree = "<group>"; };
-		54D237B82BA0777800545ADD /* Temp7Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp7Pipeline.swift; sourceTree = "<group>"; };
+		54D237B82BA0777800545ADD /* RiptonPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RiptonPipeline.swift; sourceTree = "<group>"; };
 		54D237B92BA0777800545ADD /* HyphenPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HyphenPipeline.swift; sourceTree = "<group>"; };
 		54D237BA2BA0777800545ADD /* PilotPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PilotPipeline.swift; sourceTree = "<group>"; };
 		54D237BB2BA0777800545ADD /* FrigiaPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrigiaPipeline.swift; sourceTree = "<group>"; };
-		54D237BC2BA0777800545ADD /* Temp5Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp5Pipeline.swift; sourceTree = "<group>"; };
-		54D237BD2BA0777800545ADD /* Temp4Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp4Pipeline.swift; sourceTree = "<group>"; };
+		54D237BC2BA0777800545ADD /* SiriPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiriPipeline.swift; sourceTree = "<group>"; };
+		54D237BD2BA0777800545ADD /* ReyesPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReyesPipeline.swift; sourceTree = "<group>"; };
 		54D237BE2BA0777800545ADD /* IdolPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdolPipeline.swift; sourceTree = "<group>"; };
-		54D237BF2BA0777800545ADD /* Temp6Pipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp6Pipeline.swift; sourceTree = "<group>"; };
+		54D237BF2BA0777800545ADD /* BreadPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreadPipeline.swift; sourceTree = "<group>"; };
 		54D237C02BA0777800545ADD /* PastPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPipeline.swift; sourceTree = "<group>"; };
 		54D3589328DC7B6900A3AB4D /* WonyoungCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WonyoungCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D3589628DC7B6900A3AB4D /* WonyoungCameraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonyoungCameraApp.swift; sourceTree = "<group>"; };
@@ -683,13 +691,13 @@
 				54D237AE2BA0777700545ADD /* ShinePipeline.swift */,
 				54D237AD2BA0777700545ADD /* SilentPipeline.swift */,
 				54D237B72BA0777800545ADD /* SveltePipeline.swift */,
-				54D237AF2BA0777700545ADD /* Temp2Pipeline.swift */,
-				54D237B02BA0777700545ADD /* Temp3Pipeline.swift */,
-				54D237BD2BA0777800545ADD /* Temp4Pipeline.swift */,
-				54D237BC2BA0777800545ADD /* Temp5Pipeline.swift */,
-				54D237BF2BA0777800545ADD /* Temp6Pipeline.swift */,
-				54D237B82BA0777800545ADD /* Temp7Pipeline.swift */,
-				54D237B12BA0777700545ADD /* TempPipeline.swift */,
+				54D237AF2BA0777700545ADD /* CK2Pipeline.swift */,
+				54D237B02BA0777700545ADD /* PenTouchPipeline.swift */,
+				54D237BD2BA0777800545ADD /* ReyesPipeline.swift */,
+				54D237BC2BA0777800545ADD /* SiriPipeline.swift */,
+				54D237BF2BA0777800545ADD /* BreadPipeline.swift */,
+				54D237B82BA0777800545ADD /* RiptonPipeline.swift */,
+				54D237B12BA0777700545ADD /* GangnamPipeline.swift */,
 				54D237B62BA0777800545ADD /* WhisperVideoPipeline.swift */,
 				5444215D296D833200B056D6 /* FilterPipeline.swift */,
 				54426CBB2976C33B002F7CD2 /* ContrastPipeline.swift */,
@@ -741,6 +749,17 @@
 				549BEE442A63EB5C0019CDE9 /* BannerAd.swift */,
 			);
 			path = GoogleAdMob;
+			sourceTree = "<group>";
+		};
+		54A41CF32BA2D65200535467 /* samples */ = {
+			isa = PBXGroup;
+			children = (
+				54A41CF62BA2D65E00535467 /* s1.jpg */,
+				54A41CF72BA2D65E00535467 /* s2.jpg */,
+				54A41CF42BA2D65E00535467 /* s3.jpg */,
+				54A41CF52BA2D65E00535467 /* s4.jpg */,
+			);
+			path = samples;
 			sourceTree = "<group>";
 		};
 		54ACA65529911FB500690B11 /* backgrounds */ = {
@@ -1054,6 +1073,7 @@
 		54E31C7B2970294E00EE8178 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				54A41CF32BA2D65200535467 /* samples */,
 				54C865812BA0B099007F53BD /* frames */,
 				54ACA65529911FB500690B11 /* backgrounds */,
 				54E31C7C2970295B00EE8178 /* Images */,
@@ -1263,14 +1283,17 @@
 				54E31C58296F149400EE8178 /* GMT3.png in Resources */,
 				54E31C7E2970296400EE8178 /* watermark.png in Resources */,
 				545FF9E329619DBB00BECC3C /* JJ1.png in Resources */,
+				54A41CFA2BA2D65E00535467 /* s1.jpg in Resources */,
 				6A8FFC37291E101300000C1B /* exportImage.json in Resources */,
 				54D3C33C2966E8CC009BC254 /* JJ5.png in Resources */,
 				545FF9E029619DBB00BECC3C /* JJ2.png in Resources */,
+				54A41CF82BA2D65E00535467 /* s3.jpg in Resources */,
 				54C865B92BA16E71007F53BD /* p_p3.png in Resources */,
 				54C865982BA166CB007F53BD /* f8.png in Resources */,
 				54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */,
 				54E31C63296F14A000EE8178 /* CR15.png in Resources */,
 				545FF9DC29619DBB00BECC3C /* JE2.png in Resources */,
+				54A41CFB2BA2D65E00535467 /* s2.jpg in Resources */,
 				54E31C5A296F149400EE8178 /* GMT6.png in Resources */,
 				543B35D82969A95000ED86C8 /* Natural.png in Resources */,
 				54C865BA2BA16E71007F53BD /* p_p4.png in Resources */,
@@ -1290,6 +1313,7 @@
 				54E31C74296F159500EE8178 /* whiteWoman.png in Resources */,
 				54C865802BA0A1CE007F53BD /* crb2.jpg in Resources */,
 				54C8657D2BA0A1CE007F53BD /* crb6.jpg in Resources */,
+				54A41CF92BA2D65E00535467 /* s4.jpg in Resources */,
 				54C865A12BA16D0A007F53BD /* f12.png in Resources */,
 				54E31C66296F14A000EE8178 /* CR13.png in Resources */,
 				54E31C61296F14A000EE8178 /* CR14.png in Resources */,
@@ -1364,7 +1388,7 @@
 				54D237CA2BA0777800545ADD /* CreamPipeline.swift in Sources */,
 				54D3C355296857C0009BC254 /* HapticButton.swift in Sources */,
 				54426CDC2976C5B4002F7CD2 /* Vibrance.metal in Sources */,
-				54D237CD2BA0777800545ADD /* Temp7Pipeline.swift in Sources */,
+				54D237CD2BA0777800545ADD /* RiptonPipeline.swift in Sources */,
 				560C71012919E71000F679A3 /* LocalizeFile.swift in Sources */,
 				54426CC82976C433002F7CD2 /* WhiteBalancePipeline.swift in Sources */,
 				54D237972BA06B7C00545ADD /* MTMavenVideoFilter.metal in Sources */,
@@ -1416,7 +1440,7 @@
 				54D2377F2BA06B7C00545ADD /* MTAmaroFilter.metal in Sources */,
 				54D237942BA06B7C00545ADD /* MTCremaFilter.metal in Sources */,
 				54D237912BA06B7C00545ADD /* MTGinzaVideoFilter.metal in Sources */,
-				54D237C42BA0777800545ADD /* Temp2Pipeline.swift in Sources */,
+				54D237C42BA0777800545ADD /* CK2Pipeline.swift in Sources */,
 				54E31C8029703A2900EE8178 /* Watermark.metal in Sources */,
 				54ACA65F2991254100690B11 /* Backgrounds.swift in Sources */,
 				54D2379A2BA06B7C00545ADD /* MTReyesFilter.metal in Sources */,
@@ -1428,19 +1452,19 @@
 				54168B2D28E275030000DF7F /* AlbumView.swift in Sources */,
 				54D237902BA06B7C00545ADD /* MTMayfairFilter.metal in Sources */,
 				54D237832BA06B7C00545ADD /* MTWaldenFilter.metal in Sources */,
-				54D237D22BA0777800545ADD /* Temp4Pipeline.swift in Sources */,
+				54D237D22BA0777800545ADD /* ReyesPipeline.swift in Sources */,
 				5435E652290EFAE600F8A331 /* ExportRenderer.swift in Sources */,
 				54D237882BA06B7C00545ADD /* MTPerpetuaFilter.metal in Sources */,
 				54D237A72BA06B7C00545ADD /* MTAdenFilter.metal in Sources */,
 				54D358E728DC7BD900A3AB4D /* SoundManager.swift in Sources */,
 				54426CE42976C5E5002F7CD2 /* HighlightsAndShadows.metal in Sources */,
-				54D237D42BA0777800545ADD /* Temp6Pipeline.swift in Sources */,
+				54D237D42BA0777800545ADD /* BreadPipeline.swift in Sources */,
 				54426CCC2976C485002F7CD2 /* VignettePipeline.swift in Sources */,
 				54D358E228DC7BD900A3AB4D /* Renderer.swift in Sources */,
 				54426CD22976C579002F7CD2 /* Saturation.metal in Sources */,
 				54D237802BA06B7C00545ADD /* MTValenciaFilter.metal in Sources */,
 				54D2379C2BA06B7C00545ADD /* MTBasicAdjustFilter.metal in Sources */,
-				54D237C62BA0777800545ADD /* TempPipeline.swift in Sources */,
+				54D237C62BA0777800545ADD /* GangnamPipeline.swift in Sources */,
 				54D237C32BA0777800545ADD /* ShinePipeline.swift in Sources */,
 				54426CD62976C596002F7CD2 /* Grayscale.metal in Sources */,
 				6A51A7942967D46E00EC83E9 /* Decoration.swift in Sources */,
@@ -1456,14 +1480,14 @@
 				5435E656290EFD9C00F8A331 /* ExportShader.metal in Sources */,
 				54426CC22976C3B8002F7CD2 /* SharpnessPipeline.swift in Sources */,
 				54D358DD28DC7BD900A3AB4D /* CornerRadius+Extensions.swift in Sources */,
-				54D237D12BA0777800545ADD /* Temp5Pipeline.swift in Sources */,
+				54D237D12BA0777800545ADD /* SiriPipeline.swift in Sources */,
 				54D237A22BA06B7C00545ADD /* MTRiseFilter.metal in Sources */,
 				54D358E128DC7BD900A3AB4D /* MetalCameraView.swift in Sources */,
 				54D237822BA06B7C00545ADD /* MTClarendonVideoFilter.metal in Sources */,
 				54D237C92BA0777800545ADD /* ArcadePipeline.swift in Sources */,
 				54D2378B2BA06B7C00545ADD /* MTKelvinFilter.metal in Sources */,
 				54168B3328E33E2E0000DF7F /* Hidden.swift in Sources */,
-				54D237C52BA0777800545ADD /* Temp3Pipeline.swift in Sources */,
+				54D237C52BA0777800545ADD /* PenTouchPipeline.swift in Sources */,
 				54426CD82976C59F002F7CD2 /* Grain.metal in Sources */,
 				5444215E296D833200B056D6 /* FilterPipeline.swift in Sources */,
 				54ED1068293CCE3700926E36 /* SubscriptionView.swift in Sources */,

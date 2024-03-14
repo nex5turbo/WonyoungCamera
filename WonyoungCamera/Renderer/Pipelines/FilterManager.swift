@@ -24,7 +24,8 @@ class FilterManager: ObservableObject {
     private init() {
         filters.append(LovelyPipeline())
         filters.append(IdolPipeline())
-        filters.append(MonoPipeline())
+        filters.append(ArcadePipeline())
+        
         filters.append(FrigiaPipeline())
         filters.append(CreamPipeline())
         filters.append(ShinePipeline())
@@ -34,15 +35,19 @@ class FilterManager: ObservableObject {
         filters.append(SilentPipeline())
         filters.append(PastPipeline())
         filters.append(HyphenPipeline())
-        filters.append(ArcadePipeline())
         filters.append(HypnosisPipeline())
-        filters.append(TempPipeline())
-        filters.append(Temp2Pipeline())
-        filters.append(Temp3Pipeline())
-        filters.append(Temp4Pipeline())
-        filters.append(Temp5Pipeline())
-        filters.append(Temp6Pipeline())
-        filters.append(Temp7Pipeline())
+        filters.append(GangnamPipeline())
+        filters.append(CK2Pipeline())
+        
+        // gray scale
+        filters.append(PenTouchPipeline())
+        filters.append(MonoPipeline())
+        // gray scale
+        
+        filters.append(ReyesPipeline())
+        filters.append(SiriPipeline())
+        filters.append(BreadPipeline())
+        filters.append(RiptonPipeline())
         
         self.device = SharedMetalDevice.instance.device
         for filter in filters {

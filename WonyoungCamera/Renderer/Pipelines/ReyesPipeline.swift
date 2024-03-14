@@ -1,5 +1,5 @@
 //
-//  Temp7Pipeline.swift
+//  Temp4Pipeline.swift
 //  Imica
 //
 //  Created by 워뇨옹 on 2023/09/09.
@@ -8,24 +8,18 @@
 import Foundation
 import Metal
 
-class Temp7Pipeline: FilterPipeline {
-    override var name: String { return "Ripton" }
+class ReyesPipeline: FilterPipeline {
+    override var name: String { return "Reyes" }
+    override var sampleImageName: String { return "s1.jpg" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
-        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTRiseFragment")
+        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTReyesFragment")
     }
     override func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture,
                        commandBuffer: MTLCommandBuffer) {
-        guard let blowout = samplerTexture(named: "blackboard.png") else {
+        guard let lookup = samplerTexture(named: "reyes_map.png") else {
             return
         }
-        guard let map = samplerTexture(named: "riseMap.png") else {
-            return
-        }
-        guard let overlay = samplerTexture(named: "overlayMap.png") else {
-            return
-        }
-        
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {
             fatalError("Could not make CommandEncoder")
         }
@@ -41,9 +35,7 @@ class Temp7Pipeline: FilterPipeline {
         renderEncoder.setVertexBuffer(texture0CoordinatesFillBuffer, offset: 0, index: 1) // the texture
         // setup fragment buffer
         renderEncoder.setFragmentTexture(sourceTexture, index: 0)
-        renderEncoder.setFragmentTexture(blowout, index: 1)
-        renderEncoder.setFragmentTexture(map, index: 2)
-        renderEncoder.setFragmentTexture(overlay, index: 3)
+        renderEncoder.setFragmentTexture(lookup, index: 1)
         var strength: Float = 1.0
         renderEncoder.setFragmentBytes(&strength, length: MemoryLayout<Float>.stride, index: 0)
         // draw

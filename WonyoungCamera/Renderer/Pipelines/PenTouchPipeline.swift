@@ -1,5 +1,5 @@
 //
-//  Temp6Pipeline.swift
+//  Temp3Pipeline.swift
 //  Imica
 //
 //  Created by 워뇨옹 on 2023/09/09.
@@ -8,27 +8,16 @@
 import Foundation
 import Metal
 
-class Temp6Pipeline: FilterPipeline {
-    override var name: String { return "Bread" }
+class PenTouchPipeline: FilterPipeline {
+    override var name: String { return "PenTouch" }
+    override var sampleImageName: String { return "s1.jpg" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
-        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTBrannanFragment")
+        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTInkwellFragment")
     }
     override func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture,
                        commandBuffer: MTLCommandBuffer) {
-        guard let blowout = samplerTexture(named: "brannanBlowout.png") else {
-            return
-        }
-        guard let map = samplerTexture(named: "brannanProcess.png") else {
-            return
-        }
-        guard let contrast = samplerTexture(named: "brannanContrast.png") else {
-            return
-        }
-        guard let lumaMap = samplerTexture(named: "brannanLuma.png") else {
-            return
-        }
-        guard let screenMap = samplerTexture(named: "brannanScreen.png") else {
+        guard let map = samplerTexture(named: "inkwellMap.png") else {
             return
         }
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {
@@ -46,11 +35,7 @@ class Temp6Pipeline: FilterPipeline {
         renderEncoder.setVertexBuffer(texture0CoordinatesFillBuffer, offset: 0, index: 1) // the texture
         // setup fragment buffer
         renderEncoder.setFragmentTexture(sourceTexture, index: 0)
-        renderEncoder.setFragmentTexture(blowout, index: 1)
-        renderEncoder.setFragmentTexture(map, index: 2)
-        renderEncoder.setFragmentTexture(contrast, index: 3)
-        renderEncoder.setFragmentTexture(lumaMap, index: 4)
-        renderEncoder.setFragmentTexture(screenMap, index: 5)
+        renderEncoder.setFragmentTexture(map, index: 1)
         var strength: Float = 1.0
         renderEncoder.setFragmentBytes(&strength, length: MemoryLayout<Float>.stride, index: 0)
         // draw
@@ -58,4 +43,3 @@ class Temp6Pipeline: FilterPipeline {
         renderEncoder.endEncoding()
     }
 }
-

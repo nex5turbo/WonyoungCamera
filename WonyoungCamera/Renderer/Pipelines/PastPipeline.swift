@@ -12,6 +12,7 @@ import MetalKit
 
 class PastPipeline: FilterPipeline {
     override var name: String { return "Past" }
+    override var sampleImageName: String { return "s1.jpg" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTXpro2Fragment")
     }

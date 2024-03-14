@@ -18,6 +18,7 @@ class FilterPipeline: Equatable {
     var name: String { return "" }
     var device: MTLDevice
     var library: MTLLibrary
+    var sampleImageName: String { return "" }
     private var pipelineState: MTLRenderPipelineState?
     var standardImageVerticesBuffer: MTLBuffer?
     var texture0CoordinatesFillBuffer: MTLBuffer?

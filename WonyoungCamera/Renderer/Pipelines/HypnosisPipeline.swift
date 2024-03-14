@@ -12,6 +12,7 @@ import Metal
 
 class HypnosisPipeline: FilterPipeline {
     override var name: String { return "Hypnosis" }
+    override var sampleImageName: String { return "s1.jpg" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTAshbyVideoFragment")
     }

@@ -1,5 +1,5 @@
 //
-//  Temp3Pipeline.swift
+//  Temp2Pipeline.swift
 //  Imica
 //
 //  Created by 워뇨옹 on 2023/09/09.
@@ -8,15 +8,16 @@
 import Foundation
 import Metal
 
-class Temp3Pipeline: FilterPipeline {
-    override var name: String { return "PenTouch" }
+class CK2Pipeline: FilterPipeline {
+    override var name: String { return "CK2" }
+    override var sampleImageName: String { return "s1.jpg" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
-        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTInkwellFragment")
+        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTKelvinFragment")
     }
     override func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture,
                        commandBuffer: MTLCommandBuffer) {
-        guard let map = samplerTexture(named: "inkwellMap.png") else {
+        guard let map = samplerTexture(named: "kelvinMap.png") else {
             return
         }
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {

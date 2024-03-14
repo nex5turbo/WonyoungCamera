@@ -1,5 +1,5 @@
 //
-//  Temp4Pipeline.swift
+//  Temp5Pipeline.swift
 //  Imica
 //
 //  Created by 워뇨옹 on 2023/09/09.
@@ -8,15 +8,28 @@
 import Foundation
 import Metal
 
-class Temp4Pipeline: FilterPipeline {
-    override var name: String { return "Reyes" }
+class SiriPipeline: FilterPipeline {
+    override var name: String { return "Siri" }
+    override var sampleImageName: String { return "s1.jpg" }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
-        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTReyesFragment")
+        return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTSierraFragment")
     }
     override func render(from sourceTexture: MTLTexture,
                        to outputTexture: MTLTexture,
                        commandBuffer: MTLCommandBuffer) {
-        guard let lookup = samplerTexture(named: "reyes_map.png") else {
+        guard let map = samplerTexture(named: "sierraMap.png") else {
+            return
+        }
+        guard let overlay = samplerTexture(named: "overlayMap.png") else {
+            return
+        }
+        guard let smoke = samplerTexture(named: "sierraSmoke.png") else {
+            return
+        }
+        guard let softLight = samplerTexture(named: "softLight.png") else {
+            return
+        }
+        guard let vignette = samplerTexture(named: "sierraVignette.png") else {
             return
         }
         guard let renderEncoder = makeRenderCommandEncoder(on: commandBuffer, to: outputTexture) else {
@@ -34,7 +47,11 @@ class Temp4Pipeline: FilterPipeline {
         renderEncoder.setVertexBuffer(texture0CoordinatesFillBuffer, offset: 0, index: 1) // the texture
         // setup fragment buffer
         renderEncoder.setFragmentTexture(sourceTexture, index: 0)
-        renderEncoder.setFragmentTexture(lookup, index: 1)
+        renderEncoder.setFragmentTexture(map, index: 1)
+        renderEncoder.setFragmentTexture(overlay, index: 2)
+        renderEncoder.setFragmentTexture(smoke, index: 3)
+        renderEncoder.setFragmentTexture(softLight, index: 4)
+        renderEncoder.setFragmentTexture(vignette, index: 5)
         var strength: Float = 1.0
         renderEncoder.setFragmentBytes(&strength, length: MemoryLayout<Float>.stride, index: 0)
         // draw
