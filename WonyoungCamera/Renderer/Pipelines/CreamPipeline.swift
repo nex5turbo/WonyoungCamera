@@ -10,7 +10,7 @@ import MetalKit
 
 class CreamPipeline: FilterPipeline {
     override var name: String { return "Cream" }
-    override var sampleImageName: String { return "s1.jpg" }
+    override var sampleImageName: String { return .samplePinkBaby }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTCremaFragment")
     }

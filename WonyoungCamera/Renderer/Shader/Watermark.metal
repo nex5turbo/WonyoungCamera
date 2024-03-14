@@ -20,17 +20,16 @@ fragment half4 watermarkFragment(SingleInputVertexIO fragmentInput [[stage_in]],
     float watermarkRatio = watermarkSize.x / watermarkSize.y;
     float waterX = 0.2;
     float waterY = waterX / watermarkRatio;
+    half4 color = inputTexture.sample(quadSampler, fragmentInput.textureCoordinate);
 
-    if ((fragmentInput.textureCoordinate.x >= 0.75 && fragmentInput.textureCoordinate.y / inputRatio >= 0.97 / inputRatio - waterY) &&
-        (fragmentInput.textureCoordinate.x <= 0.95 && fragmentInput.textureCoordinate.y / inputRatio <= 0.97 / inputRatio)) {
+    if ((fragmentInput.textureCoordinate.x >= 0.8 && fragmentInput.textureCoordinate.y / inputRatio >= 0.97 / inputRatio - waterY) &&
+        (fragmentInput.textureCoordinate.x <= 1 && fragmentInput.textureCoordinate.y / inputRatio <= 0.97 / inputRatio)) {
 
-        float2 waterCoord = float2((fragmentInput.textureCoordinate.x - 0.75) / waterX,
+        float2 waterCoord = float2((fragmentInput.textureCoordinate.x - 0.8) / waterX,
                                    (fragmentInput.textureCoordinate.y / inputRatio - (0.97 / inputRatio - waterY)) / waterY);
         half4 waterColor = watermarkTexture.sample(quadSampler, waterCoord);
-        if (waterColor.a == 1) {
-            return waterColor;
-        }
+        color = mix(color, waterColor, waterColor.a);
     }
-    half4 color = inputTexture.sample(quadSampler, fragmentInput.textureCoordinate);
+    
     return color;
 }

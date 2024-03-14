@@ -13,7 +13,7 @@ import Metal
 
 class SilentPipeline: FilterPipeline {
     override var name: String { return "Silent" }
-    override var sampleImageName: String { return "s1.jpg" }
+    override var sampleImageName: String { return .sampleGlassedCat }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTSutroFragment")
     }

@@ -10,7 +10,7 @@ import MetalKit
 
 class IdolPipeline: FilterPipeline {
     override var name: String { return "Idol" }
-    override var sampleImageName: String { return "s1.jpg" }
+    override var sampleImageName: String { return .sampleGlassedCat }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTAdenFragment")
     }

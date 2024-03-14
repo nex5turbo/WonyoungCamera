@@ -16,7 +16,7 @@ struct DecorationView: View {
     @Binding var decoration: Decoration
     @State var selectedTabIndex = 0
     var body: some View {
-        TabBar(items: ["Outline", "Background", "Frame"], selectedIndex: $selectedTabIndex)
+        TabBar(items: ["Outline", "Background👑", "Frame👑"], selectedIndex: $selectedTabIndex)
         let selectedTab = TabType(rawValue: selectedTabIndex) ?? TabType.outline
         ZStack {
             BorderAdjustView(decoration: $decoration)

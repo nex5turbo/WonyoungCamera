@@ -57,7 +57,14 @@ class FilterManager: ObservableObject {
     }
     
     func getFilteredSampleImage(pipeline: FilterPipeline) -> UIImage? {
-        if let sampleImageTexture = device.loadImage(imageName: "sample", ext: "png") {
+        let array = pipeline.sampleImageName.split(separator: ".")
+        print(array, pipeline.sampleImageName, pipeline.name)
+        guard array.count > 1  else {
+            return nil
+        }
+        let name = array[0]
+        let ext = array[1]
+        if let sampleImageTexture = device.loadImage(imageName: String(name), ext: String(ext)) {
             if let result = self.renderer.applyFilter(to: sampleImageTexture, with: pipeline) {
                 return result
             } else {
@@ -67,4 +74,11 @@ class FilterManager: ObservableObject {
             return nil
         }
     }
+}
+
+extension String {
+    static let sampleGlassedCat = "glassed_cat.jpg"
+    static let sampleHandRaisedCat = "hand_raised_cat.jpg"
+    static let sampleGroundBaby = "ground_baby.jpg"
+    static let samplePinkBaby = "pink_baby.jpg"
 }

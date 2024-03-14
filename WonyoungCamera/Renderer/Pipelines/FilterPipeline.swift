@@ -52,7 +52,7 @@ class FilterPipeline: Equatable {
     public init() {
         self.device = SharedMetalDevice.instance.device
         self.library = SharedMetalDevice.instance.defaultLibrary
-        self.watermarkTexture = self.device.loadImage(imageName: "logo")
+        self.watermarkTexture = self.device.loadImage(imageName: "watermark")
     }
     func getRenderPipelineState() -> MTLRenderPipelineState? {
         if let pipelineState = pipelineState {

@@ -10,7 +10,7 @@ import Metal
 
 class Pilotpipeline: FilterPipeline {
     override var name: String { return "Pilot" }
-    override var sampleImageName: String { return "s1.jpg" }
+    override var sampleImageName: String { return .sampleGlassedCat }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTSkylineVideoFragment")
     }

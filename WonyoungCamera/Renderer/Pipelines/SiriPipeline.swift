@@ -10,7 +10,7 @@ import Metal
 
 class SiriPipeline: FilterPipeline {
     override var name: String { return "Siri" }
-    override var sampleImageName: String { return "s1.jpg" }
+    override var sampleImageName: String { return .sampleGlassedCat }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTSierraFragment")
     }

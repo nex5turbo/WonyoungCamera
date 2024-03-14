@@ -10,6 +10,7 @@ import Metal
 
 class WhisperVideoPipeline: FilterPipeline {
     override var name: String { return "Whisper" }
+    override var sampleImageName: String { return .sampleGlassedCat }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTVesperVideoFragment")
     }

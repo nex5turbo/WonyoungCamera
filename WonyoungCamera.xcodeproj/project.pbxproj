@@ -74,10 +74,10 @@
 		549BEE412A63E7AC0019CDE9 /* InterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE402A63E7AC0019CDE9 /* InterstitialAd.swift */; };
 		549BEE432A63EA8C0019CDE9 /* RewardAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE422A63EA8C0019CDE9 /* RewardAd.swift */; };
 		549BEE452A63EB5C0019CDE9 /* BannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549BEE442A63EB5C0019CDE9 /* BannerAd.swift */; };
-		54A41CF82BA2D65E00535467 /* s3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF42BA2D65E00535467 /* s3.jpg */; };
-		54A41CF92BA2D65E00535467 /* s4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF52BA2D65E00535467 /* s4.jpg */; };
-		54A41CFA2BA2D65E00535467 /* s1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF62BA2D65E00535467 /* s1.jpg */; };
-		54A41CFB2BA2D65E00535467 /* s2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF72BA2D65E00535467 /* s2.jpg */; };
+		54A41CF82BA2D65E00535467 /* ground_baby.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF42BA2D65E00535467 /* ground_baby.jpg */; };
+		54A41CF92BA2D65E00535467 /* pink_baby.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF52BA2D65E00535467 /* pink_baby.jpg */; };
+		54A41CFA2BA2D65E00535467 /* glassed_cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF62BA2D65E00535467 /* glassed_cat.jpg */; };
+		54A41CFB2BA2D65E00535467 /* hand_raised_cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 54A41CF72BA2D65E00535467 /* hand_raised_cat.jpg */; };
 		54ACA6592991206F00690B11 /* DecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA6582991206F00690B11 /* DecorationView.swift */; };
 		54ACA65B299120FD00690B11 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65A299120FD00690B11 /* TabBar.swift */; };
 		54ACA65D299121BC00690B11 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ACA65C299121BC00690B11 /* BackgroundView.swift */; };
@@ -350,10 +350,10 @@
 		549BEE402A63E7AC0019CDE9 /* InterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAd.swift; sourceTree = "<group>"; };
 		549BEE422A63EA8C0019CDE9 /* RewardAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardAd.swift; sourceTree = "<group>"; };
 		549BEE442A63EB5C0019CDE9 /* BannerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAd.swift; sourceTree = "<group>"; };
-		54A41CF42BA2D65E00535467 /* s3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s3.jpg; sourceTree = "<group>"; };
-		54A41CF52BA2D65E00535467 /* s4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s4.jpg; sourceTree = "<group>"; };
-		54A41CF62BA2D65E00535467 /* s1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s1.jpg; sourceTree = "<group>"; };
-		54A41CF72BA2D65E00535467 /* s2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = s2.jpg; sourceTree = "<group>"; };
+		54A41CF42BA2D65E00535467 /* ground_baby.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ground_baby.jpg; sourceTree = "<group>"; };
+		54A41CF52BA2D65E00535467 /* pink_baby.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pink_baby.jpg; sourceTree = "<group>"; };
+		54A41CF62BA2D65E00535467 /* glassed_cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = glassed_cat.jpg; sourceTree = "<group>"; };
+		54A41CF72BA2D65E00535467 /* hand_raised_cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hand_raised_cat.jpg; sourceTree = "<group>"; };
 		54ACA6582991206F00690B11 /* DecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationView.swift; sourceTree = "<group>"; };
 		54ACA65A299120FD00690B11 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		54ACA65C299121BC00690B11 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
@@ -754,10 +754,10 @@
 		54A41CF32BA2D65200535467 /* samples */ = {
 			isa = PBXGroup;
 			children = (
-				54A41CF62BA2D65E00535467 /* s1.jpg */,
-				54A41CF72BA2D65E00535467 /* s2.jpg */,
-				54A41CF42BA2D65E00535467 /* s3.jpg */,
-				54A41CF52BA2D65E00535467 /* s4.jpg */,
+				54A41CF62BA2D65E00535467 /* glassed_cat.jpg */,
+				54A41CF72BA2D65E00535467 /* hand_raised_cat.jpg */,
+				54A41CF42BA2D65E00535467 /* ground_baby.jpg */,
+				54A41CF52BA2D65E00535467 /* pink_baby.jpg */,
 			);
 			path = samples;
 			sourceTree = "<group>";
@@ -1283,17 +1283,17 @@
 				54E31C58296F149400EE8178 /* GMT3.png in Resources */,
 				54E31C7E2970296400EE8178 /* watermark.png in Resources */,
 				545FF9E329619DBB00BECC3C /* JJ1.png in Resources */,
-				54A41CFA2BA2D65E00535467 /* s1.jpg in Resources */,
+				54A41CFA2BA2D65E00535467 /* glassed_cat.jpg in Resources */,
 				6A8FFC37291E101300000C1B /* exportImage.json in Resources */,
 				54D3C33C2966E8CC009BC254 /* JJ5.png in Resources */,
 				545FF9E029619DBB00BECC3C /* JJ2.png in Resources */,
-				54A41CF82BA2D65E00535467 /* s3.jpg in Resources */,
+				54A41CF82BA2D65E00535467 /* ground_baby.jpg in Resources */,
 				54C865B92BA16E71007F53BD /* p_p3.png in Resources */,
 				54C865982BA166CB007F53BD /* f8.png in Resources */,
 				54ED1066293CCD1C00926E36 /* Purchase.plist in Resources */,
 				54E31C63296F14A000EE8178 /* CR15.png in Resources */,
 				545FF9DC29619DBB00BECC3C /* JE2.png in Resources */,
-				54A41CFB2BA2D65E00535467 /* s2.jpg in Resources */,
+				54A41CFB2BA2D65E00535467 /* hand_raised_cat.jpg in Resources */,
 				54E31C5A296F149400EE8178 /* GMT6.png in Resources */,
 				543B35D82969A95000ED86C8 /* Natural.png in Resources */,
 				54C865BA2BA16E71007F53BD /* p_p4.png in Resources */,
@@ -1313,7 +1313,7 @@
 				54E31C74296F159500EE8178 /* whiteWoman.png in Resources */,
 				54C865802BA0A1CE007F53BD /* crb2.jpg in Resources */,
 				54C8657D2BA0A1CE007F53BD /* crb6.jpg in Resources */,
-				54A41CF92BA2D65E00535467 /* s4.jpg in Resources */,
+				54A41CF92BA2D65E00535467 /* pink_baby.jpg in Resources */,
 				54C865A12BA16D0A007F53BD /* f12.png in Resources */,
 				54E31C66296F14A000EE8178 /* CR13.png in Resources */,
 				54E31C61296F14A000EE8178 /* CR14.png in Resources */,
