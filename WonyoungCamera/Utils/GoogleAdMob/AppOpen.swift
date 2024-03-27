@@ -7,21 +7,28 @@
 
 import GoogleMobileAds
 
-final class OpenAd: NSObject, GADFullScreenContentDelegate {
+final class OpenAd: NSObject, GADFullScreenContentDelegate, ObservableObject {
     var appOpenAd: GADAppOpenAd?
     var loadTime = Date()
+    @Published var didDismiss: Bool = false
     
     func requestAppOpenAd() {
         let request = GADRequest()
-//        GADAppOpenAd.load(withAdUnitID: "ca-app-pub-3940256099942544/3419835294", // test id
-        GADAppOpenAd.load(withAdUnitID: "ca-app-pub-6235545617614297/6568492058", // product id
+        var id = "ca-app-pub-6235545617614297/6568492058"
+#if DEBUG
+        id = "ca-app-pub-3940256099942544/3419835294"
+#endif
+        GADAppOpenAd.load(withAdUnitID: id,
                           request: request,
                           completionHandler: { (appOpenAdIn, _) in
             self.appOpenAd = appOpenAdIn
             self.appOpenAd?.fullScreenContentDelegate = self
             self.loadTime = Date()
             if let gOpenAd = self.appOpenAd {
+                self.didDismiss = false
                 gOpenAd.present(fromRootViewController: (UIApplication.shared.windows.first?.rootViewController)!)
+            } else {
+                self.didDismiss = true
             }
         })
     }
@@ -48,7 +55,7 @@ final class OpenAd: NSObject, GADFullScreenContentDelegate {
     }
     
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-//        requestAppOpenAd()
+        didDismiss = true
         print("[OPEN AD] Ad dismissed")
     }
     

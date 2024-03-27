@@ -9,17 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject var openAd: OpenAd
     @ObservedObject var purchaseManager = InAppPurchaseManager.shared
-    @State var isLoading = true
     @State var isRotating = false
     var foreverAnimation: Animation {
         Animation.linear(duration: 5.0)
             .repeatForever(autoreverses: false)
     }
     
+    var canNext: Bool {
+        openAd.didDismiss
+    }
+    
     var body: some View {
         NavigationView {
-            if isLoading {
+            if !canNext {
                 ZStack {
                     Color.black.edgesIgnoringSafeArea(.all)
                     VStack {
@@ -37,16 +41,10 @@ struct ContentView: View {
                 }
                 .transition(.opacity)
                 .onAppear {
-                    if isLoading {
-                        
-                        isRotating = true
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                            withAnimation {
-                                isLoading = false
-                            }
-                        })
-                    }
+                    isRotating = true
+                }
+                .onDisappear {
+                    isRotating.toggle()
                 }
             } else {
                 CameraView()
@@ -56,6 +54,9 @@ struct ContentView: View {
             SubscriptionView()
         })
         .navigationViewStyle(.stack)
+        .task {
+            print("debug4 : \(openAd.didDismiss)")
+        }
     }
 }
 

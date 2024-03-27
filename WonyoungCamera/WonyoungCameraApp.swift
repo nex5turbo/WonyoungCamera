@@ -15,18 +15,16 @@ import FirebaseCore
 struct WonyoungCameraApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
-    var ad = OpenAd()
+    @StateObject var ad = OpenAd()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(ad)
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active && !InAppPurchaseManager.shared.isPremiumUser {
-                #if DEBUG
-                #else
                 ad.requestAppOpenAd()
-                #endif
             }
         }
     }
