@@ -14,7 +14,7 @@ struct FrameView: View {
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
-                LazyHStack {
+                LazyHStack(spacing: 20) {
                     Button {
                         decoration.frame = nil
                     } label: {
