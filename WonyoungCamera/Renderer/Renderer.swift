@@ -249,6 +249,7 @@ extension Renderer {
         var hasBackground = decoration.backgroundTexture != nil
         var hasBorder = decoration.borderColor != nil
         var hasFrame = decoration.frameTexture != nil
+        var haveToBlur = decoration.haveToBlur
 
         let quadVertices = getVertices()
         let vertices = device.makeBuffer(bytes: quadVertices, length: MemoryLayout<Vertex>.size * quadVertices.count, options: [])
@@ -274,6 +275,7 @@ extension Renderer {
         renderCommandEncoder.setFragmentBytes(&tx, length: MemoryLayout<Float>.stride, index: 6)
         renderCommandEncoder.setFragmentBytes(&ty, length: MemoryLayout<Float>.stride, index: 7)
         renderCommandEncoder.setFragmentBytes(&hasFrame, length: MemoryLayout<Float>.stride, index: 8)
+        renderCommandEncoder.setFragmentBytes(&haveToBlur, length: MemoryLayout<Bool>.stride, index: 9)
         
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: numVertice)
         renderCommandEncoder.endEncoding()

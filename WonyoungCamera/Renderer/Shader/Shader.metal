@@ -8,6 +8,31 @@
 #include <metal_stdlib>
 using namespace metal;
 
+constant float maxKernel = 4.0;
+constant float maxOffset = 34.0;
+
+half3 fastBlur(float2 uv, float2 texel, float2 kd, texture2d<half> inputTexture)
+{
+    float r = kd.x * kd.y;
+    float rr = 1.0 / r;
+
+    half3 col = half3(0.0);
+    float a = 1.0;
+    for (float x = -r; x <= r; x += kd.y)
+    {
+        for (float y = -r; y <= r; y += kd.y)
+        {
+            a++;
+            float2 c = uv + float2(x, y) * texel;
+
+            col += inputTexture.sample(
+                sampler(coord::normalized, address::repeat, filter::linear),
+                c + fract(sin(dot(c, float2(12.9898, 78.233))) * 43758.5453) * texel * kd.y * 2.0 - kd.yy * texel
+            ).rgb * (2.0 - distance(float2(x, y) * rr, float2(0.0)));
+        }
+    }
+    return col / a;
+}
 
 typedef enum VertexInputIndex
 {
@@ -98,7 +123,8 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
                                  constant float &scale [[ buffer(5) ]],
                                  constant float &tx [[ buffer(6) ]],
                                  constant float &ty [[ buffer(7) ]],
-                                 constant bool &hasFrame [[ buffer(8) ]]) {
+                                 constant bool &hasFrame [[ buffer(8) ]],
+                                 constant bool &haveToBlur [[ buffer(9) ]]) {
     float radius = 0.48 * scale;
 //    width * 0.02
     constexpr sampler colorSampler(address::clamp_to_zero ,coord::normalized, filter::linear);
@@ -128,13 +154,13 @@ fragment half4 rounding_fragment(RasterizerData in [[stage_in]],
         if (hasBG) {
             color = backgroundTexture.sample(colorSampler, in.textureCoordinate);
         } else {
-            if (hasFrame) {
-                half4 frameColor = frameTexture.sample(colorSampler, in.textureCoordinate);
-                if (frameColor.a != 0) {
-                    color = frameColor;
-                }
+            if (haveToBlur) {
+                float2 texel = float2(1.0) / float2(textureIn.get_width(), textureIn.get_height());
+                half3 blur = fastBlur(in.textureCoordinate, texel, round(float2(maxKernel, 0.5 * maxOffset + 1.0)), textureIn);
+                color = half4(blur, 1.0);
+            } else {
+                color = half4(0.0, 0.0, 0.0, 0.0); // 투명한 색상 반환
             }
-            color = half4(0.0, 0.0, 0.0, 0.0); // 투명한 색상 반환
         }
     }
     

@@ -20,6 +20,7 @@ struct Decoration {
                 return
             }
             backgroundTexture = texture
+            haveToBlur = false
         }
     }
     var frame: String? {
@@ -36,6 +37,7 @@ struct Decoration {
     }
     var frameTexture: MTLTexture?
     var backgroundTexture: MTLTexture?
+    var haveToBlur: Bool = false
     
     var borderThickness: Float = 0.5 // 0 ~ 1, 0.5 default
     var borderColor: CodableColor?
