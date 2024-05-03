@@ -10,7 +10,7 @@ import MetalKit
 
 class FrigiaPipeline: FilterPipeline {
     override var name: String { return "Frigia" }
-    override var sampleImageName: String { return .sampleGroundBaby }
+    override var sampleImageName: String { return .samplePinkBaby }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTPerpetuaFragment")
     }

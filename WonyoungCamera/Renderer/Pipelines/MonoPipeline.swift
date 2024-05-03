@@ -10,7 +10,7 @@ import MetalKit
 
 class MonoPipeline: FilterPipeline {
     override var name: String { return "Mono" }
-    override var sampleImageName: String { return .sampleGlassedCat }
+    override var sampleImageName: String { return .sampleHandRaisedCat }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTMoonVideoFragment")
     }

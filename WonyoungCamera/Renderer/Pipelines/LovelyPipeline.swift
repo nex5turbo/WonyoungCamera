@@ -12,7 +12,7 @@ import MetalKit
 
 class LovelyPipeline: FilterPipeline {
     override var name: String { return "Lovely" }
-    override var sampleImageName: String { return .sampleGlassedCat }
+    override var sampleImageName: String { return .samplePinkBaby }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MT1977Fragment")
     }

@@ -22,13 +22,14 @@ class FilterManager: ObservableObject {
     static let shared = FilterManager()
     
     private init() {
+        // pink baby
         filters.append(LovelyPipeline())
         filters.append(IdolPipeline())
-        filters.append(ArcadePipeline())
-        
         filters.append(FrigiaPipeline())
         filters.append(CreamPipeline())
         filters.append(ShinePipeline())
+        
+        // ground baby
         filters.append(WhisperVideoPipeline())
         filters.append(Sveltepipeline())
         filters.append(Pilotpipeline())
@@ -36,18 +37,21 @@ class FilterManager: ObservableObject {
         filters.append(PastPipeline())
         filters.append(HyphenPipeline())
         filters.append(HypnosisPipeline())
+        
+        // glassed cat
+        filters.append(ArcadePipeline())
         filters.append(GangnamPipeline())
         filters.append(CK2Pipeline())
-        
-        // gray scale
-        filters.append(PenTouchPipeline())
-        filters.append(MonoPipeline())
-        // gray scale
-        
         filters.append(ReyesPipeline())
         filters.append(SiriPipeline())
         filters.append(BreadPipeline())
         filters.append(RiptonPipeline())
+        
+        // gray scale
+        // hand raised cat
+        filters.append(PenTouchPipeline())
+        filters.append(MonoPipeline())
+        // gray scale
         
         self.device = SharedMetalDevice.instance.device
         for filter in filters {

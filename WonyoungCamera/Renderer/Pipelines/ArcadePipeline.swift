@@ -12,7 +12,7 @@ import Metal
 
 class ArcadePipeline: FilterPipeline {
     override var name: String { return "Arcade" }
-    override var sampleImageName: String { return .sampleHandRaisedCat }
+    override var sampleImageName: String { return .sampleGlassedCat }
     override func makeRenderPipelineState() -> MTLRenderPipelineState? {
         return makeRenderPipelineState(vertexFunctionName: "oneInputVertex", fragmentFunctionName: "MTNashvilleFragment")
     }
