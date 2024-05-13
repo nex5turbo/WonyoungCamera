@@ -57,7 +57,13 @@ class FilterManager: ObservableObject {
         for filter in filters {
             sampleImages[filter.name] = getFilteredSampleImage(pipeline: filter)
         }
-        self.selectedFilter = filters.first
+        let savedFilter = UserDefaults.standard.string(forKey: "filterName") ?? "Lovely"
+        self.selectedFilter = filters.first { $0.name == savedFilter }
+    }
+    
+    func selectFilter(_ filter: FilterPipeline) {
+        UserDefaults.standard.setValue(filter.name, forKey: "filterName")
+        self.selectedFilter = filter
     }
     
     func getFilteredSampleImage(pipeline: FilterPipeline) -> UIImage? {

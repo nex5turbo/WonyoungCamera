@@ -11,7 +11,6 @@ struct FilterScrollView: View {
     @ObservedObject var purchaseManager = InAppPurchaseManager.shared
     @ObservedObject var filterManager = FilterManager.shared
     @Binding var decoration: Decoration
-    @State var test: String? = ""
 
     @State var isRotating = false
     var foreverAnimation: Animation {
@@ -23,76 +22,74 @@ struct FilterScrollView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { value in
                 HStack {
-                    Section {
-                        ForEach(filterManager.filters, id: \.name) { filter in
-                            if let image = filterManager.sampleImages[filter.name] {
-                                VStack {
-                                    HapticButton {
-                                        self.filterManager.selectedFilter = filter
-                                    } content: {
-                                        ZStack {
-                                            Image(uiImage: image!)
-                                                .resizable()
-                                                .scaledToFill()
-                                                .clipShape(Circle())
-                                                .frame(width: 40, height: 40)
-                                            Group {
-                                                self.filterManager.selectedFilter == filter
-                                                ? Color.black.opacity(0.7)
-                                                : Color.clear
-                                            }
-                                            .frame(width: 40, height: 40)
-                                            GradientView {
-                                                Image(systemName: "checkmark.circle")
-                                                    .resizable()
-                                                    .frame(width: 40, height: 40)
-                                                    .opacity(self.filterManager.selectedFilter == filter ? 1 : 0)
-                                            }
-                                        }
+                    if !purchaseManager.isPremiumUser {
+                        VStack {
+                            Button {
+                                purchaseManager.subscriptionViewPresent.toggle()
+                            } label: {
+                                Image("subIcon")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
+                                    .animation(foreverAnimation, value: isRotating)
+                                    .onAppear {
+                                        isRotating = true
                                     }
-
-                                    VStack {
-                                        Text(filter.name)
-                                            .frame(width: 30)
-                                            .font(.system(size: 10))
-                                            .scaledToFill()
-                                            .minimumScaleFactor(0.5)
-                                            .lineLimit(1)
-                                            .foregroundColor(.white)
-                                    }
-                                    .frame(height: 20)
+                            }
+                            
+                            VStack {
+                                GradientView {
+                                    Text("Subscribe")
+                                        .frame(width: 30)
+                                        .font(.system(size: 10, weight: .bold))
+                                        .scaledToFill()
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
                                 }
                             }
+                            .frame(height: 20)
                         }
-                    } header: {
-                        if !purchaseManager.isPremiumUser {
+                        .background(.black)
+                    }
+
+                    ForEach(filterManager.filters, id: \.name) { filter in
+                        if let image = filterManager.sampleImages[filter.name], let image {
                             VStack {
-                                Button {
-                                    purchaseManager.subscriptionViewPresent.toggle()
-                                } label: {
-                                    Image("subIcon")
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                        .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
-                                        .animation(foreverAnimation, value: isRotating)
-                                        .onAppear {
-                                            isRotating = true
-                                        }
-                                }
-                                
-                                VStack {
-                                    GradientView {
-                                        Text("Subscribe")
-                                            .frame(width: 30)
-                                            .font(.system(size: 10, weight: .bold))
+                                HapticButton {
+                                    self.filterManager.selectFilter(filter)
+                                } content: {
+                                    ZStack {
+                                        Image(uiImage: image)
+                                            .resizable()
                                             .scaledToFill()
-                                            .minimumScaleFactor(0.5)
-                                            .lineLimit(1)
+                                            .clipShape(Circle())
+                                            .frame(width: 40, height: 40)
+                                        Group {
+                                            self.filterManager.selectedFilter == filter
+                                            ? Color.black.opacity(0.7)
+                                            : Color.clear
+                                        }
+                                        .frame(width: 40, height: 40)
+                                        GradientView {
+                                            Image(systemName: "checkmark.circle")
+                                                .resizable()
+                                                .frame(width: 40, height: 40)
+                                                .opacity(self.filterManager.selectedFilter == filter ? 1 : 0)
+                                        }
                                     }
+                                }
+
+                                VStack {
+                                    Text(filter.name)
+                                        .frame(width: 30)
+                                        .font(.system(size: 10))
+                                        .scaledToFill()
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                        .foregroundColor(.white)
                                 }
                                 .frame(height: 20)
                             }
-                            .background(.black)
                         }
                     }
                 }
@@ -105,6 +102,7 @@ struct FilterScrollView: View {
                         return
                     }
                     withAnimation {
+                        print(index)
                         value.scrollTo(Int(index), anchor: .center)
                     }
                 }
