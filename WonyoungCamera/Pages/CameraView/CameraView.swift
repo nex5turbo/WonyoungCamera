@@ -120,7 +120,7 @@ struct CameraView: View {
                                     }
                                 }
                                 if !purchaseManager.isPremiumUser &&
-                                    (decoration.background != nil || decoration.frame != nil) {
+                                    (decoration.background != nil || decoration.frame != nil || decoration.haveToBlur) {
                                     purchaseManager.subscriptionViewPresent.toggle()
                                     return
                                 }
