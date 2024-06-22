@@ -20,10 +20,10 @@ struct ContentView: View {
     var canNext: Bool {
         openAd.didDismiss
     }
-    
+    @State private var temp: Bool = false
     var body: some View {
         NavigationView {
-            if !canNext {
+            if !temp {
                 ZStack {
                     Color.black.edgesIgnoringSafeArea(.all)
                     VStack {
@@ -56,6 +56,9 @@ struct ContentView: View {
         .navigationViewStyle(.stack)
         .task {
             print("debug4 : \(openAd.didDismiss)")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                temp.toggle()
+            })
         }
     }
 }
