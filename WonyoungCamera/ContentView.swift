@@ -23,32 +23,33 @@ struct ContentView: View {
     @State private var temp: Bool = false
     var body: some View {
         NavigationView {
-            if !temp {
-                ZStack {
-                    Color.black.edgesIgnoringSafeArea(.all)
-                    VStack {
-                        Image("subIcon")
-                            .resizable()
-                            .frame(width: 200, height: 200)
-                            .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
-                            .animation(foreverAnimation, value: isRotating)
-                        GradientView {
-                            Text(String.APP_NAME)
-                                .font(.system(size: 25))
-                                .bold()
-                        }
-                    }
-                }
-                .transition(.opacity)
-                .onAppear {
-                    isRotating = true
-                }
-                .onDisappear {
-                    isRotating.toggle()
-                }
-            } else {
-                CameraView()
-            }
+            CameraView()
+//            if !temp {
+//                ZStack {
+//                    Color.black.edgesIgnoringSafeArea(.all)
+//                    VStack {
+//                        Image("subIcon")
+//                            .resizable()
+//                            .frame(width: 200, height: 200)
+//                            .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
+//                            .animation(foreverAnimation, value: isRotating)
+//                        GradientView {
+//                            Text(String.APP_NAME)
+//                                .font(.system(size: 25))
+//                                .bold()
+//                        }
+//                    }
+//                }
+//                .transition(.opacity)
+//                .onAppear {
+//                    isRotating = true
+//                }
+//                .onDisappear {
+//                    isRotating.toggle()
+//                }
+//            } else {
+//                CameraView()
+//            }
         }
         .sheet(isPresented: $purchaseManager.subscriptionViewPresent, content: {
             SubscriptionView()
