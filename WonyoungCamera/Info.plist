@@ -6,5 +6,7 @@
 	<string>ca-app-pub-6235545617614297~2772717276</string>
 	<key>GADIsAdManagerApp</key>
 	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
