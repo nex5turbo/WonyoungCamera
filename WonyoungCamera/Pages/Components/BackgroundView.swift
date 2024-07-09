@@ -11,19 +11,42 @@ struct BackgroundView: View {
     @Binding var decoration: Decoration
     let scale = UIScreen.main.scale
     let imageSize: CGFloat = 60
+    @State private var isAlbumPickerPresented: Bool = false
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
                 LazyHStack {
                     Button {
-                        decoration.background = nil
+                        decoration.backgroundTexture = nil
                         decoration.haveToBlur = false
                     } label: {
                         Color.white.frame(width: imageSize, height: imageSize)
                             .cornerRadius(10)
                     }
+                    
                     Button {
-                        decoration.background = nil
+                        self.isAlbumPickerPresented.toggle()
+                    } label: {
+                        VStack {
+                            GradientView {
+                                Image(systemName: "photo.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: imageSize / 2, height: imageSize / 2)
+                            }
+                        }
+                        .frame(width: imageSize, height: imageSize)
+                        .background(.black)
+                        .cornerRadius(10)
+                    }
+                    .sheet(isPresented: $isAlbumPickerPresented) {
+                        ImagePicker { image in
+                            decoration.backgroundImage = image
+                        }
+                    }
+                    
+                    Button {
+                        decoration.backgroundTexture = nil
                         decoration.haveToBlur = true
                     } label: {
                         ZStack {

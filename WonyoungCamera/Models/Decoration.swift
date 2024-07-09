@@ -10,10 +10,19 @@ import Metal
 import Foundation
 
 struct Decoration {
+    var backgroundImage: UIImage? {
+        didSet {
+            guard let backgroundImage else {
+                return
+            }
+            backgroundTexture = BackgroundsStorage.instance.getTexture(backgroundImage)
+            haveToBlur = false
+            background = nil
+        }
+    }
     var background: String? {
         didSet {
             guard let background else {
-                backgroundTexture = nil
                 return
             }
             guard let texture = BackgroundsStorage.instance.getTexture(background) else {
@@ -21,6 +30,7 @@ struct Decoration {
             }
             backgroundTexture = texture
             haveToBlur = false
+            backgroundImage = nil
         }
     }
     var frame: String? {

@@ -48,13 +48,13 @@ extension MTLDevice {
         return returnValue
     }
     func makeTexture(image: UIImage?) -> MTLTexture? {
-        guard let image = image else {
+        guard let image = image, let cgImage = image.cgImage else {
             print("RSRenderer makeTexture(_) Error: The image is nil!")
             return nil
         }
 
         let textureLoader = MTKTextureLoader(device: self)
-        let texture = try! textureLoader.newTexture(cgImage: image.cgImage!)
+        let texture = try? textureLoader.newTexture(cgImage: cgImage, options: [.SRGB: false])
         return texture
     }
 }

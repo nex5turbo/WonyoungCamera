@@ -43,4 +43,7 @@ class BackgroundsStorage {
         }
     }
     
+    func getTexture(_ image: UIImage) -> MTLTexture? {
+        return device.makeTexture(image: image)
+    }
 }
